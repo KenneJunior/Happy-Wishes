@@ -31,6 +31,26 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
     
+    <!-- Immediate theme preference loader to avoid white flash -->
+    <script>
+        try {
+            var savedTheme = localStorage.getItem('valentine_theme_mode');
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                if (document.body) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                            document.body.classList.add('dark-mode');
+                        }
+                    });
+                }
+            }
+        } catch (e) {}
+    </script>
+    
     <!-- Stylesheet -->
     <link rel="stylesheet" href="./css/styles.css">
 </head>
@@ -129,6 +149,18 @@
                 >
                     <span class="pill-icon" aria-hidden="true">🎁</span>
                     <span class="pill-label" id="wish-jar-pill-text">Tap for a wish 💌</span>
+                </button>
+
+                <button 
+                    type="button" 
+                    id="theme-toggle-btn" 
+                    class="glass-control-pill pill-theme-toggle" 
+                    aria-label="Switch to dark mode for night-time viewing"
+                    aria-pressed="false"
+                    title="Toggle Dark Mode"
+                >
+                    <span class="pill-icon" id="theme-toggle-icon" aria-hidden="true">🌙</span>
+                    <span class="pill-label" id="theme-toggle-text">Dark</span>
                 </button>
             </div>
 

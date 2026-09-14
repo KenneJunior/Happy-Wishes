@@ -455,6 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const recipientPillText = document.getElementById('recipient-pill-text');
     const wishJarPillBtn = document.getElementById('wish-jar-pill-btn');
     const wishJarPillText = document.getElementById('wish-jar-pill-text');
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const themeToggleIcon = document.getElementById('theme-toggle-icon');
+    const themeToggleText = document.getElementById('theme-toggle-text');
 
     // Countdown Elements
     const countdownWidget = document.getElementById('countdown-widget');
@@ -640,6 +643,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Optional enhancement
             }
         }
+
+        playThemeToggleSound(isDark) {
+            try {
+                this.initContext();
+                if (!this.ctx) return;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                const now = this.ctx.currentTime;
+
+                osc.type = 'sine';
+                if (isDark) {
+                    // Deep, cozy descending acoustic chime for night-time
+                    osc.frequency.setValueAtTime(587.33, now); // D5
+                    osc.frequency.exponentialRampToValueAtTime(392.00, now + 0.18); // G4
+                } else {
+                    // Bright, ascending daylight chime
+                    osc.frequency.setValueAtTime(392.00, now); // G4
+                    osc.frequency.exponentialRampToValueAtTime(587.33, now + 0.18); // D5
+                }
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.12, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.23);
+            } catch {
+                // Optional enhancement
+            }
+        }
     }
 
     const sound = new SoundEffects();
@@ -659,6 +693,75 @@ document.addEventListener('DOMContentLoaded', () => {
             toastNotification.hidden = true;
             toastNotification.style.display = 'none';
         }, durationMs);
+    }
+
+    // --------------------------------------------------------------------------
+    // 3b-2. Dark Mode / Night-Time Viewing System
+    // --------------------------------------------------------------------------
+    function isDarkModeActive() {
+        return document.documentElement.getAttribute('data-theme') === 'dark' ||
+               document.body.classList.contains('dark-mode');
+    }
+
+    function updateThemeToggleUI(isDark) {
+        if (!themeToggleBtn) return;
+        themeToggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+        themeToggleBtn.setAttribute('title', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode for Night-Time Viewing');
+        themeToggleBtn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode for night-time viewing');
+
+        if (themeToggleIcon) {
+            themeToggleIcon.textContent = isDark ? '☀️' : '🌙';
+        }
+        if (themeToggleText) {
+            themeToggleText.textContent = isDark ? 'Light' : 'Dark';
+        }
+    }
+
+    function setThemeMode(isDark, saveToStorage = true) {
+        if (isDark) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.body.classList.add('dark-mode');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.body.classList.remove('dark-mode');
+        }
+
+        if (saveToStorage) {
+            try {
+                localStorage.setItem('valentine_theme_mode', isDark ? 'dark' : 'light');
+            } catch (e) {}
+        }
+
+        updateThemeToggleUI(isDark);
+    }
+
+    function toggleThemeMode() {
+        const currentlyDark = isDarkModeActive();
+        const nextDark = !currentlyDark;
+        setThemeMode(nextDark, true);
+        sound.playThemeToggleSound(nextDark);
+        showToast(nextDark ? "Night-Time Dark Mode enabled 🌙✨" : "Daylight Mode enabled ☀️💖", nextDark ? "🌙" : "☀️");
+    }
+
+    // Initialize Theme Toggle UI state from current DOM / localStorage / system preference
+    const initialIsDark = isDarkModeActive();
+    setThemeMode(initialIsDark, false);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', toggleThemeMode);
+    }
+
+    // System theme change listener (respects OS if user hasn't explicitly set preference)
+    if (window.matchMedia) {
+        try {
+            const darkMedia = window.matchMedia('(prefers-color-scheme: dark)');
+            darkMedia.addEventListener('change', (e) => {
+                const explicitPreference = localStorage.getItem('valentine_theme_mode');
+                if (!explicitPreference) {
+                    setThemeMode(e.matches, false);
+                }
+            });
+        } catch (e) {}
     }
 
     // --------------------------------------------------------------------------
@@ -1161,8 +1264,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSeasonKey = seasonKey;
         currentSeason = SEASONS[seasonKey];
 
-        // Update body theme gradient
-        document.body.className = currentSeason.themeClass;
+        // Update body theme gradient (preserving dark-mode and other dynamic state classes)
+        Object.values(SEASONS).forEach(s => {
+            if (s.themeClass) document.body.classList.remove(s.themeClass);
+        });
+        document.body.classList.add(currentSeason.themeClass);
 
         // Update Heading & Sub-message with personalized recipient support
         const personalizedHeading = getPersonalizedHeading(currentSeasonKey, recipientName);

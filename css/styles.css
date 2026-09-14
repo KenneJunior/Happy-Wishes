@@ -19,6 +19,13 @@
     --text-main: #2b1029;
     --text-muted: #5e3b56;
     --text-light: #ffffff;
+    --question-color: #3b0922;
+    --question-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+    --success-color: #ff124f;
+    --success-shadow: 0 3px 12px rgba(255, 255, 255, 0.6);
+    --celebration-badge-bg: linear-gradient(135deg, rgba(255, 209, 102, 0.4), rgba(255, 46, 99, 0.2));
+    --celebration-badge-border: rgba(255, 209, 102, 0.6);
+    --celebration-badge-text: #631238;
 
     /* Glassmorphism Configuration */
     --glass-bg: rgba(255, 255, 255, 0.22);
@@ -31,6 +38,50 @@
     --border-glow-primary: rgba(255, 117, 140, 0.55);
     --border-glow-secondary: rgba(255, 209, 102, 0.38);
 
+    /* Background Gradients */
+    --bg-gradient-valentine: linear-gradient(-45deg, #ff4e79, #ff758c, #a18cd1, #fbc2eb, #e0407b, #ff758c);
+    --bg-gradient-birthday: linear-gradient(-45deg, #ff758c, #ffb199, #fbc2eb, #ffd166, #ff758c, #a18cd1);
+    --bg-gradient-christmas: linear-gradient(-45deg, #d90429, #ef233c, #2b9348, #38b000, #ffb703, #d90429);
+    --bg-gradient-newyear: linear-gradient(-45deg, #3a0ca3, #7209b7, #f72585, #ffd166, #4cc9f0, #3a0ca3);
+
+    /* Component Glass Tokens */
+    --pill-bg: rgba(255, 255, 255, 0.75);
+    --pill-border: rgba(255, 255, 255, 0.9);
+    --pill-text: #4a2033;
+    --pill-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+    --widget-bg: rgba(255, 255, 255, 0.52);
+    --widget-border: rgba(255, 255, 255, 0.85);
+    --widget-box-bg: rgba(255, 255, 255, 0.88);
+    --widget-box-border: rgba(255, 46, 99, 0.2);
+
+    --modal-bg: rgba(255, 255, 255, 0.96);
+    --modal-border: rgba(255, 255, 255, 0.9);
+    --modal-text: #4a1525;
+    --modal-desc: #7b6271;
+    --modal-input-bg: rgba(255, 245, 248, 0.7);
+    --modal-input-border: rgba(255, 46, 99, 0.25);
+    --modal-input-text: #333333;
+
+    --envelope-bg: linear-gradient(145deg, #fff2f5 0%, #ffd6e0 50%, #fec5d4 100%);
+    --envelope-border: 2px solid rgba(255, 255, 255, 0.95);
+    --envelope-badge-bg: rgba(255, 255, 255, 0.7);
+    --envelope-badge-text: #9c2754;
+    --envelope-text: #4a1228;
+    --envelope-prompt: #8c2a50;
+
+    --parchment-bg: #fdfbf7;
+    --parchment-border: #eadecb;
+    --parchment-text: #3d2417;
+    --parchment-greeting: #ff2e63;
+    --parchment-btn-bg: rgba(160, 130, 110, 0.15);
+    --parchment-btn-border: rgba(160, 130, 110, 0.3);
+    --parchment-btn-text: #5a3c28;
+
+    --btn-secondary-bg: rgba(255, 255, 255, 0.45);
+    --btn-secondary-border: rgba(255, 255, 255, 0.7);
+    --btn-secondary-text: var(--text-main);
+
     /* Typography */
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -39,6 +90,127 @@
     --ease-liquid: cubic-bezier(0.25, 1, 0.5, 1);
     --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
     --transition-speed: 0.3s;
+}
+
+/* --------------------------------------------------------------------------
+   1b. Dark Mode / Night-Time Viewing Variables (Deeper, Richer Tones)
+   -------------------------------------------------------------------------- */
+:root[data-theme="dark"],
+body.dark-mode {
+    /* Deeper, Richer Romantic Color Palette */
+    --color-primary: #ff3366;
+    --color-primary-hover: #ff1453;
+    --color-accent: #ff6584;
+    --color-purple: #9d71e8;
+    --color-deep-rose: #e6398b;
+    --color-soft-blush: #e28fa0;
+    --color-gold: #f5c542;
+
+    /* Text & Contrasts for Night-time Viewing (Clean, soft, warm legibility) */
+    --text-main: #fdf0f5;
+    --text-muted: #c7a3bc;
+    --text-light: #ffffff;
+    --question-color: #fff5f8;
+    --question-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 22px rgba(255, 117, 140, 0.35);
+    --success-color: #ff4d79;
+    --success-shadow: 0 2px 16px rgba(0, 0, 0, 0.8), 0 0 28px rgba(255, 77, 121, 0.55), 0 0 42px rgba(255, 117, 140, 0.28);
+    --celebration-badge-bg: linear-gradient(135deg, rgba(255, 209, 102, 0.22), rgba(255, 46, 99, 0.25));
+    --celebration-badge-border: rgba(255, 209, 102, 0.5);
+    --celebration-badge-text: #ffd166;
+
+    /* Deeper, Richer Glassmorphism Configuration for Night-time Viewing */
+    --glass-bg: rgba(24, 11, 22, 0.74);
+    --glass-border: rgba(255, 255, 255, 0.14);
+    --glass-border-inner: rgba(255, 255, 255, 0.08);
+    --glass-blur: 26px;
+    --glass-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.78),
+                    0 0 45px 0 rgba(255, 46, 99, 0.14),
+                    inset 0 1px 1px 0 rgba(255, 255, 255, 0.14);
+    --border-glow-primary: rgba(255, 66, 115, 0.45);
+    --border-glow-secondary: rgba(245, 197, 66, 0.3);
+
+    /* Deep Velvet Midnight Seasonal Gradients (Rich jewel wine, midnight plum, obsidian) */
+    --bg-gradient-valentine: linear-gradient(-45deg, #180914, #260d1f, #1e0924, #2f1228, #1c0817, #240c1e);
+    --bg-gradient-birthday: linear-gradient(-45deg, #190a1f, #2a0f2e, #1f0b27, #36152a, #16081e, #291032);
+    --bg-gradient-christmas: linear-gradient(-45deg, #0d1a10, #1f0a0e, #0e1d13, #260c12, #141c10, #200a0d);
+    --bg-gradient-newyear: linear-gradient(-45deg, #0c0b1a, #160f2e, #120921, #1d0f36, #0e0d22, #191035);
+
+    /* Component Glass Tokens for Night Viewing */
+    --pill-bg: rgba(36, 17, 30, 0.82);
+    --pill-border: rgba(255, 255, 255, 0.14);
+    --pill-text: #f7d6e4;
+    --pill-shadow: 0 4px 14px rgba(0, 0, 0, 0.38);
+
+    --widget-bg: rgba(28, 14, 25, 0.76);
+    --widget-border: rgba(255, 255, 255, 0.12);
+    --widget-box-bg: rgba(38, 19, 34, 0.88);
+    --widget-box-border: rgba(255, 78, 121, 0.28);
+
+    --modal-bg: rgba(24, 12, 22, 0.96);
+    --modal-border: rgba(255, 255, 255, 0.16);
+    --modal-text: #fdf0f5;
+    --modal-desc: #c7a3bc;
+    --modal-input-bg: rgba(38, 18, 33, 0.82);
+    --modal-input-border: rgba(255, 78, 121, 0.3);
+    --modal-input-text: #fdf0f5;
+
+    --envelope-bg: linear-gradient(145deg, #2a1122 0%, #3d1730 50%, #290f20 100%);
+    --envelope-border: 2px solid rgba(255, 255, 255, 0.15);
+    --envelope-badge-bg: rgba(255, 255, 255, 0.1);
+    --envelope-badge-text: #ff99b6;
+    --envelope-text: #fdf0f5;
+    --envelope-prompt: #ff8fa3;
+
+    --parchment-bg: #1e141a;
+    --parchment-border: rgba(255, 255, 255, 0.14);
+    --parchment-text: #f0dfe7;
+    --parchment-greeting: #ff85a1;
+    --parchment-btn-bg: rgba(255, 255, 255, 0.08);
+    --parchment-btn-border: rgba(255, 255, 255, 0.15);
+    --parchment-btn-text: #fdf0f5;
+
+    --btn-secondary-bg: rgba(42, 20, 36, 0.78);
+    --btn-secondary-border: rgba(255, 255, 255, 0.15);
+    --btn-secondary-text: #fdf0f5;
+}
+
+/* Explicit Dark Mode Typography Refinements for Main Question & Success Heading */
+body.dark-mode .main-question,
+:root[data-theme="dark"] .main-question {
+    color: #fff5f8;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 0 22px rgba(255, 117, 140, 0.35);
+}
+
+body.dark-mode .success-heading,
+:root[data-theme="dark"] .success-heading,
+body.dark-mode .glass-card.card-accepted .success-heading,
+:root[data-theme="dark"] .glass-card.card-accepted .success-heading {
+    color: #ff4d79;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8), 0 0 28px rgba(255, 77, 121, 0.55), 0 0 42px rgba(255, 117, 140, 0.28);
+}
+
+body.dark-mode .celebration-badge,
+:root[data-theme="dark"] .celebration-badge,
+body.dark-mode .glass-card.card-accepted .celebration-badge,
+:root[data-theme="dark"] .glass-card.card-accepted .celebration-badge {
+    background: linear-gradient(135deg, rgba(255, 209, 102, 0.22), rgba(255, 46, 99, 0.25));
+    border-color: rgba(255, 209, 102, 0.5);
+    color: #ffd166;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-mode .sub-message,
+:root[data-theme="dark"] .sub-message {
+    color: #d8b8ce;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .success-subtext,
+:root[data-theme="dark"] .success-subtext,
+body.dark-mode .glass-card.card-accepted .success-subtext,
+:root[data-theme="dark"] .glass-card.card-accepted .success-subtext {
+    color: #f7dbe8;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* --------------------------------------------------------------------------
@@ -69,13 +241,7 @@ body {
     justify-content: center;
     
     /* Beautiful Slow-Animated Romantic Gradient Background */
-    background: linear-gradient(-45deg, 
-        #ff4e79, 
-        #ff758c, 
-        #a18cd1, 
-        #fbc2eb, 
-        #e0407b, 
-        #ff758c);
+    background: var(--bg-gradient-valentine);
     background-size: 400% 400%;
     animation: romanticGradient 16s ease infinite;
 }
@@ -350,12 +516,18 @@ body.state-accepted .app-wrapper {
         padding: 0.25rem 0.75rem;
     }
     .glass-card.card-accepted .success-heading {
-        font-size: clamp(1.3rem, 4.5vw, 1.65rem);
+        font-size: clamp(1rem, 4vw + 0.25rem, 1.65rem);
         margin-bottom: 0.35rem;
+        line-height: 1.22;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
     .glass-card.card-accepted .success-subtext {
         font-size: 0.85rem;
         margin-bottom: 0.65rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
     }
 }
 
@@ -471,6 +643,18 @@ body.state-accepted .app-wrapper {
 #valentine-card:hover::before {
     opacity: 1;
     filter: brightness(1.2) drop-shadow(0 0 6px var(--border-glow-primary, rgba(255, 117, 140, 0.4)));
+}
+
+body.dark-mode .glass-card::before,
+body.dark-mode #valentine-card::before {
+    opacity: 0.82;
+    filter: brightness(0.92);
+}
+
+body.dark-mode .glass-card:hover::before,
+body.dark-mode #valentine-card:hover::before {
+    opacity: 1;
+    filter: brightness(1.1) drop-shadow(0 0 8px var(--border-glow-primary, rgba(255, 66, 115, 0.4)));
 }
 
 /* Fluid, Continuous Orbital Journey of Radial Specular Hotspots */
@@ -687,13 +871,23 @@ body.state-accepted .app-wrapper {
 
 .main-question {
     font-family: var(--font-heading);
-    font-size: clamp(1.4rem, 3.8vh, 1.95rem);
+    /* Aggressive fluid clamp scaling smoothly down to 0.95rem on narrow screens */
+    font-size: clamp(0.95rem, 3.2vw + 1.2vh + 0.35rem, 1.95rem);
     font-weight: 700;
-    line-height: 1.25;
-    color: #3b0922;
+    line-height: 1.22;
+    color: var(--question-color, #3b0922);
     margin-bottom: 0.35rem;
     letter-spacing: -0.02em;
-    text-shadow: 0 2px 8px rgba(255, 255, 255, 0.5);
+    text-shadow: var(--question-shadow, 0 2px 8px rgba(255, 255, 255, 0.5));
+    /* Strict overflow prevention & balanced typography */
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    text-wrap: balance;
+    box-sizing: border-box;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .sub-message {
@@ -802,13 +996,13 @@ body.state-accepted .app-wrapper {
 
 /* No Button Styling */
 .btn-no {
-    background: rgba(255, 255, 255, 0.4);
-    color: #4a1937;
+    background: var(--btn-secondary-bg);
+    color: var(--text-main);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--btn-secondary-border);
     box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08),
-                inset 0 1px 1px rgba(255, 255, 255, 0.6);
+                inset 0 1px 1px rgba(255, 255, 255, 0.4);
     will-change: top, left, transform;
 }
 
@@ -816,6 +1010,13 @@ body.state-accepted .app-wrapper {
     background: rgba(255, 255, 255, 0.6);
     box-shadow: 0 12px 25px -4px rgba(0, 0, 0, 0.12),
                 inset 0 1px 1px rgba(255, 255, 255, 0.8);
+}
+
+body.dark-mode .btn-no:hover {
+    background: rgba(56, 26, 48, 0.9);
+    border-color: rgba(255, 117, 140, 0.4);
+    box-shadow: 0 12px 25px -4px rgba(0, 0, 0, 0.4);
+    color: #ffffff;
 }
 
 /* Active dodging state applied via JS (Solution 2: Full-screen dodging) */
@@ -863,37 +1064,53 @@ body.state-accepted .app-wrapper {
 .celebration-badge {
     display: inline-block;
     padding: 0.35rem 1rem;
-    background: linear-gradient(135deg, rgba(255, 209, 102, 0.4), rgba(255, 46, 99, 0.2));
-    border: 1px solid rgba(255, 209, 102, 0.6);
+    background: var(--celebration-badge-bg, linear-gradient(135deg, rgba(255, 209, 102, 0.4), rgba(255, 46, 99, 0.2)));
+    border: 1px solid var(--celebration-badge-border, rgba(255, 209, 102, 0.6));
     border-radius: 9999px;
     font-size: 0.85rem;
     font-weight: 700;
-    color: #631238;
+    color: var(--celebration-badge-text, #631238);
     margin-bottom: 1rem;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .success-heading {
     font-family: var(--font-heading);
-    font-size: clamp(1.45rem, 3.5vh, 1.95rem);
+    /* Aggressive fluid clamp scaling smoothly down to 1rem on narrow screens */
+    font-size: clamp(1rem, 3.6vw + 1.2vh + 0.35rem, 1.95rem);
     font-weight: 800;
-    color: #ff124f;
-    line-height: 1.25;
+    color: var(--success-color, #ff124f);
+    line-height: 1.22;
     margin-bottom: 0.5rem;
-    text-shadow: 0 3px 12px rgba(255, 255, 255, 0.6);
+    text-shadow: var(--success-shadow, 0 3px 12px rgba(255, 255, 255, 0.6));
+    /* Strict text overflow containment & typographical balance */
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+    text-wrap: balance;
+    box-sizing: border-box;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .success-subtext {
-    font-size: clamp(0.85rem, 1.8vh, 0.95rem);
+    font-size: clamp(0.82rem, 1.8vh, 0.95rem);
     color: var(--text-main);
-    line-height: 1.5;
+    line-height: 1.45;
     margin-bottom: clamp(0.85rem, 2vh, 1.25rem);
-    max-width: 90%;
+    max-width: 92%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
 .btn-replay {
-    background: rgba(255, 255, 255, 0.45);
-    color: var(--text-main);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: var(--btn-secondary-bg);
+    color: var(--btn-secondary-text);
+    border: 1px solid var(--btn-secondary-border);
     font-size: 0.9rem;
     padding: 0.55rem 1.4rem;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
@@ -905,35 +1122,62 @@ body.state-accepted .app-wrapper {
     box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
 }
 
+body.dark-mode .btn-replay:hover {
+    background: rgba(56, 26, 48, 0.9);
+    border-color: rgba(255, 117, 140, 0.4);
+    color: #ffffff;
+}
+
 /* --------------------------------------------------------------------------
    8. Seasonal Background Gradient Themes
    -------------------------------------------------------------------------- */
 body.theme-birthday {
-    background: linear-gradient(-45deg, #ff758c, #ffb199, #fbc2eb, #ffd166, #ff758c, #a18cd1);
+    background: var(--bg-gradient-birthday);
     background-size: 400% 400%;
     --border-glow-primary: rgba(255, 117, 140, 0.6);
     --border-glow-secondary: rgba(255, 209, 102, 0.45);
 }
 
 body.theme-christmas {
-    background: linear-gradient(-45deg, #d90429, #ef233c, #2b9348, #38b000, #ffb703, #d90429);
+    background: var(--bg-gradient-christmas);
     background-size: 400% 400%;
     --border-glow-primary: rgba(239, 35, 60, 0.55);
     --border-glow-secondary: rgba(56, 176, 0, 0.45);
 }
 
 body.theme-newyear {
-    background: linear-gradient(-45deg, #3a0ca3, #7209b7, #f72585, #ffd166, #4cc9f0, #3a0ca3);
+    background: var(--bg-gradient-newyear);
     background-size: 400% 400%;
     --border-glow-primary: rgba(255, 209, 102, 0.6);
     --border-glow-secondary: rgba(0, 245, 212, 0.45);
 }
 
 body.theme-valentine {
-    background: linear-gradient(-45deg, #ff4e79, #ff758c, #a18cd1, #fbc2eb, #e0407b, #ff758c);
+    background: var(--bg-gradient-valentine);
     background-size: 400% 400%;
     --border-glow-primary: rgba(255, 46, 99, 0.6);
     --border-glow-secondary: rgba(255, 154, 158, 0.45);
+}
+
+/* Dark Mode Seasonal Refinements */
+body.dark-mode.theme-birthday {
+    --border-glow-primary: rgba(255, 117, 140, 0.4);
+    --border-glow-secondary: rgba(255, 209, 102, 0.28);
+}
+
+body.dark-mode.theme-christmas {
+    --border-glow-primary: rgba(239, 35, 60, 0.4);
+    --border-glow-secondary: rgba(56, 176, 0, 0.3);
+}
+
+body.dark-mode.theme-newyear {
+    --border-glow-primary: rgba(255, 209, 102, 0.4);
+    --border-glow-secondary: rgba(0, 245, 212, 0.28);
+}
+
+body.dark-mode.theme-valentine {
+    --border-glow-primary: rgba(255, 46, 99, 0.4);
+    --border-glow-secondary: rgba(255, 154, 158, 0.25);
 }
 
 /* Button aliases */
@@ -1088,15 +1332,19 @@ body.theme-valentine {
     }
 
     .main-question {
-        font-size: clamp(1.25rem, 3.6vw, 1.48rem);
+        font-size: clamp(0.92rem, 3.8vw + 0.22rem, 1.35rem);
         margin-bottom: 0.15rem;
-        line-height: 1.22;
+        line-height: 1.2;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
     .sub-message {
         font-size: clamp(0.76rem, 2.1vw, 0.82rem);
         line-height: 1.35;
         max-width: 96%;
+        overflow-wrap: break-word;
     }
 
     /* Action Buttons (Touch Target >= 44px) */
@@ -1120,15 +1368,21 @@ body.theme-valentine {
         margin-bottom: 0.35rem;
     }
 
+    .glass-card.card-accepted .success-heading,
     .success-heading {
-        font-size: clamp(1.25rem, 3vh, 1.55rem);
+        font-size: clamp(0.98rem, 4.2vw + 0.22rem, 1.45rem);
         margin-bottom: 0.2rem;
+        line-height: 1.2;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
     .success-subtext {
         font-size: 0.8rem;
         margin-bottom: 0.4rem;
         line-height: 1.35;
+        overflow-wrap: break-word;
     }
 
     .music-player-pill {
@@ -1320,11 +1574,32 @@ body.theme-valentine {
     }
 
     .main-question {
-        font-size: 1.22rem;
+        font-size: clamp(0.85rem, 4.4vw + 0.16rem, 1.15rem);
+        line-height: 1.18;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.1rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
-    .sub-message {
-        font-size: 0.76rem;
+    .glass-card.card-accepted .success-heading,
+    .success-heading {
+        font-size: clamp(0.9rem, 4.6vw + 0.16rem, 1.22rem);
+        line-height: 1.18;
+        letter-spacing: -0.015em;
+        margin-bottom: 0.2rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .sub-message,
+    .glass-card.card-accepted .success-subtext,
+    .success-subtext {
+        font-size: 0.75rem;
+        line-height: 1.32;
+        overflow-wrap: break-word;
     }
 
     .countdown-widget {
@@ -1355,6 +1630,73 @@ body.theme-valentine {
 
     .virtual-card-inner {
         min-height: 200px;
+    }
+}
+
+/* Extremely Narrow Mobile Viewports (screen width <= 320px, e.g. Galaxy Z Fold outer display 280px, iPhone 5/SE 1st gen) */
+@media (max-width: 320px) {
+    .glass-card,
+    #valentine-card {
+        padding: 0.5rem 0.55rem 0.45rem;
+        border-radius: 14px;
+    }
+
+    .card-badge {
+        display: none;
+    }
+
+    .visual-container {
+        max-width: min(200px, 78vw);
+        max-height: clamp(115px, 22vh, 155px);
+        margin-bottom: 0.25rem;
+    }
+
+    .main-question {
+        font-size: clamp(0.78rem, 4.8vw + 0.08rem, 0.98rem);
+        line-height: 1.15;
+        letter-spacing: -0.025em;
+        margin-bottom: 0.08rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .glass-card.card-accepted .success-heading,
+    .success-heading {
+        font-size: clamp(0.82rem, 5vw + 0.1rem, 1.05rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.15rem;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .sub-message,
+    .glass-card.card-accepted .success-subtext,
+    .success-subtext {
+        font-size: 0.69rem;
+        line-height: 1.28;
+        overflow-wrap: break-word;
+    }
+
+    .celebration-badge,
+    .glass-card.card-accepted .celebration-badge {
+        font-size: 0.65rem;
+        padding: 0.16rem 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .button-group {
+        min-height: 42px;
+        gap: 0.4rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .btn {
+        padding: 0.45rem 0.75rem;
+        font-size: 0.8rem;
+        min-height: 40px;
     }
 }
 
@@ -1394,12 +1736,30 @@ body.theme-valentine {
     }
 
     .main-question {
-        font-size: 1.22rem;
+        font-size: clamp(0.88rem, 3.2vh + 0.35rem, 1.22rem);
         margin-bottom: 0.1rem;
+        line-height: 1.18;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
-    .sub-message {
-        font-size: 0.76rem;
+    .glass-card.card-accepted .success-heading,
+    .success-heading {
+        font-size: clamp(0.92rem, 3.2vh + 0.38rem, 1.28rem);
+        margin-bottom: 0.15rem;
+        line-height: 1.18;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .sub-message,
+    .glass-card.card-accepted .success-subtext,
+    .success-subtext {
+        font-size: 0.74rem;
+        line-height: 1.3;
+        overflow-wrap: break-word;
     }
 
     .button-group {
@@ -1490,14 +1850,30 @@ body.theme-valentine {
     }
 
     .main-question {
-        font-size: clamp(1.05rem, 3.8vh, 1.25rem);
+        font-size: clamp(0.9rem, 3.8vh, 1.25rem);
         margin-bottom: 0.1rem;
         line-height: 1.2;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
-    .sub-message {
-        font-size: clamp(0.7rem, 2.4vh, 0.78rem);
+    .glass-card.card-accepted .success-heading,
+    .success-heading {
+        font-size: clamp(0.95rem, 3.8vh, 1.28rem);
+        margin-bottom: 0.15rem;
+        line-height: 1.2;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .sub-message,
+    .glass-card.card-accepted .success-subtext,
+    .success-subtext {
+        font-size: clamp(0.68rem, 2.4vh, 0.78rem);
         line-height: 1.25;
+        overflow-wrap: break-word;
     }
 
     .button-group {
@@ -1541,12 +1917,30 @@ body.theme-valentine {
     }
 
     .main-question {
-        font-size: 1rem;
+        font-size: clamp(0.8rem, 3.5vh, 1rem);
         margin-bottom: 0.05rem;
+        line-height: 1.15;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
     }
 
-    .sub-message {
+    .glass-card.card-accepted .success-heading,
+    .success-heading {
+        font-size: clamp(0.85rem, 3.5vh, 1.05rem);
+        margin-bottom: 0.08rem;
+        line-height: 1.15;
+        overflow-wrap: break-word;
+        word-break: break-word;
+        text-wrap: balance;
+    }
+
+    .sub-message,
+    .glass-card.card-accepted .success-subtext,
+    .success-subtext {
         font-size: 0.68rem;
+        line-height: 1.22;
+        overflow-wrap: break-word;
     }
 
     .button-group {
@@ -1967,13 +2361,13 @@ body.theme-valentine {
     gap: 0.45rem;
     padding: 0.35rem 0.85rem;
     border-radius: 9999px;
-    background: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    color: #4a2033;
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    color: var(--pill-text);
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--pill-shadow);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     transition: all 0.25s var(--ease-liquid);
@@ -1989,6 +2383,13 @@ body.theme-valentine {
     color: #ff2e63;
 }
 
+body.dark-mode .glass-control-pill:hover {
+    background: rgba(54, 25, 46, 0.95);
+    border-color: rgba(255, 117, 140, 0.45);
+    color: #ff758c;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
 .glass-control-pill:active {
     transform: scale(0.97);
 }
@@ -1998,6 +2399,36 @@ body.theme-valentine {
     border-color: rgba(255, 117, 140, 0.5);
     color: #ff124f;
     animation: pillGlow 3s ease-in-out infinite alternate;
+}
+
+body.dark-mode .pill-sparkle {
+    background: linear-gradient(135deg, rgba(46, 18, 38, 0.9), rgba(58, 20, 42, 0.95));
+    border-color: rgba(255, 117, 140, 0.35);
+    color: #ff758c;
+}
+
+/* Theme Toggle Pill Styling */
+.pill-theme-toggle {
+    transition: all 0.25s var(--ease-liquid);
+}
+
+.pill-theme-toggle .pill-icon {
+    display: inline-block;
+    transition: transform 0.35s var(--ease-elastic);
+}
+
+.pill-theme-toggle:hover .pill-icon {
+    transform: rotate(25deg) scale(1.18);
+}
+
+body.dark-mode .pill-theme-toggle {
+    border-color: rgba(255, 209, 102, 0.35);
+    color: #ffd166;
+}
+
+body.dark-mode .pill-theme-toggle:hover {
+    border-color: rgba(255, 209, 102, 0.6);
+    color: #ffe082;
 }
 
 @keyframes pillGlow {
@@ -2027,8 +2458,8 @@ body.theme-valentine {
     width: 100%;
     margin: 0.5rem 0 0.85rem;
     padding: 0.6rem 0.85rem;
-    background: rgba(255, 255, 255, 0.52);
-    border: 1px solid rgba(255, 255, 255, 0.85);
+    background: var(--widget-bg);
+    border: 1px solid var(--widget-border);
     border-radius: 16px;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -2063,7 +2494,7 @@ body.theme-valentine {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: #5c203a;
+    color: var(--text-muted);
 }
 
 .countdown-edit-btn {
@@ -2095,8 +2526,8 @@ body.theme-valentine {
     justify-content: center;
     min-width: 46px;
     padding: 0.3rem 0.25rem;
-    background: rgba(255, 255, 255, 0.88);
-    border: 1px solid rgba(255, 46, 99, 0.2);
+    background: var(--widget-box-bg);
+    border: 1px solid var(--widget-box-border);
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(255, 46, 99, 0.08);
 }
@@ -2105,14 +2536,14 @@ body.theme-valentine {
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 800;
-    color: #ff124f;
+    color: var(--color-primary);
     line-height: 1;
 }
 
 .countdown-unit {
     font-size: 0.62rem;
     font-weight: 700;
-    color: #7b6271;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-top: 2px;
@@ -2134,6 +2565,12 @@ body.theme-valentine {
     background: rgba(255, 222, 233, 0.8);
     border-radius: 8px;
     animation: bounceBanner 1s ease infinite alternate;
+}
+
+body.dark-mode .countdown-today-banner {
+    background: rgba(255, 46, 99, 0.22);
+    color: #ff8fa3;
+    border: 1px solid rgba(255, 46, 99, 0.35);
 }
 
 @keyframes bounceBanner {
@@ -2279,8 +2716,8 @@ body.theme-valentine {
 
 /* Front Face: Sealed Luxury Keepsake Envelope */
 .virtual-card-front {
-    background: linear-gradient(145deg, #fff2f5 0%, #ffd6e0 50%, #fec5d4 100%);
-    border: 2px solid rgba(255, 255, 255, 0.95);
+    background: var(--envelope-bg);
+    border: var(--envelope-border);
     box-shadow: 0 12px 28px rgba(255, 46, 99, 0.18),
                 inset 0 1px 2px rgba(255, 255, 255, 0.8);
     padding: 1.4rem 1.2rem;
@@ -2300,8 +2737,8 @@ body.theme-valentine {
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 0.12em;
-    color: #9c2754;
-    background: rgba(255, 255, 255, 0.7);
+    color: var(--envelope-badge-text);
+    background: var(--envelope-badge-bg);
     padding: 0.25rem 0.75rem;
     border-radius: 9999px;
     margin-bottom: 0.85rem;
@@ -2341,30 +2778,37 @@ body.theme-valentine {
     font-family: var(--font-heading);
     font-size: 1.15rem;
     font-weight: 800;
-    color: #4a1228;
+    color: var(--envelope-text);
     margin: 0.25rem 0;
 }
 
 .envelope-prompt {
     font-size: 0.82rem;
     font-weight: 600;
-    color: #8c2a50;
+    color: var(--envelope-prompt);
     margin: 0;
 }
 
 /* Back Face: Vintage Handwritten Parchment Note with Live Scratchpad */
 .virtual-card-back {
     transform: rotateY(180deg);
-    background: #fdfbf7;
+    background: var(--parchment-bg);
     background-image: 
         linear-gradient(rgba(224, 212, 196, 0.28) 1px, transparent 1px);
     background-size: 100% 28px;
-    border: 2px solid #eadecb;
+    border: 2px solid var(--parchment-border);
     box-shadow: 0 14px 32px rgba(90, 60, 40, 0.16),
                 inset 0 0 20px rgba(230, 215, 190, 0.4);
     padding: 1.15rem 1.25rem;
     text-align: left;
     overflow-y: auto;
+}
+
+body.dark-mode .virtual-card-back {
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
 .parchment-header {
@@ -2376,6 +2820,10 @@ body.theme-valentine {
     border-bottom: 1px dashed rgba(160, 130, 110, 0.4);
 }
 
+body.dark-mode .parchment-header {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
 .parchment-stamp {
     font-size: 1.1rem;
 }
@@ -2385,13 +2833,17 @@ body.theme-valentine {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: #8a624a;
+    color: var(--parchment-greeting);
+}
+
+body.dark-mode .parchment-title {
+    color: #ff99b6;
 }
 
 .parchment-flip-back-btn {
-    background: rgba(160, 130, 110, 0.15);
-    border: 1px solid rgba(160, 130, 110, 0.3);
-    color: #5a3c28;
+    background: var(--parchment-btn-bg);
+    border: 1px solid var(--parchment-btn-border);
+    color: var(--parchment-btn-text);
     border-radius: 9999px;
     padding: 0.2rem 0.65rem;
     font-size: 0.72rem;
@@ -2405,6 +2857,10 @@ body.theme-valentine {
     transform: scale(1.05);
 }
 
+body.dark-mode .parchment-flip-back-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
 .parchment-content-view {
     flex: 1;
     display: flex;
@@ -2415,7 +2871,7 @@ body.theme-valentine {
     font-family: 'Caveat', cursive, sans-serif;
     font-size: 1.45rem;
     font-weight: 700;
-    color: #3b1b24;
+    color: var(--parchment-greeting);
     margin: 0 0 0.4rem 0;
     line-height: 1.2;
 }
@@ -2424,7 +2880,7 @@ body.theme-valentine {
     font-family: 'Caveat', cursive, sans-serif;
     font-size: 1.28rem;
     font-weight: 600;
-    color: #4a2530;
+    color: var(--parchment-text);
     line-height: 1.45;
     margin: 0 0 0.5rem 0;
     flex: 1;
@@ -2435,7 +2891,7 @@ body.theme-valentine {
     font-family: 'Caveat', cursive, sans-serif;
     font-size: 1.32rem;
     font-weight: 700;
-    color: #c9184a;
+    color: var(--parchment-greeting);
     margin: 0;
     text-align: right;
 }
@@ -2451,8 +2907,12 @@ body.theme-valentine {
 .scratchpad-label {
     font-size: 0.72rem;
     font-weight: 700;
-    color: #7b5840;
+    color: var(--parchment-greeting);
     margin-bottom: 0.3rem;
+}
+
+body.dark-mode .scratchpad-label {
+    color: #ff99b6;
 }
 
 .scratchpad-textarea {
@@ -2466,16 +2926,27 @@ body.theme-valentine {
     font-family: 'Caveat', cursive, sans-serif;
     font-size: 1.3rem;
     font-weight: 600;
-    color: #3b1b24;
+    color: var(--parchment-text);
     line-height: 1.4;
     resize: none;
     box-sizing: border-box;
     outline: none;
 }
 
+body.dark-mode .scratchpad-textarea {
+    background: rgba(36, 18, 30, 0.85);
+    border-color: rgba(255, 78, 121, 0.3);
+    color: #fdf0f5;
+}
+
 .scratchpad-textarea:focus {
     border-color: #ff2e63;
     background: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode .scratchpad-textarea:focus {
+    background: rgba(48, 22, 42, 0.95);
+    border-color: var(--color-primary);
 }
 
 .parchment-toolbar {
@@ -2487,15 +2958,19 @@ body.theme-valentine {
     border-top: 1px dashed rgba(160, 130, 110, 0.3);
 }
 
+body.dark-mode .parchment-toolbar {
+    border-top-color: rgba(255, 255, 255, 0.15);
+}
+
 .parchment-tool-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
     padding: 0.25rem 0.65rem;
     border-radius: 6px;
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(160, 130, 110, 0.4);
-    color: #4a2818;
+    background: var(--parchment-btn-bg);
+    border: 1px solid var(--parchment-btn-border);
+    color: var(--parchment-btn-text);
     font-size: 0.75rem;
     font-weight: 700;
     cursor: pointer;
@@ -2507,6 +2982,12 @@ body.theme-valentine {
     border-color: #ff2e63;
     color: #ff2e63;
     transform: translateY(-1px);
+}
+
+body.dark-mode .parchment-tool-btn:hover {
+    background: rgba(56, 26, 48, 0.95);
+    border-color: var(--color-primary);
+    color: #fff;
 }
 
 /* --------------------------------------------------------------------------
@@ -2538,8 +3019,8 @@ body.theme-valentine {
     position: relative;
     width: 100%;
     max-width: 440px;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1.5px solid rgba(255, 255, 255, 0.9);
+    background: var(--modal-bg);
+    border: 1.5px solid var(--modal-border);
     border-radius: 22px;
     padding: 1.6rem 1.5rem;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2),
@@ -2572,6 +3053,11 @@ body.theme-valentine {
     transition: all 0.2s ease;
 }
 
+body.dark-mode .modal-close-btn {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e0cad7;
+}
+
 .modal-close-btn:hover {
     background: #ff2e63;
     color: #fff;
@@ -2593,13 +3079,13 @@ body.theme-valentine {
     font-family: var(--font-heading);
     font-size: 1.35rem;
     font-weight: 800;
-    color: #4a1525;
+    color: var(--modal-text);
     margin: 0 0 0.35rem 0;
 }
 
 .modal-desc {
     font-size: 0.85rem;
-    color: #7b6271;
+    color: var(--modal-desc);
     margin: 0;
     line-height: 1.4;
 }
@@ -2613,7 +3099,7 @@ body.theme-valentine {
     display: block;
     font-size: 0.8rem;
     font-weight: 700;
-    color: #5c2838;
+    color: var(--modal-text);
     margin-bottom: 0.35rem;
 }
 
@@ -2622,11 +3108,11 @@ body.theme-valentine {
     width: 100%;
     padding: 0.65rem 0.85rem;
     border-radius: 12px;
-    border: 1.5px solid rgba(255, 46, 99, 0.25);
-    background: rgba(255, 245, 248, 0.7);
+    border: 1.5px solid var(--modal-input-border);
+    background: var(--modal-input-bg);
     font-family: var(--font-body);
     font-size: 0.92rem;
-    color: #333;
+    color: var(--modal-input-text);
     box-sizing: border-box;
     transition: all 0.2s ease;
     outline: none;
@@ -2634,9 +3120,17 @@ body.theme-valentine {
 
 .modal-input:focus,
 .modal-textarea:focus {
-    border-color: #ff2e63;
+    border-color: var(--color-primary);
     background: #fff;
     box-shadow: 0 0 0 4px rgba(255, 46, 99, 0.15);
+}
+
+body.dark-mode .modal-input:focus,
+body.dark-mode .modal-textarea:focus {
+    background: rgba(48, 22, 42, 0.95);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(255, 46, 99, 0.25);
+    color: #ffffff;
 }
 
 .modal-btn-row {
@@ -2683,6 +3177,18 @@ body.theme-valentine {
     transform: translateY(-2px);
 }
 
+body.dark-mode .btn-modal-secondary {
+    background: rgba(42, 20, 36, 0.85);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    color: #fdf0f5;
+}
+
+body.dark-mode .btn-modal-secondary:hover {
+    background: rgba(60, 28, 52, 0.95);
+    border-color: rgba(255, 78, 121, 0.4);
+    color: #ffffff;
+}
+
 /* Wish Jar Modal Special Styling */
 .wish-jar-card {
     text-align: center;
@@ -2725,11 +3231,17 @@ body.theme-valentine {
     transition: transform 0.25s ease;
 }
 
+body.dark-mode .wish-capsule-display {
+    background: rgba(38, 18, 33, 0.75);
+    border: 1px solid rgba(255, 78, 121, 0.25);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
 .wish-text {
     font-family: 'Caveat', cursive, sans-serif;
     font-size: 1.45rem;
     font-weight: 700;
-    color: #4a1525;
+    color: var(--modal-text);
     margin: 0 0 0.5rem 0;
     line-height: 1.35;
 }
@@ -2741,6 +3253,11 @@ body.theme-valentine {
     background: rgba(255, 222, 233, 0.7);
     padding: 0.2rem 0.65rem;
     border-radius: 9999px;
+}
+
+body.dark-mode .wish-capsule-tag {
+    background: rgba(255, 46, 99, 0.25);
+    color: #ff8fa3;
 }
 
 /* --------------------------------------------------------------------------
