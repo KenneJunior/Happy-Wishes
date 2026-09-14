@@ -963,8 +963,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 3e. 3D Flip-Card Keepsake Letter & Scratchpad Editor
+    // 3e. 3D Flip-Card Keepsake Letter & Scratchpad Editor + Swipe/Glide Gestures
     // --------------------------------------------------------------------------
+    function updateEditNoteVisibility() {
+        const hasRecipient = Boolean(recipientName && recipientName.trim().length > 0);
+        if (editScratchpadBtn) {
+            if (hasRecipient) {
+                editScratchpadBtn.style.display = 'none';
+                editScratchpadBtn.setAttribute('hidden', 'true');
+                if (isScratchpadEditing) {
+                    isScratchpadEditing = false;
+                    if (parchmentContentView) parchmentContentView.hidden = false;
+                    if (parchmentScratchpadEditor) parchmentScratchpadEditor.hidden = true;
+                    if (scratchpadBtnIcon) scratchpadBtnIcon.textContent = '✍️';
+                    if (scratchpadBtnText) scratchpadBtnText.textContent = 'Edit Note';
+                }
+            } else {
+                editScratchpadBtn.style.display = 'inline-flex';
+                editScratchpadBtn.removeAttribute('hidden');
+            }
+        }
+    }
+
     function initKeepsakeCard() {
         if (envelopeRecipientText) {
             envelopeRecipientText.textContent = recipientName ? `To: ${recipientName} ❤️` : "To: Someone Special ❤️";
@@ -982,6 +1002,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scratchpadTextarea && keepsakeBody) {
             scratchpadTextarea.value = keepsakeBody.textContent.trim();
         }
+        updateEditNoteVisibility();
     }
 
     function flipCardToBack() {
@@ -998,8 +1019,145 @@ document.addEventListener('DOMContentLoaded', () => {
         sound.playDodgePop();
     }
 
+    // Hand Gesture (Swipe / Glide Left or Right) & Touch Handler
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let isTouchActive = false;
+    let hasSwipedDuringTouch = false;
+
+    if (virtualCardWrapper) {
+        // Touch events for mobile phones & tablets
+        virtualCardWrapper.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            if (e.target.closest('button, textarea, input, a, .wax-seal')) {
+                return;
+            }
+            const touch = e.touches[0];
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchStartTime = Date.now();
+            isTouchActive = true;
+            hasSwipedDuringTouch = false;
+        }, { passive: true });
+
+        virtualCardWrapper.addEventListener('touchmove', (e) => {
+            if (!isTouchActive || e.touches.length !== 1) return;
+            const touch = e.touches[0];
+            const diffX = touch.clientX - touchStartX;
+            const diffY = touch.clientY - touchStartY;
+
+            // Horizontal glide tracking
+            if (Math.abs(diffX) > 10 && Math.abs(diffX) > Math.abs(diffY) * 1.2) {
+                hasSwipedDuringTouch = true;
+                if (virtualCardInner) {
+                    const currentRot = isCardFlipped ? 180 : 0;
+                    const previewTilt = Math.max(-24, Math.min(24, diffX * 0.18));
+                    virtualCardInner.style.transition = 'none';
+                    virtualCardInner.style.transform = `rotateY(${currentRot + previewTilt}deg)`;
+                }
+            }
+        }, { passive: true });
+
+        const endTouchGlide = (e) => {
+            if (!isTouchActive) return;
+            isTouchActive = false;
+
+            if (virtualCardInner) {
+                virtualCardInner.style.transition = '';
+                virtualCardInner.style.transform = '';
+            }
+
+            const touch = e.changedTouches ? e.changedTouches[0] : e;
+            const diffX = touch.clientX - touchStartX;
+            const diffY = touch.clientY - touchStartY;
+            const elapsed = Date.now() - touchStartTime;
+
+            // Glide left or right threshold
+            if (Math.abs(diffX) >= 30 && Math.abs(diffX) > Math.abs(diffY) * 1.1 && elapsed < 850) {
+                hasSwipedDuringTouch = true;
+                if (!isCardFlipped) {
+                    flipCardToBack();
+                } else {
+                    flipCardToFront();
+                }
+                if (navigator.vibrate) {
+                    try { navigator.vibrate(25); } catch (_) {}
+                }
+            }
+
+            setTimeout(() => {
+                hasSwipedDuringTouch = false;
+            }, 120);
+        };
+
+        virtualCardWrapper.addEventListener('touchend', endTouchGlide, { passive: true });
+        virtualCardWrapper.addEventListener('touchcancel', () => {
+            isTouchActive = false;
+            hasSwipedDuringTouch = false;
+            if (virtualCardInner) {
+                virtualCardInner.style.transition = '';
+                virtualCardInner.style.transform = '';
+            }
+        }, { passive: true });
+
+        // Mouse pointer glide support for desktop
+        let mouseStartX = 0;
+        let mouseStartY = 0;
+        let mouseStartTime = 0;
+        let isMouseDown = false;
+
+        virtualCardWrapper.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            if (e.target.closest('button, textarea, input, a, .wax-seal')) return;
+            mouseStartX = e.clientX;
+            mouseStartY = e.clientY;
+            mouseStartTime = Date.now();
+            isMouseDown = true;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isMouseDown) return;
+            const diffX = e.clientX - mouseStartX;
+            const diffY = e.clientY - mouseStartY;
+            if (Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
+                if (virtualCardInner) {
+                    const currentRot = isCardFlipped ? 180 : 0;
+                    const previewTilt = Math.max(-20, Math.min(20, diffX * 0.15));
+                    virtualCardInner.style.transition = 'none';
+                    virtualCardInner.style.transform = `rotateY(${currentRot + previewTilt}deg)`;
+                }
+            }
+        });
+
+        window.addEventListener('mouseup', (e) => {
+            if (!isMouseDown) return;
+            isMouseDown = false;
+            if (virtualCardInner) {
+                virtualCardInner.style.transition = '';
+                virtualCardInner.style.transform = '';
+            }
+            const diffX = e.clientX - mouseStartX;
+            const diffY = e.clientY - mouseStartY;
+            const elapsed = Date.now() - mouseStartTime;
+
+            if (Math.abs(diffX) >= 35 && Math.abs(diffX) > Math.abs(diffY) && elapsed < 850) {
+                hasSwipedDuringTouch = true;
+                if (!isCardFlipped) {
+                    flipCardToBack();
+                } else {
+                    flipCardToFront();
+                }
+                setTimeout(() => { hasSwipedDuringTouch = false; }, 120);
+            }
+        });
+    }
+
     if (virtualCardFront) {
-        virtualCardFront.addEventListener('click', flipCardToBack);
+        virtualCardFront.addEventListener('click', () => {
+            if (hasSwipedDuringTouch) return;
+            flipCardToBack();
+        });
         virtualCardFront.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -1016,7 +1174,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (flipBackBtn) {
-        flipBackBtn.addEventListener('click', flipCardToFront);
+        flipBackBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            flipCardToFront();
+        });
     }
 
     // Scratchpad editing toggle
@@ -1317,6 +1478,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (denyTextSpan) denyTextSpan.textContent = currentSeason.denyText;
         if (denyEmojiSpan) denyEmojiSpan.textContent = currentSeason.denyEmoji;
 
+        // Initialize Keepsake Card with current recipient and note
+        initKeepsakeCard();
+
         // Reset positions & scaling
         resetButtonStates();
     }
@@ -1381,6 +1545,7 @@ document.addEventListener('DOMContentLoaded', () => {
             valentineCard.classList.remove('card-accepted');
         }
         document.body.classList.remove('state-accepted');
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
 
     // --------------------------------------------------------------------------

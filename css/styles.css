@@ -224,14 +224,19 @@ body.dark-mode .glass-card.card-accepted .success-subtext,
     box-sizing: border-box;
 }
 
-html, body {
+html {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    min-height: 100dvh;
     overflow-x: hidden;
 }
 
 body {
+    width: 100%;
     min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
     font-family: var(--font-body);
     color: var(--text-main);
     line-height: 1.5;
@@ -239,6 +244,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    -webkit-overflow-scrolling: touch;
     
     /* Beautiful Slow-Animated Romantic Gradient Background */
     background: var(--bg-gradient-valentine);
@@ -474,69 +480,132 @@ body.mobile-throttled #valentine-card {
     }
 }
 
-/* Accepted Success State - Fluid Zoom-Out so all content & top controls fit cleanly */
+/* Accepted Success State - Natural fluid scrolling without top/bottom clipping */
+body.state-accepted {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
 body.state-accepted .app-wrapper {
-    align-items: flex-start !important;
-    padding-top: max(0.5rem, env(safe-area-inset-top, 0.5rem)) !important;
-    padding-bottom: max(2.5rem, env(safe-area-inset-bottom, 2.5rem)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    padding-top: max(0.85rem, env(safe-area-inset-top, 0.85rem)) !important;
+    padding-bottom: max(3.5rem, env(safe-area-inset-bottom, 3.5rem)) !important;
+    overflow: visible !important;
 }
 
 .glass-card.card-accepted,
 #valentine-card.card-accepted {
-    transform-origin: top center !important;
-    transform: scale(0.92) !important;
-    max-width: 530px !important;
+    transform: none !important;
+    max-width: min(530px, 94vw) !important;
     max-height: none !important;
-    margin: 0.35rem auto 2.2rem auto !important;
-    padding: 1.15rem 1.4rem 1.4rem !important;
-    transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), max-width 0.65s ease, padding 0.5s ease;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0.5rem auto 2.5rem auto !important;
+    padding: 1.15rem 1.4rem 1.6rem !important;
+    transition: max-width 0.4s ease, padding 0.4s ease;
 }
 
 @media (max-width: 768px) {
+    body.state-accepted .app-wrapper {
+        padding-top: max(0.65rem, env(safe-area-inset-top, 0.65rem)) !important;
+        padding-bottom: max(3.2rem, env(safe-area-inset-bottom, 3.2rem)) !important;
+    }
+
     .glass-card.card-accepted,
     #valentine-card.card-accepted {
-        transform: scale(0.86) !important;
-        max-width: 98vw !important;
-        margin: 0.15rem auto 1.5rem auto !important;
-        padding: 0.75rem 0.95rem 1.15rem !important;
+        transform: none !important;
+        max-width: min(480px, 95vw) !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: 0.25rem auto 2rem auto !important;
+        padding: 0.85rem 0.95rem 1.35rem !important;
     }
+
     .glass-card.card-accepted .visual-container {
-        max-height: 165px;
+        max-height: 150px;
         margin-bottom: 0.35rem;
     }
+
     .glass-card.card-accepted .card-gif {
         width: auto !important;
-        height: 155px !important;
+        height: auto !important;
+        max-height: 140px !important;
     }
+
     .glass-card.card-accepted .card-controls-row {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.35rem;
     }
+
     .glass-card.card-accepted .celebration-badge {
         margin-bottom: 0.45rem;
         padding: 0.25rem 0.75rem;
     }
+
     .glass-card.card-accepted .success-heading {
-        font-size: clamp(1rem, 4vw + 0.25rem, 1.65rem);
+        font-size: clamp(1.05rem, 4.5vw + 0.2rem, 1.65rem);
         margin-bottom: 0.35rem;
         line-height: 1.22;
         overflow-wrap: break-word;
         word-break: break-word;
         text-wrap: balance;
     }
+
     .glass-card.card-accepted .success-subtext {
         font-size: 0.85rem;
         margin-bottom: 0.65rem;
         overflow-wrap: break-word;
         word-break: break-word;
     }
+
+    .glass-card.card-accepted .music-player-pill {
+        margin: 0.25rem auto 0.5rem;
+    }
+
+    .glass-card.card-accepted .virtual-card-wrapper {
+        margin: 0.4rem auto 0.75rem;
+    }
+
+    .glass-card.card-accepted .success-actions {
+        margin-top: 0.6rem;
+        margin-bottom: 0.25rem;
+        gap: 0.5rem;
+    }
 }
 
 @media (max-width: 440px) {
     .glass-card.card-accepted,
     #valentine-card.card-accepted {
-        transform: scale(0.82) !important;
-        margin-top: 0 !important;
-        margin-bottom: 1.25rem !important;
+        transform: none !important;
+        max-width: 96vw !important;
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        margin: 0.15rem auto 1.85rem auto !important;
+        padding: 0.75rem 0.85rem 1.25rem !important;
+    }
+
+    .glass-card.card-accepted .visual-container {
+        max-height: 130px;
+    }
+
+    .glass-card.card-accepted .card-gif {
+        max-height: 120px !important;
     }
 }
 
@@ -1712,6 +1781,21 @@ body.dark-mode.theme-valentine {
         max-height: calc(100dvh - 0.8rem);
     }
 
+    body.state-accepted .app-wrapper {
+        padding: 0.4rem 0.4rem 3.2rem 0.4rem !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+    }
+
+    .glass-card.card-accepted,
+    #valentine-card.card-accepted {
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        transform: none !important;
+        margin: 0.25rem auto 2rem auto !important;
+    }
+
     .card-controls-row {
         margin-bottom: 0.25rem;
     }
@@ -1795,6 +1879,21 @@ body.dark-mode.theme-valentine {
         max-height: calc(100dvh - 0.8rem);
         padding: 0.5rem 1.15rem 0.45rem;
         border-radius: 18px;
+    }
+
+    body.state-accepted .app-wrapper {
+        padding: 0.4rem 0.4rem 3.2rem 0.4rem !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+    }
+
+    .glass-card.card-accepted,
+    #valentine-card.card-accepted {
+        max-height: none !important;
+        height: auto !important;
+        overflow: visible !important;
+        transform: none !important;
+        margin: 0.25rem auto 2rem auto !important;
     }
 
     .card-controls-row {
@@ -2687,6 +2786,13 @@ body.dark-mode .countdown-today-banner {
     max-width: 380px;
     margin: 0.85rem auto 1.25rem;
     user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    cursor: grab;
+}
+
+.virtual-card-wrapper:active {
+    cursor: grabbing;
 }
 
 .virtual-card-inner {
@@ -2695,6 +2801,7 @@ body.dark-mode .countdown-today-banner {
     min-height: 270px;
     transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
     transform-style: preserve-3d;
+    touch-action: pan-y;
 }
 
 .virtual-card-inner.is-flipped {
