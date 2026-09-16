@@ -23,12 +23,18 @@ import { initSuccess } from './ui/success.js';
 
 // Effects
 import { initConfetti } from './ui/effects/confetti.js';
-import { initParticles, spawnFloatingParticle } from './ui/effects/particles.js';
-import { initPreloader } from './ui/effects/preloader.js';
+import { initParticles, startEmojiSpawner, spawnFloatingParticle } from './ui/effects/particles.js';
+import { initPreloader, updatePreloaderOccasion } from './ui/effects/preloader.js';
+
+// i18n
+import { initI18n, applyTranslations } from './i18n/index.js';
 
 function applyOccasionUI() {
     const state = appState.getState();
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
+
+    // Update preloader occasion copy if preloader is still active
+    updatePreloaderOccasion(state.occasion);
 
     // 1. Theme class on body
     applyOccasionTheme(state.occasion);
@@ -109,6 +115,9 @@ function applyOccasionUI() {
     updateBearEmotion(state.denyCount);
     updateKeepsakeContent();
     updateCountdownDisplay();
+
+    // 8. Apply dynamic language translations
+    applyTranslations();
 }
 
 function initApp() {
@@ -117,6 +126,9 @@ function initApp() {
 
     // Load state from URL params and localStorage
     appState.loadInitialState();
+
+    // Initialize Internationalization
+    initI18n();
 
     // Initialize services
     sound.initAudioElements();
@@ -146,8 +158,14 @@ function initApp() {
 
     // Initialize visual effects
     initConfetti();
-    initParticles();
-    initPreloader();
+    // Do not spawn background particles while preloader is active to save resources
+    initParticles({ autoStart: false });
+    initPreloader({
+        onAppReady: () => {
+            // Start background floating particles only after preloader exits and card reveals
+            startEmojiSpawner();
+        }
+    });
 
     // Bind top navigation pills to personalize modal
     const occasionPillBtn = document.getElementById('occasion-pill-btn');
@@ -165,7 +183,7 @@ function initApp() {
 
     // Listen for state changes
     appState.subscribe((newState, oldState, changedKeys) => {
-        if (changedKeys.some(k => ['occasion', 'recipient', 'customEvent', 'customTitle'].includes(k))) {
+        if (changedKeys.some(k => ['occasion', 'recipient', 'customEvent', 'customTitle', 'language'].includes(k))) {
             applyOccasionUI();
         }
     });

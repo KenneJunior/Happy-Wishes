@@ -5,12 +5,13 @@
  */
 
 import { sound } from '../core/sound.js';
-import { launchCelebrationConfetti } from './effects/confetti.js';
+import { launchCelebrationConfetti, triggerHeartExplosion, cancelHeartExplosion } from './effects/index.js';
 import { spawnFloatingParticle } from './effects/particles.js';
 import { DeviceManager } from '../core/device.js';
 import { OCCASIONS, CELEBRATION_EVENT_TYPES, getBearAssetsForState } from '../config/occasions.js';
 import { getPersonalizedSuccessHeading } from '../core/occasion-service.js';
 import { appState } from '../core/state.js';
+import { applyTranslations } from '../i18n/index.js';
 import { updateVisualAspectRatio } from './bear.js';
 import { resetCardFlip, updateKeepsakeContent } from './keepsake.js';
 import { resetDodge } from './dodge.js';
@@ -33,6 +34,9 @@ let valentineCard = null;
 export function triggerAcceptSuccess() {
     const state = appState.getState();
     if (state.isAccepted) return;
+
+    // Trigger Premium Explode Celebration Animation originating at Accept button
+    triggerHeartExplosion(acceptBtn);
 
     appState.updateState({ isAccepted: true }, false);
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
@@ -112,6 +116,9 @@ export function triggerAcceptSuccess() {
     // 5. Keepsake Card
     updateKeepsakeContent();
 
+    // 5.1 Ensure success screen labels match current language
+    applyTranslations();
+
     // 6. Reveal celebratory container
     if (successContainer) {
         successContainer.hidden = false;
@@ -130,13 +137,15 @@ export function triggerAcceptSuccess() {
     document.body.classList.add('state-accepted');
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
 
-    // 8. Launch Confetti
+    // 8. Launch Confetti (automatically respects reduced motion)
     launchCelebrationConfetti();
 
-    // 9. Extra particle burst
-    const burstCount = DeviceManager.isMobile ? 2 : 10;
-    for (let i = 0; i < burstCount; i++) {
-        setTimeout(spawnFloatingParticle, i * 140);
+    // 9. Extra particle burst (bypassed on reduced motion)
+    if (!DeviceManager.prefersReducedMotion) {
+        const burstCount = DeviceManager.isMobile ? 2 : 10;
+        for (let i = 0; i < burstCount; i++) {
+            setTimeout(spawnFloatingParticle, i * 140);
+        }
     }
 
     // 10. Play celebration music
@@ -145,6 +154,7 @@ export function triggerAcceptSuccess() {
 
 export function resetSuccessState(onReplayOccasionApply) {
     sound.stopCelebrationMusic();
+    cancelHeartExplosion();
 
     const musicToggleBtn = document.getElementById('music-toggle-btn');
     const musicLabel = document.getElementById('music-label');

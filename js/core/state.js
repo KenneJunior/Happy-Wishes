@@ -17,7 +17,8 @@ const STORAGE_KEYS = {
     KEEPSAKE_FROM: 'custom_keepsake_from',
     THEME_MODE: 'valentine_theme_mode',
     CUSTOM_SONG_URL: 'celebration_custom_song_url',
-    CUSTOM_SONG_NAME: 'celebration_custom_song_name'
+    CUSTOM_SONG_NAME: 'celebration_custom_song_name',
+    LANGUAGE: 'celebration_language'
 };
 
 const DEFAULT_STATE = {
@@ -34,7 +35,8 @@ const DEFAULT_STATE = {
     acceptScale: 1.0,
     cardFlipped: false,
     isAccepted: false,
-    theme: 'light'
+    theme: 'light',
+    language: 'en'
 };
 
 class StateStore {
@@ -160,6 +162,11 @@ class StateStore {
 
                 const storedSongName = localStorage.getItem(STORAGE_KEYS.CUSTOM_SONG_NAME);
                 if (storedSongName) loaded.customSongName = storedSongName;
+
+                const storedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
+                if (storedLang && ['en', 'fr', 'es', 'pt', 'de'].includes(storedLang.toLowerCase())) {
+                    loaded.language = storedLang.toLowerCase();
+                }
             }
         } catch (e) {
             console.warn('LocalStorage unavailable or restricted:', e);
@@ -168,6 +175,11 @@ class StateStore {
         // 2. URL Parameters (Explicitly override saved state)
         if (typeof window !== 'undefined' && window.location) {
             const params = new URLSearchParams(window.location.search);
+
+            const urlLang = params.get('lang') || params.get('language');
+            if (urlLang && ['en', 'fr', 'es', 'pt', 'de'].includes(urlLang.toLowerCase())) {
+                loaded.language = urlLang.toLowerCase();
+            }
 
             const urlTo = params.get('to') || params.get('name') || params.get('recipient');
             if (urlTo && urlTo.trim()) loaded.recipient = urlTo.trim().slice(0, 36);
@@ -207,6 +219,28 @@ class StateStore {
 
             const urlSongName = params.get('songname');
             if (urlSongName && urlSongName.trim()) loaded.customSongName = urlSongName.trim().slice(0, 60);
+        }
+
+        // 3. Browser / Device language fallback (if not explicitly set by URL or saved in localStorage)
+        let hasExplicitLang = false;
+        try {
+            if (typeof localStorage !== 'undefined' && localStorage.getItem(STORAGE_KEYS.LANGUAGE)) {
+                hasExplicitLang = true;
+            }
+        } catch (_) {}
+
+        if (!hasExplicitLang && loaded.language === 'en' && typeof navigator !== 'undefined') {
+            const candidates = Array.isArray(navigator.languages) && navigator.languages.length > 0
+                ? navigator.languages
+                : [navigator.language || navigator.userLanguage || ''];
+            for (const cand of candidates) {
+                if (!cand || typeof cand !== 'string') continue;
+                const code = cand.split('-')[0].toLowerCase();
+                if (['en', 'fr', 'es', 'pt', 'de'].includes(code)) {
+                    loaded.language = code;
+                    break;
+                }
+            }
         }
 
         // Apply loaded state without notifying subscribers during bootstrap
@@ -272,6 +306,10 @@ class StateStore {
             } else {
                 localStorage.removeItem(STORAGE_KEYS.CUSTOM_SONG_NAME);
             }
+
+            if (this._state.language) {
+                localStorage.setItem(STORAGE_KEYS.LANGUAGE, this._state.language);
+            }
         } catch (e) {
             console.warn('Failed to persist state to localStorage:', e);
         }
@@ -285,6 +323,7 @@ class StateStore {
         const url = new URL(window.location.origin + window.location.pathname);
         if (this._state.recipient) url.searchParams.set('to', this._state.recipient);
         if (this._state.occasion) url.searchParams.set('occasion', this._state.occasion);
+        if (this._state.language && this._state.language !== 'en') url.searchParams.set('lang', this._state.language);
         if (this._state.customDate) url.searchParams.set('date', this._state.customDate);
         if (this._state.customEvent) url.searchParams.set('event', this._state.customEvent);
         if (this._state.customTitle) url.searchParams.set('title', this._state.customTitle);

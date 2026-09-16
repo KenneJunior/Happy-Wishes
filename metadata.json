@@ -1,6 +1,6 @@
 {
-  "name": "Happy-Wishes",
-  "description": "An interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, and personalized wishes.",
+  "name": "Proposal/Celebrations",
+  "description": "Interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, multilingual translations, and personalized wishes.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

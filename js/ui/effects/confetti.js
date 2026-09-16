@@ -15,6 +15,10 @@ export function initConfetti() {
 }
 
 export function launchCelebrationConfetti(customColors) {
+    if (DeviceManager.prefersReducedMotion) {
+        return;
+    }
+
     const state = appState.getState();
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
     const colors = customColors || occ.confettiColors || ['#ff2e63', '#ffd166', '#06d6a0', '#ffffff'];

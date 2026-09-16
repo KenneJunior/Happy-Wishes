@@ -10,11 +10,14 @@ import { appState } from '../core/state.js';
 import { OCCASIONS } from '../config/occasions.js';
 import { OccasionManager, getPersonalizedHeading } from '../core/occasion-service.js';
 import { generateKeepsakeLetter } from '../services/letter-api.js';
+import { getLanguage, setLanguage, getLanguageName, t } from '../i18n/index.js';
 
 let personalizeModal = null;
 let closePersonalizeBtn = null;
 let savePersonalizeBtn = null;
 let copyCustomLinkBtn = null;
+let languageSelect = null;
+let currentLangBadge = null;
 let recipientNameInput = null;
 let customNoteInput = null;
 let celebrationDateInput = null;
@@ -178,7 +181,7 @@ function updateModalOccasionUI(selectedKey) {
     }
 }
 
-export function openPersonalizeModal() {
+export function openPersonalizeModal(focusLanguage = false) {
     if (!personalizeModal) return;
     const state = appState.getState();
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
@@ -197,6 +200,13 @@ export function openPersonalizeModal() {
     if (recipientNameInput) recipientNameInput.value = state.recipient;
     if (customNoteInput) customNoteInput.value = state.customMsg || occ.successSubtext;
     if (celebrationDateInput) celebrationDateInput.value = state.customDate;
+
+    if (languageSelect) {
+        languageSelect.value = getLanguage();
+    }
+    if (currentLangBadge) {
+        currentLangBadge.textContent = getLanguageName(getLanguage());
+    }
 
     if (eventTypeChips && eventTypeChips.length > 0) {
         eventTypeChips.forEach(chip => {
@@ -226,7 +236,12 @@ export function openPersonalizeModal() {
     personalizeModal.style.display = 'flex';
     personalizeModal.removeAttribute('aria-hidden');
 
-    if (recipientNameInput) {
+    if (focusLanguage && languageSelect) {
+        languageSelect.focus();
+        try {
+            languageSelect.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (_) {}
+    } else if (recipientNameInput) {
         recipientNameInput.focus();
     }
 }
@@ -349,6 +364,26 @@ export function initPersonalizeModal() {
     generateAiLetterBtn = document.getElementById('generate-ai-letter-btn');
     aiLetterSpark = document.getElementById('ai-letter-spark');
     aiLetterBtnText = document.getElementById('ai-letter-btn-text');
+
+    // Language & Settings Controls
+    languageSelect = document.getElementById('language-select');
+    currentLangBadge = document.getElementById('current-lang-badge');
+
+    if (languageSelect) {
+        languageSelect.value = getLanguage();
+        languageSelect.addEventListener('change', (e) => {
+            const chosenLang = e.target.value;
+            setLanguage(chosenLang, true);
+            if (currentLangBadge) {
+                currentLangBadge.textContent = getLanguageName(chosenLang);
+            }
+            const langName = getLanguageName(chosenLang);
+            const template = t('langChangedToast', 'Language set to {lang} 🌐');
+            const toastMsg = template.replace('{lang}', langName);
+            showToast(toastMsg, "🌐");
+            sound.playDodgePop();
+        });
+    }
 
     // Query Celebration Song Controls
     customSongUrlInput = document.getElementById('custom-song-url-input');
@@ -534,9 +569,12 @@ export function initPersonalizeModal() {
                 ? selectedRadio.value 
                 : modalSelectedOccasion;
 
+            const chosenLang = languageSelect ? languageSelect.value : getLanguage();
+
             const updatePayload = {
                 recipient: newName,
                 occasion: chosenOccasion,
+                language: chosenLang,
                 customMsg: newNote,
                 customSongUrl: modalCustomSongUrl || '',
                 customSongName: modalCustomSongName || ''

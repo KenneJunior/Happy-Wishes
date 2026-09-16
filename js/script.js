@@ -1,22 +1,4 @@
-/**
- * ==============================================================================
- * Seasonal Celebration Card — Interactive Frontend Logic
- * ==============================================================================
- * Features:
- * - Dynamic Date-based seasonal heading & theme auto-detection:
- *   • Before Sep 22: 'Happy Birthday!'
- *   • Sep 22 – Dec 25: 'Merry Christmas!'
- *   • Dec 25 – Jan 1: 'Happy New Year!'
- *   • Otherwise: 'Will you be my Valentine?'
- * - Animated seasonal jumping bears (SVG / GIF) matching each celebration
- * - Cursor-dodging 'Deny' button with safe 50px viewport boundaries
- * - Simultaneously scaling 'Accept' button by 1.2x on each dodge attempt
- * - Celebratory success state with canvas-confetti and jumping victory bear
- * - Real-time upward floating seasonal emojis (cakes, trees, fireworks, hearts)
- * - Interactive seasonal switcher pills for instant manual preview & testing
- * - Web Audio API cheerful acoustic chimes (zero external audio dependencies)
- * ==============================================================================
- */
+
 
 // --------------------------------------------------------------------------
 // 1. Occasion Configurations & Theming

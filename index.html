@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     
     <!-- Title & SEO Meta Tags -->
-    <title>Happy-Wishes | Interactive Celebration Card</title>
-    <meta name="description" content="An interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, and personalized wishes.">
+    <title>Proposal/Celebrations | Interactive Celebration Card</title>
+    <meta name="description" content="Interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, multilingual translations, and personalized wishes.">
     <meta name="theme-color" content="#ff2e63">
     
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="Happy-Wishes | Interactive Celebration Card">
-    <meta property="og:description" content="An interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, and personalized wishes.">
+    <meta property="og:title" content="Proposal/Celebrations | Interactive Celebration Card">
+    <meta property="og:description" content="Interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, multilingual translations, and personalized wishes.">
     <meta property="og:type" content="website">
     
     <!-- Favicon -->
@@ -56,7 +56,9 @@
 </head>
 <body>
     <!-- Custom Vanilla JS & CSS Preloader: Liquid Glass Droplet -->
-    <div id="app-preloader" class="preloader-overlay" aria-label="Loading celebration" role="status" aria-live="polite">
+    <div id="app-preloader" class="preloader-overlay" aria-label="Loading celebration">
+        <!-- Dedicated polite live region announcing only milestones (start and ready) -->
+        <div id="preloader-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
         <div class="preloader-container">
             <!-- Concentric Liquid Ripples -->
             <div class="droplet-ripple ripple-1" aria-hidden="true"></div>
@@ -76,15 +78,32 @@
 
             <!-- Preloader Typography & Liquid Glass Progress Track -->
             <div class="preloader-meta">
-                <div class="preloader-badge">
+                <div class="preloader-badge" id="preloader-badge">
                     <span class="badge-dot"></span>
                     <span id="preloader-badge-text">Crafting Magic</span>
                 </div>
-                <h2 class="preloader-title">Preparing Your Surprise</h2>
-                <div class="preloader-bar-track" aria-hidden="true">
-                    <div class="preloader-bar-fill" id="preloader-bar-fill"></div>
+                <h2 class="preloader-title" id="preloader-title">Preparing Your Surprise</h2>
+                
+                <!-- Real Asset-Aware Progress Indicator -->
+                <div class="preloader-progress-wrap" id="preloader-progress-wrap">
+                    <div class="preloader-progress-header">
+                        <span class="preloader-current-task" id="preloader-current-task">Application setup</span>
+                        <span class="preloader-percent" id="preloader-percent">0%</span>
+                    </div>
+                    <div class="preloader-bar-track" aria-hidden="true">
+                        <div class="preloader-bar-fill" id="preloader-bar-fill">
+                            <span class="preloader-bar-highlight" aria-hidden="true"></span>
+                        </div>
+                    </div>
                 </div>
-                <p class="preloader-status" id="preloader-status">Infusing sweetness...</p>
+
+                <p class="preloader-status" id="preloader-status">Initializing experience...</p>
+                
+                <!-- Real-time Asset Lifecycle Stage Readout -->
+                <div class="preloader-lifecycle-badge" id="preloader-lifecycle-badge">
+                    <span class="lifecycle-stage-pill state-pending" id="lifecycle-stage-pill">PENDING</span>
+                    <span class="lifecycle-asset-name" id="lifecycle-asset-name">Core Environment</span>
+                </div>
             </div>
         </div>
     </div>
@@ -413,12 +432,32 @@
             <div class="modal-header">
                 <span class="modal-icon">💌</span>
                 <h3 class="modal-title" id="personalize-title">Personalize This Card</h3>
-                <p class="modal-desc">Tailor the recipient's name, celebration occasion, date, and sweet keepsake letter.</p>
+                <p class="modal-desc" id="modal-personalize-desc">Tailor the recipient's name, celebration occasion, language, date, and sweet keepsake letter.</p>
             </div>
             <form id="personalize-form" class="modal-form" onsubmit="return false;">
                 <div class="modal-form-scroll" id="personalize-scroll-body">
+                    <!-- Settings: Language Selector -->
+                    <div class="form-group settings-language-group" id="settings-language-group">
+                        <div class="form-label-with-action">
+                            <label for="language-select" id="language-label">
+                                <span class="label-icon">🌐</span> <span id="language-label-text">Language</span>
+                            </label>
+                            <span class="settings-lang-badge" id="current-lang-badge">English</span>
+                        </div>
+                        <div class="custom-select-wrapper" id="language-select-wrapper">
+                            <select id="language-select" class="modal-input custom-language-select" aria-label="Choose application language">
+                                <option value="en">English (US)</option>
+                                <option value="fr">Français (French)</option>
+                                <option value="es">Español (Spanish)</option>
+                                <option value="pt">Português (Portuguese)</option>
+                                <option value="de">Deutsch (German)</option>
+                            </select>
+                            <span class="select-chevron" aria-hidden="true">▾</span>
+                        </div>
+                    </div>
+
                     <div class="form-group">
-                        <label for="recipient-name-input">Recipient's Name or Nickname</label>
+                        <label for="recipient-name-input" id="recipient-name-label">Recipient's Name or Nickname</label>
                         <input 
                             type="text" 
                             id="recipient-name-input" 
@@ -431,70 +470,70 @@
 
                     <!-- Occasion Selector (Valentine, Christmas, New Year, Easter, Birthday, Anniversary, Custom Date) -->
                     <div class="form-group">
-                        <label class="form-group-title">Select Occasion</label>
+                        <label class="form-group-title" id="modal-select-occasion-title">Select Occasion</label>
                         <div class="occasion-selector-grid" id="occasion-selector-grid" role="radiogroup" aria-label="Choose celebration occasion">
                             <label class="occasion-option-card" data-occasion="valentine">
                                 <input type="radio" name="selected-occasion" value="valentine" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">💖</span>
-                                    <span class="occasion-label">Valentine</span>
-                                    <span class="occasion-sub">Feb 14</span>
+                                    <span class="occasion-label" id="occ-title-valentine">Valentine</span>
+                                    <span class="occasion-sub" id="occ-sub-valentine">Feb 14</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="christmas">
                                 <input type="radio" name="selected-occasion" value="christmas" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🎄</span>
-                                    <span class="occasion-label">Christmas</span>
-                                    <span class="occasion-sub">Dec 25</span>
+                                    <span class="occasion-label" id="occ-title-christmas">Christmas</span>
+                                    <span class="occasion-sub" id="occ-sub-christmas">Dec 25</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="newyear">
                                 <input type="radio" name="selected-occasion" value="newyear" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🎆</span>
-                                    <span class="occasion-label">New Year</span>
-                                    <span class="occasion-sub">Jan 1</span>
+                                    <span class="occasion-label" id="occ-title-newyear">New Year</span>
+                                    <span class="occasion-sub" id="occ-sub-newyear">Jan 1</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="easter">
                                 <input type="radio" name="selected-occasion" value="easter" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🐣</span>
-                                    <span class="occasion-label">Easter</span>
-                                    <span class="occasion-sub" id="easter-calculated-sub">Upcoming</span>
+                                    <span class="occasion-label" id="occ-title-easter">Easter</span>
+                                    <span class="occasion-sub" id="occ-sub-easter">Upcoming</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="birthday">
                                 <input type="radio" name="selected-occasion" value="birthday" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🎂</span>
-                                    <span class="occasion-label">Birthday</span>
-                                    <span class="occasion-sub">Party Day</span>
+                                    <span class="occasion-label" id="occ-title-birthday">Birthday</span>
+                                    <span class="occasion-sub" id="occ-sub-birthday">Party Day</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="anniversary">
                                 <input type="radio" name="selected-occasion" value="anniversary" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">💍</span>
-                                    <span class="occasion-label">Anniversary</span>
-                                    <span class="occasion-sub">Love Milestone</span>
+                                    <span class="occasion-label" id="occ-title-anniversary">Anniversary</span>
+                                    <span class="occasion-sub" id="occ-sub-anniversary">Love Milestone</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="graduation">
                                 <input type="radio" name="selected-occasion" value="graduation" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🎓</span>
-                                    <span class="occasion-label">Graduation</span>
-                                    <span class="occasion-sub">Achievement</span>
+                                    <span class="occasion-label" id="occ-title-graduation">Graduation</span>
+                                    <span class="occasion-sub" id="occ-sub-graduation">Achievement</span>
                                 </div>
                             </label>
                             <label class="occasion-option-card" data-occasion="custom">
                                 <input type="radio" name="selected-occasion" value="custom" class="sr-only">
                                 <div class="occasion-card-inner">
                                     <span class="occasion-emoji">🗓️</span>
-                                    <span class="occasion-label">Custom Date</span>
-                                    <span class="occasion-sub">Pick & Name</span>
+                                    <span class="occasion-label" id="occ-title-custom">Custom Date</span>
+                                    <span class="occasion-sub" id="occ-sub-custom">Pick & Name</span>
                                 </div>
                             </label>
                         </div>
@@ -634,10 +673,10 @@
                 </div>
                 <div class="modal-btn-row">
                     <button type="button" id="save-personalize-btn" class="btn-modal-primary" aria-label="Save and apply personalization">
-                        <span>Save & Apply 💖</span>
+                        <span id="save-personalize-text">Save & Apply 💖</span>
                     </button>
                     <button type="button" id="copy-custom-link-btn" class="btn-modal-secondary" aria-label="Copy personalized shareable link">
-                        <span>Copy Link 🔗</span>
+                        <span id="copy-custom-link-text">Copy Link 🔗</span>
                     </button>
                 </div>
             </form>

@@ -4,7 +4,7 @@
  * Complex calculations belong in core/occasion-service.js.
  */
 
-export const OCCASIONS = {
+export let OCCASIONS = {
     valentine: {
         id: 'valentine',
         name: "Valentine's Day",

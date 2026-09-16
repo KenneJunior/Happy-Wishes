@@ -97,7 +97,9 @@ export function stopEmojiSpawner() {
     }
 }
 
-export function initParticles() {
+export function initParticles(options = {}) {
     floatingContainer = document.getElementById('floating-hearts-container');
-    startEmojiSpawner();
+    if (options.autoStart !== false) {
+        startEmojiSpawner();
+    }
 }

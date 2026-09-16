@@ -10,6 +10,7 @@ import { appState } from '../core/state.js';
 import { OCCASIONS, CELEBRATION_EVENT_TYPES } from '../config/occasions.js';
 import { OccasionManager } from '../core/occasion-service.js';
 import { generateKeepsakeLetter } from '../services/letter-api.js';
+import { t } from '../i18n/index.js';
 
 let virtualCardWrapper = null;
 let virtualCardInner = null;
@@ -62,7 +63,10 @@ export function updateKeepsakeContent() {
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
 
     if (envelopeRecipientText) {
-        envelopeRecipientText.textContent = state.recipient ? `To: ${state.recipient} ❤️` : "To: Someone Special ❤️";
+        const toPrefix = t('envelopeToPrefix', 'To: ');
+        envelopeRecipientText.textContent = state.recipient
+            ? `${toPrefix}${state.recipient} ❤️`
+            : `${t('envelopeToDefault', 'To: Someone Special')} ❤️`;
     }
 
     const customText = state.customMsg ? state.customMsg.trim() : '';
@@ -74,7 +78,10 @@ export function updateKeepsakeContent() {
             keepsakeGreeting.style.display = 'none';
         } else {
             keepsakeGreeting.style.display = 'block';
-            keepsakeGreeting.textContent = state.recipient ? `Dearest ${state.recipient},` : "Dearest One,";
+            const dearPrefix = t('parchmentGreetingPrefix', 'Dearest');
+            keepsakeGreeting.textContent = state.recipient
+                ? `${dearPrefix} ${state.recipient},`
+                : t('parchmentGreetingDefault', 'Dearest One,');
         }
     }
 
@@ -83,11 +90,13 @@ export function updateKeepsakeContent() {
             keepsakeSignature.style.display = 'none';
         } else {
             keepsakeSignature.style.display = 'block';
+            keepsakeSignature.textContent = t('parchmentSignatureDefault', 'With all my love & heart ❤️');
         }
     }
 
     if (keepsakeBody) {
         if (customText) {
+            // User-authored note or AI-generated letter: PRESERVE EXACTLY AS ENTERED!
             keepsakeBody.textContent = customText;
         } else if (state.occasion === 'custom') {
             const eventCfg = CELEBRATION_EVENT_TYPES[state.customEvent] || CELEBRATION_EVENT_TYPES.other;
