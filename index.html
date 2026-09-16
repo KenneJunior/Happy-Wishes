@@ -22,7 +22,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- External Confetti Library (with graceful vanilla fallback in script.js) -->
+    <!-- External Confetti Library (with graceful vanilla fallback) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
     <!-- Lightweight 3D Tilt Library -->
     <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js" defer></script>
@@ -303,7 +303,7 @@
             <!-- Celebratory Success State (Initially hidden) -->
             <div class="success-container" id="success-container" aria-hidden="true" hidden>
                 <div class="celebration-badge" id="celebration-badge">
-                    <span>🎉 BEST DECISION EVER! 🎉</span>
+                    <span id="badge-text">🎉 BEST DECISION EVER! 🎉</span>
                 </div>
                 <h2 class="success-heading" id="success-heading">
                     Yaaay! Happy Birthday! 🎂🎉🥳
@@ -600,7 +600,7 @@
         <span class="toast-msg" id="toast-msg"></span>
     </div>
 
-    <!-- JavaScript Application Logic -->
-    <script src="./js/script.js" defer></script>
+    <!-- JavaScript Application Logic (Modular ES Architecture) -->
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>

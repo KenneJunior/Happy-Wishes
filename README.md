@@ -105,22 +105,37 @@ http://localhost:3000
 
 ```
 ├── index.html            # Main entry HTML file (with relative asset links for GitHub Pages)
-├── yes_page.html          # Success celebration page
-├── server.js              # Express static server for local development & Cloud Run
+├── pages/
+│   └── yes_page.html      # Success celebration page
+├── server.js              # Express static & AI API proxy server
 ├── css/
 │   ├── styles.css         # Glassmorphism, animations, responsive layouts & themes
 │   └── yes_style.css      # Styling for the standalone yes page
 ├── js/
-│   └── script.js          # Dodge physics, audio synthesizer, confetti & season engine
+│   ├── main.js            # Composition root & module bootstrapper
+│   ├── config/            # Declarative static configurations
+│   │   ├── occasions.js   # Occasion definitions, themes, and metadata
+│   │   ├── emotions.js    # Mascot mood tiers and dialogue lines
+│   │   └── wishes.js      # Curated seasonal wishes & minigame capsules
+│   ├── core/              # Business logic & services
+│   │   ├── state.js       # Centralized observable reactive state manager
+│   │   ├── occasion-service.js # Easter algorithm & occasion date calculations
+│   │   ├── sound.js       # Web Audio API synthesizer & celebration music
+│   │   └── device.js      # Hardware capability detection & adaptive throttling
+│   ├── services/          # External communications
+│   │   └── wish-api.js    # Gemini AI wish crafting & resilient fallbacks
+│   └── ui/                # UI components & effects
+│       ├── bear.js        # Mascot reactions & aspect ratio adjustments
+│       ├── countdown.js   # Target date countdown & banner management
+│       ├── dodge.js       # Physics button dodge & progressive scaling
+│       ├── keepsake.js    # 3D interactive keepsake card & scratchpad
+│       ├── modal-personalize.js # Personalization modal & shareable link generation
+│       ├── modal-wishjar.js # Wish Jar minigame modal
+│       ├── success.js     # Acceptance celebration state coordinator
+│       ├── theme.js       # Light/dark mode & theme switcher
+│       ├── toast.js       # Micro-notification toasts
+│       └── effects/       # Confetti, particles, 3D tilt, and preloader
 ├── assets/                # SVG vectors and seasonal bear animations
-│   ├── bear-birthday.svg
-│   ├── bear-birthday-success.svg
-│   ├── bear-christmas.svg
-│   ├── bear-christmas-success.svg
-│   ├── bear-newyear.svg
-│   ├── bear-newyear-success.svg
-│   ├── img1.gif
-│   └── img3.gif
 └── README.md              # Project documentation and architecture guide
 ```
 

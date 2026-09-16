@@ -12,5 +12,8 @@
     "@google/genai": "^2.22.0",
     "@kennejunior/liquidglass": "1.0.3",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1"
   }
 }

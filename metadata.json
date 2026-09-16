@@ -1,6 +1,6 @@
 {
   "name": "Remix be-my-Valentine",
-  "description": "Interactive seasonal celebration card with 3D flip parchment scratchpad, live countdown timer, dynamic URL personalization, compliments/reasons generator, and reactive emotional bear animations.",
+  "description": "Imported from GitHub: KenneJunior/be-my-Valentine",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
