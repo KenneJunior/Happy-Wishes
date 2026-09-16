@@ -44,7 +44,7 @@ export const OCCASIONS = {
         floatingEmojis: ['💖', '💕', '✨', '🌸', '💘', '💝'],
         effects: ['💖', '💕', '✨', '🌸', '💘', '💝'],
         confettiColors: ['#ff2e63', '#ff758c', '#ffffff', '#ffd166', '#ff9a9e'],
-        countdownTitle: (name) => name ? `💖 Countdown to ${name}'s Valentine's Day` : "💖 Countdown to Valentine's Day",
+        countdownTitle: () => "💖 Countdown to Valentine's Day",
         todayMessage: (name) => name ? `🎉 HAPPY VALENTINE'S DAY, ${name.toUpperCase()}! WISHING YOU INFINITE LOVE! 💖✨` : "🎉 HAPPY VALENTINE'S DAY! WISHING YOU INFINITE LOVE! 💖✨",
         getHeading: (name) => name ? `${name}, will you be my Valentine?` : 'Will you be my Valentine?',
         getSubMessage: () => 'A little question straight from the heart...',
@@ -102,8 +102,8 @@ export const OCCASIONS = {
         floatingEmojis: ['🎂', '🎉', '✨', '🎈', '⭐', '🧁'],
         effects: ['🎂', '🎉', '✨', '🎈', '⭐', '🧁'],
         confettiColors: ['#ffd166', '#ff758c', '#06d6a0', '#118ab2', '#ffbe0b'],
-        countdownTitle: (name) => name ? `🎂 ${name}'s Birthday Countdown` : "🎂 Birthday Countdown",
-        todayMessage: (name) => name ? `🎉 HAPPY BIRTHDAY, ${name.toUpperCase()}! WISHING YOU INFINITE JOY! 🎂✨` : "🎉 THE CELEBRATION IS TODAY! WISHING YOU INFINITE JOY! 🎂✨",
+        countdownTitle: () => "🎂 Birthday Countdown",
+        todayMessage: (name) => name ? `🎉 HAPPY BIRTHDAY, ${name.toUpperCase()}! WISHING YOU INFINITE JOY! 🎂✨` : "🎉 HAPPY BIRTHDAY! WISHING YOU INFINITE JOY! 🎂✨",
         getHeading: (name) => name ? `Happy Birthday, ${name}!` : 'Happy Birthday!',
         getSubMessage: () => 'Wishing you a magical day filled with sweet moments and huge smiles! 🎂✨',
         getSuccessHeading: (name) => name ? `Yaaay, ${name}! Happy Birthday! 🎂🎉🥳` : 'Yaaay! Happy Birthday! 🎂🎉🥳',
@@ -160,7 +160,7 @@ export const OCCASIONS = {
         floatingEmojis: ['❄️', '🎄', '✨', '⭐', '🔔', '🎁'],
         effects: ['❄️', '🎄', '✨', '⭐', '🔔', '🎁'],
         confettiColors: ['#d90429', '#2b9348', '#ffd166', '#ffffff', '#38b000'],
-        countdownTitle: (name) => name ? `🎄 Countdown to ${name}'s Christmas` : "🎄 Countdown to Christmas",
+        countdownTitle: () => "🎄 Countdown to Christmas",
         todayMessage: (name) => name ? `🎉 MERRY CHRISTMAS, ${name.toUpperCase()}! WISHING YOU WARMTH AND JOY! 🎄✨` : "🎉 MERRY CHRISTMAS! WISHING YOU WARMTH AND JOY! 🎄✨",
         getHeading: (name) => name ? `Merry Christmas, ${name}! Will you celebrate with me?` : 'Merry Christmas! Will you celebrate with me?',
         getSubMessage: () => 'Winter coziness, warm cocoa, and holiday cheer...',
@@ -181,7 +181,7 @@ export const OCCASIONS = {
     },
     newyear: {
         id: 'newyear',
-        name: "New Year's Eve",
+        name: "New Year",
         icon: '🎆',
         emoji: '🎆',
         badge: '🎆 HAPPY NEW YEAR',
@@ -218,7 +218,7 @@ export const OCCASIONS = {
         floatingEmojis: ['🎆', '✨', '🥂', '⭐', '🎊', '💫'],
         effects: ['🎆', '✨', '🥂', '⭐', '🎊', '💫'],
         confettiColors: ['#ffd166', '#f72585', '#7209b7', '#4cc9f0', '#ffffff'],
-        countdownTitle: (name) => name ? `🎆 Countdown to ${name}'s New Year` : "🎆 Countdown to New Year",
+        countdownTitle: () => "🎆 Countdown to New Year",
         todayMessage: (name) => name ? `🎉 HAPPY NEW YEAR, ${name.toUpperCase()}! MAY THIS YEAR BE EXTRAORDINARY! 🎆🥂` : "🎉 HAPPY NEW YEAR! MAY THIS YEAR BE EXTRAORDINARY! 🎆🥂",
         getHeading: (name) => name ? `${name}, ready to ring in the New Year together?` : 'Ready to ring in the New Year together?',
         getSubMessage: () => '365 fresh pages, blank canvases, and bold new chapters...',
@@ -276,7 +276,7 @@ export const OCCASIONS = {
         floatingEmojis: ['🐰', '🌸', '🥚', '🌷', '✨', '🐣'],
         effects: ['🐰', '🌸', '🥚', '🌷', '✨', '🐣'],
         confettiColors: ['#f472b6', '#a855f7', '#38bdf8', '#fef08a', '#4ade80'],
-        countdownTitle: (name) => name ? `🐰 Countdown to ${name}'s Easter` : "🐰 Countdown to Easter",
+        countdownTitle: () => "🐰 Countdown to Easter",
         todayMessage: (name) => name ? `🎉 HAPPY EASTER, ${name.toUpperCase()}! WISHING YOU SPRINGTIME BLOSSOMS! 🐰🌸` : "🎉 HAPPY EASTER! WISHING YOU SPRINGTIME BLOSSOMS! 🐰🌸",
         getHeading: (name) => name ? `Happy Easter, ${name}! Will you hop along with me?` : 'Happy Easter! Will you hop along with me?',
         getSubMessage: () => 'Springtime blossoms, sweet treats, and colorful renewal...',
@@ -300,8 +300,8 @@ export const OCCASIONS = {
         name: 'Custom Celebration',
         icon: '✨',
         emoji: '✨',
-        badge: '✨ SPECIAL CELEBRATION',
-        celebrationBadge: '✨ SPECIAL CELEBRATION DAY!',
+        badge: '✨ CELEBRATION',
+        celebrationBadge: '✨ CELEBRATION DAY!',
         fixedDate: null, // User-selected via date input
         question: 'Will you celebrate with me?',
         subtext: 'A unique milestone made especially for us...',
@@ -336,7 +336,7 @@ export const OCCASIONS = {
         confettiColors: ['#ff2e63', '#ffd166', '#c084fc', '#ffffff', '#ff758c'],
         countdownTitle: (name, title) => {
             const t = (title && title.trim()) ? title.trim() : 'Celebration';
-            return name ? `✨ ${name}'s ${t} Countdown` : `✨ ${t} Countdown`;
+            return `✨ ${t} Countdown`;
         },
         todayMessage: (name, title) => {
             const t = (title && title.trim()) ? title.trim().toUpperCase() : 'CELEBRATION';
@@ -363,6 +363,122 @@ export const OCCASIONS = {
         ],
         defaultMessage: "Some dates on the calendar hold a quiet magic that only we truly understand. I wanted to mark this special moment and remind you how cherished you are.",
         defaultFrom: 'Always in my thoughts'
+    },
+    graduation: {
+        id: 'graduation',
+        name: 'Graduation',
+        icon: '🎓',
+        emoji: '🎓',
+        badge: '🎓 CONGRATULATIONS GRADUATE',
+        celebrationBadge: '🎓 YOU DID IT, GRADUATE! 🌟',
+        fixedDate: null,
+        question: 'Congratulations, Graduate!',
+        subtext: 'Your hard work, brilliance, and perseverance have paid off! 🎓🌟',
+        themeClass: 'theme-graduation',
+        bgGradient: 'linear-gradient(-45deg, #1d3557, #457b9d, #2a9d8f, #e76f51, #f4a261, #1d3557)',
+        bearNormal: './assets/bear-graduation.svg',
+        bearSuccess: './assets/bear-graduation-success.svg',
+        assets: {
+            bearInitial: './assets/bear-graduation.svg',
+            bearSuccess: './assets/bear-graduation-success.svg',
+            fallbackGif: './assets/img1.gif',
+            fallbackSuccessGif: './assets/img3.gif'
+        },
+        acceptText: 'Onto New Heights!',
+        acceptEmoji: '🎓',
+        denyText: 'Not Done Yet',
+        denyEmoji: '📚',
+        denyPhrases: [
+            "Are you sure? 🎓",
+            "Think about the diploma! 📜",
+            "You worked so hard! 🌟",
+            "Time to celebrate your brilliance! 🥳",
+            "Put your graduation cap on! 🎓",
+            "The future is calling! 🚀",
+            "One more chance to celebrate! ✨",
+            "You cannot say no! 🐻"
+        ],
+        btnAcceptEmoji: '🎓',
+        particleType: 'up',
+        floatingEmojis: ['🎓', '⭐', '✨', '📜', '🎉', '🏆'],
+        effects: ['🎓', '⭐', '✨', '📜', '🎉', '🏆'],
+        confettiColors: ['#ffd166', '#457b9d', '#e63946', '#2a9d8f', '#ffffff'],
+        countdownTitle: (name) => name ? `🎓 ${name}'s Graduation Countdown` : '🎓 Graduation Countdown',
+        todayMessage: (name) => name ? `🎉 CONGRATS GRADUATE ${name.toUpperCase()}! THE WORLD IS YOURS! 🎓🌟` : '🎉 CONGRATULATIONS GRADUATE! THE WORLD IS YOURS! 🎓🌟',
+        getHeading: (name) => name ? `Congratulations, Graduate ${name}! 🎓` : 'Congratulations, Graduate! 🎓',
+        getSubMessage: () => 'Your hard work, brilliance, and perseverance have paid off...',
+        getSuccessHeading: (name) => name ? `So Proud of You, ${name}! 🎓🌟` : 'So Proud of You! 🎓🌟',
+        successSubtext: 'The future is yours to conquer! May success and happiness follow you wherever you go! 🌟',
+        reasonsPool: [
+            'All the late nights and tireless dedication you poured into reaching this milestone.',
+            'Your genuine curiosity, intellect, and passion to make a difference.',
+            'The resilience you showed when challenges appeared along the journey.',
+            'How you inspired everyone around you with your focus and grace.',
+            'Every milestone and quiz that led up to this proud graduation cap moment.',
+            'Your readiness to step boldly into the next exciting adventure.',
+            'Because today is your day to shine in the spotlight.',
+            'How proud everyone is to cheer for your remarkable achievement.'
+        ],
+        defaultMessage: "Standing here at this turning point, I want to remind you how proud I am of everything you have accomplished. Your determination and heart make this graduation truly extraordinary.",
+        defaultFrom: 'Cheering for your journey'
+    },
+    anniversary: {
+        id: 'anniversary',
+        name: 'Anniversary',
+        icon: '💍',
+        emoji: '💍',
+        badge: '💍 HAPPY ANNIVERSARY',
+        celebrationBadge: '💍 FOREVER & ALWAYS! 💖',
+        fixedDate: null,
+        question: 'Happy Anniversary!',
+        subtext: 'Celebrating our journey together and all the sweet moments we share... 💍💖',
+        themeClass: 'theme-anniversary',
+        bgGradient: 'linear-gradient(-45deg, #ff4e79, #e0a96d, #ff758c, #ffd166, #9b5de5, #ff4e79)',
+        bearNormal: './assets/bear-anniversary.svg',
+        bearSuccess: './assets/bear-anniversary-success.svg',
+        assets: {
+            bearInitial: './assets/bear-anniversary.svg',
+            bearSuccess: './assets/bear-anniversary-success.svg',
+            fallbackGif: './assets/img1.gif',
+            fallbackSuccessGif: './assets/img3.gif'
+        },
+        acceptText: 'Forever & Always',
+        acceptEmoji: '💍',
+        denyText: 'Not Today',
+        denyEmoji: '🙈',
+        denyPhrases: [
+            "Are you sure? 🥺",
+            "Think of all our memories! 💖",
+            "Look at these twin rings! 💍",
+            "Don't break my heart! 💔",
+            "Here is to another year! 🥂",
+            "I baked special treats! 🍪",
+            "Last chance for romance! ✨",
+            "You cannot say no! 🐻"
+        ],
+        btnAcceptEmoji: '💍',
+        particleType: 'up',
+        floatingEmojis: ['💍', '💖', '✨', '🥂', '🌹', '💎'],
+        effects: ['💍', '💖', '✨', '🥂', '🌹', '💎'],
+        confettiColors: ['#ffd166', '#ff2e63', '#ff758c', '#e0a96d', '#ffffff'],
+        countdownTitle: (name) => name ? `💍 ${name}'s Anniversary Countdown` : '💍 Anniversary Countdown',
+        todayMessage: (name) => name ? `🎉 HAPPY ANNIVERSARY, ${name.toUpperCase()}! HERE IS TO FOREVER! 💍💖` : '🎉 HAPPY ANNIVERSARY! HERE IS TO FOREVER! 💍💖',
+        getHeading: (name) => name ? `Happy Anniversary, ${name}! 💍` : 'Happy Anniversary! 💍',
+        getSubMessage: () => 'Celebrating our journey together and all the sweet moments we share...',
+        getSuccessHeading: (name) => name ? `Happy Anniversary, ${name}! 💖💍` : 'Happy Anniversary! 💖💍',
+        successSubtext: "Here's to another beautiful year of laughter, love, and sweet memories together! 🥂❤️",
+        reasonsPool: [
+            'How we can communicate without even having to say a single word out loud.',
+            'The patient, gentle way you listen whenever my mind is spinning.',
+            'Our comfortable silence that feels warmer than any grand conversation.',
+            'Every road trip, late-night tea, and unplanned memory we shared this year.',
+            'How you make ordinary routines feel cozy and effortlessly romantic.',
+            'The unconditional kindness and trust you give so freely.',
+            'The way your hand fits perfectly in mine after all this time.',
+            'Because choosing you has been the best chapter of my life.'
+        ],
+        defaultMessage: "Celebrating another milestone with you fills my heart with deep gratitude. Every memory, shared laugh, and quiet evening together has made our journey so meaningful.",
+        defaultFrom: 'Forever yours'
     }
 };
 
@@ -377,6 +493,8 @@ export const CELEBRATION_EVENT_TYPES = {
         icon: '🎂',
         emoji: '🎂',
         badge: '🎂 HAPPY BIRTHDAY',
+        bearNormal: './assets/bear-birthday.svg',
+        bearSuccess: './assets/bear-birthday-success.svg',
         acceptText: 'Celebrate Big!',
         acceptEmoji: '🎉',
         getHeading: (name) => name ? `Happy Birthday, ${name}! 🎂` : 'Happy Birthday! 🎂',
@@ -392,12 +510,14 @@ export const CELEBRATION_EVENT_TYPES = {
         icon: '💍',
         emoji: '💍',
         badge: '💍 HAPPY ANNIVERSARY',
+        bearNormal: './assets/bear-anniversary.svg',
+        bearSuccess: './assets/bear-anniversary-success.svg',
         acceptText: 'Forever & Always',
         acceptEmoji: '💖',
         getHeading: (name) => name ? `Happy Anniversary, ${name}! 💍` : 'Happy Anniversary! 💍',
         getSubMessage: () => 'Celebrating our journey together and all the sweet moments we share...',
         getSuccessHeading: (name) => name ? `Happy Anniversary, ${name}! 💖💍` : 'Happy Anniversary! 💖💍',
-        countdownTitle: (name) => name ? `💍 ${name}'s Anniversary Countdown` : '💍 Anniversary Countdown',
+        countdownTitle: () => '💍 Anniversary Countdown',
         todayMessage: (name) => name ? `🎉 HAPPY ANNIVERSARY, ${name.toUpperCase()}! HERE IS TO FOREVER! 💍💖` : '🎉 HAPPY ANNIVERSARY! HERE IS TO FOREVER! 💍💖',
         successSubtext: "Here's to another beautiful year of laughter, love, and memories together! 🥂❤️"
     },
@@ -407,12 +527,14 @@ export const CELEBRATION_EVENT_TYPES = {
         icon: '🎓',
         emoji: '🎓',
         badge: '🎓 CONGRATULATIONS',
+        bearNormal: './assets/bear-graduation.svg',
+        bearSuccess: './assets/bear-graduation-success.svg',
         acceptText: 'Onto New Heights!',
         acceptEmoji: '🚀',
         getHeading: (name) => name ? `Congratulations, Graduate ${name}! 🎓` : 'Congratulations, Graduate! 🎓',
         getSubMessage: () => 'Your hard work, brilliance, and perseverance have paid off...',
         getSuccessHeading: (name) => name ? `So Proud of You, ${name}! 🎓🌟` : 'So Proud of You! 🎓🌟',
-        countdownTitle: (name) => name ? `🎓 ${name}'s Graduation Countdown` : '🎓 Graduation Countdown',
+        countdownTitle: () => '🎓 Graduation Countdown',
         todayMessage: (name) => name ? `🎉 CONGRATS GRADUATE ${name.toUpperCase()}! THE WORLD IS YOURS! 🎓🌟` : '🎉 CONGRATULATIONS GRADUATE! THE WORLD IS YOURS! 🎓🌟',
         successSubtext: 'The future is yours to conquer! May success follow you wherever you go! 🌟'
     },
@@ -427,7 +549,7 @@ export const CELEBRATION_EVENT_TYPES = {
         getHeading: (name) => name ? `Congrats on the Promotion, ${name}! 🚀` : 'Congrats on the Promotion! 🚀',
         getSubMessage: () => 'Celebrating your dedication, talent, and well-earned achievement...',
         getSuccessHeading: (name) => name ? `Cheers to Your Next Level, ${name}! 🚀🥂` : 'Cheers to Your Next Level! 🚀🥂',
-        countdownTitle: (name) => name ? `🚀 ${name}'s Career Milestone Countdown` : '🚀 Career Milestone Countdown',
+        countdownTitle: () => '🚀 Career Milestone Countdown',
         todayMessage: (name) => name ? `🎉 CHEERS TO YOUR PROMOTION, ${name.toUpperCase()}! YOU DID IT! 🚀🥂` : '🎉 CHEERS TO YOUR PROMOTION! YOU DID IT! 🚀🥂',
         successSubtext: "Your dedication is inspiring. Here's to making great things happen in your new role! 🏆"
     },
@@ -442,7 +564,7 @@ export const CELEBRATION_EVENT_TYPES = {
         getHeading: (name) => name ? `Happy Housewarming, ${name}! 🏡` : 'Happy Housewarming! 🏡',
         getSubMessage: () => 'Wishing you endless laughter, peace, and sweet memories in your new sanctuary...',
         getSuccessHeading: (name) => name ? `Welcome Home, ${name}! 🏡💖` : 'Welcome Home! 🏡💖',
-        countdownTitle: (name) => name ? `🏡 ${name}'s Housewarming Countdown` : '🏡 Housewarming Countdown',
+        countdownTitle: () => '🏡 Housewarming Countdown',
         todayMessage: (name) => name ? `🎉 WELCOME HOME, ${name.toUpperCase()}! MAY JOY FILL EVERY ROOM! 🏡🔑` : '🎉 WELCOME HOME! MAY JOY FILL EVERY ROOM! 🏡🔑',
         successSubtext: 'May your new home always be filled with warmth, happiness, and love! 🔑'
     },
@@ -457,7 +579,7 @@ export const CELEBRATION_EVENT_TYPES = {
         getHeading: (name) => name ? `To the Best Friend Ever, ${name}! 🌸` : 'To My Best Friend! 🌸',
         getSubMessage: () => 'Grateful every day for your laughter, support, and wonderful friendship...',
         getSuccessHeading: (name) => name ? `Besties Forever, ${name}! 🌸💖` : 'Besties Forever! 🌸💖',
-        countdownTitle: (name) => name ? `🌸 ${name}'s Friendship Celebration Countdown` : '🌸 Friendship Celebration Countdown',
+        countdownTitle: () => '🌸 Friendship Celebration Countdown',
         todayMessage: (name) => name ? `🎉 HAPPY BEST FRIENDS DAY, ${name.toUpperCase()}! BESTIES FOREVER! 🌸✨` : '🎉 HAPPY BEST FRIENDS DAY! BESTIES FOREVER! 🌸✨',
         successSubtext: 'Thank you for being such an irreplaceable part of my life! 👯‍♀️✨'
     },
@@ -477,7 +599,7 @@ export const CELEBRATION_EVENT_TYPES = {
         getSuccessHeading: (name) => name ? `Congratulations, ${name}! 🌟🥂` : 'Congratulations! 🌟🥂',
         countdownTitle: (name, title) => {
             const t = (title && title.trim()) ? title.trim() : 'Milestone';
-            return name ? `🌟 ${name}'s ${t} Countdown` : `🌟 ${t} Countdown`;
+            return `🌟 ${t} Countdown`;
         },
         todayMessage: (name, title) => {
             const t = (title && title.trim()) ? title.trim().toUpperCase() : 'MILESTONE';
@@ -490,22 +612,24 @@ export const CELEBRATION_EVENT_TYPES = {
         label: 'Our Love Story',
         icon: '💖',
         emoji: '💖',
-        badge: '💖 SPECIAL ROMANCE',
+        badge: '💖 ROMANTIC MILESTONE',
+        bearNormal: './assets/bear-anniversary.svg',
+        bearSuccess: './assets/bear-anniversary-success.svg',
         acceptText: 'Yes, With All My Heart!',
         acceptEmoji: '🥰',
         getHeading: (name) => name ? `${name}, will you celebrate our love with me? 💖` : 'Will you celebrate our love with me? 💖',
         getSubMessage: () => 'A little corner of the world dedicated just to our story...',
         getSuccessHeading: (name) => name ? `Yaaay, ${name}! You said YES! 💖` : 'You said YES! 💖',
-        countdownTitle: (name) => name ? `💖 ${name}'s Love Story Countdown` : '💖 Love Story Countdown',
+        countdownTitle: () => '💖 Love Story Countdown',
         todayMessage: (name) => name ? `🎉 CELEBRATING OUR LOVE TODAY, ${name.toUpperCase()}! FOREVER YOURS! 💖🥰` : '🎉 CELEBRATING OUR LOVE TODAY! FOREVER YOURS! 💖🥰',
         successSubtext: 'Every chapter with you is sweeter than the last. I love you! 💖✨'
     },
     other: {
         id: 'other',
-        label: 'Special Celebration',
+        label: 'Celebration',
         icon: '✍️',
         emoji: '✍️',
-        badge: '✨ SPECIAL CELEBRATION',
+        badge: '✨ CELEBRATION',
         acceptText: 'Yes, Absolutely!',
         acceptEmoji: '✨',
         getHeading: (name, title) => {
@@ -518,7 +642,7 @@ export const CELEBRATION_EVENT_TYPES = {
         getSuccessHeading: (name) => name ? `Yaaay, ${name}! You said YES! 🎉✨` : 'You said YES! 🎉✨',
         countdownTitle: (name, title) => {
             const t = (title && title.trim()) ? title.trim() : 'Celebration';
-            return name ? `✨ ${name}'s ${t} Countdown` : `✨ ${t} Countdown`;
+            return `✨ ${t} Countdown`;
         },
         todayMessage: (name, title) => {
             const t = (title && title.trim()) ? title.trim().toUpperCase() : 'CELEBRATION';
@@ -527,3 +651,69 @@ export const CELEBRATION_EVENT_TYPES = {
         successSubtext: "Some milestones hold a magic that is uniquely ours. Here's to making memories! 🥂✨"
     }
 };
+
+/**
+ * Resolves the appropriate SVG bear assets based on occasion and custom celebration state.
+ * Specifically checks for Graduation and Anniversary across occasion keys, event chips, and custom titles.
+ *
+ * @param {Object} state - The current application state
+ * @returns {{ normal: string, success: string }} Resolved paths to normal and success bear SVGs
+ */
+export function getBearAssetsForState(state) {
+    if (!state) {
+        return {
+            normal: './assets/bear-valentine.svg',
+            success: './assets/bear-valentine-success.svg'
+        };
+    }
+
+    const occasionKey = (state.occasion || '').toLowerCase();
+    const eventKey = (state.customEvent || '').toLowerCase();
+    const customTitle = (state.customTitle || '').toLowerCase();
+
+    // 1. Explicit Graduation check (occasion, event chip, or title keyword)
+    if (
+        occasionKey === 'graduation' ||
+        eventKey === 'graduation' ||
+        customTitle.includes('graduat') ||
+        customTitle.includes('diploma') ||
+        customTitle.includes('commencement')
+    ) {
+        return {
+            normal: './assets/bear-graduation.svg',
+            success: './assets/bear-graduation-success.svg'
+        };
+    }
+
+    // 2. Explicit Anniversary check (occasion, event chip, or title keyword)
+    if (
+        occasionKey === 'anniversary' ||
+        eventKey === 'anniversary' ||
+        customTitle.includes('anniversar') ||
+        customTitle.includes('wedding')
+    ) {
+        return {
+            normal: './assets/bear-anniversary.svg',
+            success: './assets/bear-anniversary-success.svg'
+        };
+    }
+
+    // 3. Custom event type checks with designated assets
+    if (eventKey && CELEBRATION_EVENT_TYPES[eventKey]) {
+        const ev = CELEBRATION_EVENT_TYPES[eventKey];
+        if (ev.bearNormal && ev.bearSuccess) {
+            return {
+                normal: ev.bearNormal,
+                success: ev.bearSuccess
+            };
+        }
+    }
+
+    // 4. Standard registered occasion fallback
+    const occ = OCCASIONS[occasionKey] || OCCASIONS.christmas;
+    return {
+        normal: occ.bearNormal || './assets/bear-valentine.svg',
+        success: occ.bearSuccess || './assets/bear-valentine-success.svg'
+    };
+}
+

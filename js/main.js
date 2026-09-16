@@ -55,7 +55,7 @@ function applyOccasionUI() {
 
     // 3. Document Title and Open Graph tag
     if (state.recipient) {
-        document.title = `${personalizedHeading} | Special Message`;
+        document.title = `${personalizedHeading} | Happy Wishes`;
         const ogTitle = document.querySelector('meta[property="og:title"]');
         if (ogTitle) ogTitle.setAttribute('content', personalizedHeading);
     }
@@ -63,7 +63,7 @@ function applyOccasionUI() {
     // 4. Control Pills
     const recipientPillText = document.getElementById('recipient-pill-text');
     if (recipientPillText) {
-        recipientPillText.textContent = state.recipient ? `For: ${state.recipient}` : "For: Someone Special";
+        recipientPillText.textContent = state.recipient ? "Personalize ✏️" : "Personalize 💌";
     }
 
     updateWishJarPill();

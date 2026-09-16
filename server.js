@@ -28,9 +28,32 @@ function getAIClient() {
   return aiClient;
 }
 
-// --------------------------------------------------------------------------
-// Rich Curated Structured Data Bank (Fallbacks and Offline Library)
-// --------------------------------------------------------------------------
+// Candidate models in order of priority: primary latest model, followed by high-throughput lite model
+const CANDIDATE_MODELS = ['gemini-3.8-flash', 'gemini-3.1-flash-lite'];
+
+async function executeGeminiWithFallback(ai, prompt, responseSchema) {
+  for (const model of CANDIDATE_MODELS) {
+    try {
+      const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          responseSchema
+        }
+      });
+      const responseText = response.text ? response.text.trim() : '';
+      if (responseText) {
+        const parsed = JSON.parse(responseText);
+        if (parsed) return parsed;
+      }
+    } catch (_) {
+      // Continue to candidate fallback model (e.g. gemini-3.1-flash-lite)
+      continue;
+    }
+  }
+  return null;
+}
 const CURATED_WISHES_BANK = {
   valentine: [
     { text: "Your smile has an effortless way of turning my most chaotic days into pure peace.", tag: "Reason to Love" },
@@ -130,8 +153,7 @@ app.post('/api/wishes/generate', async (req, res) => {
   // Try Gemini AI if API key is available
   const ai = getAIClient();
   if (ai) {
-    try {
-      const prompt = `You are a thoughtful, eloquent master of celebration greetings and compliments.
+    const prompt = `You are a thoughtful, eloquent master of celebration greetings and compliments.
 Create 6 to 8 fresh, diverse, deeply touching, and highly original seasonal wishes or sweet reasons/compliments.
 Occasion: ${occasion}
 Event Type / Theme: ${eventType || occasion}
@@ -152,48 +174,35 @@ Return a strictly valid JSON object matching this schema:
   ]
 }`;
 
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.6-flash',
-        contents: prompt,
-        config: {
-          responseMimeType: 'application/json',
-          responseSchema: {
+    const wishesSchema = {
+      type: Type.OBJECT,
+      properties: {
+        title: { type: Type.STRING },
+        tagPrefix: { type: Type.STRING },
+        wishes: {
+          type: Type.ARRAY,
+          items: {
             type: Type.OBJECT,
             properties: {
-              title: { type: Type.STRING },
-              tagPrefix: { type: Type.STRING },
-              wishes: {
-                type: Type.ARRAY,
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    text: { type: Type.STRING },
-                    tag: { type: Type.STRING }
-                  },
-                  required: ['text', 'tag']
-                }
-              }
+              text: { type: Type.STRING },
+              tag: { type: Type.STRING }
             },
-            required: ['title', 'tagPrefix', 'wishes']
+            required: ['text', 'tag']
           }
         }
-      });
+      },
+      required: ['title', 'tagPrefix', 'wishes']
+    };
 
-      const responseText = response.text ? response.text.trim() : '';
-      if (responseText) {
-        const parsed = JSON.parse(responseText);
-        if (Array.isArray(parsed.wishes) && parsed.wishes.length > 0) {
-          return res.json({
-            success: true,
-            source: 'ai',
-            title: parsed.title || `${nameToUse}'s Special Wishes ✨`,
-            tagPrefix: parsed.tagPrefix || 'Wish',
-            wishes: parsed.wishes
-          });
-        }
-      }
-    } catch (err) {
-      console.warn('Gemini wish generation encountered issue, falling back to curated bank:', err.message);
+    const parsed = await executeGeminiWithFallback(ai, prompt, wishesSchema);
+    if (parsed && Array.isArray(parsed.wishes) && parsed.wishes.length > 0) {
+      return res.json({
+        success: true,
+        source: 'ai',
+        title: parsed.title || `${nameToUse}'s Special Wishes ✨`,
+        tagPrefix: parsed.tagPrefix || 'Wish',
+        wishes: parsed.wishes
+      });
     }
   }
 
@@ -235,6 +244,209 @@ app.get('/api/wishes/fresh', (req, res) => {
     source: 'curated',
     count: bank.length,
     wishes: bank
+  });
+});
+
+// --------------------------------------------------------------------------
+// API: Generate Heartfelt Keepsake Letter using Gemini AI
+// --------------------------------------------------------------------------
+const OCCASION_TITLES = {
+  valentine: "Valentine's Day",
+  christmas: "Christmas",
+  newyear: "New Year",
+  easter: "Easter",
+  birthday: "Birthday",
+  anniversary: "Anniversary",
+  custom: "Special Celebration"
+};
+
+const CELEBRATION_TITLES = {
+  birthday: "Birthday",
+  anniversary: "Anniversary",
+  graduation: "Graduation Day",
+  promotion: "Job Promotion",
+  newhome: "New Home",
+  friendship: "Best Friends Day",
+  milestone: "Major Milestone",
+  love: "Our Love Story",
+  other: "Special Celebration"
+};
+
+function generateCuratedLetter({ recipient, occasion, eventType, eventTitle, dateStr }) {
+  const name = (recipient && recipient.trim()) ? recipient.trim() : 'Someone Special';
+  const displayOccasion = eventTitle || CELEBRATION_TITLES[eventType] || OCCASION_TITLES[occasion] || 'Celebration';
+  const when = (dateStr && dateStr.trim()) ? `on ${dateStr.trim()}` : 'today and always';
+
+  if (occasion === 'valentine' || eventType === 'love') {
+    const body = `As Valentine's Day arrives ${when}, my heart is filled with pure gratitude for you. Walking through life by your side makes every ordinary day feel like poetry and every dream feel within reach. Thank you for filling my world with so much warmth, laughter, and effortless magic.`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `With all my heart and endless love ❤️`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nWith all my heart and endless love ❤️`
+    };
+  }
+
+  if (occasion === 'birthday' || eventType === 'birthday') {
+    const body = `Happy Birthday! Celebrating your wonderful presence ${when} is the easiest reason to smile. May your new orbit around the sun bring you vibrant health, daring adventures, and laughter that echoes every single day. The world is infinitely brighter because you are in it!`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `Wishing you the happiest birthday ever 🎂✨`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nWishing you the happiest birthday ever 🎂✨`
+    };
+  }
+
+  if (occasion === 'anniversary' || eventType === 'anniversary') {
+    const body = `Happy Anniversary! Commemorating our journey ${when} reminds me how wondrous our love continues to be. Through every shared smile, quiet victory, and gentle chapter, my devotion to you only grows deeper, stronger, and more true. Here is to our sweetest memories and every milestone still ahead!`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `Forever and always yours 💍❤️`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nForever and always yours 💍❤️`
+    };
+  }
+
+  if (occasion === 'christmas') {
+    const body = `Merry Christmas! As the holiday warmth and twinkling lights gather ${when}, I want to send you my deepest affection. May your home be wrapped in cozy firelight, peace, and sweet memories with the ones you love most. Thank you for being the brightest gift of all.`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `With all my warmest holiday love 🎄✨`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nWith all my warmest holiday love 🎄✨`
+    };
+  }
+
+  if (occasion === 'newyear') {
+    const body = `Happy New Year! Greet this fresh chapter ${when} with fearless optimism and an open heart. You have all the resilience and brilliance needed to make this your most triumphant year yet. May every sunrise bring you bold dreams, good health, and abundant joy!`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `Cheers to our brightest year ahead 🎆🥂`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nCheers to our brightest year ahead 🎆🥂`
+    };
+  }
+
+  if (occasion === 'easter') {
+    const body = `Happy Easter! As springtime blooms ${when}, may your heart feel as light, free, and hopeful as the morning sun. Wishing you fresh beginnings, sweet chocolate moments, and serene peace in everything you do. Thank you for sharing your gentle light with me.`;
+    return {
+      greeting: `Dearest ${name},`,
+      body,
+      closing: `Warm springtime love and hugs 🐣🌸`,
+      fullLetter: `Dearest ${name},\n\n${body}\n\nWarm springtime love and hugs 🐣🌸`
+    };
+  }
+
+  const body = `Celebrating ${displayOccasion} with you ${when} fills my heart with immense happiness. Every step you took to reach this moment is a testament to your spirit and perseverance. May this milestone be the launchpad for your most rewarding and joyful chapter yet!`;
+  return {
+    greeting: `Dearest ${name},`,
+    body,
+    closing: `With boundless admiration and warmest wishes ✨🥂`,
+    fullLetter: `Dearest ${name},\n\n${body}\n\nWith boundless admiration and warmest wishes ✨🥂`
+  };
+}
+
+app.post('/api/letter/generate', async (req, res) => {
+  const {
+    recipientName = '',
+    occasion = 'christmas',
+    eventType = '',
+    eventTitle = '',
+    selectedDate = '',
+    customNote = '',
+    vibe = 'heartfelt'
+  } = req.body || {};
+
+  const nameToUse = (recipientName && recipientName.trim()) ? recipientName.trim() : 'Someone Special';
+  const occasionName = (eventTitle && eventTitle.trim())
+    ? eventTitle.trim()
+    : (eventType && CELEBRATION_TITLES[eventType])
+      ? CELEBRATION_TITLES[eventType]
+      : (OCCASION_TITLES[occasion] || occasion);
+
+  // Format the date if provided
+  let formattedDate = selectedDate;
+  if (selectedDate && typeof selectedDate === 'string') {
+    try {
+      const parts = selectedDate.split('-');
+      if (parts.length === 3) {
+        const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+        if (!isNaN(d.getTime())) {
+          formattedDate = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+      } else {
+        const d = new Date(selectedDate);
+        if (!isNaN(d.getTime())) {
+          formattedDate = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+        }
+      }
+    } catch (_) {}
+  }
+
+  const ai = getAIClient();
+  if (ai) {
+    const prompt = `You are an eloquent writer of heartfelt keepsake letters and personal holiday / celebration notes.
+Write an authentic, deeply touching, and memorable keepsake letter for a greeting card with the following details:
+- Recipient Name: ${nameToUse}
+- Occasion / Celebration: ${occasionName}
+- Selected Date / Target Milestone Date: ${formattedDate || 'this special milestone'}
+- Personal context / Draft note: "${customNote || ''}"
+- Desired Vibe: ${vibe}, sincere, warm, poetic yet authentic, emotionally resonant
+
+Requirements:
+1. Write 2 to 3 concise, beautifully written paragraphs (total length around 280-450 characters / 50-80 words).
+2. Directly reference the recipient (${nameToUse}), the celebration (${occasionName}), and the significance of the date (${formattedDate || 'this moment'}).
+3. Do NOT use markdown symbols like asterisks (**) or bullet points, so it reads like genuine handwritten parchment.
+4. Keep the greeting warm (e.g. "Dearest ${nameToUse}," or "Happy ${occasionName}, ${nameToUse}!") and closing sweet (e.g. "With all my love and warmest wishes ❤️").
+
+Return a strictly valid JSON object matching this schema:
+{
+  "greeting": "Dearest ${nameToUse},",
+  "body": "The heartfelt paragraphs...",
+  "closing": "With all my love & heart ❤️",
+  "letter": "Full combined letter ready to display"
+}`;
+
+    const letterSchema = {
+      type: Type.OBJECT,
+      properties: {
+        greeting: { type: Type.STRING },
+        body: { type: Type.STRING },
+        closing: { type: Type.STRING },
+        letter: { type: Type.STRING }
+      },
+      required: ['letter']
+    };
+
+    const parsed = await executeGeminiWithFallback(ai, prompt, letterSchema);
+    if (parsed && parsed.letter && parsed.letter.trim().length > 0) {
+      return res.json({
+        success: true,
+        source: 'ai',
+        greeting: parsed.greeting || `Dearest ${nameToUse},`,
+        body: parsed.body || parsed.letter,
+        closing: parsed.closing || 'With all my love ❤️',
+        letter: parsed.letter.trim()
+      });
+    }
+  }
+
+  // Curated Fallback Letter Generator (if API key missing or network failure)
+  const fallbackLetter = generateCuratedLetter({
+    recipient: nameToUse,
+    occasion,
+    eventType,
+    eventTitle: occasionName,
+    dateStr: formattedDate
+  });
+
+  return res.json({
+    success: true,
+    source: 'curated',
+    greeting: fallbackLetter.greeting,
+    body: fallbackLetter.body,
+    closing: fallbackLetter.closing,
+    letter: fallbackLetter.fullLetter
   });
 });
 

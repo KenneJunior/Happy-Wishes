@@ -49,12 +49,12 @@ export function updateCountdownDisplay() {
             countdownTodayBanner.style.display = 'block';
             if (state.occasion === 'custom') {
                 const displayTitle = (state.customTitle && state.customTitle.trim()) || 
-                    (CELEBRATION_EVENT_TYPES[state.customEvent] ? CELEBRATION_EVENT_TYPES[state.customEvent].label : 'SPECIAL DAY');
+                    (CELEBRATION_EVENT_TYPES[state.customEvent] ? CELEBRATION_EVENT_TYPES[state.customEvent].label : 'Celebration');
                 countdownTodayBanner.textContent = `🎉 TODAY IS ${state.recipient ? state.recipient.toUpperCase() + "'S " : ""}${displayTitle.toUpperCase()}! WISHING YOU INFINITE JOY! ✨🥂`;
             } else if (typeof occ.todayMessage === 'function') {
                 countdownTodayBanner.textContent = occ.todayMessage(state.recipient);
             } else {
-                countdownTodayBanner.textContent = `🎉 TODAY IS THE SPECIAL DAY! WISHING YOU INFINITE JOY! ✨🥂`;
+                countdownTodayBanner.textContent = `🎉 TODAY IS THE CELEBRATION! WISHING YOU INFINITE JOY! ✨🥂`;
             }
         }
     } else {

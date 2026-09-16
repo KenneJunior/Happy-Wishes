@@ -56,8 +56,8 @@ export async function generateWishes(params = {}) {
         }
 
         throw new Error('Invalid or empty wishes payload received');
-    } catch (err) {
-        console.warn('Wish generation service fallback triggered:', err.message);
+    } catch (_) {
+        // Fall back gracefully to curated client wish options
 
         const clientFallbacks = [
             recipientName 

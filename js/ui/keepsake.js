@@ -8,6 +8,8 @@ import { sound } from '../core/sound.js';
 import { showToast } from './toast.js';
 import { appState } from '../core/state.js';
 import { OCCASIONS, CELEBRATION_EVENT_TYPES } from '../config/occasions.js';
+import { OccasionManager } from '../core/occasion-service.js';
+import { generateKeepsakeLetter } from '../services/letter-api.js';
 
 let virtualCardWrapper = null;
 let virtualCardInner = null;
@@ -25,6 +27,10 @@ let editScratchpadBtn = null;
 let scratchpadBtnIcon = null;
 let scratchpadBtnText = null;
 let copyScratchpadBtn = null;
+let aiParchmentBtn = null;
+let parchmentAiSpark = null;
+let parchmentAiText = null;
+let isParchmentAiLoading = false;
 
 let isCardFlipped = false;
 let isScratchpadEditing = false;
@@ -58,12 +64,31 @@ export function updateKeepsakeContent() {
     if (envelopeRecipientText) {
         envelopeRecipientText.textContent = state.recipient ? `To: ${state.recipient} ❤️` : "To: Someone Special ❤️";
     }
+
+    const customText = state.customMsg ? state.customMsg.trim() : '';
+    const hasCustomGreeting = customText && /^(dearest|dear|to:?|happy\s+\w+)/i.test(customText);
+    const hasCustomClosing = customText && /(with\s+all\s+my|love\s*,|yours\s*,|warmest\s+|cheers\s*,|forever\s+and)/i.test(customText);
+
     if (keepsakeGreeting) {
-        keepsakeGreeting.textContent = state.recipient ? `Dearest ${state.recipient},` : "Dearest One,";
+        if (hasCustomGreeting) {
+            keepsakeGreeting.style.display = 'none';
+        } else {
+            keepsakeGreeting.style.display = 'block';
+            keepsakeGreeting.textContent = state.recipient ? `Dearest ${state.recipient},` : "Dearest One,";
+        }
     }
+
+    if (keepsakeSignature) {
+        if (hasCustomClosing) {
+            keepsakeSignature.style.display = 'none';
+        } else {
+            keepsakeSignature.style.display = 'block';
+        }
+    }
+
     if (keepsakeBody) {
-        if (state.customMsg) {
-            keepsakeBody.textContent = state.customMsg;
+        if (customText) {
+            keepsakeBody.textContent = customText;
         } else if (state.occasion === 'custom') {
             const eventCfg = CELEBRATION_EVENT_TYPES[state.customEvent] || CELEBRATION_EVENT_TYPES.other;
             keepsakeBody.textContent = eventCfg.successSubtext || occ.successSubtext;
@@ -124,6 +149,9 @@ export function initKeepsake() {
     scratchpadBtnIcon = document.getElementById('scratchpad-btn-icon');
     scratchpadBtnText = document.getElementById('scratchpad-btn-text');
     copyScratchpadBtn = document.getElementById('copy-scratchpad-btn');
+    aiParchmentBtn = document.getElementById('ai-parchment-btn');
+    parchmentAiSpark = document.getElementById('parchment-ai-spark');
+    parchmentAiText = document.getElementById('parchment-ai-text');
 
     updateKeepsakeContent();
 
@@ -318,17 +346,99 @@ export function initKeepsake() {
         });
     }
 
+    // AI Keepsake Letter Generation directly on Parchment Card
+    async function handleGenerateParchmentAiLetter() {
+        if (isParchmentAiLoading) return;
+        isParchmentAiLoading = true;
+
+        if (aiParchmentBtn) {
+            aiParchmentBtn.disabled = true;
+            aiParchmentBtn.classList.add('is-loading');
+        }
+        if (parchmentAiText) {
+            parchmentAiText.textContent = 'Writing...';
+        }
+
+        const state = appState.getState();
+        const currentName = state.recipient || '';
+        const effOccasion = state.occasion;
+        const effEventType = state.customEvent || '';
+        const effEventTitle = state.customTitle || '';
+        const userDate = state.customDate || '';
+
+        let dateStr = userDate;
+        if (!dateStr || (effOccasion !== 'custom' && effOccasion !== 'birthday')) {
+            try {
+                const target = OccasionManager.getTargetDate(effOccasion, userDate);
+                if (target && !isNaN(target.getTime())) {
+                    dateStr = target.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                }
+            } catch (_) {}
+        } else if (userDate) {
+            try {
+                const parts = userDate.split('-');
+                if (parts.length === 3) {
+                    const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                    dateStr = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                }
+            } catch (_) {}
+        }
+
+        try {
+            const result = await generateKeepsakeLetter({
+                recipientName: currentName,
+                occasion: effOccasion,
+                eventType: effEventType,
+                eventTitle: effEventTitle,
+                selectedDate: dateStr,
+                customNote: state.customMsg || '',
+                vibe: 'heartfelt'
+            });
+
+            if (result && result.letter) {
+                appState.updateState({ customMsg: result.letter });
+                if (scratchpadTextarea) scratchpadTextarea.value = result.letter;
+                sound.playCelebrationChime();
+                showToast("Gemini AI crafted a heartfelt keepsake letter! 💌✨", "✨");
+            }
+        } catch (err) {
+            console.error('Error generating keepsake parchment letter:', err);
+        } finally {
+            isParchmentAiLoading = false;
+            if (aiParchmentBtn) {
+                aiParchmentBtn.disabled = false;
+                aiParchmentBtn.classList.remove('is-loading');
+            }
+            if (parchmentAiText) {
+                parchmentAiText.textContent = 'AI Letter';
+            }
+        }
+    }
+
+    if (aiParchmentBtn) {
+        aiParchmentBtn.addEventListener('click', handleGenerateParchmentAiLetter);
+    }
+
     // Copy Scratchpad Note to Clipboard
     if (copyScratchpadBtn) {
         copyScratchpadBtn.addEventListener('click', () => {
-            const greeting = keepsakeGreeting ? keepsakeGreeting.textContent : 'Dearest One,';
-            const body = keepsakeBody ? keepsakeBody.textContent : '';
-            const sig = keepsakeSignature ? keepsakeSignature.textContent : 'With all my love ❤️';
-            const fullLetter = `${greeting}\n\n${body}\n\n${sig}`;
+            const body = keepsakeBody ? keepsakeBody.textContent.trim() : '';
+            const hasGreeting = /^(dearest|dear|to:?|happy\s+\w+)/i.test(body);
+            const hasClosing = /(with\s+all\s+my|love\s*,|yours\s*,|warmest\s+|cheers\s*,|forever\s+and)/i.test(body);
+
+            const greeting = (!hasGreeting && keepsakeGreeting && keepsakeGreeting.style.display !== 'none')
+                ? keepsakeGreeting.textContent.trim() 
+                : '';
+            const sig = (!hasClosing && keepsakeSignature && keepsakeSignature.style.display !== 'none')
+                ? keepsakeSignature.textContent.trim() 
+                : '';
+
+            const parts = [greeting, body, sig].filter(Boolean);
+            const fullLetter = parts.join('\n\n');
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(fullLetter).then(() => {
-                    showToast("Keepsake note copied to clipboard! 💌", "📋");
+                    showToast("Keepsake letter copied to clipboard! 💌", "📋");
                 }).catch(() => {
                     showToast("Note ready! Press Ctrl+C to copy", "✍️");
                 });

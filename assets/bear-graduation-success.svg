@@ -1,0 +1,240 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <!-- Bear Fur Gradients -->
+    <linearGradient id="furGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#f8f9fa"/>
+      <stop offset="100%" stop-color="#e9ecef"/>
+    </linearGradient>
+
+    <radialGradient id="bellyGrad" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#f1f3f5"/>
+      <stop offset="100%" stop-color="#dee2e6"/>
+    </radialGradient>
+
+    <linearGradient id="innerEarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffccd5"/>
+      <stop offset="100%" stop-color="#ff758f"/>
+    </linearGradient>
+
+    <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#ff758f" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffccd5" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Academic Mortarboard Cap Gradients -->
+    <linearGradient id="capBoardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b3a4a"/>
+      <stop offset="45%" stop-color="#1b263b"/>
+      <stop offset="100%" stop-color="#0d1b2a"/>
+    </linearGradient>
+
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="45%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#e09f3e"/>
+    </linearGradient>
+
+    <linearGradient id="ribbonRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#e63946"/>
+      <stop offset="100%" stop-color="#9b2226"/>
+    </linearGradient>
+
+    <linearGradient id="diplomaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fffdf0"/>
+      <stop offset="100%" stop-color="#fefae0"/>
+    </linearGradient>
+
+    <linearGradient id="specularRim" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="75%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="joyGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#ffd166" flood-opacity="0.35"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#e63946" flood-opacity="0.2"/>
+    </filter>
+
+    <style>
+      @keyframes bearVictoryJump {
+        0%, 100% { transform: translateY(0px) scale(1, 1); }
+        30% { transform: translateY(-38px) scale(0.92, 1.1) rotate(2deg); }
+        55% { transform: translateY(-42px) scale(1.02, 0.98) rotate(-1deg); }
+        75% { transform: translateY(8px) scale(1.18, 0.82) rotate(0deg); }
+        88% { transform: translateY(-10px) scale(0.96, 1.05) rotate(1deg); }
+      }
+
+      @keyframes groundShadowVictory {
+        0%, 100% { transform: scale(1, 1); opacity: 0.38; }
+        30%, 55% { transform: scale(0.48, 0.44); opacity: 0.12; }
+        75% { transform: scale(1.32, 1.25); opacity: 0.6; }
+        88% { transform: scale(0.85, 0.82); opacity: 0.28; }
+      }
+
+      @keyframes capTossFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        35% { transform: translateY(-32px) rotate(-16deg); }
+        60% { transform: translateY(-44px) rotate(-22deg); }
+        80% { transform: translateY(-12px) rotate(-6deg); }
+      }
+
+      @keyframes diplomaWave {
+        0%, 100% { transform: rotate(0deg); }
+        30% { transform: rotate(18deg); }
+        60% { transform: rotate(-12deg); }
+        80% { transform: rotate(8deg); }
+      }
+
+      @keyframes confettiRain {
+        0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 0.9; }
+        100% { transform: translateY(120px) rotate(260deg); opacity: 0; }
+      }
+
+      .bear-victory-anim {
+        animation: bearVictoryJump 2.4s cubic-bezier(0.28, 0, 0.22, 1) infinite;
+        transform-origin: 140px 185px;
+      }
+
+      .shadow-victory-anim {
+        animation: groundShadowVictory 2.4s cubic-bezier(0.28, 0, 0.22, 1) infinite;
+        transform-origin: 140px 222px;
+      }
+
+      .cap-toss-anim {
+        animation: capTossFloat 2.4s ease-in-out infinite;
+        transform-origin: 140px 50px;
+      }
+
+      .diploma-wave-anim {
+        animation: diplomaWave 2.4s ease-in-out infinite;
+        transform-origin: 188px 135px;
+      }
+
+      .confetti-1 { animation: confettiRain 3.2s linear infinite 0.2s; }
+      .confetti-2 { animation: confettiRain 3.6s linear infinite 0.9s; }
+      .confetti-3 { animation: confettiRain 3.0s linear infinite 1.5s; }
+      .confetti-4 { animation: confettiRain 3.4s linear infinite 0.6s; }
+    </style>
+  </defs>
+
+  <!-- Ground Shadow -->
+  <ellipse cx="140" cy="222" rx="55" ry="12" fill="#1b263b" class="shadow-victory-anim"/>
+
+  <!-- Flying Confetti & Gold Stars Streamers -->
+  <g class="confetti-1">
+    <polygon points="35,20 40,25 35,30 30,25" fill="#ffd166"/>
+    <rect x="50" y="15" width="8" height="4" rx="1.5" fill="#e63946" transform="rotate(25 50 15)"/>
+  </g>
+  <g class="confetti-2">
+    <circle cx="230" cy="30" r="3.5" fill="#457b9d"/>
+    <polygon points="245,25 248,32 255,35 248,38 245,45 242,38 235,35 242,32" fill="url(#goldGrad)"/>
+  </g>
+  <g class="confetti-3">
+    <rect x="25" y="60" width="7" height="3" rx="1" fill="#2a9d8f" transform="rotate(-35 25 60)"/>
+    <polygon points="215,80 218,87 225,90 218,93 215,100 212,93 205,90 212,87" fill="#ffd166"/>
+  </g>
+  <g class="confetti-4">
+    <circle cx="75" cy="50" r="3" fill="#ff758f"/>
+    <rect x="195" y="35" width="9" height="4" rx="1.5" fill="#ffd166" transform="rotate(45 195 35)"/>
+  </g>
+
+  <!-- Tossed Mortarboard Cap in Mid-Air Flight -->
+  <g class="cap-toss-anim">
+    <!-- Mortarboard Diamond Top Tilted in Mid-Air -->
+    <polygon points="140,16 198,34 140,50 82,34" fill="url(#capBoardGrad)" stroke="#0d1b2a" stroke-width="2"/>
+    <polygon points="140,16 198,34 192,36 140,20" fill="#ffffff" opacity="0.45"/>
+    <!-- Center Gold Button -->
+    <ellipse cx="140" cy="33" rx="4" ry="2.5" fill="url(#goldGrad)"/>
+    <!-- Swirling Flying Tassel -->
+    <path d="M 140 33 Q 175 25 186 44 L 194 65" fill="none" stroke="url(#goldGrad)" stroke-width="2.8" stroke-linecap="round"/>
+    <polygon points="190,65 198,65 200,82 188,82" fill="url(#goldGrad)"/>
+  </g>
+
+  <!-- Main Animated Character Rig -->
+  <g class="bear-victory-anim" filter="url(#joyGlow)">
+    
+    <!-- Bear Body -->
+    <ellipse cx="140" cy="158" rx="42" ry="46" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2.5"/>
+    <ellipse cx="140" cy="164" rx="28" ry="30" fill="url(#bellyGrad)"/>
+
+    <!-- Bear Feet in Joyful Jump Stance -->
+    <ellipse cx="108" cy="202" rx="15" ry="11" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2" transform="rotate(-8 108 202)"/>
+    <ellipse cx="108" cy="202" rx="8" ry="5.5" fill="#ffccd5" opacity="0.6"/>
+    <ellipse cx="172" cy="202" rx="15" ry="11" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2" transform="rotate(8 172 202)"/>
+    <ellipse cx="172" cy="202" rx="8" ry="5.5" fill="#ffccd5" opacity="0.6"/>
+
+    <!-- Bear Ears with Happy Perk -->
+    <g>
+      <circle cx="104" cy="74" r="18" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2.5"/>
+      <circle cx="104" cy="74" r="10" fill="url(#innerEarGrad)"/>
+      <path d="M 89 70 C 95 63 110 63 117 71 C 111 66 97 66 89 70 Z" fill="url(#specularRim)" opacity="0.9"/>
+    </g>
+    <g>
+      <circle cx="176" cy="74" r="18" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2.5"/>
+      <circle cx="176" cy="74" r="10" fill="url(#innerEarGrad)"/>
+      <path d="M 163 70 C 169 63 184 63 191 71 C 185 66 171 66 163 70 Z" fill="url(#specularRim)" opacity="0.9"/>
+    </g>
+
+    <!-- Bear Head -->
+    <circle cx="140" cy="116" r="48" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2.5"/>
+    <ellipse cx="140" cy="95" rx="28" ry="14" fill="#ffffff" opacity="0.45"/>
+
+    <!-- Left Paw Raised High in Wave / Fist Pump -->
+    <g transform="translate(94, 126) rotate(-35)">
+      <ellipse cx="0" cy="0" rx="12" ry="16" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2"/>
+      <ellipse cx="0" cy="-4" rx="6" ry="4" fill="#ffccd5" opacity="0.6"/>
+      <circle cx="0" cy="-7" r="1.5" fill="#ffffff" opacity="0.7"/>
+    </g>
+
+    <!-- Right Paw Raised High Waving the Rolled Diploma -->
+    <g class="diploma-wave-anim">
+      <!-- Arm / Paw -->
+      <ellipse cx="186" cy="132" rx="12" ry="16" fill="url(#furGrad)" stroke="#ced4da" stroke-width="2" transform="rotate(30 186 132)"/>
+      
+      <!-- Held Diploma Scroll -->
+      <g transform="translate(192, 118) rotate(38)">
+        <rect x="-10" y="-30" width="20" height="60" rx="4" fill="url(#diplomaGrad)" stroke="#d4af37" stroke-width="1.4"/>
+        <!-- Curled Ends -->
+        <ellipse cx="0" cy="-30" rx="10" ry="3" fill="#fffdf0" stroke="#b08968" stroke-width="1"/>
+        <ellipse cx="0" cy="30" rx="10" ry="3" fill="#f5ebe0" stroke="#b08968" stroke-width="1"/>
+        <!-- Red Satin Ribbon -->
+        <rect x="-11" y="-4" width="22" height="8" rx="1.5" fill="url(#ribbonRedGrad)"/>
+        <!-- Gold Stamp -->
+        <circle cx="0" cy="0" r="5" fill="url(#goldGrad)"/>
+        <!-- Flying Ribbon Tails -->
+        <path d="M 0 4 Q 8 14 16 16 L 12 18 Z" fill="url(#ribbonRedGrad)"/>
+        <path d="M -2 4 Q -10 14 -14 18 L -8 18 Z" fill="url(#ribbonRedGrad)"/>
+      </g>
+    </g>
+
+    <!-- Happy Joyful Curved Eyes (^ _ ^) -->
+    <path d="M 112 114 Q 119 104 126 114" fill="none" stroke="#1b263b" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 154 114 Q 161 104 168 114" fill="none" stroke="#1b263b" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Blushing Rosy Cheeks -->
+    <circle cx="110" cy="126" r="13" fill="url(#blushGrad)"/>
+    <circle cx="170" cy="126" r="13" fill="url(#blushGrad)"/>
+    <ellipse cx="107" cy="123" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.85"/>
+    <circle cx="111" cy="125" r="1" fill="#ffffff" opacity="0.6"/>
+    <ellipse cx="173" cy="123" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.85"/>
+    <circle cx="169" cy="125" r="1" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Snout & Nose -->
+    <ellipse cx="140" cy="125" rx="14" ry="10" fill="#ffffff" stroke="#e9ecef" stroke-width="1.5"/>
+    <ellipse cx="140" cy="120" rx="5.5" ry="3.5" fill="#1b263b"/>
+    <ellipse cx="138" cy="119" rx="2" ry="1" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Big Joyful Open Laughing Mouth -->
+    <path d="M 132 126 Q 140 128 148 126 Q 148 138 140 140 Q 132 138 132 126 Z" fill="#800f2f" stroke="#1b263b" stroke-width="1.8"/>
+    <!-- Cute Pink Tongue -->
+    <path d="M 135 134 Q 140 131 145 134 Q 140 140 135 134 Z" fill="#ff758f"/>
+
+  </g>
+</svg>

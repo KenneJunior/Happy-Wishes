@@ -8,15 +8,17 @@ import { sound } from '../core/sound.js';
 import { launchCelebrationConfetti } from './effects/confetti.js';
 import { spawnFloatingParticle } from './effects/particles.js';
 import { DeviceManager } from '../core/device.js';
-import { OCCASIONS, CELEBRATION_EVENT_TYPES } from '../config/occasions.js';
+import { OCCASIONS, CELEBRATION_EVENT_TYPES, getBearAssetsForState } from '../config/occasions.js';
 import { getPersonalizedSuccessHeading } from '../core/occasion-service.js';
 import { appState } from '../core/state.js';
 import { updateVisualAspectRatio } from './bear.js';
 import { resetCardFlip, updateKeepsakeContent } from './keepsake.js';
 import { resetDodge } from './dodge.js';
+import { showToast } from './toast.js';
 
 let acceptBtn = null;
 let replayBtn = null;
+let shareLinkBtn = null;
 let contentHeader = null;
 let buttonGroup = null;
 let occasionPillBtn = null;
@@ -63,7 +65,8 @@ export function triggerAcceptSuccess() {
 
     // 2. Victory Bear
     if (mainGif) {
-        mainGif.src = occ.bearSuccess;
+        const bearAssets = getBearAssetsForState(state);
+        mainGif.src = bearAssets.success || occ.bearSuccess;
         mainGif.alt = `Celebratory ${occ.name} animation`;
         mainGif.style.transform = 'scale(1.08)';
         if (mainGif.complete) {
@@ -173,6 +176,16 @@ export function resetSuccessState(onReplayOccasionApply) {
         buttonGroup.style.display = 'flex';
         buttonGroup.removeAttribute('hidden');
     }
+    if (acceptBtn) {
+        acceptBtn.style.display = '';
+        acceptBtn.style.transform = 'scale(1)';
+        acceptBtn.removeAttribute('hidden');
+    }
+    const denyBtn = document.getElementById('deny-btn') || document.getElementById('no-btn');
+    if (denyBtn) {
+        denyBtn.style.display = '';
+        denyBtn.removeAttribute('hidden');
+    }
     if (successContainer) {
         successContainer.hidden = true;
         successContainer.setAttribute('aria-hidden', 'true');
@@ -181,9 +194,10 @@ export function resetSuccessState(onReplayOccasionApply) {
 
     const state = appState.getState();
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
+    const bearAssets = getBearAssetsForState(state);
 
     if (mainGif) {
-        mainGif.src = occ.bearNormal;
+        mainGif.src = bearAssets.normal || occ.bearNormal;
         mainGif.style.transform = '';
     }
 
@@ -207,6 +221,7 @@ export function resetSuccessState(onReplayOccasionApply) {
 export function initSuccess({ onReplayOccasionApply } = {}) {
     acceptBtn = document.getElementById('accept-btn') || document.getElementById('yes-btn');
     replayBtn = document.getElementById('replay-btn');
+    shareLinkBtn = document.getElementById('share-link-btn');
     contentHeader = document.getElementById('content-header');
     buttonGroup = document.getElementById('button-group');
     occasionPillBtn = document.getElementById('occasion-pill-btn');
@@ -225,6 +240,42 @@ export function initSuccess({ onReplayOccasionApply } = {}) {
     if (replayBtn) {
         replayBtn.addEventListener('click', () => {
             resetSuccessState(onReplayOccasionApply);
+        });
+    }
+
+    if (shareLinkBtn) {
+        shareLinkBtn.addEventListener('click', async () => {
+            sound.playSparklePop();
+            const shareUrl = appState.getShareUrl();
+            const state = appState.getState();
+            const title = state.recipient ? `${state.recipient}'s Celebration Card` : "Celebration Card";
+
+            if (navigator.share && typeof navigator.canShare === 'function') {
+                try {
+                    if (navigator.canShare({ url: shareUrl })) {
+                        await navigator.share({
+                            title,
+                            text: "Open this celebration card! 💌✨",
+                            url: shareUrl,
+                        });
+                        showToast("Celebration link shared! 💖", "🔗");
+                        return;
+                    }
+                } catch (err) {
+                    if (err.name === 'AbortError') return;
+                }
+            }
+
+            try {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(shareUrl);
+                    showToast("Celebration link copied! Ready to share 🔗✨", "📋");
+                } else {
+                    window.prompt("Copy your celebration link:", shareUrl);
+                }
+            } catch (_) {
+                window.prompt("Copy your celebration link:", shareUrl);
+            }
         });
     }
 }

@@ -43,7 +43,9 @@ export function getEffectiveWishJarConfig() {
         return {
             title: `${displayTitle} Wishes & Notes ${eventCfg.emoji || '✨'}`,
             tagPrefix: `${eventCfg.label || 'Celebration'} Wish`,
-            pillLabel: `Tap for ${eventCfg.label || 'a'} wish 💌`,
+            pillLabel: (state.customTitle && state.customTitle.trim())
+                ? `${state.customTitle.trim()} Wishes 🎁`
+                : `${eventCfg.label || 'Celebration'} Wishes 🎁`,
             items: items
         };
     }
@@ -192,6 +194,10 @@ export function openWishJarModal() {
     wishJarModal.hidden = false;
     wishJarModal.style.display = 'flex';
     wishJarModal.removeAttribute('aria-hidden');
+
+    if (nextWishBtn) {
+        nextWishBtn.focus();
+    }
 }
 
 export function closeWishJarModal() {
@@ -199,6 +205,10 @@ export function closeWishJarModal() {
     wishJarModal.hidden = true;
     wishJarModal.style.display = 'none';
     wishJarModal.setAttribute('aria-hidden', 'true');
+
+    if (wishJarPillBtn) {
+        wishJarPillBtn.focus();
+    }
 }
 
 export function initWishJarModal() {

@@ -15,7 +15,9 @@ const STORAGE_KEYS = {
     CUSTOM_EVENT: 'celebration_custom_event_type',
     KEEPSAKE_MSG: 'custom_keepsake_msg',
     KEEPSAKE_FROM: 'custom_keepsake_from',
-    THEME_MODE: 'valentine_theme_mode'
+    THEME_MODE: 'valentine_theme_mode',
+    CUSTOM_SONG_URL: 'celebration_custom_song_url',
+    CUSTOM_SONG_NAME: 'celebration_custom_song_name'
 };
 
 const DEFAULT_STATE = {
@@ -26,6 +28,8 @@ const DEFAULT_STATE = {
     customTitle: '',
     customMsg: '',
     customFrom: '',
+    customSongUrl: '',
+    customSongName: '',
     denyCount: 0,
     acceptScale: 1.0,
     cardFlipped: false,
@@ -119,11 +123,15 @@ class StateStore {
                 if (storedRecipient) loaded.recipient = storedRecipient.trim();
 
                 const storedOccasion = localStorage.getItem(STORAGE_KEYS.OCCASION);
-                if (storedOccasion && (OCCASIONS[storedOccasion] || storedOccasion === 'anniversary')) {
+                if (storedOccasion && (OCCASIONS[storedOccasion] || storedOccasion === 'anniversary' || storedOccasion === 'graduation')) {
                     if (storedOccasion === 'anniversary') {
-                        loaded.occasion = 'custom';
+                        loaded.occasion = 'anniversary';
                         loaded.customEvent = 'anniversary';
                         if (!loaded.customTitle) loaded.customTitle = 'Anniversary';
+                    } else if (storedOccasion === 'graduation') {
+                        loaded.occasion = 'graduation';
+                        loaded.customEvent = 'graduation';
+                        if (!loaded.customTitle) loaded.customTitle = 'Graduation';
                     } else {
                         loaded.occasion = storedOccasion;
                     }
@@ -146,6 +154,12 @@ class StateStore {
 
                 const storedTheme = localStorage.getItem(STORAGE_KEYS.THEME_MODE);
                 if (storedTheme) loaded.theme = storedTheme;
+
+                const storedSongUrl = localStorage.getItem(STORAGE_KEYS.CUSTOM_SONG_URL);
+                if (storedSongUrl) loaded.customSongUrl = storedSongUrl;
+
+                const storedSongName = localStorage.getItem(STORAGE_KEYS.CUSTOM_SONG_NAME);
+                if (storedSongName) loaded.customSongName = storedSongName;
             }
         } catch (e) {
             console.warn('LocalStorage unavailable or restricted:', e);
@@ -159,11 +173,15 @@ class StateStore {
             if (urlTo && urlTo.trim()) loaded.recipient = urlTo.trim().slice(0, 36);
 
             const urlOccasion = params.get('occasion');
-            if (urlOccasion && (OCCASIONS[urlOccasion] || urlOccasion === 'anniversary')) {
+            if (urlOccasion && (OCCASIONS[urlOccasion] || urlOccasion === 'anniversary' || urlOccasion === 'graduation')) {
                 if (urlOccasion === 'anniversary') {
-                    loaded.occasion = 'custom';
+                    loaded.occasion = 'anniversary';
                     loaded.customEvent = 'anniversary';
                     if (!loaded.customTitle) loaded.customTitle = 'Anniversary';
+                } else if (urlOccasion === 'graduation') {
+                    loaded.occasion = 'graduation';
+                    loaded.customEvent = 'graduation';
+                    if (!loaded.customTitle) loaded.customTitle = 'Graduation';
                 } else {
                     loaded.occasion = urlOccasion;
                 }
@@ -183,6 +201,12 @@ class StateStore {
 
             const urlFrom = params.get('from');
             if (urlFrom) loaded.customFrom = urlFrom.trim().slice(0, 36);
+
+            const urlSong = params.get('song');
+            if (urlSong && urlSong.trim()) loaded.customSongUrl = urlSong.trim();
+
+            const urlSongName = params.get('songname');
+            if (urlSongName && urlSongName.trim()) loaded.customSongName = urlSongName.trim().slice(0, 60);
         }
 
         // Apply loaded state without notifying subscribers during bootstrap
@@ -236,6 +260,18 @@ class StateStore {
             if (this._state.theme) {
                 localStorage.setItem(STORAGE_KEYS.THEME_MODE, this._state.theme);
             }
+
+            if (this._state.customSongUrl && !this._state.customSongUrl.startsWith('blob:')) {
+                localStorage.setItem(STORAGE_KEYS.CUSTOM_SONG_URL, this._state.customSongUrl);
+            } else if (!this._state.customSongUrl) {
+                localStorage.removeItem(STORAGE_KEYS.CUSTOM_SONG_URL);
+            }
+
+            if (this._state.customSongName) {
+                localStorage.setItem(STORAGE_KEYS.CUSTOM_SONG_NAME, this._state.customSongName);
+            } else {
+                localStorage.removeItem(STORAGE_KEYS.CUSTOM_SONG_NAME);
+            }
         } catch (e) {
             console.warn('Failed to persist state to localStorage:', e);
         }
@@ -254,6 +290,12 @@ class StateStore {
         if (this._state.customTitle) url.searchParams.set('title', this._state.customTitle);
         if (this._state.customMsg) url.searchParams.set('msg', this._state.customMsg);
         if (this._state.customFrom) url.searchParams.set('from', this._state.customFrom);
+        if (this._state.customSongUrl && !this._state.customSongUrl.startsWith('blob:')) {
+            url.searchParams.set('song', this._state.customSongUrl);
+        }
+        if (this._state.customSongName && (!this._state.customSongUrl || !this._state.customSongUrl.startsWith('blob:'))) {
+            url.searchParams.set('songname', this._state.customSongName);
+        }
         return url.toString();
     }
 }

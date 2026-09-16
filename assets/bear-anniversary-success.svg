@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <!-- Bear Fur Gradients -->
+    <linearGradient id="furGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#fff5f8"/>
+      <stop offset="100%" stop-color="#fee5ed"/>
+    </linearGradient>
+
+    <radialGradient id="bellyGrad" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#fff0f5"/>
+      <stop offset="100%" stop-color="#ffdbe6"/>
+    </radialGradient>
+
+    <linearGradient id="innerEarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb3c6"/>
+      <stop offset="100%" stop-color="#ff7597"/>
+    </linearGradient>
+
+    <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff2e63" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#ff5c8a" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffccd5" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Luxury Gold Gradients for Rings & Champagne -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="35%" stop-color="#ffd166"/>
+      <stop offset="70%" stop-color="#e09f3e"/>
+      <stop offset="100%" stop-color="#fff3b0"/>
+    </linearGradient>
+
+    <linearGradient id="champagneGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff9db"/>
+      <stop offset="60%" stop-color="#ffe494"/>
+      <stop offset="100%" stop-color="#f4c042"/>
+    </linearGradient>
+
+    <!-- Bow Tie Gradients -->
+    <linearGradient id="bowTieGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="50%" stop-color="#c9184a"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+
+    <!-- Glowing Heart Ruby Gradient -->
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#a4133c"/>
+    </linearGradient>
+
+    <linearGradient id="specularRim" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0.4"/>
+      <stop offset="75%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="anniversaryJoyGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#ff4d6d" flood-opacity="0.38"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#ffd166" flood-opacity="0.3"/>
+    </filter>
+
+    <style>
+      @keyframes bearLoveJump {
+        0%, 100% { transform: translateY(0px) scale(1, 1); }
+        30% { transform: translateY(-38px) scale(0.92, 1.1) rotate(2deg); }
+        55% { transform: translateY(-42px) scale(1.02, 0.98) rotate(-1deg); }
+        75% { transform: translateY(8px) scale(1.18, 0.82) rotate(0deg); }
+        88% { transform: translateY(-10px) scale(0.96, 1.05) rotate(1deg); }
+      }
+
+      @keyframes groundShadowLove {
+        0%, 100% { transform: scale(1, 1); opacity: 0.38; }
+        30%, 55% { transform: scale(0.48, 0.44); opacity: 0.12; }
+        75% { transform: scale(1.32, 1.25); opacity: 0.6; }
+        88% { transform: scale(0.85, 0.82); opacity: 0.28; }
+      }
+
+      @keyframes toastCheerLeft {
+        0%, 100% { transform: rotate(0deg); }
+        40% { transform: rotate(14deg); }
+        60% { transform: rotate(8deg); }
+      }
+
+      @keyframes toastCheerRight {
+        0%, 100% { transform: rotate(0deg); }
+        40% { transform: rotate(-14deg); }
+        60% { transform: rotate(-8deg); }
+      }
+
+      @keyframes sparklePulse {
+        0%, 100% { transform: scale(0.85) rotate(0deg); opacity: 0.7; }
+        50% { transform: scale(1.35) rotate(45deg); opacity: 1; filter: drop-shadow(0 0 6px #ffd166); }
+      }
+
+      @keyframes heartRain {
+        0% { transform: translateY(-15px) scale(0.8); opacity: 0; }
+        25% { opacity: 1; }
+        75% { opacity: 0.9; }
+        100% { transform: translateY(115px) scale(1.1) rotate(25deg); opacity: 0; }
+      }
+
+      .bear-love-anim {
+        animation: bearLoveJump 2.4s cubic-bezier(0.28, 0, 0.22, 1) infinite;
+        transform-origin: 140px 185px;
+      }
+
+      .shadow-love-anim {
+        animation: groundShadowLove 2.4s cubic-bezier(0.28, 0, 0.22, 1) infinite;
+        transform-origin: 140px 222px;
+      }
+
+      .cheer-left {
+        animation: toastCheerLeft 2.4s ease-in-out infinite;
+        transform-origin: 105px 150px;
+      }
+
+      .cheer-right {
+        animation: toastCheerRight 2.4s ease-in-out infinite;
+        transform-origin: 175px 150px;
+      }
+
+      .sparkle-pop {
+        animation: sparklePulse 1.8s ease-in-out infinite;
+        transform-origin: 140px 105px;
+      }
+
+      .falling-heart-1 { animation: heartRain 3.2s linear infinite 0.2s; }
+      .falling-heart-2 { animation: heartRain 3.6s linear infinite 1.1s; }
+      .falling-heart-3 { animation: heartRain 2.9s linear infinite 1.8s; }
+    </style>
+  </defs>
+
+  <!-- Dynamic Ground Shadow -->
+  <ellipse cx="140" cy="222" rx="55" ry="12" fill="#590d22" class="shadow-love-anim"/>
+
+  <!-- Falling Romantic Sparkles & Floating Ruby Hearts -->
+  <g class="falling-heart-1">
+    <path d="M 38 35 C 38 29 30 25 30 32 C 30 39 38 44 38 44 C 38 44 46 39 46 32 C 46 25 38 29 38 35 Z" fill="url(#heartGrad)"/>
+    <circle cx="35" cy="30" r="1.2" fill="#ffffff"/>
+  </g>
+  <g class="falling-heart-2">
+    <path d="M 242 42 C 242 36 234 32 234 39 C 234 46 242 51 242 51 C 242 51 250 46 250 39 C 250 32 242 36 242 42 Z" fill="url(#heartGrad)"/>
+    <polygon points="225,25 227,30 232,32 227,34 225,39 223,34 218,32 223,30" fill="url(#goldGrad)"/>
+  </g>
+  <g class="falling-heart-3">
+    <polygon points="55,80 57,85 62,87 57,89 55,94 53,89 48,87 53,85" fill="url(#goldGrad)"/>
+    <circle cx="218" cy="90" r="3" fill="#ff758f"/>
+  </g>
+
+  <!-- Main Animated Character Rig -->
+  <g class="bear-love-anim" filter="url(#anniversaryJoyGlow)">
+    
+    <!-- Bear Body -->
+    <ellipse cx="140" cy="158" rx="42" ry="46" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <ellipse cx="140" cy="164" rx="28" ry="30" fill="url(#bellyGrad)"/>
+
+    <!-- Bear Feet in Joyful Jump Stance -->
+    <ellipse cx="108" cy="202" rx="15" ry="11" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2" transform="rotate(-8 108 202)"/>
+    <ellipse cx="108" cy="202" rx="8" ry="5.5" fill="#ffccd5" opacity="0.7"/>
+    <ellipse cx="172" cy="202" rx="15" ry="11" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2" transform="rotate(8 172 202)"/>
+    <ellipse cx="172" cy="202" rx="8" ry="5.5" fill="#ffccd5" opacity="0.7"/>
+
+    <!-- Bear Ears with Happy Perk -->
+    <g>
+      <circle cx="104" cy="74" r="18" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+      <circle cx="104" cy="74" r="10" fill="url(#innerEarGrad)"/>
+      <path d="M 89 70 C 95 63 110 63 117 71 C 111 66 97 66 89 70 Z" fill="url(#specularRim)" opacity="0.9"/>
+    </g>
+    <g>
+      <circle cx="176" cy="74" r="18" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+      <circle cx="176" cy="74" r="10" fill="url(#innerEarGrad)"/>
+      <path d="M 163 70 C 169 63 184 63 191 71 C 185 66 171 66 163 70 Z" fill="url(#specularRim)" opacity="0.9"/>
+    </g>
+
+    <!-- Bear Head -->
+    <circle cx="140" cy="116" r="48" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <ellipse cx="140" cy="95" rx="28" ry="14" fill="#ffffff" opacity="0.45"/>
+
+    <!-- Dashing Formal Bow Tie with Gold Knot -->
+    <g transform="translate(140, 146)">
+      <polygon points="0,0 -16,-8 -16,8" fill="url(#bowTieGrad)" stroke="#590d22" stroke-width="1"/>
+      <polygon points="0,0 16,-8 16,8" fill="url(#bowTieGrad)" stroke="#590d22" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="4" ry="4.5" fill="url(#goldGrad)" stroke="#c28b18" stroke-width="0.8"/>
+      <circle cx="-1" cy="-1" r="1.2" fill="#ffffff"/>
+    </g>
+
+    <!-- Happy Joyful Closed Eyes (^ _ ^) -->
+    <path d="M 112 114 Q 119 104 126 114" fill="none" stroke="#200d14" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 154 114 Q 161 104 168 114" fill="none" stroke="#200d14" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- Blushing Rosy Cheeks -->
+    <circle cx="110" cy="126" r="13" fill="url(#blushGrad)"/>
+    <circle cx="170" cy="126" r="13" fill="url(#blushGrad)"/>
+    <ellipse cx="107" cy="123" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.85"/>
+    <circle cx="111" cy="125" r="1" fill="#ffffff" opacity="0.6"/>
+    <ellipse cx="173" cy="123" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.85"/>
+    <circle cx="169" cy="125" r="1" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Snout & Nose -->
+    <ellipse cx="140" cy="125" rx="14" ry="10" fill="#ffffff" stroke="#fce4ec" stroke-width="1.5"/>
+    <ellipse cx="140" cy="120" rx="5.5" ry="3.5" fill="#3a1320"/>
+    <ellipse cx="138" cy="119" rx="2" ry="1" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Big Joyful Open Laughing Mouth -->
+    <path d="M 132 126 Q 140 128 148 126 Q 148 138 140 140 Q 132 138 132 126 Z" fill="#800f2f" stroke="#3a1320" stroke-width="1.8"/>
+    <!-- Cute Pink Tongue -->
+    <path d="M 135 134 Q 140 131 145 134 Q 140 140 135 134 Z" fill="#ff758f"/>
+
+    <!-- Cheering Champagne Toast Flutes with Golden Rings Clink -->
+    <!-- Left Paw & Champagne Flute -->
+    <g class="cheer-left">
+      <ellipse cx="108" cy="154" rx="12" ry="10" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2"/>
+      <!-- Glass Stem & Base -->
+      <line x1="116" y1="140" x2="124" y2="162" stroke="#ffffff" stroke-width="1.8" opacity="0.8"/>
+      <ellipse cx="124" cy="162" rx="6" ry="2" fill="#ffffff" opacity="0.6"/>
+      <!-- Glass Bowl with Sparkling Champagne -->
+      <polygon points="112,120 124,124 118,144 114,142" fill="url(#champagneGrad)" stroke="#ffffff" stroke-width="1.2"/>
+      <!-- Rising Champagne Fizz Bubbles -->
+      <circle cx="117" cy="128" r="1" fill="#ffffff"/>
+      <circle cx="119" cy="134" r="0.8" fill="#ffffff"/>
+    </g>
+
+    <!-- Right Paw & Champagne Flute -->
+    <g class="cheer-right">
+      <ellipse cx="172" cy="154" rx="12" ry="10" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2"/>
+      <!-- Glass Stem & Base -->
+      <line x1="164" y1="140" x2="156" y2="162" stroke="#ffffff" stroke-width="1.8" opacity="0.8"/>
+      <ellipse cx="156" cy="162" rx="6" ry="2" fill="#ffffff" opacity="0.6"/>
+      <!-- Glass Bowl with Sparkling Champagne -->
+      <polygon points="168,120 156,124 162,144 166,142" fill="url(#champagneGrad)" stroke="#ffffff" stroke-width="1.2"/>
+      <!-- Rising Fizz Bubbles -->
+      <circle cx="163" cy="128" r="1" fill="#ffffff"/>
+      <circle cx="161" cy="134" r="0.8" fill="#ffffff"/>
+    </g>
+
+    <!-- Clink Sparkle & Interlocking Rings at Toast Point -->
+    <g class="sparkle-pop" transform="translate(140, 118)">
+      <!-- Twin Interlocking Golden Love Rings floating in toast sparkle -->
+      <ellipse cx="-4" cy="-5" rx="7" ry="9" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+      <ellipse cx="4" cy="-5" rx="7" ry="9" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+      <!-- Brilliant Starburst Clink Glint -->
+      <polygon points="0,-14 2,-3 12,0 2,3 0,14 -2,3 -12,0 -2,-3" fill="#ffffff"/>
+      <circle cx="0" cy="0" r="2.5" fill="#fff3b0"/>
+    </g>
+
+  </g>
+</svg>

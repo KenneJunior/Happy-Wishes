@@ -7,7 +7,7 @@ export const WISH_DATA = {
     valentine: {
         title: "Reasons Why I Love You 💖",
         tagPrefix: "Reason",
-        pillLabel: "Tap for a reason 💌",
+        pillLabel: "Love Reasons 💖",
         items: [
             "The way your eyes crinkle with pure joy when you genuinely laugh.",
             "How you make even the simplest grocery trip feel like our favorite adventure.",
@@ -34,7 +34,7 @@ export const WISH_DATA = {
     birthday: {
         title: "Birthday Wishes & Sweet Compliments 🎂",
         tagPrefix: "Birthday Wish",
-        pillLabel: "Tap for a wish 💌",
+        pillLabel: "Birthday Wishes 🎂",
         items: [
             "May your year ahead be as radiant, joyful, and limitless as your smile!",
             "Wishing you uncontainable laughter, unexpected miracles, and all your biggest goals coming true!",
@@ -59,7 +59,7 @@ export const WISH_DATA = {
     christmas: {
         title: "Holiday Cheer & Cozy Wishes 🎄",
         tagPrefix: "Holiday Wish",
-        pillLabel: "Holiday Wish 🎁",
+        pillLabel: "Holiday Wishes 🎁",
         items: [
             "May your holidays be wrapped in warmth, sweet cocoa kisses, and fireside peace.",
             "Of all the holiday lights twinkling this season, you will always be the brightest one to me.",
@@ -76,7 +76,7 @@ export const WISH_DATA = {
     newyear: {
         title: "New Year Hopes & Toast Wishes 🎆",
         tagPrefix: "New Year Toast",
-        pillLabel: "New Year Toast 🥂",
+        pillLabel: "New Year Toasts 🥂",
         items: [
             "Cheers to 365 fresh chances to laugh louder, dream bolder, and love deeper!",
             "May 2026 bring you career breakthroughs, breathtaking travels, and continuous peace.",
@@ -93,7 +93,7 @@ export const WISH_DATA = {
     easter: {
         title: "Easter Hopes & Springtime Blessings 🐣",
         tagPrefix: "Easter Blessing",
-        pillLabel: "Easter Wish 🌸",
+        pillLabel: "Easter Wishes 🌸",
         items: [
             "May your Easter be filled with the warmth of sunshine, fresh hope, and joyful moments.",
             "Wishing you sweet treats, blooming flowers, and springtime peace all around.",
@@ -110,7 +110,7 @@ export const WISH_DATA = {
     custom: {
         title: "Celebration Wishes & Thoughtful Notes ✨",
         tagPrefix: "Special Wish",
-        pillLabel: "Celebration Wish 🎁",
+        pillLabel: "Celebration Wishes 🎁",
         items: [
             "May today be the launchpad for all your greatest accomplishments yet!",
             "Wishing you limitless happiness, deep peace, and radiant health on this special day.",
@@ -127,7 +127,7 @@ export const WISH_DATA = {
     anniversary: {
         title: "Anniversary Wishes & Sweet Reasons 💍",
         tagPrefix: "Anniversary Note",
-        pillLabel: "Anniversary Wish 💍",
+        pillLabel: "Anniversary Notes 💍",
         items: [
             "Happy Anniversary! May your love grow deeper, stronger, and more wondrous with every passing year.",
             "Celebrating the two of you—a living reminder of how magical true love really is.",

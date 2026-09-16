@@ -5,7 +5,7 @@
  */
 
 import { BEAR_EMOTIONS, SUCCESS_EMOTION } from '../config/emotions.js';
-import { OCCASIONS } from '../config/occasions.js';
+import { OCCASIONS, getBearAssetsForState } from '../config/occasions.js';
 import { appState } from '../core/state.js';
 
 let mainGif = null;
@@ -85,9 +85,9 @@ export function updateBearEmotion(dodgeNum) {
 export function updateBearAsset(isAccepted = false) {
     if (!mainGif) return;
     const state = appState.getState();
-    const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
+    const assets = getBearAssetsForState(state);
 
-    const targetSrc = isAccepted ? occ.bearSuccess : occ.bearNormal;
+    const targetSrc = isAccepted ? assets.success : assets.normal;
     if (targetSrc && mainGif.getAttribute('src') !== targetSrc) {
         mainGif.src = targetSrc;
     }
