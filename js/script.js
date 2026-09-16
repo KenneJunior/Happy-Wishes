@@ -19,46 +19,15 @@
  */
 
 // --------------------------------------------------------------------------
-// 1. Seasonal Configurations & Theming
+// 1. Occasion Configurations & Theming
 // --------------------------------------------------------------------------
-const SEASONS = {
-    birthday: {
-        id: 'birthday',
-        name: 'Birthday',
-        themeClass: 'theme-birthday',
-        heading: 'Happy Birthday',
-        subMessage: 'Today is entirely about celebrating the most incredible person I know. Wishing you a day overflowing with sweet moments, endless laughter, and a love that grows exponentially. You deserve the entire universe and more! 🎂✨💖🥺',
-        badge: '🎂 Special Day',
-        bearNormal: './assets/bear-birthday.svg',
-        bearSuccess: './assets/bear-birthday-success.svg',
-        acceptText: 'Accept',
-        acceptEmoji: '🎂',
-        denyText: 'Deny',
-        denyEmoji: '🙈',
-        denyPhrases: [
-            "Deny", 
-            "Are you seriously clicking this? 🥺", 
-            "But I made this just for you! 🥺❤️", 
-            "My heart is breaking a little 💔", 
-            "Error: Your finger must have slipped! 🙈", 
-            "Still trying? You're too cute! 🥰", 
-            "The math says you must click Accept! 📈", 
-            "Just surrender to the birthday love! 🎂", 
-            "Click Accept for infinite hugs! 🧸💖"
-        ],
-        successHeading: 'Yaaay! Happy Birthday',
-        successSubtext: 'My greatest wish is to see you smiling every single day. May this new chapter bring you closer to all your dreams, and I promise to be right here cheering you on through every beautiful moment. I love you endlessly! ✨💖🦋',
-        celebrationBadge: '🎉 BEST BIRTHDAY EVER! 🎂',
-        particleType: 'up',
-        floatingEmojis: ['🎂', '🎈', '🍰', '🎁', '🎉', '✨', '🧁', '🥳', '💖', '🍭'],
-        confettiColors: ['#ff758c', '#ffd166', '#ffb199', '#fbc2eb', '#06d6a0', '#ffffff']
-    },
+const OCCASIONS = {
     christmas: {
         id: 'christmas',
         name: 'Christmas',
+        emoji: '🎄',
+        isFixedDate: true,
         themeClass: 'theme-christmas',
-        heading: 'Merry Christmas, my love! 🎄❤️✨',
-        subMessage: 'The holidays are magical, but absolutely nothing compares to the warmth and light you bring into my life every single day. Sending you the coziest winter vibes and all my love! 🎄❄️🥰☕',
         badge: '🎄 Holiday Magic',
         bearNormal: './assets/bear-christmas.svg',
         bearSuccess: './assets/bear-christmas-success.svg',
@@ -77,8 +46,14 @@ const SEASONS = {
             "Just take my gift! 🎁", 
             "Holiday kisses await! ✨🥰"
         ],
-        successHeading: 'Merry Christmas, my beautiful angel! 🎄🎅✨❤️',
-        successSubtext: 'You are the absolute best gift I could ever ask for. May our holiday season be wrapped in warmth, sweet kisses, and cozy memories that we will cherish forever. Let\'s make this unforgettable! 🎁🍪💏',
+        countdownTitle: '🎄 Christmas Day Countdown',
+        todayMessage: (name) => `🎉 MERRY CHRISTMAS${name ? ' ' + name.toUpperCase() : ''}! WISHING YOU WARMTH & JOY! 🎄✨`,
+        getHeading: (name) => name ? `Merry Christmas, ${name}! 🎄❤️` : `Merry Christmas! 🎄❤️`,
+        getSubMessage: (name) => name 
+            ? `The holidays are magical, but nothing compares to the warmth and light you bring into my life every day, ${name}. Wishing you the coziest moments! 🎄❄️🥰☕`
+            : `The holidays are magical, but nothing compares to the warmth and light you bring into my life every day. Wishing you the coziest winter vibes! 🎄❄️🥰☕`,
+        getSuccessHeading: (name) => name ? `Merry Christmas, ${name}! 🎄🎅✨` : `Merry Christmas! 🎄🎅✨`,
+        successSubtext: 'You are the absolute best gift I could ever ask for. May this season be wrapped in warmth, sweet treats, and cozy memories to cherish forever! 🎁🍪✨',
         celebrationBadge: '🎄 MERRY & BRIGHT! 🎅',
         particleType: 'snow',
         floatingEmojis: ['❄️', '❅', '❆', '✻', '✨', '❤️', '🎁'],
@@ -87,9 +62,9 @@ const SEASONS = {
     newyear: {
         id: 'newyear',
         name: 'New Year',
+        emoji: '🎆',
+        isFixedDate: true,
         themeClass: 'theme-newyear',
-        heading: 'Happy New Yea',
-        subMessage: 'As the year comes to a close, I am incredibly grateful that I get to walk into this brand-new chapter holding your hand. Cheers to our beautiful future together! 🎆🥂✨🥺',
         badge: '🎆 2026 Celebration',
         bearNormal: './assets/bear-newyear.svg',
         bearSuccess: './assets/bear-newyear-success.svg',
@@ -101,26 +76,136 @@ const SEASONS = {
             "Deny", 
             "Are you sure? 🎆🥺", 
             "Don't ruin our midnight countdown! ⏳❤️", 
-            "Think again, my love! 👀", 
+            "Think again! 👀", 
             "Too slow! ⚡", 
             "Midnight toast over here! 👉🥂", 
             "We are going into 2026 together! 🛸", 
-            "Say yes to us! 🌟", 
+            "Say yes! 🌟", 
             "Our magic awaits! 💫🥰"
         ],
-        successHeading: 'Cheers to us and an amazing 2026! 🎆🥂✨🥰',
-        successSubtext: 'Here is to 365 new chances to shine, laugh, and write the next beautiful pages of our love story. There is no one else I would rather build a future with. I love you more than words can say! 🥳🌟💖🥂',
-        celebrationBadge: '🎆 CHEERS TO US! 🥂',
+        countdownTitle: "🎆 New Year's Midnight Countdown",
+        todayMessage: (name) => `🎉 HAPPY NEW YEAR${name ? ' ' + name.toUpperCase() : ''}! CHEERS TO A BRIGHT YEAR! 🎆🥂`,
+        getHeading: (name) => name ? `Happy New Year, ${name}! 🎆✨` : `Happy New Year! 🎆✨`,
+        getSubMessage: (name) => name
+            ? `As the year turns, I am grateful to walk into this brand-new chapter with you, ${name}. Cheers to our brightest adventures ahead! 🎆🥂✨`
+            : `As the year turns, I am grateful to walk into this brand-new chapter together. Cheers to our brightest adventures ahead! 🎆🥂✨`,
+        getSuccessHeading: (name) => name ? `Cheers to 2026, ${name}! 🎆🥂✨` : `Cheers to an amazing 2026! 🎆🥂✨`,
+        successSubtext: 'Here is to 365 new chances to shine, laugh, and create beautiful memories together. Cheers to an unforgettable year ahead! 🥳🌟💖🥂',
+        celebrationBadge: '🎆 CHEERS TO 2026! 🥂',
         particleType: 'spark',
         floatingEmojis: ['✨', '🌟', '💫', '⭐', '🎇', '🥂', '💖', '🥰'],
         confettiColors: ['#ffd166', '#00f5d4', '#f72585', '#7209b7', '#ffffff', '#4cc9f0']
     },
+    easter: {
+        id: 'easter',
+        name: 'Easter',
+        emoji: '🐣',
+        isFixedDate: true,
+        themeClass: 'theme-easter',
+        badge: '🐣 Springtime Joy',
+        bearNormal: './assets/bear-easter.svg',
+        bearSuccess: './assets/bear-easter-success.svg',
+        acceptText: 'Accept',
+        acceptEmoji: '🐣',
+        denyText: 'Deny',
+        denyEmoji: '🐰',
+        denyPhrases: [
+            "Deny", 
+            "Wait, don't hop away! 🐰🥺", 
+            "There's chocolate waiting! 🍫✨", 
+            "Are you sure? 🐣", 
+            "Too fast like a bunny! 💨", 
+            "Sweet surprises this way! 👉🌸", 
+            "Hop right into happiness! 🌷", 
+            "Catch the golden egg! 🥚✨", 
+            "Hoppy celebration awaits! 💖"
+        ],
+        countdownTitle: '🐣 Easter Celebration Countdown',
+        todayMessage: (name) => `🎉 HAPPY EASTER${name ? ' ' + name.toUpperCase() : ''}! WISHING YOU SWEET TREATS & SUNSHINE! 🐣🌸`,
+        getHeading: (name) => name ? `Happy Easter, ${name}! 🐣🌸` : `Happy Easter! 🐣🌸`,
+        getSubMessage: (name) => name
+            ? `May this Easter fill your heart with springtime renewal, bright sunshine, and baskets full of sweet moments, ${name}! 🐣🌷✨`
+            : `May this Easter fill your heart with springtime renewal, bright sunshine, and baskets full of sweet moments! 🐣🌷✨`,
+        getSuccessHeading: (name) => name ? `Happy Easter, ${name}! 🐣🌷🎉` : `Happy Easter! 🐣🌷🎉`,
+        successSubtext: "Wishing you a season blooming with fresh hope, peaceful days, and lots of sweet chocolate surprises! Let's celebrate! 🌸🍫🐣",
+        celebrationBadge: '🐣 HOPPY EASTER! 🌸',
+        particleType: 'up',
+        floatingEmojis: ['🐣', '🌸', '🌷', '🐰', '🥚', '✨', '💐', '🦋'],
+        confettiColors: ['#a855f7', '#f472b6', '#38bdf8', '#fef08a', '#4ade80', '#ffffff']
+    },
+    custom: {
+        id: 'custom',
+        name: 'Custom Date',
+        emoji: '🗓️',
+        isFixedDate: false,
+        themeClass: 'theme-custom',
+        badge: '✨ Special Celebration',
+        bearNormal: './assets/bear-birthday.svg',
+        bearSuccess: './assets/bear-birthday-success.svg',
+        acceptText: 'Accept',
+        acceptEmoji: '🎉',
+        denyText: 'Deny',
+        denyEmoji: '🙈',
+        denyPhrases: [
+            "Deny", 
+            "Are you seriously clicking this? 🥺", 
+            "Look closer at this celebration! 🥺❤️", 
+            "Still trying? You're too quick! 🥰", 
+            "Click Accept for good vibes! ✨", 
+            "Celebrate this special day! 🎁", 
+            "Surrender to the joy! 💖"
+        ],
+        countdownTitle: (name) => name ? `🗓️ ${name}'s Celebration Countdown` : '🗓️ Celebration Day Countdown',
+        todayMessage: (name) => `🎉 TODAY IS ${name ? name.toUpperCase() + "'S" : "THE"} SPECIAL DAY! CELEBRATE IN STYLE! ✨🥂`,
+        getHeading: (name) => name ? `Celebrating You, ${name}! ✨` : `Celebrating This Special Occasion! ✨`,
+        getSubMessage: (name) => name
+            ? `Today and every day, you deserve the warmest congratulations and infinite reasons to smile, ${name}! 💖✨`
+            : `Today and every day, you deserve the warmest congratulations and infinite reasons to smile! 💖✨`,
+        getSuccessHeading: (name) => name ? `Cheers to You, ${name}! 🎉✨` : `Cheers to This Special Day! 🎉✨`,
+        successSubtext: 'May this special milestone bring you closer to all your dreams and fill your days with joy, laughter, and success! 🌟🥂💖',
+        celebrationBadge: '🎉 SPECIAL CELEBRATION! ✨',
+        particleType: 'up',
+        floatingEmojis: ['🎉', '✨', '🌟', '💖', '🎁', '🎈', '🍰', '🥳'],
+        confettiColors: ['#ff758c', '#ffd166', '#ff9a9e', '#c084fc', '#fbc2eb', '#ffffff']
+    },
+    birthday: {
+        id: 'birthday',
+        name: 'Birthday',
+        emoji: '🎂',
+        isFixedDate: false,
+        themeClass: 'theme-birthday',
+        badge: '🎂 Special Day',
+        bearNormal: './assets/bear-birthday.svg',
+        bearSuccess: './assets/bear-birthday-success.svg',
+        acceptText: 'Accept',
+        acceptEmoji: '🎂',
+        denyText: 'Deny',
+        denyEmoji: '🙈',
+        denyPhrases: [
+            "Deny", 
+            "Are you seriously clicking this? 🥺", 
+            "Click Accept for cake! 🎂", 
+            "Surrender to the birthday love! 🍰"
+        ],
+        countdownTitle: (name) => name ? `🎂 ${name}'s Birthday Countdown` : '🎂 Birthday Celebration Countdown',
+        todayMessage: (name) => `🎉 TODAY IS ${name ? name.toUpperCase() + "'S" : "THE"} CELEBRATION DAY! WISHING YOU INFINITE JOY! 🎂✨`,
+        getHeading: (name) => name ? `Happy Birthday, ${name}!` : `Happy Birthday!`,
+        getSubMessage: (name) => name
+            ? `Wishing you a magical day filled with sweet moments, huge smiles, and unlimited cake, ${name}! 🎂✨`
+            : `Wishing you a magical day filled with sweet moments and huge smiles! 🎂✨`,
+        getSuccessHeading: (name) => name ? `Yaaay, ${name}! Happy Birthday! 🎂🎉🥳` : `Happy Birthday! 🎂🎉🥳`,
+        successSubtext: 'My greatest wish is to see you smiling every single day. May this new chapter bring you closer to all your dreams! ✨💖🦋',
+        celebrationBadge: '🎉 BEST BIRTHDAY EVER! 🎂',
+        particleType: 'up',
+        floatingEmojis: ['🎂', '🎈', '🍰', '🎁', '🎉', '✨', '🧁', '🥳', '💖', '🍭'],
+        confettiColors: ['#ff758c', '#ffd166', '#ffb199', '#fbc2eb', '#06d6a0', '#ffffff']
+    },
     valentine: {
         id: 'valentine',
         name: 'Valentine',
+        emoji: '💖',
+        isFixedDate: true,
         themeClass: 'theme-valentine',
-        heading: 'will you be my Valentine? 🥺🌹💖',
-        subMessage: 'Every single variable in my life changed for the better the moment I met you. Statistically and undeniably, you are my perfect match. Will you do me the absolute honor? 💌🦋🥺❤️',
         badge: '💖 Special Question',
         bearNormal: './assets/bear-valentine.svg',
         bearSuccess: './assets/bear-valentine-success.svg',
@@ -131,25 +216,334 @@ const SEASONS = {
         denyPhrases: [
             "Deny", 
             "Wait, seriously? 🥺", 
-            "Recalculate that! 📊💔", 
-            "Probability of clicking this: 0% 🛑", 
-            "The limit does not exist! 📉", 
-            "Graphing your hesitation... 🤔", 
-            "Coordinate geometry says no! 🛸", 
-            "Just optimize for Accept! 👉", 
-            "Q.E.D. Just click Yes already! 🥰💋"
+            "Click Yes already! 🥰💋"
         ],
-        successHeading: 'Hypothesis Confirmed! You said YES! 💖🌹🥰💍',
-        successSubtext: 'My heart just skipped a beat! You are my absolute favorite person in the entire universe. Happy Valentine\'s Day! Let\'s keep optimizing our love forever and ever! ✨🥰🧸💘',
+        countdownTitle: "💖 Valentine's Day Countdown",
+        todayMessage: (name) => `🎉 HAPPY VALENTINE'S DAY${name ? ' ' + name.toUpperCase() : ''}! 💖🌹`,
+        getHeading: (name) => name ? `${name}, will you be my Valentine? 🥺🌹💖` : `Will you be my Valentine? 🥺🌹💖`,
+        getSubMessage: (name) => name
+            ? `My heart has been waiting to ask you this all year long, ${name}... 💌`
+            : `Every single variable in my life changed for the better the moment I met you. Will you do me the honor? 💌🦋🥺❤️`,
+        getSuccessHeading: (name) => name ? `Yaaay, ${name}! You said YES! 💖🌹` : `You said YES! 💖🌹`,
+        successSubtext: 'You make every single day feel special. Happy Valentine\'s Day! Let\'s keep celebrating forever! ✨🥰🧸💘',
         celebrationBadge: '🎉 100% PROBABILITY OF HAPPINESS! 💖',
         particleType: 'up',
         floatingEmojis: ['💖', '❤️', '💘', '🌹', '💕', '💌', '💝', '🥰', '✨', '🌸', '🦋'],
         confettiColors: ['#ff2e63', '#ff6b8b', '#ff9a9e', '#fbc2eb', '#ffffff', '#ffd166']
+    },
+    anniversary: {
+        id: 'anniversary',
+        name: 'Anniversary',
+        emoji: '💍',
+        isFixedDate: false,
+        themeClass: 'theme-anniversary',
+        badge: '💍 Love Milestone',
+        bearNormal: './assets/bear-valentine.svg',
+        bearSuccess: './assets/bear-valentine-success.svg',
+        acceptText: 'Accept',
+        acceptEmoji: '💍',
+        denyText: 'Deny',
+        denyEmoji: '🥺',
+        denyPhrases: [
+            "Deny", 
+            "Wait, our love is forever! 💍🥺", 
+            "Look back at our journey! 💖✨", 
+            "Click Accept for sweet love! 🥂"
+        ],
+        countdownTitle: (name) => name ? `💍 ${name}'s Anniversary Countdown` : '💍 Anniversary Celebration Countdown',
+        todayMessage: (name) => `🎉 HAPPY ANNIVERSARY${name ? ' ' + name.toUpperCase() : ''}! HERE'S TO ENDLESS LOVE! 💍🥂💖`,
+        getHeading: (name) => name ? `Happy Anniversary, ${name}! 💍✨` : `Happy Anniversary! 💍✨`,
+        getSubMessage: (name) => name
+            ? `Celebrating another gorgeous milestone with you, ${name}. Here is to forever and a day! 💍💖🥂`
+            : `Celebrating another gorgeous love milestone together. Here is to forever and a day! 💍💖🥂`,
+        getSuccessHeading: (name) => name ? `Cheers to Us, ${name}! 💍🥂💖` : `Happy Anniversary! 💍🥂💖`,
+        successSubtext: 'Every memory made with you is my absolute favorite treasure. Cheers to many more sweet chapters together! 🥂💍✨💖',
+        celebrationBadge: '💍 HAPPY ANNIVERSARY! 🥂',
+        particleType: 'up',
+        floatingEmojis: ['💍', '💖', '🥂', '🌹', '✨', '💐', '🥰', '💕'],
+        confettiColors: ['#ff2e63', '#ffd166', '#ff758c', '#c084fc', '#ffffff']
     }
 };
 
 // --------------------------------------------------------------------------
-// 1b. Seasonal Wishes & Reasons Collections
+// 1b. Custom Celebration Event Types (What do you want to celebrate?)
+// --------------------------------------------------------------------------
+const CELEBRATION_EVENT_TYPES = {
+    birthday: {
+        id: 'birthday',
+        label: 'Birthday',
+        emoji: '🎂',
+        defaultTitle: 'Birthday',
+        badge: '🎂 Birthday Special',
+        getHeading: (name) => name ? `Happy Birthday, ${name}! 🎂🎉` : `Happy Birthday! 🎂🎉`,
+        getSubMessage: (name) => name ? `Wishing you a magical day filled with sweet moments, huge smiles, and unlimited cake, ${name}! 🎂✨` : `Wishing you a magical day filled with sweet moments and huge smiles! 🎂✨`,
+        getSuccessHeading: (name) => name ? `Yaaay, ${name}! Happy Birthday! 🎂🎉🥳` : `Happy Birthday! 🎂🎉🥳`,
+        countdownTitle: (name) => name ? `🎂 ${name}'s Birthday Countdown` : `🎂 Birthday Countdown`,
+        acceptText: 'Celebrate! 🎂',
+        acceptEmoji: '🎂',
+        successSubtext: 'My greatest wish is to see you smiling every single day. May this new chapter bring you closer to all your dreams! ✨💖🦋'
+    },
+    anniversary: {
+        id: 'anniversary',
+        label: 'Anniversary',
+        emoji: '💍',
+        defaultTitle: 'Anniversary',
+        badge: '💍 Love Milestone',
+        getHeading: (name) => name ? `Happy Anniversary, ${name}! 💍✨` : `Happy Anniversary! 💍✨`,
+        getSubMessage: (name) => name ? `Celebrating the beautiful love story we share, ${name}. Here is to forever and a day! 💍💖🥂` : `Celebrating another gorgeous love milestone together! 💍💖🥂`,
+        getSuccessHeading: (name) => name ? `Cheers to Us, ${name}! 💍🥂💖` : `Happy Anniversary! 💍🥂💖`,
+        countdownTitle: (name) => name ? `💍 ${name}'s Anniversary Countdown` : `💍 Anniversary Countdown`,
+        acceptText: 'Cheers! 💍',
+        acceptEmoji: '💍',
+        successSubtext: 'Every memory made with you is my absolute favorite treasure. Cheers to many more sweet chapters together! 🥂💍✨💖'
+    },
+    graduation: {
+        id: 'graduation',
+        label: 'Graduation',
+        emoji: '🎓',
+        defaultTitle: 'Graduation Day',
+        badge: '🎓 Commencement Day',
+        getHeading: (name) => name ? `Congratulations on Your Graduation, ${name}! 🎓🌟` : `Congratulations on Your Graduation! 🎓🌟`,
+        getSubMessage: (name) => name ? `Your dedication, brilliance, and late nights paid off, ${name}! The future is yours to conquer! 🎓✨` : `Your hard work and brilliance paid off! The future is yours to conquer! 🎓✨`,
+        getSuccessHeading: (name) => name ? `Proud of You, ${name}! 🎓🎉🥂` : `Hats Off to the Graduate! 🎓🎉🥂`,
+        countdownTitle: (name) => name ? `🎓 ${name}'s Graduation Countdown` : `🎓 Graduation Day Countdown`,
+        acceptText: 'Woohoo! 🎓',
+        acceptEmoji: '🎓',
+        successSubtext: 'You set your sights on a lofty dream and achieved it with grace. May this triumph open magnificent doors for you! 🌟🥂🎓'
+    },
+    promotion: {
+        id: 'promotion',
+        label: 'Job Promotion',
+        emoji: '🚀',
+        defaultTitle: 'New Promotion',
+        badge: '🚀 Next Level',
+        getHeading: (name) => name ? `Congratulations on Your Promotion, ${name}! 🚀💼` : `Congratulations on Your Promotion! 🚀💼`,
+        getSubMessage: (name) => name ? `So well deserved, ${name}! Your talent, perseverance, and passion make this just the beginning! 🚀🌟` : `So well deserved! Your talent and dedication make this just the beginning! 🚀🌟`,
+        getSuccessHeading: (name) => name ? `Cheers to Your New Heights, ${name}! 🚀🥂` : `Congratulations on Rising Higher! 🚀🥂`,
+        countdownTitle: (name) => name ? `🚀 ${name}'s Big Promotion Countdown` : `🚀 Promotion Celebration Countdown`,
+        acceptText: 'Onward! 🚀',
+        acceptEmoji: '💼',
+        successSubtext: 'Your diligence and brilliance continue to inspire everyone around you. Here is to breaking ceilings and soaring high! 🥂💼✨'
+    },
+    newhome: {
+        id: 'newhome',
+        label: 'New Home',
+        emoji: '🏡',
+        defaultTitle: 'New Home Celebration',
+        badge: '🏡 Home Sweet Home',
+        getHeading: (name) => name ? `Congratulations on Your New Home, ${name}! 🏡🔑` : `Congratulations on Your New Home! 🏡🔑`,
+        getSubMessage: (name) => name ? `May your new sanctuary be filled with warmth, endless laughter, and beautiful new memories, ${name}! 🏡✨` : `May your new sanctuary be filled with warmth, laughter, and beautiful memories! 🏡✨`,
+        getSuccessHeading: (name) => name ? `Welcome Home, ${name}! 🏡🥂🔑` : `Happy Housewarming! 🏡🥂🔑`,
+        countdownTitle: (name) => name ? `🏡 ${name}'s Housewarming Countdown` : `🏡 Housewarming Countdown`,
+        acceptText: 'Welcome! 🏡',
+        acceptEmoji: '🔑',
+        successSubtext: 'May every doorway lead to happiness, every window open to peace, and your home be filled with unconditional love! 🏡🔑💖'
+    },
+    friendship: {
+        id: 'friendship',
+        label: 'Friendship',
+        emoji: '🌸',
+        defaultTitle: 'Best Friends Day',
+        badge: '🌸 True Friendship',
+        getHeading: (name) => name ? `Celebrating Our Beautiful Friendship, ${name}! 🌸💖` : `Celebrating Our Friendship! 🌸💖`,
+        getSubMessage: (name) => name ? `Thank you for being the kindest, funnest, and truest friend anyone could ever ask for, ${name}! 🌸✨` : `Thank you for being such a wonderful and true friend! 🌸✨`,
+        getSuccessHeading: (name) => name ? `Besties Forever, ${name}! 🌸💖🥂` : `Best Friends Forever! 🌸💖🥂`,
+        countdownTitle: (name) => name ? `🌸 Celebrating ${name} Countdown` : `🌸 Friendship Celebration Countdown`,
+        acceptText: 'Celebrate! 🌸',
+        acceptEmoji: '💖',
+        successSubtext: 'True friends are the family we choose. Thank you for filling life with effortless laughter, honesty, and warmth! 🌸🥂💕'
+    },
+    milestone: {
+        id: 'milestone',
+        label: 'Milestone',
+        emoji: '🌟',
+        defaultTitle: 'Major Milestone',
+        badge: '🌟 Victory Milestone',
+        getHeading: (name, title) => {
+            const eventName = (title && title.trim()) ? title.trim() : 'This Major Milestone';
+            return name ? `Celebrating ${eventName}, ${name}! 🌟✨` : `Celebrating ${eventName}! 🌟✨`;
+        },
+        getSubMessage: (name, title) => {
+            const eventName = (title && title.trim()) ? title.trim() : 'this incredible milestone';
+            return name ? `Every single step you took brought you to ${eventName}, ${name}. Take a bow! 🌟🥂` : `Every single step you took brought you to ${eventName}. Take a bow! 🌟🥂`;
+        },
+        getSuccessHeading: (name, title) => {
+            const eventName = (title && title.trim()) ? title.trim() : 'Your Milestone';
+            return name ? `Cheers to ${eventName}, ${name}! 🌟🎉` : `Cheers to ${eventName}! 🌟🎉`;
+        },
+        countdownTitle: (name, title) => {
+            const eventName = (title && title.trim()) ? title.trim() : 'Milestone';
+            return name ? `🌟 ${name}'s ${eventName} Countdown` : `🌟 ${eventName} Countdown`;
+        },
+        acceptText: 'Victory! 🌟',
+        acceptEmoji: '🎉',
+        successSubtext: 'You faced every challenge and turned dreams into reality. May this victory be the launchpad for even greater joys! 🌟🥂'
+    },
+    love: {
+        id: 'love',
+        label: 'Love Story',
+        emoji: '💖',
+        defaultTitle: 'Our Love Story',
+        badge: '💖 Pure Love',
+        getHeading: (name) => name ? `Celebrating Our Love Story, ${name}! 💖🌹` : `Celebrating Our Love Story! 💖🌹`,
+        getSubMessage: (name) => name ? `Loving you is the easiest, sweetest, and most wonderful decision I have ever made, ${name}! 💖✨` : `Loving you is the easiest and most wonderful decision I have ever made! 💖✨`,
+        getSuccessHeading: (name) => name ? `Forever Yours, ${name}! 💖🌹` : `Celebrating True Love! 💖🌹`,
+        countdownTitle: (name) => name ? `💖 ${name}'s Special Day Countdown` : `💖 Love Story Countdown`,
+        acceptText: 'Forever! 💖',
+        acceptEmoji: '🌹',
+        successSubtext: 'You make every ordinary moment feel like pure magic. Here is to loving you more today than yesterday, and even more tomorrow! 💖🌹'
+    },
+    other: {
+        id: 'other',
+        label: 'Custom Celebration',
+        emoji: '✨',
+        defaultTitle: 'Special Celebration',
+        badge: '✨ Special Celebration',
+        getHeading: (name, title) => {
+            const displayTitle = (title && title.trim()) ? title.trim() : 'This Special Celebration';
+            return name ? `Celebrating ${displayTitle}, ${name}! ✨` : `Celebrating ${displayTitle}! ✨`;
+        },
+        getSubMessage: (name, title) => {
+            const displayTitle = (title && title.trim()) ? title.trim() : 'this special celebration';
+            return name 
+                ? `Sending you the warmest congratulations on ${displayTitle}, ${name}! You deserve all the joy! 💖✨` 
+                : `Sending you the warmest congratulations on ${displayTitle}! You deserve all the joy! 💖✨`;
+        },
+        getSuccessHeading: (name, title) => {
+            const displayTitle = (title && title.trim()) ? title.trim() : 'This Special Day';
+            return name ? `Cheers to ${displayTitle}, ${name}! 🎉✨` : `Cheers to ${displayTitle}! 🎉✨`;
+        },
+        countdownTitle: (name, title) => {
+            const displayTitle = (title && title.trim()) ? title.trim() : 'Celebration';
+            return name ? `🗓️ ${name}'s ${displayTitle} Countdown` : `🗓️ ${displayTitle} Countdown`;
+        },
+        acceptText: 'Celebrate! 🎉',
+        acceptEmoji: '🎉',
+        successSubtext: 'May this special celebration bring you closer to all your dreams and fill your days with joy, laughter, and success! 🌟🥂💖'
+    }
+};
+
+// Aliased for backwards compatibility
+const SEASONS = OCCASIONS;
+
+// --------------------------------------------------------------------------
+// 1b. Occasion & Date Computation Service
+// --------------------------------------------------------------------------
+const OccasionManager = {
+    calculateEasterDate(year) {
+        const a = year % 19;
+        const b = Math.floor(year / 100);
+        const c = year % 100;
+        const d = Math.floor(b / 4);
+        const e = b % 4;
+        const f = Math.floor((b + 8) / 25);
+        const g = Math.floor((b - f + 1) / 3);
+        const h = (19 * a + b - d - g + 15) % 30;
+        const i = Math.floor(c / 4);
+        const k = c % 4;
+        const l = (32 + 2 * e + 2 * i - h - k) % 7;
+        const m = Math.floor((a + 11 * h + 22 * l) / 451);
+        const month = Math.floor((h + l - 7 * m + 114) / 31) - 1; // 0-indexed: 2 = March, 3 = April
+        const day = ((h + l - 7 * m + 114) % 31) + 1;
+        return new Date(year, month, day, 0, 0, 0);
+    },
+
+    getTargetDate(occasionKey, customDateStr, now = new Date()) {
+        const currentYear = now.getFullYear();
+
+        if (occasionKey === 'christmas') {
+            let xmas = new Date(currentYear, 11, 25, 0, 0, 0);
+            if (now.getTime() - xmas.getTime() > 86400000) {
+                xmas = new Date(currentYear + 1, 11, 25, 0, 0, 0);
+            }
+            return xmas;
+        }
+
+        if (occasionKey === 'newyear') {
+            let ny = new Date(currentYear + 1, 0, 1, 0, 0, 0);
+            return ny;
+        }
+
+        if (occasionKey === 'easter') {
+            let easter = this.calculateEasterDate(currentYear);
+            if (now.getTime() - easter.getTime() > 86400000) {
+                easter = this.calculateEasterDate(currentYear + 1);
+            }
+            return easter;
+        }
+
+        if (occasionKey === 'valentine') {
+            let val = new Date(currentYear, 1, 14, 0, 0, 0);
+            if (now.getTime() - val.getTime() > 86400000) {
+                val = new Date(currentYear + 1, 1, 14, 0, 0, 0);
+            }
+            return val;
+        }
+
+        // Custom Date or Birthday
+        if (customDateStr) {
+            const parsed = new Date(customDateStr);
+            if (!isNaN(parsed.getTime())) {
+                return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate(), 0, 0, 0);
+            }
+        }
+
+        const saved = localStorage.getItem('celebration_custom_date');
+        if (saved) {
+            const parsed = new Date(saved);
+            if (!isNaN(parsed.getTime())) {
+                return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate(), 0, 0, 0);
+            }
+        }
+
+        // Fallback target: 30 days from now
+        const defaultDate = new Date(now.getTime() + 30 * 86400000);
+        return new Date(defaultDate.getFullYear(), defaultDate.getMonth(), defaultDate.getDate(), 0, 0, 0);
+    },
+
+    getCountdownData(occasionKey, customDateStr, now = new Date()) {
+        const occasion = OCCASIONS[occasionKey] || OCCASIONS.christmas;
+        const targetDate = this.getTargetDate(occasionKey, customDateStr, now);
+        const diffMs = targetDate.getTime() - now.getTime();
+        const isToday = diffMs <= 0 && diffMs > -86400000;
+
+        let elapsedOrRemaining = isToday ? Math.abs(diffMs) : Math.max(0, diffMs);
+        const totalSeconds = Math.floor(elapsedOrRemaining / 1000);
+        const days = Math.floor(totalSeconds / 86400);
+        const hours = Math.floor((totalSeconds % 86400) / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+
+        return {
+            occasion,
+            targetDate,
+            diffMs,
+            isToday,
+            days: String(days).padStart(2, '0'),
+            hours: String(hours).padStart(2, '0'),
+            minutes: String(minutes).padStart(2, '0'),
+            seconds: String(seconds).padStart(2, '0')
+        };
+    },
+
+    getDefaultOccasionKey(today = new Date()) {
+        const month = today.getMonth();
+        const day = today.getDate();
+        // Late Dec -> New Year
+        if (month === 11 && day >= 26) return 'newyear';
+        // Jan 1 -> New Year
+        if (month === 0 && day <= 1) return 'newyear';
+        // Spring (Feb-Apr) -> Easter
+        if (month >= 1 && month <= 3) return 'easter';
+        // Fall/Winter (Sep-Dec) -> Christmas
+        if (month >= 8 && month <= 11) return 'christmas';
+        // Summer/Mid-year -> Christmas
+        return 'christmas';
+    }
+};
+
+// --------------------------------------------------------------------------
+// 1c. Seasonal Wishes & Reasons Collections
 // --------------------------------------------------------------------------
 const WISH_DATA = {
     valentine: {
@@ -237,111 +631,107 @@ const WISH_DATA = {
             "May your courage be stronger than any obstacle and your happiness be contagious.",
             "Cheers to writing our most beautiful, joyful, and victorious love story yet in 2026!"
         ]
+    },
+    easter: {
+        title: "Easter Hopes & Springtime Blessings 🐣",
+        tagPrefix: "Easter Blessing",
+        pillLabel: "Easter Wish 🌸",
+        items: [
+            "May your Easter be filled with the warmth of sunshine, fresh hope, and joyful moments.",
+            "Wishing you sweet treats, blooming flowers, and springtime peace all around.",
+            "May your days ahead be as bright and vibrant as springtime in full bloom.",
+            "Sending you endless smiles, chocolate surprises, and warm hugs this Easter!",
+            "May new opportunities bloom in your life just like spring flowers after winter rain.",
+            "Wishing you a peaceful holiday surrounded by loved ones and sweet memories.",
+            "May your heart feel light and rejuvenated with every step forward this season.",
+            "Here's to fresh beginnings, shared laughter, and sunny days ahead!",
+            "May joy hatch around every corner of your life this beautiful season.",
+            "Wishing you the sweetest and most hopeful Easter celebration ever!"
+        ]
+    },
+    custom: {
+        title: "Celebration Wishes & Thoughtful Notes ✨",
+        tagPrefix: "Special Wish",
+        pillLabel: "Celebration Wish 🎁",
+        items: [
+            "May today be the launchpad for all your greatest accomplishments yet!",
+            "Wishing you limitless happiness, deep peace, and radiant health on this special day.",
+            "You bring so much inspiration and light to those around you every single day.",
+            "May every dream you hold close to your heart begin unfolding beautifully now.",
+            "Here's to celebrating milestones, making memories, and cherishing each moment.",
+            "May success and satisfaction follow every effort you pour into your passions.",
+            "You deserve every drop of happiness and all the wonderful surprises life has to offer.",
+            "May your day be filled with warm smiles, joyful surprises, and great company.",
+            "Cheers to honoring how far you have come and looking forward to where you are heading!",
+            "Wishing you a celebration that leaves an unforgettable sparkle in your heart."
+        ]
+    },
+    anniversary: {
+        title: "Anniversary Wishes & Sweet Reasons 💍",
+        tagPrefix: "Anniversary Note",
+        pillLabel: "Anniversary Wish 💍",
+        items: [
+            "Happy Anniversary! May your love grow deeper, stronger, and more wondrous with every passing year.",
+            "Celebrating the two of you—a living reminder of how magical true love really is.",
+            "Through every season and adventure, your love remains a guiding light.",
+            "Wishing you another year of endless giggles, warm hugs, and sweet memories together.",
+            "Here's to all the memories you've made, and all the gorgeous chapters yet to come.",
+            "May your bond be blessed with boundless patience, romance, and shared dreams.",
+            "Cheers to a love that inspires everyone lucky enough to witness it!",
+            "May every day together feel just as sweet and exciting as the first day you fell in love.",
+            "Wishing you a lifetime of holding hands, cozy movie nights, and unshakeable happiness.",
+            "Happy Anniversary to the most radiant, enduring, and sweet couple!"
+        ]
     }
 };
 
 /**
- * Generates personalized headings based on URL recipient parameter (?to=Lucie or ?name=...)
+ * Generates personalized headings based on recipient name, occasion, and custom event type
  */
-function getPersonalizedHeading(seasonKey, name) {
-    if (!name) return SEASONS[seasonKey].heading;
-    switch (seasonKey) {
-        case 'birthday':
-            return `Happy Birthday, ${name}!`;
-        case 'christmas':
-            return `Merry Christmas, ${name}!`;
-        case 'newyear':
-            return `Happy New Year, ${name}!`;
-        case 'valentine':
-            return `${name}, will you be my Valentine?`;
-        default:
-            return `${name}, will you be my Valentine?`;
+function getPersonalizedHeading(occasionKey, name, eventType = null, eventTitle = '') {
+    if (occasionKey === 'custom') {
+        const typeKey = eventType && CELEBRATION_EVENT_TYPES[eventType] ? eventType : 'other';
+        const typeCfg = CELEBRATION_EVENT_TYPES[typeKey];
+        return typeCfg.getHeading(name, eventTitle);
     }
+    const occ = OCCASIONS[occasionKey] || OCCASIONS.christmas;
+    return occ.getHeading(name);
 }
 
-function getPersonalizedSubMessage(seasonKey, name) {
-    if (!name) return SEASONS[seasonKey].subMessage;
-    switch (seasonKey) {
-        case 'birthday':
-            return `Wishing you a magical day filled with sweet moments, huge smiles, and unlimited cake, ${name}! 🎂✨`;
-        case 'christmas':
-            return `Sending you cozy winter vibes, warm cocoa hugs, and holiday cheer, ${name}! 🎄❄️`;
-        case 'newyear':
-            return `Cheers to brand-new adventures, sparkling dreams, and an unforgettable 2026, ${name}! 🎆🥂`;
-        case 'valentine':
-            return `My heart has been waiting to ask you this all year long, ${name}... 💌`;
-        default:
-            return SEASONS[seasonKey].subMessage;
+function getPersonalizedSubMessage(occasionKey, name, eventType = null, eventTitle = '') {
+    if (occasionKey === 'custom') {
+        const typeKey = eventType && CELEBRATION_EVENT_TYPES[eventType] ? eventType : 'other';
+        const typeCfg = CELEBRATION_EVENT_TYPES[typeKey];
+        return typeCfg.getSubMessage(name, eventTitle);
     }
+    const occ = OCCASIONS[occasionKey] || OCCASIONS.christmas;
+    return occ.getSubMessage(name);
 }
 
-function getPersonalizedSuccessHeading(seasonKey, name) {
-    if (!name) return SEASONS[seasonKey].successHeading;
-    switch (seasonKey) {
-        case 'birthday':
-            return `Yaaay, ${name}! Happy Birthday! 🎂🎉🥳`;
-        case 'christmas':
-            return `Merry Christmas, ${name}! 🎄🎅✨`;
-        case 'newyear':
-            return `Cheers to 2026, ${name}! 🎆🥂✨`;
-        case 'valentine':
-            return `Yaaay, ${name}! You said YES! 💖🌹`;
-        default:
-            return SEASONS[seasonKey].successHeading;
+function getPersonalizedSuccessHeading(occasionKey, name, eventType = null, eventTitle = '') {
+    if (occasionKey === 'custom') {
+        const typeKey = eventType && CELEBRATION_EVENT_TYPES[eventType] ? eventType : 'other';
+        const typeCfg = CELEBRATION_EVENT_TYPES[typeKey];
+        return typeCfg.getSuccessHeading(name, eventTitle);
     }
-}
-
-/**
- * Determines seasonal identifier strictly based on date requirements:
- * - If before September 22 of the current year: 'Happy Birthday!' ('birthday')
- * - If between September 22 and December 25: 'Merry Christmas!' ('christmas')
- * - If between December 25 and January 1: 'Happy New Year!' ('newyear')
- * - Otherwise: 'Will you be my Valentine?' ('valentine')
- */
-function getSeasonKeyByDate(date = new Date()) {
-    const month = date.getMonth(); // 0-indexed: 0 = Jan, 8 = Sep, 11 = Dec
-    const day = date.getDate();
-
-    // 1. Between December 25 and January 1 -> Happy New Year!
-    const isNewYear = (month === 11 && day >= 25) || (month === 0 && day <= 1);
-    if (isNewYear) {
-        return 'newyear';
-    }
-
-    // 2. Between September 22 and December 25 -> Merry Christmas!
-    const isChristmas = (month === 8 && day >= 22) || (month > 8 && month < 11) || (month === 11 && day < 25);
-    if (isChristmas) {
-        return 'christmas';
-    }
-
-    // 3. Valentine window (January 2 through end of February / early spring) -> "Otherwise"
-    const isValentinePeriod = (month === 0 && day > 1) || (month === 1);
-    if (isValentinePeriod) {
-        return 'valentine';
-    }
-
-    // 4. Before September 22 of the current year -> Happy Birthday!
-    const isBeforeSep22 = (month < 8) || (month === 8 && day < 22);
-    if (isBeforeSep22) {
-        return 'birthday';
-    }
-
-    // Default "Otherwise" fallback
-    return 'valentine';
+    const occ = OCCASIONS[occasionKey] || OCCASIONS.christmas;
+    return occ.getSuccessHeading(name);
 }
 
 /**
  * Public helper function to return the heading string for any given Date.
  */
 function determineHeadingByDate(date = new Date()) {
-    const seasonKey = getSeasonKeyByDate(date);
-    return SEASONS[seasonKey].heading;
+    const seasonKey = OccasionManager.getDefaultOccasionKey(date);
+    const occ = OCCASIONS[seasonKey] || OCCASIONS.christmas;
+    return occ.getHeading('');
 }
 
 // Expose globally for testing/inspection
 window.determineHeadingByDate = determineHeadingByDate;
-window.getSeasonKeyByDate = getSeasonKeyByDate;
-window.SEASONS = SEASONS;
+window.OccasionManager = OccasionManager;
+window.OCCASIONS = OCCASIONS;
+window.SEASONS = OCCASIONS;
 
 document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
@@ -450,7 +840,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const rawCustomDate = urlParams.get('date') || localStorage.getItem('celebration_custom_date') || '';
     let customCelebrationDate = rawCustomDate.trim();
 
+    const rawCustomEventType = urlParams.get('event') || localStorage.getItem('celebration_custom_event_type') || 'other';
+    let customEventType = rawCustomEventType.trim();
+
+    const rawCustomEventTitle = urlParams.get('title') || localStorage.getItem('celebration_custom_event_title') || '';
+    let customEventTitle = rawCustomEventTitle.trim().slice(0, 48);
+
     // Top Controls & Personalization Elements
+    const occasionPillBtn = document.getElementById('occasion-pill-btn');
+    const occasionPillIcon = document.getElementById('occasion-pill-icon');
+    const occasionPillText = document.getElementById('occasion-pill-text');
     const personalizePillBtn = document.getElementById('personalize-pill-btn');
     const recipientPillText = document.getElementById('recipient-pill-text');
     const wishJarPillBtn = document.getElementById('wish-jar-pill-btn');
@@ -501,8 +900,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const recipientNameInput = document.getElementById('recipient-name-input');
     const customNoteInput = document.getElementById('custom-note-input');
     const celebrationDateInput = document.getElementById('celebration-date-input');
+    const occasionOptionCards = document.querySelectorAll('.occasion-option-card');
+    const fixedOccasionInfo = document.getElementById('fixed-occasion-info');
+    const fixedInfoIcon = document.getElementById('fixed-info-icon');
+    const fixedInfoText = document.getElementById('fixed-info-text');
+    const customDateGroup = document.getElementById('custom-date-group');
+    const easterCalculatedSub = document.getElementById('easter-calculated-sub');
     const savePersonalizeBtn = document.getElementById('save-personalize-btn');
     const copyCustomLinkBtn = document.getElementById('copy-custom-link-btn');
+
+    // Custom Event Selection Elements
+    const customEventTypeSection = document.getElementById('custom-event-type-section');
+    const eventTypeChips = document.querySelectorAll('.event-type-chip');
+    const customEventTitleInput = document.getElementById('custom-event-title-input');
+    const customEventPreviewBanner = document.getElementById('custom-event-preview-banner');
+    const customEventPreviewText = document.getElementById('custom-event-preview-text');
 
     const wishJarModal = document.getElementById('wish-jar-modal');
     const closeWishModalBtn = document.getElementById('close-wish-modal-btn');
@@ -510,8 +922,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishJarIcon = document.getElementById('wish-jar-icon');
     const wishContentText = document.getElementById('wish-content-text');
     const wishCapsuleTag = document.getElementById('wish-capsule-tag');
+    const wishCapsuleDisplay = document.getElementById('wish-capsule-display');
+    const wishSourcePill = document.getElementById('wish-source-pill');
+    const wishCounterPill = document.getElementById('wish-counter-pill');
     const nextWishBtn = document.getElementById('next-wish-btn');
     const copyWishBtn = document.getElementById('copy-wish-btn');
+    const fetchFreshWishesBtn = document.getElementById('fetch-fresh-wishes-btn');
+    const aiBtnSpark = document.getElementById('ai-btn-spark');
+    const aiBtnText = document.getElementById('ai-btn-text');
 
     // Toast Notification
     const toastNotification = document.getElementById('toast-notification');
@@ -523,14 +941,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Interactive State Variables
-    let currentSeasonKey = 'birthday';
-    let currentSeason = SEASONS.birthday;
+    const rawOccasion = urlParams.get('occasion') || urlParams.get('season') || localStorage.getItem('celebration_occasion') || '';
+    let initialOccasionKey = rawOccasion && OCCASIONS[rawOccasion] ? rawOccasion : OccasionManager.getDefaultOccasionKey();
+    let currentSeasonKey = initialOccasionKey;
+    let currentSeason = OCCASIONS[currentSeasonKey];
     let acceptScale = 1.0;
     let dodgeCount = 0;
     let isAccepted = false;
     let floatingInterval = null;
     let countdownTimerInterval = null;
     let currentWishIndex = 0;
+    let activeWishesPool = [];
+    let currentWishSource = 'curated';
+    let isFetchingWishes = false;
     let isCardFlipped = false;
     let isScratchpadEditing = false;
 
@@ -768,97 +1191,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3c. Count-up and Countdown Timer Engine
     // --------------------------------------------------------------------------
     function getCelebrationTargetDate(seasonKey, customDateStr) {
-        if (customDateStr) {
-            const parsed = new Date(customDateStr);
-            if (!isNaN(parsed.getTime())) {
-                return new Date(parsed.getFullYear(), parsed.getMonth(), parsed.getDate(), 0, 0, 0);
-            }
-        }
-
-        const now = new Date();
-        const currentYear = now.getFullYear();
-
-        if (seasonKey === 'valentine') {
-            let valDate = new Date(currentYear, 1, 14, 0, 0, 0); // Feb 14
-            if (now > valDate && (now - valDate) > 86400000) {
-                valDate = new Date(currentYear + 1, 1, 14, 0, 0, 0);
-            }
-            return valDate;
-        }
-
-        if (seasonKey === 'newyear') {
-            return new Date(currentYear + 1, 0, 1, 0, 0, 0); // Jan 1 midnight
-        }
-
-        if (seasonKey === 'christmas') {
-            let xmasDate = new Date(currentYear, 11, 25, 0, 0, 0); // Dec 25
-            if (now > xmasDate && (now - xmasDate) > 86400000) {
-                xmasDate = new Date(currentYear + 1, 11, 25, 0, 0, 0);
-            }
-            return xmasDate;
-        }
-
-        // Birthday default: custom saved date or upcoming celebration date
-        const savedBday = localStorage.getItem('celebration_custom_date');
-        if (savedBday) {
-            const parsed = new Date(savedBday);
-            if (!isNaN(parsed.getTime())) {
-                let target = new Date(currentYear, parsed.getMonth(), parsed.getDate(), 0, 0, 0);
-                if (now > target && (now - target) > 86400000) {
-                    target = new Date(currentYear + 1, parsed.getMonth(), parsed.getDate(), 0, 0, 0);
-                }
-                return target;
-            }
-        }
-
-        // Default birthday demonstration target (Sep 22 or upcoming)
-        let defaultBday = new Date(currentYear, 8, 22, 0, 0, 0);
-        if (now > defaultBday && (now - defaultBday) > 86400000) {
-            defaultBday = new Date(currentYear + 1, 8, 22, 0, 0, 0);
-        }
-        return defaultBday;
+        return OccasionManager.getTargetDate(seasonKey, customDateStr);
     }
 
     function updateCountdownDisplay() {
         if (!timerDays || !timerHours || !timerMinutes || !timerSeconds) return;
 
-        // Set title based on season
+        const data = OccasionManager.getCountdownData(currentSeasonKey, customCelebrationDate);
+        const occ = data.occasion;
+
+        // Set title based on occasion
         if (countdownTitle) {
-            if (currentSeasonKey === 'valentine') {
-                countdownTitle.textContent = "💖 Valentine's Day Countdown";
-            } else if (currentSeasonKey === 'newyear') {
-                countdownTitle.textContent = "🎆 New Year's Midnight Countdown";
-            } else if (currentSeasonKey === 'christmas') {
-                countdownTitle.textContent = "🎄 Christmas Day Countdown";
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                countdownTitle.textContent = eventCfg.countdownTitle(recipientName, customEventTitle);
+            } else if (typeof occ.countdownTitle === 'function') {
+                countdownTitle.textContent = occ.countdownTitle(recipientName);
+            } else if (occ.countdownTitle) {
+                countdownTitle.textContent = occ.countdownTitle;
             } else {
-                countdownTitle.textContent = recipientName ? `🎂 ${recipientName}'s Birthday Countdown` : "🎂 Birthday Celebration Countdown";
+                countdownTitle.textContent = recipientName ? `🗓️ ${recipientName}'s Celebration Countdown` : "🗓️ Celebration Day Countdown";
             }
         }
 
-        const targetDate = getCelebrationTargetDate(currentSeasonKey, customCelebrationDate);
-        const now = new Date();
-        const diffMs = targetDate.getTime() - now.getTime();
-
         // If today is the celebration date (within the active day)
-        if (diffMs <= 0 && diffMs > -86400000) {
+        if (data.isToday) {
             if (countdownTodayBanner) {
                 countdownTodayBanner.hidden = false;
                 countdownTodayBanner.style.display = 'block';
-                countdownTodayBanner.textContent = currentSeasonKey === 'birthday' 
-                    ? `🎉 TODAY IS ${recipientName ? recipientName.toUpperCase() + "'S" : "THE"} CELEBRATION DAY! WISHING YOU INFINITE JOY! 🎂✨`
-                    : `🎉 THE CELEBRATION IS HAPPENING TODAY! ENJOY EVERY SECOND! ✨🥂`;
+                if (currentSeasonKey === 'custom') {
+                    const displayTitle = (customEventTitle && customEventTitle.trim()) || (CELEBRATION_EVENT_TYPES[customEventType] ? CELEBRATION_EVENT_TYPES[customEventType].label : 'SPECIAL DAY');
+                    countdownTodayBanner.textContent = `🎉 TODAY IS ${recipientName ? recipientName.toUpperCase() + "'S " : ""}${displayTitle.toUpperCase()}! WISHING YOU INFINITE JOY! ✨🥂`;
+                } else if (typeof occ.todayMessage === 'function') {
+                    countdownTodayBanner.textContent = occ.todayMessage(recipientName);
+                } else {
+                    countdownTodayBanner.textContent = `🎉 TODAY IS THE SPECIAL DAY! WISHING YOU INFINITE JOY! ✨🥂`;
+                }
             }
-            // Count-up active hours/minutes/seconds of the celebration day
-            const elapsed = Math.abs(diffMs);
-            const hours = Math.floor(elapsed / (1000 * 60 * 60));
-            const mins = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
-            const secs = Math.floor((elapsed % (1000 * 60)) / 1000);
-
-            timerDays.textContent = "00";
-            timerHours.textContent = String(hours).padStart(2, '0');
-            timerMinutes.textContent = String(mins).padStart(2, '0');
-            timerSeconds.textContent = String(secs).padStart(2, '0');
-            return;
         } else {
             if (countdownTodayBanner) {
                 countdownTodayBanner.hidden = true;
@@ -866,19 +1235,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        let remaining = Math.max(0, diffMs);
-        const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-        remaining -= days * (1000 * 60 * 60 * 24);
-        const hours = Math.floor(remaining / (1000 * 60 * 60));
-        remaining -= hours * (1000 * 60 * 60);
-        const minutes = Math.floor(remaining / (1000 * 60));
-        remaining -= minutes * (1000 * 60);
-        const seconds = Math.floor(remaining / 1000);
-
-        timerDays.textContent = String(days).padStart(2, '0');
-        timerHours.textContent = String(hours).padStart(2, '0');
-        timerMinutes.textContent = String(minutes).padStart(2, '0');
-        timerSeconds.textContent = String(seconds).padStart(2, '0');
+        timerDays.textContent = data.days;
+        timerHours.textContent = data.hours;
+        timerMinutes.textContent = data.minutes;
+        timerSeconds.textContent = data.seconds;
     }
 
     function startCountdownTimer() {
@@ -995,6 +1355,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (keepsakeBody) {
             if (customKeepsakeMsg) {
                 keepsakeBody.textContent = customKeepsakeMsg;
+            } else if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                keepsakeBody.textContent = eventCfg.successSubtext;
             } else {
                 keepsakeBody.textContent = currentSeason.successSubtext;
             }
@@ -1235,11 +1598,155 @@ document.addEventListener('DOMContentLoaded', () => {
     // --------------------------------------------------------------------------
     // 3f. Personalization Modal & Dynamic Link Generator
     // --------------------------------------------------------------------------
+    function updateCustomCelebrationPreview() {
+        if (!customEventPreviewBanner || !customEventPreviewText) return;
+        const currentName = recipientNameInput ? recipientNameInput.value.trim().slice(0, 36) : recipientName;
+        const heading = getPersonalizedHeading('custom', currentName, customEventType, customEventTitle);
+        customEventPreviewText.textContent = `"${heading}"`;
+    }
+
+    function updateModalOccasionUI(selectedKey) {
+        const occ = OCCASIONS[selectedKey] || OCCASIONS.christmas;
+
+        // Update radio checked states and visual card active states
+        if (occasionOptionCards && occasionOptionCards.length > 0) {
+            occasionOptionCards.forEach(card => {
+                const val = card.getAttribute('data-occasion');
+                const radio = card.querySelector('input[type="radio"]');
+                const isMatch = val === selectedKey;
+                if (radio) radio.checked = isMatch;
+                card.classList.toggle('active', isMatch);
+            });
+        }
+
+        // Easter calculated upcoming date preview
+        if (easterCalculatedSub) {
+            const now = new Date();
+            const easterDate = OccasionManager.calculateEasterDate(now.getFullYear());
+            const targetEaster = (now.getTime() - easterDate.getTime() > 86400000)
+                ? OccasionManager.calculateEasterDate(now.getFullYear() + 1)
+                : easterDate;
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            easterCalculatedSub.textContent = `${monthNames[targetEaster.getMonth()]} ${targetEaster.getDate()}`;
+        }
+
+        // Show/hide fixed info vs custom date input vs celebration type picker
+        if (selectedKey === 'custom' || selectedKey === 'birthday' || selectedKey === 'anniversary') {
+            if (fixedOccasionInfo) {
+                fixedOccasionInfo.hidden = true;
+                fixedOccasionInfo.style.display = 'none';
+            }
+            if (customDateGroup) {
+                customDateGroup.hidden = false;
+                customDateGroup.style.display = 'block';
+            }
+            if (customEventTypeSection) {
+                if (selectedKey === 'custom') {
+                    customEventTypeSection.hidden = false;
+                    customEventTypeSection.style.display = 'block';
+                    updateCustomCelebrationPreview();
+                } else {
+                    customEventTypeSection.hidden = true;
+                    customEventTypeSection.style.display = 'none';
+                }
+            }
+        } else {
+            if (customDateGroup) {
+                customDateGroup.hidden = true;
+                customDateGroup.style.display = 'none';
+            }
+            if (customEventTypeSection) {
+                customEventTypeSection.hidden = true;
+                customEventTypeSection.style.display = 'none';
+            }
+            if (fixedOccasionInfo) {
+                fixedOccasionInfo.hidden = false;
+                fixedOccasionInfo.style.display = 'flex';
+                if (fixedInfoIcon) fixedInfoIcon.textContent = occ.emoji || '🎉';
+                if (fixedInfoText) {
+                    const target = OccasionManager.getTargetDate(selectedKey, null);
+                    const dateStr = target.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    fixedInfoText.textContent = `Targeting ${occ.name}: ${dateStr}`;
+                }
+            }
+        }
+    }
+
+    // Attach click listeners to occasion selection cards in modal
+    if (occasionOptionCards && occasionOptionCards.length > 0) {
+        occasionOptionCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const occasionVal = card.getAttribute('data-occasion');
+                if (occasionVal && OCCASIONS[occasionVal]) {
+                    updateModalOccasionUI(occasionVal);
+                }
+            });
+        });
+    }
+
+    // Attach listeners to Custom Event Type Chips
+    if (eventTypeChips && eventTypeChips.length > 0) {
+        eventTypeChips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                eventTypeChips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
+
+                const eventVal = chip.getAttribute('data-event') || 'other';
+                const defaultTitle = chip.getAttribute('data-title') || '';
+                customEventType = eventVal;
+
+                if (customEventTitleInput) {
+                    if (eventVal === 'other') {
+                        if (customEventTitleInput.value === defaultTitle || !customEventTitleInput.value) {
+                            customEventTitleInput.value = '';
+                            customEventTitle = '';
+                        }
+                        customEventTitleInput.focus();
+                    } else {
+                        customEventTitle = defaultTitle;
+                        customEventTitleInput.value = defaultTitle;
+                    }
+                }
+                updateCustomCelebrationPreview();
+                sound.playDodgePop();
+            });
+        });
+    }
+
+    if (customEventTitleInput) {
+        customEventTitleInput.addEventListener('input', () => {
+            customEventTitle = customEventTitleInput.value.trim().slice(0, 48);
+            updateCustomCelebrationPreview();
+        });
+    }
+
+    if (recipientNameInput) {
+        recipientNameInput.addEventListener('input', () => {
+            updateCustomCelebrationPreview();
+        });
+    }
+
     function openPersonalizeModal() {
         if (!personalizeModal) return;
         if (recipientNameInput) recipientNameInput.value = recipientName;
         if (customNoteInput) customNoteInput.value = customKeepsakeMsg || currentSeason.successSubtext;
         if (celebrationDateInput) celebrationDateInput.value = customCelebrationDate;
+
+        // Sync chips with current customEventType
+        if (eventTypeChips && eventTypeChips.length > 0) {
+            eventTypeChips.forEach(chip => {
+                const ev = chip.getAttribute('data-event');
+                chip.classList.toggle('active', ev === customEventType);
+            });
+        }
+        if (customEventTitleInput) {
+            customEventTitleInput.value = customEventTitle;
+        }
+
+        // Sync occasion selector with current state
+        const activeOccasionKey = OCCASIONS[currentSeasonKey] ? currentSeasonKey : 'christmas';
+        updateModalOccasionUI(activeOccasionKey);
+        updateCustomCelebrationPreview();
 
         personalizeModal.hidden = false;
         personalizeModal.style.display = 'flex';
@@ -1253,6 +1760,9 @@ document.addEventListener('DOMContentLoaded', () => {
         personalizeModal.setAttribute('aria-hidden', 'true');
     }
 
+    if (occasionPillBtn) {
+        occasionPillBtn.addEventListener('click', openPersonalizeModal);
+    }
     if (personalizePillBtn) {
         personalizePillBtn.addEventListener('click', openPersonalizeModal);
     }
@@ -1271,8 +1781,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateShareableLink() {
         const url = new URL(window.location.origin + window.location.pathname);
         if (recipientName) url.searchParams.set('to', recipientName);
-        if (currentSeasonKey && currentSeasonKey !== 'birthday') url.searchParams.set('season', currentSeasonKey);
-        if (customCelebrationDate) url.searchParams.set('date', customCelebrationDate);
+        if (currentSeasonKey) url.searchParams.set('occasion', currentSeasonKey);
+        if (currentSeasonKey === 'custom') {
+            if (customCelebrationDate) url.searchParams.set('date', customCelebrationDate);
+            if (customEventType) url.searchParams.set('event', customEventType);
+            if (customEventTitle) url.searchParams.set('title', customEventTitle);
+        } else if ((currentSeasonKey === 'birthday' || currentSeasonKey === 'anniversary') && customCelebrationDate) {
+            url.searchParams.set('date', customCelebrationDate);
+        }
         if (customKeepsakeMsg) url.searchParams.set('msg', customKeepsakeMsg);
         return url.toString();
     }
@@ -1282,6 +1798,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const newName = recipientNameInput ? recipientNameInput.value.trim().slice(0, 36) : '';
             const newNote = customNoteInput ? customNoteInput.value.trim().slice(0, 500) : '';
             const newDate = celebrationDateInput ? celebrationDateInput.value.trim() : '';
+
+            // Selected occasion radio
+            const selectedRadio = document.querySelector('input[name="selected-occasion"]:checked');
+            const chosenOccasion = (selectedRadio && OCCASIONS[selectedRadio.value]) ? selectedRadio.value : currentSeasonKey;
 
             recipientName = newName;
             if (newName) {
@@ -1295,18 +1815,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('custom_keepsake_msg', newNote);
             }
 
-            if (newDate) {
+            if (chosenOccasion === 'custom') {
+                customEventType = customEventType || 'other';
+                customEventTitle = customEventTitleInput ? customEventTitleInput.value.trim().slice(0, 48) : '';
+                localStorage.setItem('celebration_custom_event_type', customEventType);
+                if (customEventTitle) {
+                    localStorage.setItem('celebration_custom_event_title', customEventTitle);
+                } else {
+                    localStorage.removeItem('celebration_custom_event_title');
+                }
+            } else {
+                localStorage.removeItem('celebration_custom_event_type');
+                localStorage.removeItem('celebration_custom_event_title');
+            }
+
+            if ((chosenOccasion === 'custom' || chosenOccasion === 'birthday' || chosenOccasion === 'anniversary') && newDate) {
                 customCelebrationDate = newDate;
                 localStorage.setItem('celebration_custom_date', newDate);
-            } else {
+            } else if (chosenOccasion !== 'custom' && chosenOccasion !== 'birthday' && chosenOccasion !== 'anniversary') {
                 customCelebrationDate = '';
                 localStorage.removeItem('celebration_custom_date');
             }
 
-            // Update UI elements in place
-            if (recipientPillText) {
-                recipientPillText.textContent = recipientName ? `For: ${recipientName}` : "For: Someone Special";
-            }
+            currentSeasonKey = chosenOccasion;
+            localStorage.setItem('celebration_occasion', chosenOccasion);
+
+            // Re-initialize active wish pool with new occasion/event context
+            initWishPool(true);
 
             applySeason(currentSeasonKey);
             initKeepsakeCard();
@@ -1347,15 +1882,181 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 3g. "Reason Why I Love You" / Wish Generator
+    // 3g. Fresh Compliments, Wishes & AI Wish Jar Minigame
     // --------------------------------------------------------------------------
+    function getEffectiveWishJarConfig() {
+        if (currentSeasonKey === 'custom') {
+            const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+            const displayTitle = customEventTitle || eventCfg.label || 'Celebration';
+            const items = (WISH_DATA[customEventType] && WISH_DATA[customEventType].items) 
+                ? WISH_DATA[customEventType].items 
+                : WISH_DATA.custom.items;
+            return {
+                title: `${displayTitle} Wishes & Notes ${eventCfg.emoji || '✨'}`,
+                tagPrefix: `${eventCfg.label || 'Celebration'} Wish`,
+                pillLabel: `Tap for ${eventCfg.label || 'a'} wish 💌`,
+                items: items
+            };
+        }
+        return WISH_DATA[currentSeasonKey] || WISH_DATA.valentine;
+    }
+
+    function initWishPool(forceReset = false) {
+        if (activeWishesPool.length === 0 || forceReset) {
+            const config = getEffectiveWishJarConfig();
+            activeWishesPool = [...config.items];
+            currentWishIndex = 0;
+            currentWishSource = 'curated';
+        }
+    }
+
+    function updateWishJarUI() {
+        const config = getEffectiveWishJarConfig();
+        if (wishJarTitle) wishJarTitle.textContent = config.title;
+
+        if (activeWishesPool.length === 0) {
+            initWishPool();
+        }
+
+        const wish = activeWishesPool[currentWishIndex] || "Wishing you boundless love and joy today and always! ✨";
+
+        if (wishContentText) {
+            wishContentText.textContent = `"${wish}"`;
+        }
+
+        if (wishCapsuleTag) {
+            wishCapsuleTag.textContent = `✨ ${config.tagPrefix} #${currentWishIndex + 1} of ${activeWishesPool.length}`;
+        }
+
+        if (wishSourcePill) {
+            if (currentWishSource === 'ai') {
+                wishSourcePill.textContent = '✨ Fresh AI Wishes';
+                wishSourcePill.classList.add('is-ai-active');
+            } else {
+                wishSourcePill.textContent = '✨ Fresh Curated Wishes';
+                wishSourcePill.classList.remove('is-ai-active');
+            }
+        }
+
+        if (wishCounterPill) {
+            wishCounterPill.textContent = `Wish ${currentWishIndex + 1} of ${activeWishesPool.length}`;
+        }
+    }
+
+    function drawRandomWish() {
+        if (activeWishesPool.length === 0) {
+            initWishPool();
+        }
+        if (activeWishesPool.length === 0) return;
+
+        let nextIdx = Math.floor(Math.random() * activeWishesPool.length);
+        if (activeWishesPool.length > 1 && nextIdx === currentWishIndex) {
+            nextIdx = (nextIdx + 1) % activeWishesPool.length;
+        }
+        currentWishIndex = nextIdx;
+
+        if (wishCapsuleDisplay) {
+            wishCapsuleDisplay.classList.add('wish-animating');
+            setTimeout(() => {
+                if (wishCapsuleDisplay) wishCapsuleDisplay.classList.remove('wish-animating');
+            }, 240);
+        }
+
+        updateWishJarUI();
+        sound.playCelebrationChime();
+    }
+
+    async function fetchFreshWishes() {
+        if (isFetchingWishes) return;
+        isFetchingWishes = true;
+
+        if (fetchFreshWishesBtn) {
+            fetchFreshWishesBtn.disabled = true;
+            fetchFreshWishesBtn.classList.add('is-loading');
+        }
+        if (aiBtnText) {
+            aiBtnText.textContent = 'Crafting...';
+        }
+        if (aiBtnSpark) {
+            aiBtnSpark.classList.add('sparkle-spin');
+        }
+
+        try {
+            const payload = {
+                occasion: currentSeasonKey,
+                eventType: customEventType,
+                eventTitle: customEventTitle,
+                recipientName: recipientName,
+                customNote: customKeepsakeMsg,
+                vibe: 'heartfelt'
+            };
+
+            const resp = await fetch('/api/wishes/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!resp.ok) {
+                throw new Error(`Server returned status: ${resp.status}`);
+            }
+
+            const data = await resp.json();
+            if (data && data.success && Array.isArray(data.wishes) && data.wishes.length > 0) {
+                const freshItems = data.wishes.filter(w => !activeWishesPool.includes(w));
+                const wishesToAdd = freshItems.length > 0 ? freshItems : data.wishes;
+
+                activeWishesPool = [...wishesToAdd, ...activeWishesPool];
+                currentWishIndex = 0;
+                currentWishSource = data.source || 'ai';
+
+                updateWishJarUI();
+                sound.playCelebrationChime();
+
+                const toastMsg = (data.source === 'ai') 
+                    ? "Fresh AI wishes crafted for your celebration! ✨💌" 
+                    : "Fresh seasonal wishes unlocked! 💌✨";
+                showToast(toastMsg, "✨");
+            } else {
+                throw new Error('No wishes in response');
+            }
+        } catch (err) {
+            // Client-side fallback if offline or network fails
+            const clientFallbacks = [
+                recipientName 
+                    ? `May every step you take bring you closer to your deepest dreams, ${recipientName}! Keep shining brilliantly!`
+                    : `May every step you take bring you closer to your deepest dreams! Keep shining brilliantly!`,
+                `Here's to laughing until your cheeks hurt, dreaming with courage, and cherishing every sweet memory.`,
+                recipientName
+                    ? `Never doubt how deeply loved and appreciated you are, ${recipientName}!`
+                    : `Never doubt how deeply loved and appreciated you are!`,
+                `Sending you infinite warmth, endless sparkle, and happiness that overflows today and always.`
+            ];
+            activeWishesPool = [...clientFallbacks, ...activeWishesPool];
+            currentWishIndex = 0;
+            currentWishSource = 'curated';
+            updateWishJarUI();
+            sound.playCelebrationChime();
+            showToast("Fresh compliments & wishes loaded! 💌✨", "✨");
+        } finally {
+            isFetchingWishes = false;
+            if (fetchFreshWishesBtn) {
+                fetchFreshWishesBtn.disabled = false;
+                fetchFreshWishesBtn.classList.remove('is-loading');
+            }
+            if (aiBtnText) {
+                aiBtnText.textContent = 'Fresh Wishes';
+            }
+            if (aiBtnSpark) {
+                aiBtnSpark.classList.remove('sparkle-spin');
+            }
+        }
+    }
+
     function openWishJarModal() {
         if (!wishJarModal) return;
-        const seasonData = WISH_DATA[currentSeasonKey] || WISH_DATA.valentine;
-        if (wishJarTitle) wishJarTitle.textContent = seasonData.title;
-
-        // Draw a random wish
-        drawRandomWish();
+        initWishPool();
+        updateWishJarUI();
 
         wishJarModal.hidden = false;
         wishJarModal.style.display = 'flex';
@@ -1367,27 +2068,6 @@ document.addEventListener('DOMContentLoaded', () => {
         wishJarModal.hidden = true;
         wishJarModal.style.display = 'none';
         wishJarModal.setAttribute('aria-hidden', 'true');
-    }
-
-    function drawRandomWish() {
-        const seasonData = WISH_DATA[currentSeasonKey] || WISH_DATA.valentine;
-        const items = seasonData.items;
-        if (!items || items.length === 0) return;
-
-        let nextIdx = Math.floor(Math.random() * items.length);
-        if (items.length > 1 && nextIdx === currentWishIndex) {
-            nextIdx = (nextIdx + 1) % items.length;
-        }
-        currentWishIndex = nextIdx;
-
-        if (wishContentText) {
-            wishContentText.textContent = `"${items[currentWishIndex]}"`;
-        }
-        if (wishCapsuleTag) {
-            wishCapsuleTag.textContent = `✨ ${seasonData.tagPrefix} #${currentWishIndex + 1} of ${items.length}`;
-        }
-
-        sound.playCelebrationChime();
     }
 
     if (wishJarPillBtn) {
@@ -1404,6 +2084,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nextWishBtn) {
         nextWishBtn.addEventListener('click', drawRandomWish);
     }
+    if (fetchFreshWishesBtn) {
+        fetchFreshWishesBtn.addEventListener('click', fetchFreshWishes);
+    }
     if (copyWishBtn) {
         copyWishBtn.addEventListener('click', () => {
             const text = wishContentText ? wishContentText.textContent : '';
@@ -1418,22 +2101,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 4. Seasonal Theme Application
+    // 4. Occasion & Seasonal Theme Application
     // --------------------------------------------------------------------------
     function applySeason(seasonKey) {
-        if (!SEASONS[seasonKey]) seasonKey = 'birthday';
+        if (!OCCASIONS[seasonKey]) seasonKey = 'christmas';
         currentSeasonKey = seasonKey;
-        currentSeason = SEASONS[seasonKey];
+        currentSeason = OCCASIONS[seasonKey];
 
         // Update body theme gradient (preserving dark-mode and other dynamic state classes)
-        Object.values(SEASONS).forEach(s => {
+        Object.values(OCCASIONS).forEach(s => {
             if (s.themeClass) document.body.classList.remove(s.themeClass);
         });
         document.body.classList.add(currentSeason.themeClass);
 
-        // Update Heading & Sub-message with personalized recipient support
-        const personalizedHeading = getPersonalizedHeading(currentSeasonKey, recipientName);
-        const personalizedSubMessage = getPersonalizedSubMessage(currentSeasonKey, recipientName);
+        // Update Heading & Sub-message with personalized recipient and custom event support
+        const personalizedHeading = getPersonalizedHeading(currentSeasonKey, recipientName, customEventType, customEventTitle);
+        const personalizedSubMessage = getPersonalizedSubMessage(currentSeasonKey, recipientName, customEventType, customEventTitle);
 
         if (questionText) questionText.textContent = personalizedHeading;
         if (subMessage) subMessage.textContent = personalizedSubMessage;
@@ -1446,15 +2129,37 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Update Top Control Pills
+        if (occasionPillIcon && occasionPillText) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                occasionPillIcon.textContent = eventCfg.emoji || '✨';
+                occasionPillText.textContent = customEventTitle || eventCfg.label || 'Celebration';
+            } else {
+                occasionPillIcon.textContent = currentSeason.emoji || '🎉';
+                occasionPillText.textContent = currentSeason.name || 'Occasion';
+            }
+        }
         if (recipientPillText) {
             recipientPillText.textContent = recipientName ? `For: ${recipientName}` : "For: Someone Special";
         }
-        if (wishJarPillText && WISH_DATA[currentSeasonKey]) {
-            wishJarPillText.textContent = WISH_DATA[currentSeasonKey].pillLabel || "Tap for a wish 💌";
+        if (wishJarPillText) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                wishJarPillText.textContent = `Tap for ${eventCfg.label} Wish 💌`;
+            } else if (WISH_DATA[currentSeasonKey]) {
+                wishJarPillText.textContent = WISH_DATA[currentSeasonKey].pillLabel || "Tap for a wish 💌";
+            }
         }
 
-        // Update Badge
-        if (badgeText) badgeText.textContent = currentSeason.badge;
+        // Update Badge (if present)
+        if (badgeText) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                badgeText.textContent = customEventTitle ? `✨ ${customEventTitle}` : eventCfg.badge;
+            } else {
+                badgeText.textContent = currentSeason.badge;
+            }
+        }
 
         // Update Jumping Bear Visual
         if (mainGif) {
@@ -1473,8 +2178,22 @@ document.addEventListener('DOMContentLoaded', () => {
         updateBearEmotion(dodgeCount);
 
         // Update Buttons
-        if (acceptTextSpan) acceptTextSpan.textContent = currentSeason.acceptText;
-        if (acceptEmojiSpan) acceptEmojiSpan.textContent = currentSeason.acceptEmoji;
+        if (acceptTextSpan) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                acceptTextSpan.textContent = eventCfg.acceptText || currentSeason.acceptText;
+            } else {
+                acceptTextSpan.textContent = currentSeason.acceptText;
+            }
+        }
+        if (acceptEmojiSpan) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                acceptEmojiSpan.textContent = eventCfg.acceptEmoji || currentSeason.acceptEmoji;
+            } else {
+                acceptEmojiSpan.textContent = currentSeason.acceptEmoji;
+            }
+        }
         if (denyTextSpan) denyTextSpan.textContent = currentSeason.denyText;
         if (denyEmojiSpan) denyEmojiSpan.textContent = currentSeason.denyEmoji;
 
@@ -1891,11 +2610,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const successSubtext = document.getElementById('success-subtext');
         const celebrationBadge = document.getElementById('celebration-badge');
 
-        const personalizedSuccessHeading = getPersonalizedSuccessHeading(currentSeasonKey, recipientName);
+        const personalizedSuccessHeading = getPersonalizedSuccessHeading(currentSeasonKey, recipientName, customEventType, customEventTitle);
 
         if (successHeading) successHeading.textContent = personalizedSuccessHeading;
-        if (successSubtext) successSubtext.textContent = currentSeason.successSubtext;
-        if (celebrationBadge) celebrationBadge.innerHTML = `<span>${currentSeason.celebrationBadge}</span>`;
+        if (successSubtext) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                successSubtext.textContent = eventCfg.successSubtext;
+            } else {
+                successSubtext.textContent = currentSeason.successSubtext;
+            }
+        }
+        if (celebrationBadge) {
+            if (currentSeasonKey === 'custom') {
+                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
+                celebrationBadge.innerHTML = `<span>${eventCfg.badge || '✨ CELEBRATION DAY!'}</span>`;
+            } else {
+                celebrationBadge.innerHTML = `<span>${currentSeason.celebrationBadge}</span>`;
+            }
+        }
 
         // 5. Populate and initialize Virtual Keepsake Flip-Card
         initKeepsakeCard();
@@ -1957,7 +2690,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         musicToggleBtn.classList.remove('is-paused');
                     }
                     if (musicLabel) {
-                        musicLabel.textContent = 'Birthday Music: Playing 🎶';
+                        musicLabel.textContent = `${currentSeason.name} Music: Playing 🎶`;
                     }
                 }).catch((err) => {
                     console.log('Audio playback waiting for user tap:', err);
@@ -1965,7 +2698,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         musicToggleBtn.classList.add('is-paused');
                     }
                     if (musicLabel) {
-                        musicLabel.textContent = 'Tap to Play Birthday Music 🎶';
+                        musicLabel.textContent = `Tap to Play ${currentSeason.name} Music 🎶`;
                     }
                 });
             }
@@ -1980,12 +2713,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (birthdayAudio.paused) {
                 birthdayAudio.play().then(() => {
                     musicToggleBtn.classList.remove('is-paused');
-                    if (musicLabel) musicLabel.textContent = 'Birthday Music: Playing 🎶';
+                    if (musicLabel) musicLabel.textContent = `${currentSeason.name} Music: Playing 🎶`;
                 }).catch(() => {});
             } else {
                 birthdayAudio.pause();
                 musicToggleBtn.classList.add('is-paused');
-                if (musicLabel) musicLabel.textContent = 'Birthday Music: Paused ⏸️';
+                if (musicLabel) musicLabel.textContent = `${currentSeason.name} Music: Paused ⏸️`;
             }
         });
     }
@@ -2018,25 +2751,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --------------------------------------------------------------------------
-    // 9. Automated Date-Based Initialization
+    // 9. Occasion & Date-Based Initialization
     // --------------------------------------------------------------------------
-    // Check URL parameters for manual season override: ?season=birthday|christmas|newyear|valentine
-    const seasonQuery = urlParams.get('season')?.toLowerCase();
+    // Check URL parameters or localStorage for occasion override: ?occasion=christmas|newyear|easter|custom|birthday|valentine
+    const occasionQuery = (urlParams.get('occasion') || urlParams.get('season'))?.toLowerCase();
     const dateQuery = urlParams.get('date');
+    const storedOccasion = localStorage.getItem('celebration_occasion');
 
-    let initialSeasonKey = 'birthday';
+    let initialSeasonKey = 'christmas';
 
-    if (dateQuery) {
+    if (occasionQuery && OCCASIONS[occasionQuery]) {
+        initialSeasonKey = occasionQuery;
+    } else if (storedOccasion && OCCASIONS[storedOccasion]) {
+        initialSeasonKey = storedOccasion;
+    } else if (dateQuery) {
         const parsedDate = new Date(dateQuery);
         if (!isNaN(parsedDate.getTime())) {
-            initialSeasonKey = getSeasonKeyByDate(parsedDate);
+            initialSeasonKey = OccasionManager.getDefaultOccasionKey(parsedDate);
         }
-    } else if (seasonQuery && SEASONS[seasonQuery]) {
-        initialSeasonKey = seasonQuery;
     } else {
-        // Automatically determine season via JavaScript Date function
-        const today = new Date();
-        initialSeasonKey = getSeasonKeyByDate(today);
+        initialSeasonKey = OccasionManager.getDefaultOccasionKey(new Date());
     }
 
     // Apply the determined seasonal content, jumping bear, and texts

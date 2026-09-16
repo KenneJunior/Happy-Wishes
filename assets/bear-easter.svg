@@ -1,0 +1,265 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <!-- Shading & Lighting Gradients -->
+    <linearGradient id="furGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#fdfbf7"/>
+      <stop offset="100%" stop-color="#fae8eb"/>
+    </linearGradient>
+
+    <radialGradient id="bellyGrad" cx="50%" cy="38%" r="58%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#fff5f8"/>
+      <stop offset="100%" stop-color="#fedce5"/>
+    </radialGradient>
+
+    <linearGradient id="innerEarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffccd5"/>
+      <stop offset="100%" stop-color="#ff7597"/>
+    </linearGradient>
+
+    <radialGradient id="blushGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff4d6d" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#ff758f" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffccd5" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Easter Egg Gradients -->
+    <linearGradient id="eggGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd166"/>
+      <stop offset="35%" stop-color="#f72585"/>
+      <stop offset="70%" stop-color="#7209b7"/>
+      <stop offset="100%" stop-color="#4cc9f0"/>
+    </linearGradient>
+
+    <linearGradient id="eggPastel" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#fbcfe8"/>
+      <stop offset="100%" stop-color="#bae6fd"/>
+    </linearGradient>
+
+    <linearGradient id="bunnyEarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#fbf0f3"/>
+      <stop offset="100%" stop-color="#f8d7e0"/>
+    </linearGradient>
+
+    <linearGradient id="specularRim" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <radialGradient id="irisLight" cx="50%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#581c87" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2d131b" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="springGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#c084fc" flood-opacity="0.22"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#f472b6" flood-opacity="0.18"/>
+    </filter>
+
+    <style>
+      @keyframes bearSpringJump {
+        0% { transform: translateY(0px) scale(1, 1) rotate(0deg); }
+        9% { transform: translateY(11px) scale(1.15, 0.85) rotate(0deg); }
+        22% { transform: translateY(-16px) scale(0.88, 1.15) rotate(1deg); }
+        36% { transform: translateY(-44px) scale(0.93, 1.09) rotate(2deg); }
+        48% { transform: translateY(-47px) scale(1.02, 0.98) rotate(0.6deg); }
+        64% { transform: translateY(-12px) scale(0.89, 1.14) rotate(-0.8deg); }
+        74% { transform: translateY(13px) scale(1.24, 0.76) rotate(0deg); }
+        84% { transform: translateY(-10px) scale(0.93, 1.08) rotate(-0.5deg); }
+        92% { transform: translateY(3px) scale(1.04, 0.97) rotate(0.2deg); }
+        100% { transform: translateY(0px) scale(1, 1) rotate(0deg); }
+      }
+
+      @keyframes groundShadowSpring {
+        0% { transform: scale(1, 1); opacity: 0.38; }
+        9% { transform: scale(1.28, 1.22); opacity: 0.55; }
+        22% { transform: scale(0.74, 0.68); opacity: 0.20; }
+        36%, 48% { transform: scale(0.44, 0.40); opacity: 0.08; }
+        64% { transform: scale(0.80, 0.74); opacity: 0.22; }
+        74% { transform: scale(1.36, 1.30); opacity: 0.65; }
+        84% { transform: scale(0.86, 0.82); opacity: 0.26; }
+        92% { transform: scale(1.07, 1.05); opacity: 0.44; }
+        100% { transform: scale(1, 1); opacity: 0.38; }
+      }
+
+      @keyframes bunnyEarLeft {
+        0%, 100% { transform: rotate(-5deg); }
+        35% { transform: rotate(-16deg); }
+        70% { transform: rotate(4deg); }
+      }
+
+      @keyframes bunnyEarRight {
+        0%, 100% { transform: rotate(5deg); }
+        35% { transform: rotate(18deg); }
+        70% { transform: rotate(-4deg); }
+      }
+
+      @keyframes eggWobble {
+        0%, 100% { transform: rotate(-3deg); }
+        50% { transform: rotate(4deg); }
+      }
+
+      @keyframes eyeBlink {
+        0%, 93%, 97%, 100% { transform: scaleY(1); }
+        95% { transform: scaleY(0.08); }
+      }
+
+      @keyframes petalDrift {
+        0% { transform: translateY(-8px) rotate(0deg); opacity: 0; }
+        20% { opacity: 0.9; }
+        80% { opacity: 0.8; }
+        100% { transform: translateY(210px) rotate(180deg); opacity: 0; }
+      }
+
+      .bear-jumping-rig {
+        transform-origin: 140px 214px;
+        animation: bearSpringJump 1.45s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        will-change: transform;
+      }
+
+      .ground-shadow {
+        transform-origin: 140px 222px;
+        animation: groundShadowSpring 1.45s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+        will-change: transform, opacity;
+      }
+
+      .bunny-ear-l {
+        transform-origin: 112px 75px;
+        animation: bunnyEarLeft 2.2s ease-in-out infinite;
+      }
+
+      .bunny-ear-r {
+        transform-origin: 168px 75px;
+        animation: bunnyEarRight 2.2s ease-in-out infinite;
+      }
+
+      .egg-wobble-anim {
+        transform-origin: 140px 175px;
+        animation: eggWobble 2s ease-in-out infinite;
+      }
+
+      .eye-blink-anim {
+        transform-origin: 140px 114px;
+        animation: eyeBlink 3.6s ease-in-out infinite;
+      }
+
+      .p-1 { animation: petalDrift 4s linear infinite; }
+      .p-2 { animation: petalDrift 3.5s linear infinite 1.2s; }
+      .p-3 { animation: petalDrift 4.5s linear infinite 2.1s; }
+    </style>
+  </defs>
+
+  <!-- Ambient Spring Petals -->
+  <g id="spring-petals" aria-hidden="true">
+    <path class="p-1" d="M 45 10 C 48 4 56 4 58 12 C 54 18 46 16 45 10 Z" fill="#fbcfe8" opacity="0.8"/>
+    <path class="p-2" d="M 235 15 C 238 9 246 9 248 17 C 244 23 236 21 235 15 Z" fill="#fef08a" opacity="0.85"/>
+    <path class="p-3" d="M 130 5 C 133 0 141 0 143 8 C 139 14 131 12 130 5 Z" fill="#bbf7d0" opacity="0.8"/>
+  </g>
+
+  <!-- Dynamic Shadow -->
+  <ellipse class="ground-shadow" cx="140" cy="222" rx="48" ry="9" fill="#9333ea" opacity="0.22"/>
+
+  <!-- Main Jumping Bear Rig -->
+  <g class="bear-jumping-rig" filter="url(#springGlow)">
+
+    <!-- Feet -->
+    <g id="feet">
+      <ellipse cx="114" cy="204" rx="17" ry="13" fill="url(#furGrad)" stroke="#f5c2ce" stroke-width="2"/>
+      <ellipse cx="114" cy="205" rx="8" ry="6" fill="url(#innerEarGrad)"/>
+      <circle cx="109" cy="198" r="2" fill="#ff7597"/>
+      <circle cx="114" cy="196" r="2" fill="#ff7597"/>
+      <circle cx="119" cy="198" r="2" fill="#ff7597"/>
+
+      <ellipse cx="166" cy="204" rx="17" ry="13" fill="url(#furGrad)" stroke="#f5c2ce" stroke-width="2"/>
+      <ellipse cx="166" cy="205" rx="8" ry="6" fill="url(#innerEarGrad)"/>
+      <circle cx="161" cy="198" r="2" fill="#ff7597"/>
+      <circle cx="166" cy="196" r="2" fill="#ff7597"/>
+      <circle cx="171" cy="198" r="2" fill="#ff7597"/>
+    </g>
+
+    <!-- Body -->
+    <ellipse cx="140" cy="166" rx="46" ry="40" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <ellipse cx="140" cy="170" rx="30" ry="25" fill="url(#bellyGrad)"/>
+    <ellipse cx="140" cy="153" rx="18" ry="4.5" fill="#ffffff" opacity="0.6"/>
+
+    <!-- Round Bear Ears -->
+    <circle cx="98" cy="84" r="20" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <circle cx="98" cy="84" r="11" fill="url(#innerEarGrad)"/>
+
+    <circle cx="182" cy="84" r="20" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <circle cx="182" cy="84" r="11" fill="url(#innerEarGrad)"/>
+
+    <!-- Head -->
+    <circle cx="140" cy="116" r="48" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2.5"/>
+    <ellipse cx="140" cy="95" rx="28" ry="14" fill="#ffffff" opacity="0.45"/>
+
+    <!-- Cute Bunny Ears Headband on Bear -->
+    <!-- Left Bunny Ear -->
+    <g class="bunny-ear-l">
+      <path d="M 112 75 C 98 45 92 18 106 14 C 120 10 126 38 122 72 Z" fill="url(#bunnyEarGrad)" stroke="#f2bdca" stroke-width="2"/>
+      <path d="M 110 68 C 102 46 98 25 106 22 C 114 19 118 40 117 66 Z" fill="url(#innerEarGrad)"/>
+    </g>
+    <!-- Right Bunny Ear -->
+    <g class="bunny-ear-r">
+      <path d="M 168 75 C 182 45 188 18 174 14 C 160 10 154 38 158 72 Z" fill="url(#bunnyEarGrad)" stroke="#f2bdca" stroke-width="2"/>
+      <path d="M 170 68 C 178 46 182 25 174 22 C 166 19 162 40 163 66 Z" fill="url(#innerEarGrad)"/>
+    </g>
+    <!-- Headband Arc with Spring Flowers -->
+    <path d="M 104 80 Q 140 68 176 80" fill="none" stroke="#e879f9" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="140" cy="71" r="5.5" fill="#fde047"/>
+    <circle cx="140" cy="71" r="2.5" fill="#ffffff"/>
+    <circle cx="126" cy="74" r="4" fill="#f472b6"/>
+    <circle cx="154" cy="74" r="4" fill="#67e8f9"/>
+
+    <!-- Eyes (Anime Glossy) -->
+    <g class="eye-blink-anim">
+      <g transform="translate(118, 114)">
+        <ellipse cx="0" cy="0" rx="6.8" ry="8.8" fill="#200d14"/>
+        <ellipse cx="0" cy="3" rx="5" ry="3.5" fill="url(#irisLight)"/>
+        <ellipse cx="-2.3" cy="-3.2" rx="3" ry="3.8" fill="#ffffff"/>
+        <circle cx="2.6" cy="3.2" r="1.4" fill="#ffffff"/>
+      </g>
+      <g transform="translate(162, 114)">
+        <ellipse cx="0" cy="0" rx="6.8" ry="8.8" fill="#200d14"/>
+        <ellipse cx="0" cy="3" rx="5" ry="3.5" fill="url(#irisLight)"/>
+        <ellipse cx="-2.3" cy="-3.2" rx="3" ry="3.8" fill="#ffffff"/>
+        <circle cx="2.6" cy="3.2" r="1.4" fill="#ffffff"/>
+      </g>
+    </g>
+
+    <!-- Rosy Blushing Cheeks -->
+    <ellipse cx="106" cy="126" rx="11" ry="7" fill="url(#blushGrad)"/>
+    <ellipse cx="174" cy="126" rx="11" ry="7" fill="url(#blushGrad)"/>
+
+    <!-- Snout & Nose -->
+    <ellipse cx="140" cy="128" rx="15" ry="11" fill="#ffffff" stroke="#f5c2ce" stroke-width="1.5"/>
+    <path d="M 135 124 C 137 121 143 121 145 124 C 146 126 142 129 140 129 C 138 129 134 126 135 124 Z" fill="#ff4d6d"/>
+    <path d="M 140 129 L 140 134" stroke="#ff7597" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 134 133 Q 140 138 146 133" fill="none" stroke="#ff7597" stroke-width="1.6" stroke-linecap="round"/>
+
+    <!-- Paws Holding Beautiful Easter Egg -->
+    <g class="egg-wobble-anim">
+      <!-- Decorated Easter Egg -->
+      <path d="M 140 148 C 122 148 116 172 122 192 C 128 208 152 208 158 192 C 164 172 158 148 140 148 Z" fill="url(#eggPastel)" stroke="#f472b6" stroke-width="2"/>
+      <!-- Egg Decorative Stripes and Polka Dots -->
+      <path d="M 120 170 Q 140 178 160 170" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M 121 182 Q 140 190 159 182" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="132" cy="162" r="2.5" fill="#38bdf8"/>
+      <circle cx="140" cy="160" r="2.5" fill="#facc15"/>
+      <circle cx="148" cy="162" r="2.5" fill="#4ade80"/>
+      <ellipse cx="130" cy="154" rx="4" ry="2" fill="#ffffff" opacity="0.7"/>
+    </g>
+
+    <!-- Bear Paws Hugging the Egg -->
+    <ellipse cx="118" cy="178" rx="10" ry="8" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2"/>
+    <circle cx="118" cy="178" r="4.5" fill="url(#innerEarGrad)"/>
+    <ellipse cx="162" cy="178" rx="10" ry="8" fill="url(#furGrad)" stroke="#f2bdca" stroke-width="2"/>
+    <circle cx="162" cy="178" r="4.5" fill="url(#innerEarGrad)"/>
+
+  </g>
+</svg>

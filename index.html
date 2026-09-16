@@ -132,9 +132,20 @@
             >
                 <button 
                     type="button" 
+                    id="occasion-pill-btn" 
+                    class="glass-control-pill" 
+                    aria-label="Select celebration occasion"
+                    title="Change Occasion"
+                >
+                    <span class="pill-icon" id="occasion-pill-icon">🎄</span>
+                    <span class="pill-label" id="occasion-pill-text">Christmas</span>
+                </button>
+
+                <button 
+                    type="button" 
                     id="personalize-pill-btn" 
                     class="glass-control-pill" 
-                    aria-label="Personalize recipient name and create share link"
+                    aria-label="Personalize card"
                 >
                     <span class="pill-icon" aria-hidden="true">💌</span>
                     <span class="pill-label" id="recipient-pill-text">For: Someone Special</span>
@@ -162,20 +173,6 @@
                     <span class="pill-icon" id="theme-toggle-icon" aria-hidden="true">🌙</span>
                     <span class="pill-label" id="theme-toggle-text">Dark</span>
                 </button>
-            </div>
-
-            <!-- Top Heart Badge & Live Countdown Widget -->
-            <div 
-                class="card-badge" 
-                id="card-badge"
-                data-aos="fade-down"
-                data-aos-delay="220"
-                data-aos-duration="600"
-                data-aos-easing="ease-out-cubic"
-                data-aos-once="true"
-            >
-                <span class="badge-icon" id="badge-icon">✨</span>
-                <span class="badge-text" id="badge-text">Special Celebration</span>
             </div>
 
             <!-- Live Countdown / Count-up Timer Widget -->
@@ -352,7 +349,7 @@
                                 </div>
                             </div>
                             <h3 class="envelope-recipient" id="envelope-recipient-text">To: Someone Special</h3>
-                            <p class="envelope-prompt" id="envelope-prompt">✨ Glide left/right or tap to open letter 💌</p>
+                            <p class="envelope-prompt" id="envelope-prompt">✨ Swipe left/right or tap to open letter 💌</p>
                         </div>
 
                         <!-- Back Face: Vintage Handwritten Parchment Note with Live Scratchpad -->
@@ -432,28 +429,134 @@
                         type="text" 
                         id="recipient-name-input" 
                         class="modal-input" 
-                        placeholder="e.g. Lux Mea, Lulu, Sweetheart" 
+                        placeholder="e.g. Someone Special, Your Special Person, Dear You" 
                         maxlength="36" 
                         autocomplete="off"
                     >
                 </div>
+
+                <!-- Occasion Selector (Valentine, Christmas, New Year, Easter, Birthday, Anniversary, Custom Date) -->
                 <div class="form-group">
-                    <label for="custom-note-input">Personal Sweet Note / Scratchpad (Optional)</label>
-                    <textarea 
-                        id="custom-note-input" 
-                        class="modal-textarea" 
-                        placeholder="Add a heartfelt memory or custom love letter..."
-                        maxlength="320"
-                        rows="3"
-                    ></textarea>
+                    <label class="form-group-title">Select Occasion</label>
+                    <div class="occasion-selector-grid" id="occasion-selector-grid" role="radiogroup" aria-label="Choose celebration occasion">
+                        <label class="occasion-option-card" data-occasion="valentine">
+                            <input type="radio" name="selected-occasion" value="valentine" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">💖</span>
+                                <span class="occasion-label">Valentine</span>
+                                <span class="occasion-sub">Feb 14</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="christmas">
+                            <input type="radio" name="selected-occasion" value="christmas" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">🎄</span>
+                                <span class="occasion-label">Christmas</span>
+                                <span class="occasion-sub">Dec 25</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="newyear">
+                            <input type="radio" name="selected-occasion" value="newyear" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">🎆</span>
+                                <span class="occasion-label">New Year</span>
+                                <span class="occasion-sub">Jan 1</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="easter">
+                            <input type="radio" name="selected-occasion" value="easter" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">🐣</span>
+                                <span class="occasion-label">Easter</span>
+                                <span class="occasion-sub" id="easter-calculated-sub">Upcoming</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="birthday">
+                            <input type="radio" name="selected-occasion" value="birthday" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">🎂</span>
+                                <span class="occasion-label">Birthday</span>
+                                <span class="occasion-sub">Party Day</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="anniversary">
+                            <input type="radio" name="selected-occasion" value="anniversary" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">💍</span>
+                                <span class="occasion-label">Anniversary</span>
+                                <span class="occasion-sub">Love Milestone</span>
+                            </div>
+                        </label>
+                        <label class="occasion-option-card" data-occasion="custom">
+                            <input type="radio" name="selected-occasion" value="custom" class="sr-only">
+                            <div class="occasion-card-inner">
+                                <span class="occasion-emoji">🗓️</span>
+                                <span class="occasion-label">Custom Date</span>
+                                <span class="occasion-sub">Pick & Name</span>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="celebration-date-input">Celebration Date (Optional - for Countdown Timer)</label>
+
+                <!-- Fixed Occasion Info (Visible for fixed dates like Christmas, New Year, Easter, Valentine's) -->
+                <div class="fixed-occasion-info" id="fixed-occasion-info" role="status">
+                    <span class="fixed-info-icon" id="fixed-info-icon">🎄</span>
+                    <span class="fixed-info-text" id="fixed-info-text">Targeting Christmas: Dec 25, 2026</span>
+                </div>
+
+                <!-- Custom Date & Celebration Type Picker (Displayed for Custom, Birthday, Anniversary) -->
+                <div class="form-group" id="custom-date-group" hidden style="display: none;">
+                    <label for="celebration-date-input">Celebration Date</label>
                     <input 
                         type="date" 
                         id="celebration-date-input" 
                         class="modal-input"
                     >
+                    <p class="form-field-hint">The countdown timer will accurately track down to this specific date.</p>
+
+                    <!-- What do you want to celebrate? -->
+                    <div class="custom-event-type-section" id="custom-event-type-section">
+                        <label class="form-group-title" style="margin-top: 0.85rem;">What are you celebrating?</label>
+                        <div class="event-type-chips" id="event-type-chips" role="radiogroup" aria-label="Celebration event type">
+                            <button type="button" class="event-type-chip" data-event="birthday" data-title="Birthday">🎂 Birthday</button>
+                            <button type="button" class="event-type-chip" data-event="anniversary" data-title="Anniversary">💍 Anniversary</button>
+                            <button type="button" class="event-type-chip" data-event="graduation" data-title="Graduation">🎓 Graduation</button>
+                            <button type="button" class="event-type-chip" data-event="promotion" data-title="Job Promotion">🚀 Promotion</button>
+                            <button type="button" class="event-type-chip" data-event="newhome" data-title="New Home">🏡 New Home</button>
+                            <button type="button" class="event-type-chip" data-event="friendship" data-title="Best Friends Day">🌸 Friendship</button>
+                            <button type="button" class="event-type-chip" data-event="milestone" data-title="Major Milestone">🌟 Milestone</button>
+                            <button type="button" class="event-type-chip" data-event="love" data-title="Our Love Story">💖 Romance</button>
+                            <button type="button" class="event-type-chip active" data-event="other" data-title="Special Celebration">✍️ Custom Title</button>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 0.75rem;">
+                            <label for="custom-event-title-input">Celebration Title / Event Name</label>
+                            <input 
+                                type="text" 
+                                id="custom-event-title-input" 
+                                class="modal-input" 
+                                placeholder="e.g. Our 1st Anniversary, Graduation Day, Passing the Bar Exam" 
+                                maxlength="40" 
+                                autocomplete="off"
+                            >
+                        </div>
+
+                        <div class="custom-event-preview-banner" id="custom-event-preview-banner">
+                            <span class="preview-badge">Card Heading Preview</span>
+                            <span class="preview-text" id="custom-event-preview-text">"Celebrating This Special Occasion! ✨"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="custom-note-input">Personal Sweet Note / Keepsake Letter (Optional)</label>
+                    <textarea 
+                        id="custom-note-input" 
+                        class="modal-textarea" 
+                        placeholder="Add a heartfelt memory or custom sweet message..."
+                        maxlength="400"
+                        rows="3"
+                    ></textarea>
                 </div>
                 <div class="modal-btn-row">
                     <button type="button" id="save-personalize-btn" class="btn-modal-primary">
@@ -477,18 +580,26 @@
                     <span class="wish-jar-icon" id="wish-jar-icon">🎁</span>
                 </div>
                 <h3 class="modal-title" id="wish-jar-title">Reasons Why I Love You & Wishes</h3>
-                <p class="modal-desc" id="wish-jar-desc">Open a capsule to reveal sweet reasons and compliments crafted just for you!</p>
+                <p class="modal-desc" id="wish-jar-desc">Open capsules or generate fresh seasonal wishes crafted for your special celebration!</p>
+                <div class="wish-jar-source-row">
+                    <span class="wish-source-pill" id="wish-source-pill">✨ Fresh Seasonal Wishes</span>
+                    <span class="wish-counter-pill" id="wish-counter-pill">Wish 1</span>
+                </div>
             </div>
             <div class="wish-capsule-display" id="wish-capsule-display">
                 <p class="wish-text" id="wish-content-text">"Your laugh is the warmest sound in the entire world, and your happiness makes everything better."</p>
                 <div class="wish-capsule-tag" id="wish-capsule-tag">✨ Sweet Reason #1</div>
             </div>
-            <div class="modal-btn-row">
-                <button type="button" id="next-wish-btn" class="btn-modal-primary">
-                    <span>Draw Another Wish 🎲✨</span>
+            <div class="modal-btn-row wish-actions-row">
+                <button type="button" id="next-wish-btn" class="btn-modal-primary" title="Draw another wish">
+                    <span>Draw Another 🎲</span>
                 </button>
-                <button type="button" id="copy-wish-btn" class="btn-modal-secondary">
-                    <span>Copy Wish 📋</span>
+                <button type="button" id="fetch-fresh-wishes-btn" class="btn-modal-ai" title="Fetch fresh AI seasonal wishes">
+                    <span class="ai-spark-spin" id="ai-btn-spark">✨</span>
+                    <span id="ai-btn-text">Fresh Wishes</span>
+                </button>
+                <button type="button" id="copy-wish-btn" class="btn-modal-secondary" title="Copy wish">
+                    <span>Copy 📋</span>
                 </button>
             </div>
         </div>
