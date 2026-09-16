@@ -2,7 +2,7 @@
 
 An interactive, responsive single-page web application featuring modern glassmorphism, playful button physics, celebratory confetti bursts, seasonal themes, and zero-dependency Web Audio sound synthesis.
 
-Deployed Live on GitHub Pages: [https://kennejunior.github.io/be-my-Valentine/](https://kennejunior.github.io/be-my-Valentine/)
+Deployed Live on GitHub Pages: [https://kennejunior.github.io/be-my-Valentine/](https://kennejunior.github.io/Happy-Wishes/)
 
 ---
 
