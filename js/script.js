@@ -815,7 +815,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Birthday Music Elements
     const birthdayAudio = document.getElementById('birthday-audio');
-    const musicPlayerPill = document.getElementById('music-player-pill');
     const musicToggleBtn = document.getElementById('music-toggle-btn');
     const musicLabel = document.getElementById('music-label');
 
@@ -848,8 +847,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Top Controls & Personalization Elements
     const occasionPillBtn = document.getElementById('occasion-pill-btn');
-    const occasionPillIcon = document.getElementById('occasion-pill-icon');
-    const occasionPillText = document.getElementById('occasion-pill-text');
     const personalizePillBtn = document.getElementById('personalize-pill-btn');
     const recipientPillText = document.getElementById('recipient-pill-text');
     const wishJarPillBtn = document.getElementById('wish-jar-pill-btn');
@@ -869,10 +866,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const countdownTodayBanner = document.getElementById('countdown-today-banner');
 
     // Bear Emotion Elements
-    const bearEmotionPill = document.getElementById('bear-emotion-pill');
     const bearEmotionIcon = document.getElementById('bear-emotion-icon');
     const bearEmotionText = document.getElementById('bear-emotion-text');
-    const bearSpeechBubble = document.getElementById('bear-speech-bubble');
     const bearSpeechText = document.getElementById('bear-speech-text');
 
     // 3D Flip-Card Virtual Love Letter / Scratchpad Elements
@@ -919,7 +914,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wishJarModal = document.getElementById('wish-jar-modal');
     const closeWishModalBtn = document.getElementById('close-wish-modal-btn');
     const wishJarTitle = document.getElementById('wish-jar-title');
-    const wishJarIcon = document.getElementById('wish-jar-icon');
+    document.getElementById('wish-jar-icon');
     const wishContentText = document.getElementById('wish-content-text');
     const wishCapsuleTag = document.getElementById('wish-capsule-tag');
     const wishCapsuleDisplay = document.getElementById('wish-capsule-display');
@@ -2129,16 +2124,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Update Top Control Pills
-        if (occasionPillIcon && occasionPillText) {
-            if (currentSeasonKey === 'custom') {
-                const eventCfg = CELEBRATION_EVENT_TYPES[customEventType] || CELEBRATION_EVENT_TYPES.other;
-                occasionPillIcon.textContent = eventCfg.emoji || '✨';
-                occasionPillText.textContent = customEventTitle || eventCfg.label || 'Celebration';
-            } else {
-                occasionPillIcon.textContent = currentSeason.emoji || '🎉';
-                occasionPillText.textContent = currentSeason.name || 'Occasion';
-            }
-        }
         if (recipientPillText) {
             recipientPillText.textContent = recipientName ? `For: ${recipientName}` : "For: Someone Special";
         }
@@ -2586,6 +2571,12 @@ document.addEventListener('DOMContentLoaded', () => {
             buttonGroup.style.display = 'none';
             buttonGroup.setAttribute('hidden', 'true');
         }
+        if(personalizePillBtn) {
+            personalizePillBtn.classList.add('d-none');
+        }
+        if(wishJarPillBtn) {
+            wishJarPillBtn.classList.add('d-none');
+        }
         if (denyBtn) {
             denyBtn.style.display = 'none';
         }
@@ -2740,6 +2731,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (musicLabel) {
                 musicLabel.textContent = 'Birthday Music: Playing 🎶';
+            }
+            if (personalizePillBtn) {
+                personalizePillBtn.classList.remove('d-none');
+            }
+            if (wishJarPillBtn) {
+                wishJarPillBtn.classList.remove('d-none');
             }
 
             resetButtonStates();

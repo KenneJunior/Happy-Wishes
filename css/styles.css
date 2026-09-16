@@ -3744,4 +3744,7 @@ body.dark-mode .wish-source-pill {
     100% { transform: translate(-50%, 0) scale(1); opacity: 1; }
 }
 
+.d-none{
+    display:none !important;
+}
 
