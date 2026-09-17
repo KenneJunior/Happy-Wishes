@@ -592,29 +592,116 @@
                         <!-- Theme Category Filter Bar -->
                         <div class="theme-category-filter-bar" id="theme-category-filter-bar" role="tablist" aria-label="Filter theme library by category">
                             <button type="button" class="theme-category-btn active" id="theme-filter-all" data-category="all" role="tab" aria-selected="true">
-                                <span class="filter-icon" aria-hidden="true">✨</span> All <span class="filter-count" id="count-all">10</span>
+                                <span class="filter-icon" aria-hidden="true">✨</span> All <span class="filter-count" id="count-all">17</span>
+                            </button>
+                            <button type="button" class="theme-category-btn" id="theme-filter-occasion" data-category="occasion" role="tab" aria-selected="false">
+                                <span class="filter-icon" aria-hidden="true">🎉</span> Occasion <span class="filter-count" id="count-occasion">8</span>
                             </button>
                             <button type="button" class="theme-category-btn" id="theme-filter-romantic" data-category="romantic" role="tab" aria-selected="false">
-                                <span class="filter-icon" aria-hidden="true">💖</span> Romantic <span class="filter-count" id="count-romantic">8</span>
+                                <span class="filter-icon" aria-hidden="true">💖</span> Romantic <span class="filter-count" id="count-romantic">10</span>
                             </button>
                             <button type="button" class="theme-category-btn" id="theme-filter-floral" data-category="floral" role="tab" aria-selected="false">
                                 <span class="filter-icon" aria-hidden="true">🌹</span> Floral <span class="filter-count" id="count-floral">2</span>
                             </button>
                             <button type="button" class="theme-category-btn" id="theme-filter-animated" data-category="animated" role="tab" aria-selected="false">
-                                <span class="filter-icon" aria-hidden="true">🎬</span> Animated <span class="filter-count" id="count-animated">10</span>
+                                <span class="filter-icon" aria-hidden="true">🎬</span> Animated <span class="filter-count" id="count-animated">17</span>
                             </button>
                         </div>
 
                         <!-- Romantic Themes Grid -->
                         <div class="romantic-themes-grid" id="romantic-themes-grid" role="radiogroup" aria-label="Select romantic theme visual or GIF">
-                            <div class="romantic-theme-card active" id="theme-card-default" data-theme="default" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="true">
+                            <div class="romantic-theme-card active" id="theme-card-valentine-default" data-theme="valentine-default" data-categories="all,romantic,animated,occasion" tabindex="0" role="radio" aria-checked="true">
                                 <div class="romantic-card-thumb-wrap">
-                                    <img src="./assets/bear-valentine.svg" alt="Default Mascot" class="romantic-card-thumb" loading="lazy">
-                                    <span class="romantic-theme-tag">Default</span>
+                                    <img src="./assets/bear-valentine.svg" alt="Valentine Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
                                 </div>
                                 <div class="romantic-card-info">
-                                    <span class="romantic-card-title">Occasion Mascot</span>
-                                    <span class="romantic-card-sub">Auto Holiday Bear</span>
+                                    <span class="romantic-card-title">Valentine Bear</span>
+                                    <span class="romantic-card-sub">Sweetheart Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-birthday-default" data-theme="birthday-default" data-categories="all,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-birthday.svg" alt="Birthday Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Birthday Bear</span>
+                                    <span class="romantic-card-sub">Party Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-anniversary-default" data-theme="anniversary-default" data-categories="all,romantic,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-anniversary.svg" alt="Anniversary Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Anniversary Bear</span>
+                                    <span class="romantic-card-sub">Golden Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-graduation-default" data-theme="graduation-default" data-categories="all,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-graduation.svg" alt="Graduation Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Graduation Bear</span>
+                                    <span class="romantic-card-sub">Cap & Gown Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-christmas-default" data-theme="christmas-default" data-categories="all,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-christmas.svg" alt="Christmas Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Christmas Bear</span>
+                                    <span class="romantic-card-sub">Holiday Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-newyear-default" data-theme="newyear-default" data-categories="all,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-newyear.svg" alt="New Year Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">New Year Bear</span>
+                                    <span class="romantic-card-sub">Midnight Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-easter-default" data-theme="easter-default" data-categories="all,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-easter.svg" alt="Easter Bunny Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Easter Bunny Bear</span>
+                                    <span class="romantic-card-sub">Spring Mascot</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-custom-default" data-theme="custom-default" data-categories="all,romantic,animated,occasion" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-valentine.svg" alt="Celebration Bear" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-occasion">Occasion</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Celebration Bear</span>
+                                    <span class="romantic-card-sub">Milestone Mascot</span>
                                 </div>
                                 <span class="theme-selected-check" aria-hidden="true">✓</span>
                             </div>
@@ -748,10 +835,10 @@
                         <div class="custom-visual-url-row" id="custom-visual-url-row">
                             <div class="custom-visual-input-wrap">
                                 <span class="custom-visual-icon" aria-hidden="true">🌐</span>
-                                <input
-                                    type="url"
-                                    id="custom-visual-url-input"
-                                    class="modal-input custom-visual-input"
+                                <input 
+                                    type="url" 
+                                    id="custom-visual-url-input" 
+                                    class="modal-input custom-visual-input" 
                                     placeholder="Or paste any custom GIF / image URL (e.g. Giphy, Tenor, direct link)..."
                                     autocomplete="off"
                                 >

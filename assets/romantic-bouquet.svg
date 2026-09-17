@@ -226,7 +226,7 @@
     <!-- Deep Green Rose Leaves -->
     <path d="M110,126 C90,110 88,88 104,96 C115,102 118,118 110,126 Z" fill="url(#rbq-leaf-fresh)"/>
     <path d="M104,96 Q108,112 110,126" stroke="#1b4332" stroke-width="1.2" fill="none"/>
-
+    
     <path d="M170,126 C190,110 192,88 176,96 C165,102 162,118 170,126 Z" fill="url(#rbq-leaf-fresh)"/>
     <path d="M176,96 Q172,112 170,126" stroke="#1b4332" stroke-width="1.2" fill="none"/>
 
@@ -235,7 +235,7 @@
       <path d="M140,94 Q132,68 126,56" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
       <circle cx="126" cy="56" r="3.2" fill="#ffffff" stroke="#ffccd5" stroke-width="0.8"/>
       <circle cx="132" cy="66" r="2.6" fill="#fff0f3"/>
-
+      
       <path d="M140,94 Q148,68 154,56" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
       <circle cx="154" cy="56" r="3.2" fill="#ffffff" stroke="#ffccd5" stroke-width="0.8"/>
       <circle cx="148" cy="66" r="2.6" fill="#fff0f3"/>
@@ -272,15 +272,15 @@
     <g class="rbq-petal-pulse" transform="translate(140, 105)">
       <!-- Deep Petal Shadow Silhouette -->
       <path d="M-28,-8 C-24,-30 24,-30 28,-8 C34,14 16,32 -2,32 C-20,32 -34,14 -28,-8 Z" fill="url(#rbq-rose-deep)"/>
-
+      
       <!-- Layered Petal Shells -->
       <path d="M-22,-14 C-14,-28 16,-28 22,-14 C28,2 14,24 -2,24 C-18,24 -26,2 -22,-14 Z" fill="url(#rbq-rose-petal-light)"/>
       <path d="M-16,-18 C-8,-28 14,-24 18,-12 C22,2 10,18 -2,18 C-14,18 -20,4 -16,-18 Z" fill="#c9184a"/>
-
+      
       <!-- Cupped Front Petal Folds -->
       <path d="M-18,2 C-14,18 14,18 18,2 C12,12 -12,12 -18,2 Z" fill="#ff4d6d"/>
       <path d="M-14,-6 C-8,-16 12,-16 14,-4 C16,8 6,14 -2,14 C-10,14 -16,4 -14,-6 Z" fill="url(#rbq-rose-petal-light)"/>
-
+      
       <!-- Velvet Rose Spiral Core -->
       <path d="M-8,-4 C-6,-12 6,-12 8,-4 C9,4 3,9 -1,9 C-5,9 -9,4 -8,-4 Z" fill="#540817"/>
       <path d="M-4,-2 C-3,-7 4,-7 5,-2 C6,3 1,5 -1,5 C-3,5 -5,2 -4,-2 Z" fill="#ba1a38"/>

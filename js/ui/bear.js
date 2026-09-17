@@ -174,7 +174,7 @@ export function initBear() {
 
     // Subscribe to state changes for recipient updates or occasion changes
     appState.subscribe((newState, oldState, changedKeys) => {
-        if (changedKeys.includes('occasion') || changedKeys.includes('isAccepted')) {
+        if (changedKeys.includes('occasion') || changedKeys.includes('visualTheme') || changedKeys.includes('customVisualUrl') || changedKeys.includes('isAccepted')) {
             updateBearAsset(newState.isAccepted);
         }
         if (changedKeys.includes('denyCount') || changedKeys.includes('recipient') || changedKeys.includes('isAccepted')) {

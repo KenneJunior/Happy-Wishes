@@ -14,7 +14,7 @@
 import { sound } from '../core/sound.js';
 import { showToast } from './toast.js';
 import { appState } from '../core/state.js';
-import { OCCASIONS } from '../config/occasions.js';
+import { OCCASIONS, resolveOccasionDefaultVisual, isOccasionDefaultVisual } from '../config/occasions.js';
 import { OccasionManager, getPersonalizedHeading } from '../core/occasion-service.js';
 import { ROMANTIC_VISUAL_THEMES, ROMANTIC_VISUAL_MAP } from '../config/visual-themes.js';
 import { previewVisualAsset, updateBearAsset, restoreCommittedVisualAsset } from './bear.js';
@@ -100,6 +100,7 @@ const sessionObjectUrls = new Set();
 function updateCategoryCounts() {
     const counts = {
         all: ROMANTIC_VISUAL_THEMES.length,
+        occasion: 0,
         romantic: 0,
         floral: 0,
         animated: 0
@@ -107,17 +108,20 @@ function updateCategoryCounts() {
 
     ROMANTIC_VISUAL_THEMES.forEach(theme => {
         const cats = theme.categories || [];
+        if (cats.includes('occasion')) counts.occasion++;
         if (cats.includes('romantic')) counts.romantic++;
         if (cats.includes('floral')) counts.floral++;
         if (cats.includes('animated')) counts.animated++;
     });
 
     const countAllEl = document.getElementById('count-all');
+    const countOccEl = document.getElementById('count-occasion');
     const countRomEl = document.getElementById('count-romantic');
     const countFloEl = document.getElementById('count-floral');
     const countAniEl = document.getElementById('count-animated');
 
     if (countAllEl) countAllEl.textContent = counts.all;
+    if (countOccEl) countOccEl.textContent = counts.occasion;
     if (countRomEl) countRomEl.textContent = counts.romantic;
     if (countFloEl) countFloEl.textContent = counts.floral;
     if (countAniEl) countAniEl.textContent = counts.animated;
@@ -183,9 +187,16 @@ function updateVisualThemeDisplayUI(themeId, customUrl = '') {
     }
 
     const currentOcc = (draftState && draftState.occasion) || 'valentine';
+    const currentCustomEvent = (draftState && draftState.customEvent) || '';
+
+    // If themeId is 'default' or not provided, resolve to the occasion-specific default
+    let effectiveThemeId = themeId;
+    if (!effectiveThemeId || effectiveThemeId === 'default') {
+        effectiveThemeId = resolveOccasionDefaultVisual(currentOcc, currentCustomEvent);
+    }
 
     // Update main card visual preview safely
-    previewVisualAsset(hasCustomUrl ? 'custom-url' : themeId, customUrl, currentOcc);
+    previewVisualAsset(hasCustomUrl ? 'custom-url' : effectiveThemeId, customUrl, currentOcc);
 
     if (hasCustomUrl) {
         if (romanticThemeBadge) {
@@ -207,32 +218,28 @@ function updateVisualThemeDisplayUI(themeId, customUrl = '') {
         return;
     }
 
-    const theme = ROMANTIC_VISUAL_MAP[themeId] || ROMANTIC_VISUAL_MAP.default;
+    const theme = ROMANTIC_VISUAL_MAP[effectiveThemeId] || ROMANTIC_VISUAL_MAP.default;
 
     if (romanticThemeBadge) {
         romanticThemeBadge.textContent = `${theme.name} ${theme.icon || ''}`;
     }
 
+    const occDefaultThemeId = resolveOccasionDefaultVisual(currentOcc, currentCustomEvent);
+
     romanticThemeCards.forEach(card => {
         const cardTheme = card.getAttribute('data-theme');
-        const isActive = cardTheme === themeId;
+        const isActive = (cardTheme === effectiveThemeId) ||
+            (cardTheme === 'default' && effectiveThemeId === occDefaultThemeId);
         card.classList.toggle('active', isActive);
         card.setAttribute('aria-checked', isActive ? 'true' : 'false');
     });
 
     if (themeLivePreviewImg) {
-        if (themeId === 'default') {
-            const occConfig = OCCASIONS[currentOcc] || OCCASIONS.valentine;
-            themeLivePreviewImg.src = occConfig.bearNormal || './assets/bear-valentine.svg';
-        } else {
-            themeLivePreviewImg.src = theme.normal || theme.thumbnail;
-        }
+        themeLivePreviewImg.src = theme.normal || theme.thumbnail;
     }
 
     if (themePreviewName) {
-        themePreviewName.textContent = themeId === 'default'
-            ? 'Default Occasion Mascot'
-            : `${theme.name} (${theme.badge || 'Romantic'})`;
+        themePreviewName.textContent = `${theme.name} (${theme.badge || 'Occasion'})`;
     }
 
     if (themePreviewDesc) {
@@ -368,9 +375,23 @@ function updateModalOccasionUI(selectedKey) {
         }
     }
 
-    // If default theme is selected and no custom visual URL, live update mascot for this occasion
-    if (draftState.visualTheme === 'default' && !draftState.customVisualUrl) {
-        updateVisualThemeDisplayUI('default', '');
+    // Synchronize visual library and live preview for occasion default
+    const hasCustomVisual = !!(draftState.customVisualUrl && draftState.customVisualUrl.trim());
+    const isDefaultSelection = !draftState.visualSelectionMode ||
+                               draftState.visualSelectionMode === 'occasion-default' ||
+                               !draftState.visualTheme ||
+                               draftState.visualTheme === 'default' ||
+                               isOccasionDefaultVisual(draftState.visualTheme, draftState.occasion, draftState.customEvent);
+
+    if (!hasCustomVisual && isDefaultSelection) {
+        const newDefaultVisual = resolveOccasionDefaultVisual(selectedKey, draftState.customEvent);
+        draftState.visualTheme = newDefaultVisual;
+        draftState.visualSelectionMode = 'occasion-default';
+        updateVisualThemeDisplayUI(newDefaultVisual, '');
+    } else if (hasCustomVisual) {
+        updateVisualThemeDisplayUI('custom-url', draftState.customVisualUrl);
+    } else {
+        updateVisualThemeDisplayUI(draftState.visualTheme, '');
     }
 }
 
@@ -757,6 +778,7 @@ function commitDraftChanges() {
         const chosenOccasion = draftState.occasion || 'valentine';
         const chosenLang = languageSelect ? languageSelect.value : (draftState.language || getLanguage());
 
+        const chosenVisual = draftState.visualTheme || resolveOccasionDefaultVisual(chosenOccasion, draftState.customEvent);
         const updatePayload = {
             recipient: newName,
             occasion: chosenOccasion,
@@ -764,7 +786,8 @@ function commitDraftChanges() {
             customMsg: newNote,
             customSongUrl: draftState.customSongUrl || '',
             customSongName: draftState.customSongName || '',
-            visualTheme: draftState.visualTheme || 'default',
+            visualTheme: chosenVisual,
+            visualSelectionMode: draftState.visualSelectionMode || 'occasion-default',
             customVisualUrl: draftState.customVisualUrl || ''
         };
 
@@ -913,8 +936,12 @@ export function initPersonalizeModal() {
             const handleSelect = () => {
                 const themeId = card.getAttribute('data-theme') || 'default';
                 visualLoadToken++;
+                const curOcc = draftState ? draftState.occasion : 'valentine';
+                const curEvent = draftState ? draftState.customEvent : '';
+                const isDefault = isOccasionDefaultVisual(themeId, curOcc, curEvent);
                 if (draftState) {
                     draftState.visualTheme = themeId;
+                    draftState.visualSelectionMode = isDefault ? 'occasion-default' : 'explicit';
                     draftState.customVisualUrl = '';
                 }
                 if (customVisualUrlInput) customVisualUrlInput.value = '';
@@ -949,12 +976,16 @@ export function initPersonalizeModal() {
         clearCustomVisualBtn.addEventListener('click', () => {
             visualLoadToken++;
             clearTimeout(customUrlDebounceTimer);
+            const curOcc = draftState ? draftState.occasion : 'valentine';
+            const curEvent = draftState ? draftState.customEvent : '';
+            const defaultVisual = resolveOccasionDefaultVisual(curOcc, curEvent);
             if (draftState) {
                 draftState.customVisualUrl = '';
-                draftState.visualTheme = 'default';
+                draftState.visualTheme = defaultVisual;
+                draftState.visualSelectionMode = 'occasion-default';
             }
             if (customVisualUrlInput) customVisualUrlInput.value = '';
-            updateVisualThemeDisplayUI('default', '');
+            updateVisualThemeDisplayUI(defaultVisual, '');
             sound.playDodgePop();
         });
     }
@@ -963,12 +994,16 @@ export function initPersonalizeModal() {
         resetThemeVisualBtn.addEventListener('click', () => {
             visualLoadToken++;
             clearTimeout(customUrlDebounceTimer);
+            const curOcc = draftState ? draftState.occasion : 'valentine';
+            const curEvent = draftState ? draftState.customEvent : '';
+            const defaultVisual = resolveOccasionDefaultVisual(curOcc, curEvent);
             if (draftState) {
-                draftState.visualTheme = 'default';
+                draftState.visualTheme = defaultVisual;
+                draftState.visualSelectionMode = 'occasion-default';
                 draftState.customVisualUrl = '';
             }
             if (customVisualUrlInput) customVisualUrlInput.value = '';
-            updateVisualThemeDisplayUI('default', '');
+            updateVisualThemeDisplayUI(defaultVisual, '');
             sound.playDodgePop();
             showToast("Visual reset to default occasion mascot 🐻", "↺");
         });
@@ -1118,6 +1153,17 @@ export function initPersonalizeModal() {
 
                 if (draftState) {
                     draftState.customEvent = eventVal;
+                    if (draftState.occasion === 'custom' && !draftState.customVisualUrl) {
+                        const isDef = !draftState.visualSelectionMode ||
+                            draftState.visualSelectionMode === 'occasion-default' ||
+                            isOccasionDefaultVisual(draftState.visualTheme, 'custom', eventVal);
+                        if (isDef) {
+                            const newDef = resolveOccasionDefaultVisual('custom', eventVal);
+                            draftState.visualTheme = newDef;
+                            draftState.visualSelectionMode = 'occasion-default';
+                            updateVisualThemeDisplayUI(newDef, '');
+                        }
+                    }
                 }
 
                 if (customEventTitleInput) {

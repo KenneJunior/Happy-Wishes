@@ -380,7 +380,7 @@
     <g transform="translate(138, 92)">
       <!-- Sculpted Soft Cherub Jaw Contour -->
       <path d="M-18,-4 C-20,12 -12,25 0,26 C12,25 20,12 18,-4 C18,-18 12,-26 0,-26 C-12,-26 -18,-18 -18,-4 Z" fill="url(#rcp-skin)"/>
-
+      
       <!-- Forehead Soft Highlight -->
       <ellipse cx="0" cy="-10" rx="12" ry="7" fill="#ffffff" opacity="0.32"/>
 
@@ -454,12 +454,12 @@
     <!-- Classical Recurve Golden Bow and Taut String System -->
     <g class="rcp-tension-system">
       <!-- Upper Recurve Limb -->
-      <path d="M174,120 C172,106 170,94 176,86 C180,80 186,80 186,84 C186,86 182,90 180,94 C176,104 174,114 174,120 Z"
+      <path d="M174,120 C172,106 170,94 176,86 C180,80 186,80 186,84 C186,86 182,90 180,94 C176,104 174,114 174,120 Z" 
             fill="url(#rcp-gold-bow)"/>
       <circle cx="186" cy="84" r="2.8" fill="#ffd166"/>
 
       <!-- Lower Recurve Limb -->
-      <path d="M174,128 C172,142 170,154 176,162 C180,168 186,168 186,164 C186,162 182,158 180,154 C176,144 174,134 174,128 Z"
+      <path d="M174,128 C172,142 170,154 176,162 C180,168 186,168 186,164 C186,162 182,158 180,154 C176,144 174,134 174,128 Z" 
             fill="url(#rcp-gold-bow)"/>
       <circle cx="186" cy="164" r="2.8" fill="#ffd166"/>
 

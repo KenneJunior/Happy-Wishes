@@ -382,6 +382,66 @@ async function runAudit() {
     window.dispatchEvent(new window.KeyboardEvent('keydown', { key: 'Escape' }));
     recordTest("Accessibility", "Escape key cancels and closes modal", modal.hidden === true || modal.classList.contains('is-closing'));
 
+    // -------------------------------------------------------------
+    // Suite 16: Occasion → Default Visual Synchronization
+    // -------------------------------------------------------------
+    console.log("\n--- Running Suite 16: Occasion → Default Visual Synchronization ---");
+    appState.updateState({ occasion: 'valentine', visualTheme: 'valentine-default', visualSelectionMode: 'occasion-default', customVisualUrl: '' });
+    openPersonalizeModal();
+
+    const livePreviewImg = document.getElementById('theme-live-preview-img');
+
+    // 1. Select Graduation
+    const gradOptionCard = document.querySelector('.occasion-option-card[data-occasion="graduation"]');
+    if (gradOptionCard) gradOptionCard.click();
+    const gradThemeCard = document.getElementById('theme-card-graduation-default');
+    const gradIsActive = gradThemeCard && gradThemeCard.classList.contains('active');
+    const gradPreviewCorrect = livePreviewImg && livePreviewImg.getAttribute('src').includes('bear-graduation.svg');
+    recordTest("Occasion Default Sync", "Selecting Graduation updates both visual card and live preview to Graduation default", gradIsActive && gradPreviewCorrect);
+
+    // 2. Select Birthday
+    const bdayOptionCard = document.querySelector('.occasion-option-card[data-occasion="birthday"]');
+    if (bdayOptionCard) bdayOptionCard.click();
+    const bdayThemeCard = document.getElementById('theme-card-birthday-default');
+    const bdayIsActive = bdayThemeCard && bdayThemeCard.classList.contains('active');
+    const bdayPreviewCorrect = livePreviewImg && livePreviewImg.getAttribute('src').includes('bear-birthday.svg');
+    recordTest("Occasion Default Sync", "Selecting Birthday updates both visual card and live preview to Birthday default", bdayIsActive && bdayPreviewCorrect);
+
+    // 3. Select Christmas
+    const xmasOptionCard = document.querySelector('.occasion-option-card[data-occasion="christmas"]');
+    if (xmasOptionCard) xmasOptionCard.click();
+    const xmasThemeCard = document.getElementById('theme-card-christmas-default');
+    const xmasIsActive = xmasThemeCard && xmasThemeCard.classList.contains('active');
+    const xmasPreviewCorrect = livePreviewImg && livePreviewImg.getAttribute('src').includes('bear-christmas.svg');
+    recordTest("Occasion Default Sync", "Selecting Christmas updates both visual card and live preview to Christmas default", xmasIsActive && xmasPreviewCorrect);
+
+    // 4. Explicit User Choice Preservation across Occasion Change
+    const roseThemeCard = document.getElementById('theme-card-blooming-rose');
+    if (roseThemeCard) roseThemeCard.click();
+    const roseSelected = roseThemeCard && roseThemeCard.classList.contains('active');
+
+    // Switch to Easter while rose is explicitly selected
+    const easterOptionCard = document.querySelector('.occasion-option-card[data-occasion="easter"]');
+    if (easterOptionCard) easterOptionCard.click();
+    const roseStillActive = roseThemeCard && roseThemeCard.classList.contains('active');
+    const rosePreviewCorrect = livePreviewImg && livePreviewImg.getAttribute('src').includes('romantic-rose');
+    recordTest("Explicit Choice Preservation", "User's explicit visual choice (Rose) is preserved across occasion switch to Easter", roseSelected && roseStillActive && rosePreviewCorrect);
+
+    // 5. Reset button returns to current occasion default
+    const resetVisualBtn = document.getElementById('reset-theme-visual-btn');
+    if (resetVisualBtn) resetVisualBtn.click();
+    const easterThemeCard = document.getElementById('theme-card-easter-default');
+    const easterIsActive = easterThemeCard && easterThemeCard.classList.contains('active');
+    const easterPreviewCorrect = livePreviewImg && livePreviewImg.getAttribute('src').includes('bear-easter.svg');
+    recordTest("Reset to Occasion Default", "Resetting visual restores Easter occasion default mascot", easterIsActive && easterPreviewCorrect);
+
+    // 6. Saving persists occasion default
+    const saveCommitBtn = document.getElementById('save-personalize-btn');
+    if (saveCommitBtn) saveCommitBtn.click();
+    const savedState = appState.getState();
+    const savedCorrectly = savedState.occasion === 'easter' && (savedState.visualTheme === 'easter-default' || savedState.visualTheme === 'default');
+    recordTest("Save Occasion Default", "Saving persists Easter occasion default accurately", savedCorrectly);
+
     console.log("\n=== Audit Completed. Summary: ===");
     const passedCount = results.filter(r => r.passed).length;
     console.log(`Total tests: ${results.length}, Passed: ${passedCount}, Failed: ${results.length - passedCount}`);

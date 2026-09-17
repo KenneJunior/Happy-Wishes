@@ -154,7 +154,7 @@
   <!-- Graceful Swans Forming a Heart Neck Shape -->
   <g class="rsn-swans-group">
     <!-- Center Sunset Radiance in the Heart Gap -->
-    <path d="M140,118 C140,110 146,104 150,108 C154,112 154,118 146,124 L140,130 L134,124 C126,118 126,112 130,108 C134,104 140,110 140,118 Z"
+    <path d="M140,118 C140,110 146,104 150,108 C154,112 154,118 146,124 L140,130 L134,124 C126,118 126,112 130,108 C134,104 140,110 140,118 Z" 
           fill="#ff5c7e" opacity="0.85"/>
     <circle cx="140" cy="118" r="3" fill="#ffffff" opacity="0.9"/>
 
@@ -168,7 +168,7 @@
     <path d="M84,163 C78,158 80,152 88,157 Z" fill="#ffffff"/>
 
     <!-- Left Swan S-Curved Neck and Head -->
-    <path d="M104,164 C106,142 120,132 130,120 C136,112 140,106 137,98 C133,90 124,92 122,98 C120,104 114,120 108,136 C100,146 94,154 104,164 Z"
+    <path d="M104,164 C106,142 120,132 130,120 C136,112 140,106 137,98 C133,90 124,92 122,98 C120,104 114,120 108,136 C100,146 94,154 104,164 Z" 
           fill="url(#rsn-swan-body)"/>
     <!-- Left Swan Head Highlight -->
     <circle cx="131" cy="98" r="4.8" fill="#ffffff"/>
@@ -188,7 +188,7 @@
     <path d="M196,163 C202,158 200,152 192,157 Z" fill="#ffffff"/>
 
     <!-- Right Swan S-Curved Neck and Head -->
-    <path d="M176,164 C174,142 160,132 150,120 C144,112 140,106 143,98 C147,90 156,92 158,98 C160,104 166,120 172,136 C180,146 186,154 176,164 Z"
+    <path d="M176,164 C174,142 160,132 150,120 C144,112 140,106 143,98 C147,90 156,92 158,98 C160,104 166,120 172,136 C180,146 186,154 176,164 Z" 
           fill="url(#rsn-swan-body)"/>
     <!-- Right Swan Head Highlight -->
     <circle cx="149" cy="98" r="4.8" fill="#ffffff"/>

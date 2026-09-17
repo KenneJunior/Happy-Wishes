@@ -5,7 +5,7 @@
  */
 
 import { getDefaultOccasionKey } from './occasion-service.js';
-import { OCCASIONS } from '../config/occasions.js';
+import { OCCASIONS, resolveOccasionDefaultVisual, isOccasionDefaultVisual } from '../config/occasions.js';
 
 const STORAGE_KEYS = {
     RECIPIENT: 'celebration_recipient',
@@ -20,12 +20,15 @@ const STORAGE_KEYS = {
     CUSTOM_SONG_NAME: 'celebration_custom_song_name',
     LANGUAGE: 'celebration_language',
     VISUAL_THEME: 'celebration_visual_theme',
+    VISUAL_SELECTION_MODE: 'celebration_visual_selection_mode',
     CUSTOM_VISUAL_URL: 'celebration_custom_visual_url'
 };
 
+const initialDefaultOccasion = getDefaultOccasionKey();
+
 export const DEFAULT_STATE = {
     recipient: '',
-    occasion: getDefaultOccasionKey(),
+    occasion: initialDefaultOccasion,
     customDate: '',
     customEvent: '',
     customTitle: '',
@@ -33,7 +36,8 @@ export const DEFAULT_STATE = {
     customFrom: '',
     customSongUrl: '',
     customSongName: '',
-    visualTheme: 'default',
+    visualTheme: resolveOccasionDefaultVisual(initialDefaultOccasion),
+    visualSelectionMode: 'occasion-default',
     customVisualUrl: '',
     denyCount: 0,
     acceptScale: 1.0,
@@ -199,7 +203,12 @@ class StateStore {
             }
 
             const urlVisual = params.get('visual') || params.get('theme_visual') || params.get('gif');
-            if (urlVisual && urlVisual.trim()) loaded.visualTheme = urlVisual.trim();
+            if (urlVisual && urlVisual.trim()) {
+                loaded.visualTheme = urlVisual.trim();
+                loaded.visualSelectionMode = isOccasionDefaultVisual(loaded.visualTheme, loaded.occasion, loaded.customEvent)
+                    ? 'occasion-default'
+                    : 'explicit';
+            }
 
             const urlVisualUrl = params.get('visual_url') || params.get('custom_gif');
             if (urlVisualUrl && urlVisualUrl.trim()) loaded.customVisualUrl = urlVisualUrl.trim();
@@ -264,6 +273,21 @@ class StateStore {
                     break;
                 }
             }
+        }
+
+        // 4. Resolve default visual theme if not explicitly set
+        const storedVisualSelectionMode = (typeof localStorage !== 'undefined') ? localStorage.getItem(STORAGE_KEYS.VISUAL_SELECTION_MODE) : null;
+        if (storedVisualSelectionMode) {
+            loaded.visualSelectionMode = storedVisualSelectionMode;
+        }
+
+        if (!loaded.visualTheme || loaded.visualTheme === 'default') {
+            loaded.visualTheme = resolveOccasionDefaultVisual(loaded.occasion, loaded.customEvent);
+            loaded.visualSelectionMode = 'occasion-default';
+        } else if (!loaded.visualSelectionMode) {
+            loaded.visualSelectionMode = isOccasionDefaultVisual(loaded.visualTheme, loaded.occasion, loaded.customEvent)
+                ? 'occasion-default'
+                : 'explicit';
         }
 
         // Apply loaded state without notifying subscribers during bootstrap
@@ -338,6 +362,10 @@ class StateStore {
                 localStorage.setItem(STORAGE_KEYS.LANGUAGE, this._state.language);
             }
 
+            if (this._state.visualSelectionMode) {
+                localStorage.setItem(STORAGE_KEYS.VISUAL_SELECTION_MODE, this._state.visualSelectionMode);
+            }
+
             if (this._state.visualTheme && this._state.visualTheme !== 'default') {
                 localStorage.setItem(STORAGE_KEYS.VISUAL_THEME, this._state.visualTheme);
             } else {
@@ -364,7 +392,9 @@ class StateStore {
         if (this._state.occasion) url.searchParams.set('occasion', this._state.occasion);
         if (this._state.language && this._state.language !== 'en') url.searchParams.set('lang', this._state.language);
         if (this._state.visualTheme && this._state.visualTheme !== 'default') {
-            url.searchParams.set('visual', this._state.visualTheme);
+            if (this._state.visualSelectionMode === 'explicit' && !isOccasionDefaultVisual(this._state.visualTheme, this._state.occasion, this._state.customEvent)) {
+                url.searchParams.set('visual', this._state.visualTheme);
+            }
         }
         if (this._state.customVisualUrl && !this._state.customVisualUrl.startsWith('blob:')) {
             url.searchParams.set('visual_url', this._state.customVisualUrl);

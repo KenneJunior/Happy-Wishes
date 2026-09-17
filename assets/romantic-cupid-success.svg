@@ -348,15 +348,15 @@
     <!-- The Great Faceted Ruby Love Heart (Centerpiece Jewel) -->
     <g class="rcps-heart-jewel">
       <!-- Heart Base Volume -->
-      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z"
+      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z" 
             fill="url(#rcps-ruby-heart)"/>
 
       <!-- Golden Filigree Rim Piping -->
-      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z"
+      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z" 
             stroke="url(#rcps-heart-rim)" stroke-width="1.8" fill="none" opacity="0.8"/>
 
       <!-- Inner Glowing Core Facet -->
-      <path d="M140,140 C140,126 156,118 166,128 C176,138 176,150 152,162 L140,172 L128,162 C104,150 104,138 114,128 C124,118 140,126 140,140 Z"
+      <path d="M140,140 C140,126 156,118 166,128 C176,138 176,150 152,162 L140,172 L128,162 C104,150 104,138 114,128 C124,118 140,126 140,140 Z" 
             fill="#ff4d6d" opacity="0.48"/>
 
       <!-- Specular Glass Highlight Glint -->
@@ -367,14 +367,14 @@
 
     <!-- Sculpted Arms Hugging the Ruby Heart Lovingly -->
     <!-- Left Arm and Hand: Wraps around left lobe to rest on jewel -->
-    <path d="M118,130 C104,134 98,146 106,156 C114,166 124,162 132,156"
+    <path d="M118,130 C104,134 98,146 106,156 C114,166 124,162 132,156" 
           fill="none" stroke="url(#rcps-skin)" stroke-width="10" stroke-linecap="round"/>
     <ellipse cx="132" cy="156" rx="5" ry="4.2" fill="url(#rcps-skin)"/>
     <!-- Delicately Sculpted Fingers on Heart -->
     <path d="M130,154 C132,153 134,155 133,158 C132,160 130,160 129,159" fill="none" stroke="#e29b87" stroke-width="1.3" stroke-linecap="round"/>
 
     <!-- Right Arm and Hand: Wraps around right lobe to rest on jewel -->
-    <path d="M162,130 C176,134 182,146 174,156 C166,166 156,162 148,156"
+    <path d="M162,130 C176,134 182,146 174,156 C166,166 156,162 148,156" 
           fill="none" stroke="url(#rcps-skin)" stroke-width="10" stroke-linecap="round"/>
     <ellipse cx="148" cy="156" rx="5" ry="4.2" fill="url(#rcps-skin)"/>
     <!-- Delicately Sculpted Fingers on Heart -->

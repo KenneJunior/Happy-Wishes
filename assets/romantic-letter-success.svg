@@ -170,7 +170,7 @@
     <g class="rlts-paper-layer" transform="translate(76, 52)">
       <!-- Fine Cotton Sheet -->
       <rect x="0" y="0" width="128" height="96" rx="8" fill="url(#rlts-parchment)" stroke="#ecd8c8" stroke-width="1.2"/>
-
+      
       <!-- Gold Foil Border Inset on Parchment -->
       <rect x="4" y="4" width="120" height="88" rx="6" fill="none" stroke="#ffd166" stroke-width="0.9" stroke-dasharray="8 4" opacity="0.8"/>
 
@@ -178,7 +178,7 @@
       <g transform="translate(64, 38)">
         <path d="M0,-8 C0,-20 16,-28 28,-14 C40,0 40,16 16,34 L0,48 L-16,34 C-40,16 -40,0 -28,-14 C-16,-28 0,-20 0,-8 Z" fill="url(#rlts-ruby-heart)"/>
         <!-- Golden Rim Line on Heart -->
-        <path d="M0,-8 C0,-20 16,-28 28,-14 C40,0 40,16 16,34 L0,48 L-16,34 C-40,16 -40,0 -28,-14 C-16,-28 0,-20 0,-8 Z"
+        <path d="M0,-8 C0,-20 16,-28 28,-14 C40,0 40,16 16,34 L0,48 L-16,34 C-40,16 -40,0 -28,-14 C-16,-28 0,-20 0,-8 Z" 
               stroke="#ffd166" stroke-width="1.4" fill="none" opacity="0.85"/>
         <!-- Specular Highlight Arc -->
         <path d="M-16,0 C-22,8 -22,18 -18,24" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" fill="none" opacity="0.85"/>

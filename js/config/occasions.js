@@ -12,6 +12,7 @@ export let OCCASIONS = {
         emoji: '💖',
         badge: '💖 BE MY VALENTINE',
         celebrationBadge: '💖 YOU SAID YES!',
+        defaultVisual: 'valentine-default',
         fixedDate: { month: 1, day: 14 }, // Month is 0-indexed: 1 = February
         question: 'Will you be my Valentine?',
         subtext: 'A little question straight from the heart...',
@@ -70,6 +71,7 @@ export let OCCASIONS = {
         emoji: '🎂',
         badge: '🎂 HAPPY BIRTHDAY',
         celebrationBadge: '🎉 BEST DECISION EVER! 🎉',
+        defaultVisual: 'birthday-default',
         fixedDate: null, // Dynamic: determined by recipient's birthday or current year
         question: 'Happy Birthday!',
         subtext: 'Wishing you a magical day filled with sweet moments and huge smiles! 🎂✨',
@@ -128,6 +130,7 @@ export let OCCASIONS = {
         emoji: '🎄',
         badge: '🎄 MERRY CHRISTMAS',
         celebrationBadge: '🎄 MERRY CHRISTMAS!',
+        defaultVisual: 'christmas-default',
         fixedDate: { month: 11, day: 25 }, // Month 11 = December
         question: 'Merry Christmas! Will you celebrate with me?',
         subtext: 'Winter coziness, warm cocoa, and holiday cheer...',
@@ -186,6 +189,7 @@ export let OCCASIONS = {
         emoji: '🎆',
         badge: '🎆 HAPPY NEW YEAR',
         celebrationBadge: '🎆 HAPPY NEW YEAR!',
+        defaultVisual: 'newyear-default',
         fixedDate: { month: 0, day: 1 }, // Month 0 = January 1st
         question: 'Ready to ring in the New Year together?',
         subtext: '365 fresh pages, blank canvases, and bold new chapters...',
@@ -244,6 +248,7 @@ export let OCCASIONS = {
         emoji: '🐰',
         badge: '🐰 HAPPY EASTER',
         celebrationBadge: '🐰 HAPPY EASTER!',
+        defaultVisual: 'easter-default',
         fixedDate: null, // Calculated dynamically by Easter algorithm in occasion-service.js
         question: 'Happy Easter! Will you hop along with me?',
         subtext: 'Springtime blossoms, sweet treats, and colorful renewal...',
@@ -302,6 +307,7 @@ export let OCCASIONS = {
         emoji: '✨',
         badge: '✨ CELEBRATION',
         celebrationBadge: '✨ CELEBRATION DAY!',
+        defaultVisual: 'custom-default',
         fixedDate: null, // User-selected via date input
         question: 'Will you celebrate with me?',
         subtext: 'A unique milestone made especially for us...',
@@ -371,6 +377,7 @@ export let OCCASIONS = {
         emoji: '🎓',
         badge: '🎓 CONGRATULATIONS GRADUATE',
         celebrationBadge: '🎓 YOU DID IT, GRADUATE! 🌟',
+        defaultVisual: 'graduation-default',
         fixedDate: null,
         question: 'Congratulations, Graduate!',
         subtext: 'Your hard work, brilliance, and perseverance have paid off! 🎓🌟',
@@ -429,6 +436,7 @@ export let OCCASIONS = {
         emoji: '💍',
         badge: '💍 HAPPY ANNIVERSARY',
         celebrationBadge: '💍 FOREVER & ALWAYS! 💖',
+        defaultVisual: 'anniversary-default',
         fixedDate: null,
         question: 'Happy Anniversary!',
         subtext: 'Celebrating our journey together and all the sweet moments we share... 💍💖',
@@ -715,5 +723,52 @@ export function getBearAssetsForState(state) {
         normal: occ.bearNormal || './assets/bear-valentine.svg',
         success: occ.bearSuccess || './assets/bear-valentine-success.svg'
     };
+}
+
+export const OCCASION_DEFAULT_VISUAL_IDS = [
+    'default',
+    'valentine-default',
+    'birthday-default',
+    'christmas-default',
+    'newyear-default',
+    'easter-default',
+    'graduation-default',
+    'anniversary-default',
+    'custom-default'
+];
+
+/**
+ * Resolves the deterministic default visual theme identifier for a given occasion.
+ * @param {string} occasionKey
+ * @param {string} [customEvent='']
+ * @returns {string} Stable visual theme ID (e.g. 'graduation-default')
+ */
+export function resolveOccasionDefaultVisual(occasionKey, customEvent = '') {
+    const occKey = (occasionKey || '').toLowerCase();
+    const evtKey = (customEvent || '').toLowerCase();
+
+    if (occKey === 'graduation' || evtKey === 'graduation') return 'graduation-default';
+    if (occKey === 'anniversary' || evtKey === 'anniversary') return 'anniversary-default';
+    if (occKey === 'birthday' || evtKey === 'birthday') return 'birthday-default';
+
+    const occ = OCCASIONS[occKey];
+    if (occ && occ.defaultVisual) {
+        return occ.defaultVisual;
+    }
+    return 'valentine-default';
+}
+
+/**
+ * Checks whether a given visual theme ID represents the automatic default visual for the occasion.
+ * @param {string} themeId
+ * @param {string} occasionKey
+ * @param {string} [customEvent='']
+ * @returns {boolean}
+ */
+export function isOccasionDefaultVisual(themeId, occasionKey, customEvent = '') {
+    if (!themeId) return true;
+    if (themeId === 'default') return true;
+    const defaultId = resolveOccasionDefaultVisual(occasionKey, customEvent);
+    return themeId === defaultId;
 }
 

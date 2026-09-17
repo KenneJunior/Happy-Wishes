@@ -3,18 +3,104 @@
  * Curated library of romantic themes, animated SVGs, and GIFs for the personal card.
  */
 
+import { resolveOccasionDefaultVisual, isOccasionDefaultVisual } from './occasions.js';
+
 export const ROMANTIC_VISUAL_THEMES = [
     {
-        id: 'default',
-        name: 'Default Mascot',
-        subtitle: 'Auto Occasion Bear',
+        id: 'valentine-default',
+        name: 'Valentine Bear',
+        subtitle: 'Sweetheart Mascot',
         badge: 'Occasion',
-        icon: '🐻',
-        categories: ['all', 'romantic', 'animated'],
+        icon: '💖',
+        categories: ['all', 'romantic', 'animated', 'occasion'],
         thumbnail: './assets/bear-valentine.svg',
-        normal: null,
-        success: null,
-        description: 'Dynamically matches the selected celebration mascot'
+        normal: './assets/bear-valentine.svg',
+        success: './assets/bear-valentine-success.svg',
+        description: 'Sweetheart bear holding a pulsing glowing ruby heart'
+    },
+    {
+        id: 'birthday-default',
+        name: 'Birthday Bear',
+        subtitle: 'Party Mascot',
+        badge: 'Occasion',
+        icon: '🎂',
+        categories: ['all', 'animated', 'occasion'],
+        thumbnail: './assets/bear-birthday.svg',
+        normal: './assets/bear-birthday.svg',
+        success: './assets/bear-birthday-success.svg',
+        description: 'Joyful birthday bear celebrating with cake, cupcakes, and party cheers'
+    },
+    {
+        id: 'anniversary-default',
+        name: 'Anniversary Bear',
+        subtitle: 'Golden Mascot',
+        badge: 'Occasion',
+        icon: '💍',
+        categories: ['all', 'romantic', 'animated', 'occasion'],
+        thumbnail: './assets/bear-anniversary.svg',
+        normal: './assets/bear-anniversary.svg',
+        success: './assets/bear-anniversary-success.svg',
+        description: 'Romantic anniversary bear celebrating enduring love and golden milestones'
+    },
+    {
+        id: 'graduation-default',
+        name: 'Graduation Bear',
+        subtitle: 'Cap & Gown Mascot',
+        badge: 'Occasion',
+        icon: '🎓',
+        categories: ['all', 'animated', 'occasion'],
+        thumbnail: './assets/bear-graduation.svg',
+        normal: './assets/bear-graduation.svg',
+        success: './assets/bear-graduation-success.svg',
+        description: 'Proud graduate bear in academic cap holding a diploma scroll'
+    },
+    {
+        id: 'christmas-default',
+        name: 'Christmas Bear',
+        subtitle: 'Holiday Mascot',
+        badge: 'Occasion',
+        icon: '🎄',
+        categories: ['all', 'animated', 'occasion'],
+        thumbnail: './assets/bear-christmas.svg',
+        normal: './assets/bear-christmas.svg',
+        success: './assets/bear-christmas-success.svg',
+        description: 'Festive holiday bear wearing a cozy Santa hat amidst winter snow'
+    },
+    {
+        id: 'newyear-default',
+        name: 'New Year Bear',
+        subtitle: 'Midnight Mascot',
+        badge: 'Occasion',
+        icon: '🎆',
+        categories: ['all', 'animated', 'occasion'],
+        thumbnail: './assets/bear-newyear.svg',
+        normal: './assets/bear-newyear.svg',
+        success: './assets/bear-newyear-success.svg',
+        description: 'Dazzling New Year bear toasting with sparklers and midnight cheer'
+    },
+    {
+        id: 'easter-default',
+        name: 'Easter Bunny Bear',
+        subtitle: 'Spring Mascot',
+        badge: 'Occasion',
+        icon: '🐰',
+        categories: ['all', 'animated', 'occasion'],
+        thumbnail: './assets/bear-easter.svg',
+        normal: './assets/bear-easter.svg',
+        success: './assets/bear-easter-success.svg',
+        description: 'Playful bunny-eared bear with colorful spring eggs and blossoms'
+    },
+    {
+        id: 'custom-default',
+        name: 'Celebration Bear',
+        subtitle: 'Milestone Mascot',
+        badge: 'Occasion',
+        icon: '✨',
+        categories: ['all', 'romantic', 'animated', 'occasion'],
+        thumbnail: './assets/bear-valentine.svg',
+        normal: './assets/bear-valentine.svg',
+        success: './assets/bear-valentine-success.svg',
+        description: 'Versatile celebratory bear honoring your special moments'
     },
     {
         id: 'sweetheart-bear',
@@ -130,12 +216,26 @@ export const ROMANTIC_VISUAL_MAP = Object.fromEntries(
     ROMANTIC_VISUAL_THEMES.map(theme => [theme.id, theme])
 );
 
+// Backward-compatible alias for generic 'default'
+ROMANTIC_VISUAL_MAP.default = {
+    id: 'default',
+    name: 'Occasion Mascot',
+    subtitle: 'Auto Holiday Bear',
+    badge: 'Occasion',
+    icon: '🐻',
+    categories: ['all', 'romantic', 'animated', 'occasion'],
+    thumbnail: './assets/bear-valentine.svg',
+    normal: null,
+    success: null,
+    description: 'Dynamically matches the selected celebration mascot'
+};
+
 /**
  * Resolves the visual asset URLs for normal and success states given the app state.
  * Priority order:
  * 1. Custom Image/GIF URL (if specified in state.customVisualUrl)
- * 2. Selected Romantic Theme from Library (if not 'default')
- * 3. Fallback to seasonal occasion mascot / celebration resolver
+ * 2. Selected Visual Theme from Library (resolved to occasion default if 'default' or occasion-default)
+ * 3. Fallback to seasonal occasion mascot resolver
  *
  * @param {Object} state - The centralized application state
  * @param {Function} defaultOccasionResolver - Fallback function resolving seasonal bear
@@ -157,14 +257,22 @@ export function resolveVisualAssetsForState(state, defaultOccasionResolver) {
         };
     }
 
-    // 2. Selected Romantic Visual Theme
-    const themeId = state ? state.visualTheme : 'default';
-    if (themeId && themeId !== 'default' && ROMANTIC_VISUAL_MAP[themeId]) {
+    // 2. Resolve target theme ID
+    let themeId = state ? state.visualTheme : '';
+    if (!themeId || themeId === 'default') {
+        themeId = resolveOccasionDefaultVisual(state ? state.occasion : '', state ? state.customEvent : '');
+    }
+
+    if (themeId && ROMANTIC_VISUAL_MAP[themeId]) {
         const theme = ROMANTIC_VISUAL_MAP[themeId];
+        const isOccDefault = isOccasionDefaultVisual(themeId, state ? state.occasion : '', state ? state.customEvent : '');
+        const normalAsset = theme.normal || theme.thumbnail;
+        const successAsset = theme.success || theme.normal || theme.thumbnail;
+
         return {
-            normal: theme.normal || theme.thumbnail,
-            success: theme.success || theme.normal || theme.thumbnail,
-            isCustom: true,
+            normal: normalAsset,
+            success: successAsset,
+            isCustom: !isOccDefault,
             theme
         };
     }
@@ -175,10 +283,14 @@ export function resolveVisualAssetsForState(state, defaultOccasionResolver) {
         success: './assets/bear-valentine-success.svg'
     };
 
+    const fallbackOccDefaultId = resolveOccasionDefaultVisual(state ? state.occasion : '', state ? state.customEvent : '');
+    const defTheme = ROMANTIC_VISUAL_MAP[fallbackOccDefaultId] || ROMANTIC_VISUAL_MAP['valentine-default'];
+
     return {
         normal: defaultAssets.normal,
         success: defaultAssets.success,
         isCustom: false,
-        theme: ROMANTIC_VISUAL_MAP.default
+        theme: defTheme
     };
 }
+
