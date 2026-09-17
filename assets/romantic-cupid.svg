@@ -1,0 +1,490 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Handcrafted Romantic Cupid Cherub Illustration">
+  <defs>
+    <!-- Soft Warm Ambient Backdrop Halo -->
+    <radialGradient id="rcp-ambient-glow" cx="50%" cy="48%" r="52%">
+      <stop offset="0%" stop-color="#fff5f6" stop-opacity="0.9"/>
+      <stop offset="45%" stop-color="#ffe6ec" stop-opacity="0.38"/>
+      <stop offset="80%" stop-color="#ffd5df" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Cherub Skin: Soft Porcelain with Warm Peach Undertones -->
+    <linearGradient id="rcp-skin" x1="25%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#fffaf7"/>
+      <stop offset="35%" stop-color="#fde8de"/>
+      <stop offset="75%" stop-color="#f7c5b4"/>
+      <stop offset="100%" stop-color="#e29b87"/>
+    </linearGradient>
+
+    <!-- Cherub Skin Shaded (for depth in limbs and torso recesses) -->
+    <linearGradient id="rcp-skin-shadow" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#f8cfc1"/>
+      <stop offset="60%" stop-color="#e99e8a"/>
+      <stop offset="100%" stop-color="#cb7a66"/>
+    </linearGradient>
+
+    <!-- Cherub Cheek and Joint Blush -->
+    <radialGradient id="rcp-blush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff6b8b" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#ff8da1" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffb3c1" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Sculpted Golden Ringlets -->
+    <linearGradient id="rcp-hair-base" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#fff6c2"/>
+      <stop offset="35%" stop-color="#fec85a"/>
+      <stop offset="70%" stop-color="#d68429"/>
+      <stop offset="100%" stop-color="#934d0b"/>
+    </linearGradient>
+    <linearGradient id="rcp-hair-curl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffea9f"/>
+      <stop offset="50%" stop-color="#e89d30"/>
+      <stop offset="100%" stop-color="#a65814"/>
+    </linearGradient>
+
+    <!-- Foreground Wing: Luminous Layered Feathers with Champagne and Rose Tones -->
+    <linearGradient id="rcp-wing-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#fff5f8"/>
+      <stop offset="80%" stop-color="#f9d1dc"/>
+      <stop offset="100%" stop-color="#df98a9"/>
+    </linearGradient>
+    <linearGradient id="rcp-wing-secondary" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#fef0f4"/>
+      <stop offset="100%" stop-color="#ebd1d8"/>
+    </linearGradient>
+
+    <!-- Background Wing: Soft Atmospheric Perspective -->
+    <linearGradient id="rcp-wing-back" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fae7ed"/>
+      <stop offset="55%" stop-color="#e9b8c5"/>
+      <stop offset="100%" stop-color="#bf7d90"/>
+    </linearGradient>
+
+    <!-- Polished Gilded Recurve Bow -->
+    <linearGradient id="rcp-gold-bow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffde8"/>
+      <stop offset="30%" stop-color="#ffd466"/>
+      <stop offset="65%" stop-color="#e59920"/>
+      <stop offset="100%" stop-color="#8d4e04"/>
+    </linearGradient>
+
+    <!-- Burnished Wood Arrow Shaft -->
+    <linearGradient id="rcp-arrow-wood" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffd580"/>
+      <stop offset="50%" stop-color="#df9a28"/>
+      <stop offset="100%" stop-color="#935b0b"/>
+    </linearGradient>
+
+    <!-- Faceted Ruby Arrowhead -->
+    <linearGradient id="rcp-ruby-arrow" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ff6b8b"/>
+      <stop offset="35%" stop-color="#d90429"/>
+      <stop offset="75%" stop-color="#800216"/>
+      <stop offset="100%" stop-color="#3b0008"/>
+    </linearGradient>
+
+    <!-- Silk Chiffon Sash -->
+    <linearGradient id="rcp-sash" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fff0f4"/>
+      <stop offset="100%" stop-color="#f8c9d5"/>
+    </linearGradient>
+
+    <!-- Ground Contact Shadow with Optical Gradient -->
+    <radialGradient id="rcp-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6e1f32" stop-opacity="0.22"/>
+      <stop offset="50%" stop-color="#6e1f32" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#6e1f32" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Physical hierarchy of motion:
+       Primary: Body lift with slight momentum, hang-time, and damped settle.
+       Grounding: Shadow responds in real-time (fades and shrinks during lift; deepens and expands during descent).
+       Secondary: Asymmetric wing flex with delayed timing.
+       Tertiary: Hair inertia, sash flutter, and dynamic bowstring tension.
+    */
+    @keyframes rcpBodyFlight {
+      0% {
+        transform: translate(0px, 0px) rotate(0deg);
+      }
+      22% {
+        transform: translate(0.5px, -2.8px) rotate(0.4deg);
+      }
+      48% {
+        transform: translate(0px, -6.5px) rotate(1.1deg);
+      }
+      58% {
+        transform: translate(-0.4px, -6.2px) rotate(0.9deg);
+      }
+      82% {
+        transform: translate(-0.5px, -1.8px) rotate(-0.3deg);
+      }
+      100% {
+        transform: translate(0px, 0px) rotate(0deg);
+      }
+    }
+
+    @keyframes rcpShadowPhysics {
+      0% {
+        transform: scale(1, 1);
+        opacity: 0.95;
+      }
+      48%, 58% {
+        transform: scale(0.86, 0.82);
+        opacity: 0.52;
+      }
+      82% {
+        transform: scale(1.04, 1.03);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1, 1);
+        opacity: 0.95;
+      }
+    }
+
+    /* Asymmetric wing flex */
+    @keyframes rcpWingLeftLag {
+      0%, 100% {
+        transform: rotate(-1.5deg) scaleY(1);
+      }
+      45% {
+        transform: rotate(5.5deg) scaleY(0.96);
+      }
+      80% {
+        transform: rotate(-3deg) scaleY(1.02);
+      }
+    }
+
+    @keyframes rcpWingRightLag {
+      0%, 100% {
+        transform: rotate(1.2deg) scaleY(1);
+      }
+      48% {
+        transform: rotate(-5.5deg) scaleY(0.95);
+      }
+      82% {
+        transform: rotate(2.5deg) scaleY(1.02);
+      }
+    }
+
+    /* Secondary delayed hair and sash inertia */
+    @keyframes rcpHairInertia {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      38% {
+        transform: rotate(-1.4deg);
+      }
+      72% {
+        transform: rotate(1.2deg);
+      }
+    }
+
+    @keyframes rcpSashBreeze {
+      0%, 100% {
+        transform: rotate(0deg) skewX(0deg);
+      }
+      45% {
+        transform: rotate(3deg) skewX(-2deg);
+      }
+      80% {
+        transform: rotate(-1.5deg) skewX(1deg);
+      }
+    }
+
+    /* Bow tension flex coordinated with drawing arm */
+    @keyframes rcpBowStringTension {
+      0%, 100% {
+        transform: translate(0px, 0px);
+      }
+      48% {
+        transform: translate(-1.8px, -0.2px);
+      }
+      80% {
+        transform: translate(0.4px, 0px);
+      }
+    }
+
+    /* Delicate starlight twinkle */
+    @keyframes rcpTwinkleStarlight {
+      0%, 100% {
+        opacity: 0.28;
+        transform: scale(0.85);
+      }
+      50% {
+        opacity: 0.92;
+        transform: scale(1.15);
+      }
+    }
+
+    .rcp-cherub-master {
+      animation: rcpBodyFlight 5.2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      transform-origin: 140px 135px;
+    }
+
+    .rcp-shadow-layer {
+      animation: rcpShadowPhysics 5.2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      transform-origin: 140px 218px;
+    }
+
+    .rcp-wing-l-group {
+      animation: rcpWingLeftLag 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+      transform-origin: 106px 116px;
+    }
+
+    .rcp-wing-r-group {
+      animation: rcpWingRightLag 4.2s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.22s;
+      transform-origin: 166px 114px;
+    }
+
+    .rcp-hair-cluster {
+      animation: rcpHairInertia 5.2s ease-in-out infinite 0.15s;
+      transform-origin: 136px 86px;
+    }
+
+    .rcp-sash-flow {
+      animation: rcpSashBreeze 4.6s ease-in-out infinite;
+      transform-origin: 118px 168px;
+    }
+
+    .rcp-tension-system {
+      animation: rcpBowStringTension 5.2s ease-in-out infinite;
+      transform-origin: 168px 124px;
+    }
+
+    .rcp-star-a {
+      animation: rcpTwinkleStarlight 3.4s ease-in-out infinite;
+      transform-origin: 66px 58px;
+    }
+    .rcp-star-b {
+      animation: rcpTwinkleStarlight 3.8s ease-in-out infinite 1.1s;
+      transform-origin: 218px 50px;
+    }
+
+    /* Motion Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rcp-cherub-master,
+      .rcp-shadow-layer,
+      .rcp-wing-l-group,
+      .rcp-wing-r-group,
+      .rcp-hair-cluster,
+      .rcp-sash-flow,
+      .rcp-tension-system,
+      .rcp-star-a,
+      .rcp-star-b {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+  <!-- Ambient Backdrop Glow -->
+  <circle cx="140" cy="118" r="98" fill="url(#rcp-ambient-glow)"/>
+
+  <!-- Responsive Contact Ground Shadow -->
+  <ellipse class="rcp-shadow-layer" cx="140" cy="218" rx="46" ry="7" fill="url(#rcp-contact-shadow)"/>
+
+  <!-- Restrained Ambient Starlight Sparks -->
+  <g class="rcp-star-a">
+    <path d="M66,50 Q66,58 58,58 Q66,58 66,66 Q66,58 74,58 Q66,58 66,50 Z" fill="#ffd166"/>
+    <circle cx="66" cy="58" r="1.3" fill="#ffffff"/>
+  </g>
+  <g class="rcp-star-b">
+    <path d="M218,42 Q218,50 210,50 Q218,50 218,58 Q218,50 226,50 Q218,50 218,42 Z" fill="#fca5b5"/>
+    <circle cx="218" cy="50" r="1.3" fill="#ffffff"/>
+  </g>
+
+  <!-- Master Cupid Cherub Character Hierarchy -->
+  <g class="rcp-cherub-master">
+
+    <!-- Receding Left Wing (Background Layer) -->
+    <g class="rcp-wing-l-group">
+      <!-- Outer Primary Flight Feathers -->
+      <path d="M106,116 C76,82 48,88 38,110 C32,126 46,140 68,142 C84,144 98,132 106,116 Z" fill="url(#rcp-wing-back)"/>
+      <path d="M104,122 C80,98 58,102 48,118 C42,130 54,140 76,140 Z" fill="url(#rcp-wing-back)" opacity="0.9"/>
+      <!-- Mid Feathers -->
+      <path d="M102,126 C84,110 68,114 62,126 C58,136 70,140 88,138 Z" fill="#ffffff" opacity="0.75"/>
+      <!-- Soft Coverts at Base -->
+      <path d="M106,120 C94,112 82,118 80,128 C80,136 94,138 104,132 Z" fill="#ffffff" opacity="0.65"/>
+      <!-- Feather Rib Highlight -->
+      <path d="M96,120 C74,106 62,114 58,122" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.8"/>
+    </g>
+
+    <!-- Quiver slung gracefully across back -->
+    <g transform="translate(108, 122) rotate(-32)">
+      <!-- Quiver Body -->
+      <rect x="-6" y="-18" width="12" height="36" rx="4" fill="#9e3347" stroke="#ffd166" stroke-width="1.1"/>
+      <line x1="-6" y1="-8" x2="6" y2="-8" stroke="#ffd166" stroke-width="1"/>
+      <line x1="-6" y1="8" x2="6" y2="8" stroke="#ffd166" stroke-width="1"/>
+      <!-- Quiver Feather Fletchings -->
+      <path d="M-3,-18 L-6,-26 L-1,-24 L-2,-18 Z" fill="#ff758f"/>
+      <path d="M2,-18 L-1,-27 L4,-25 L3,-18 Z" fill="#ffffff"/>
+      <path d="M4,-18 L6,-26 L1,-24 L2,-18 Z" fill="#ffb3c1"/>
+    </g>
+
+    <!-- Tucked Floating Cherub Legs (True Anatomical Pelvis Connection) -->
+    <!-- Right Leg (Back/Upper Leg) -->
+    <path d="M130,166 C136,170 144,172 148,180 C151,186 146,192 138,192 C132,192 126,186 126,178 Z" fill="url(#rcp-skin-shadow)"/>
+    <!-- Right Foot -->
+    <ellipse cx="144" cy="189" rx="6" ry="4.5" fill="url(#rcp-skin-shadow)" transform="rotate(15 144 189)"/>
+
+    <!-- Left Leg (Foreground Tucked Leg) -->
+    <path d="M118,164 C112,170 108,178 112,186 C116,194 126,195 132,190 C136,185 134,175 128,168 Z" fill="url(#rcp-skin)"/>
+    <!-- Left Knee Highlight -->
+    <ellipse cx="114" cy="182" rx="4.5" ry="3.5" fill="#ffffff" opacity="0.35"/>
+    <!-- Left Foot with Baby Toes Contour -->
+    <ellipse cx="127" cy="190" rx="6.5" ry="4.8" fill="url(#rcp-skin)" transform="rotate(-12 127 190)"/>
+    <circle cx="132" cy="189" r="1.4" fill="#f8c3b2"/>
+    <circle cx="131" cy="191.5" r="1.2" fill="#f8c3b2"/>
+
+    <!-- Cherub Sculpted Torso (Fluid Chest to Abdomen) -->
+    <path d="M124,124 C136,120 148,122 154,130 C158,140 156,154 148,168 C142,176 130,180 122,174 C114,168 112,154 114,142 C116,132 118,126 124,124 Z" fill="url(#rcp-skin)"/>
+    <!-- Chest Soft Highlight and Rosy Belly Gradient -->
+    <ellipse cx="140" cy="138" rx="10" ry="7" fill="#ffffff" opacity="0.32"/>
+    <circle cx="134" cy="154" r="7" fill="url(#rcp-blush)" opacity="0.6"/>
+
+    <!-- Silken Chiffon Wrap with Golden Edging -->
+    <g class="rcp-sash-flow">
+      <!-- Main Waist Draping -->
+      <path d="M114,158 Q136,184 160,158 Q166,172 152,180 Q136,186 120,178 Q110,170 114,158 Z" fill="url(#rcp-sash)" stroke="#ffd1dc" stroke-width="0.9"/>
+      <!-- Crease Highlights -->
+      <path d="M118,162 Q136,182 156,164" stroke="#ffffff" stroke-width="1.3" fill="none" opacity="0.85"/>
+      <path d="M120,166 Q136,186 152,170" stroke="#ffd166" stroke-width="1" fill="none" opacity="0.7"/>
+      <!-- Flowing Sash Tails drifting behind -->
+      <path d="M116,174 C104,180 96,192 98,200 C102,202 108,194 122,184 Z" fill="url(#rcp-sash)" stroke="#ffd166" stroke-width="0.8"/>
+      <path d="M120,178 C110,186 106,200 110,208 C114,208 118,198 126,184 Z" fill="url(#rcp-sash)" opacity="0.85"/>
+    </g>
+
+    <!-- Foreground Wing (Right Wing Layered Feathers) -->
+    <g class="rcp-wing-r-group">
+      <!-- Primary Flight Feathers (Long, Sweeping) -->
+      <path d="M166,112 C198,76 226,82 236,104 C242,120 228,134 206,136 C186,138 174,126 166,112 Z" fill="url(#rcp-wing-primary)"/>
+      <!-- Second Tier Feathers -->
+      <path d="M170,116 C196,90 220,96 226,112 C230,124 216,132 196,132 Z" fill="url(#rcp-wing-secondary)"/>
+      <path d="M172,122 C192,104 212,110 216,122 C218,132 204,136 188,134 Z" fill="#ffffff" opacity="0.95"/>
+      <!-- Covert Down Feathers at Base -->
+      <path d="M170,118 C186,108 198,114 200,124 C202,130 192,134 180,132 Z" fill="#ffffff"/>
+      <path d="M172,124 C184,118 194,122 194,128 C194,134 186,136 178,134 Z" fill="#ffffff"/>
+      <!-- Gilded Feather Rib Accents -->
+      <path d="M174,116 C198,100 212,108 216,116" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round"/>
+      <path d="M176,124 C194,114 204,120 208,126" stroke="#fcd5de" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    </g>
+
+    <!-- Cherub Head, Hair and Refined Facial Structure -->
+    <g transform="translate(138, 92)">
+      <!-- Sculpted Soft Cherub Jaw Contour -->
+      <path d="M-18,-4 C-20,12 -12,25 0,26 C12,25 20,12 18,-4 C18,-18 12,-26 0,-26 C-12,-26 -18,-18 -18,-4 Z" fill="url(#rcp-skin)"/>
+      
+      <!-- Forehead Soft Highlight -->
+      <ellipse cx="0" cy="-10" rx="12" ry="7" fill="#ffffff" opacity="0.32"/>
+
+      <!-- Ear with Delicate Helix (Left Profile) -->
+      <ellipse cx="-18" cy="2" rx="3.5" ry="5.5" fill="url(#rcp-skin)"/>
+      <path d="M-18,0 Q-16,2 -18,4" stroke="#e29b87" stroke-width="1" fill="none"/>
+
+      <!-- Cheeks Warm Rosy Blush -->
+      <ellipse cx="-12" cy="7" rx="7" ry="4.2" fill="url(#rcp-blush)"/>
+      <ellipse cx="12" cy="7" rx="7" ry="4.2" fill="url(#rcp-blush)"/>
+
+      <!-- Expressive Stylized Facial Features -->
+      <!-- Left Eye: Playful Focused Archer Aim (Delicate Wink Curve) -->
+      <path d="M-15,0 Q-10,-4 -5,0" fill="none" stroke="#4a1a24" stroke-width="2.2" stroke-linecap="round"/>
+      <!-- Right Eye: Focused Wide Almond Eye with Starlight Glimmer -->
+      <ellipse cx="9" cy="0" rx="4.2" ry="4.8" fill="#38131d"/>
+      <ellipse cx="9" cy="0" rx="3.8" ry="4.4" fill="#4d1b28"/>
+      <!-- Crisp Catchlights in Eye -->
+      <circle cx="8" cy="-1.5" r="1.6" fill="#ffffff"/>
+      <circle cx="10.5" cy="1.2" r="0.8" fill="#ffffff"/>
+      <!-- Fine Upper Lash Accent -->
+      <path d="M4,-1 Q9,-6 14,-2" fill="none" stroke="#38131d" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Delicate Cherub Eyebrows -->
+      <path d="M-15,-6 Q-10,-9 -5,-6" fill="none" stroke="#c47829" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+      <path d="M5,-7 Q10,-10 15,-6" fill="none" stroke="#c47829" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+
+      <!-- Cute Button Nose -->
+      <path d="M-1,3 Q0,5 2,4" fill="none" stroke="#d98270" stroke-width="1.3" stroke-linecap="round"/>
+
+      <!-- Sweet Smiling Mouth with Dimple -->
+      <path d="M-4,12 Q0,17 4,12" fill="none" stroke="#b01332" stroke-width="2" stroke-linecap="round"/>
+      <ellipse cx="0" cy="13.5" rx="2.5" ry="1.2" fill="#ff758f"/>
+      <circle cx="5" cy="11.5" r="0.8" fill="#ff758f"/>
+
+      <!-- Classical Cherub Sculpted Ringlets (Coherent Hair Silhouette) -->
+      <g class="rcp-hair-cluster">
+        <!-- Back Framing Volume -->
+        <circle cx="-16" cy="-16" r="9.5" fill="url(#rcp-hair-base)"/>
+        <circle cx="16" cy="-16" r="9.5" fill="url(#rcp-hair-base)"/>
+        <circle cx="0" cy="-22" r="11.5" fill="url(#rcp-hair-base)"/>
+        <!-- Side Tumble Curls -->
+        <circle cx="-19" cy="-7" r="7" fill="url(#rcp-hair-curl)"/>
+        <circle cx="19" cy="-7" r="7" fill="url(#rcp-hair-curl)"/>
+        <!-- Forehead Sculpted Ringlets -->
+        <path d="M-13,-17 C-19,-5 -7,-4 -5,-13 Z" fill="url(#rcp-hair-curl)"/>
+        <path d="M5,-19 C-1,-7 13,-5 9,-14 Z" fill="url(#rcp-hair-curl)"/>
+        <circle cx="-7" cy="-18" r="8.5" fill="url(#rcp-hair-curl)"/>
+        <circle cx="7" cy="-18" r="8.5" fill="url(#rcp-hair-curl)"/>
+        <!-- Strand Direction Highlights -->
+        <path d="M-12,-22 Q-6,-26 0,-24 Q6,-26 12,-22" stroke="#fff3b0" stroke-width="1.3" fill="none" opacity="0.85" stroke-linecap="round"/>
+        <path d="M-4,-24 Q0,-27 4,-24" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.75" stroke-linecap="round"/>
+        <path d="M-9,-14 Q-5,-10 -6,-6" stroke="#fff3b0" stroke-width="1.1" fill="none" opacity="0.8"/>
+        <path d="M7,-14 Q9,-10 6,-6" stroke="#fff3b0" stroke-width="1.1" fill="none" opacity="0.8"/>
+      </g>
+    </g>
+
+    <!-- Anatomically Connected Arms and Bowstring Tension System -->
+    <!-- Left Arm: Extends from shoulder to grip bow handle -->
+    <path d="M142,126 C152,124 162,122 172,124" fill="none" stroke="url(#rcp-skin)" stroke-width="9.5" stroke-linecap="round"/>
+    <ellipse cx="174" cy="124" rx="5.2" ry="4.6" fill="url(#rcp-skin)"/>
+    <!-- Left Hand Fingers wrapping around Bow Grip -->
+    <path d="M173,121 C175,121 177,123 176,127 C175,129 173,129 172,128" fill="none" stroke="#e29b87" stroke-width="1.4" stroke-linecap="round"/>
+
+    <!-- Right Arm: Elbow pulled back in archer pose, forearm pulling string -->
+    <path d="M120,126 C110,132 112,142 124,140 C136,138 144,130 154,124" fill="none" stroke="url(#rcp-skin)" stroke-width="9" stroke-linecap="round"/>
+    <!-- Right Drawing Hand: Hooked on bowstring at nock -->
+    <ellipse cx="154" cy="124" rx="5.2" ry="4.4" fill="url(#rcp-skin)"/>
+    <path d="M152,122 C154,121 156,123 155,126 C154,127 152,127 151,125" fill="none" stroke="#e29b87" stroke-width="1.3" stroke-linecap="round"/>
+
+    <!-- Classical Recurve Golden Bow and Taut String System -->
+    <g class="rcp-tension-system">
+      <!-- Upper Recurve Limb -->
+      <path d="M174,120 C172,106 170,94 176,86 C180,80 186,80 186,84 C186,86 182,90 180,94 C176,104 174,114 174,120 Z" 
+            fill="url(#rcp-gold-bow)"/>
+      <circle cx="186" cy="84" r="2.8" fill="#ffd166"/>
+
+      <!-- Lower Recurve Limb -->
+      <path d="M174,128 C172,142 170,154 176,162 C180,168 186,168 186,164 C186,162 182,158 180,154 C176,144 174,134 174,128 Z" 
+            fill="url(#rcp-gold-bow)"/>
+      <circle cx="186" cy="164" r="2.8" fill="#ffd166"/>
+
+      <!-- Bow Grip (Velvet and Gold Wrap at Center) -->
+      <rect x="171.5" y="119" width="5.5" height="10" rx="2" fill="#9e3347" stroke="#ffd166" stroke-width="0.8"/>
+
+      <!-- Taut String connected physically from tips to nocking point -->
+      <line x1="186" y1="84" x2="154" y2="124" stroke="#ffffff" stroke-width="1.3" opacity="0.9"/>
+      <line x1="154" y1="124" x2="186" y2="164" stroke="#ffffff" stroke-width="1.3" opacity="0.9"/>
+      <!-- String serving wrap at nock -->
+      <line x1="152" y1="123" x2="156" y2="125" stroke="#ffd166" stroke-width="2"/>
+
+      <!-- Nocked Arrow aligned through bow pass -->
+      <!-- Shaft -->
+      <line x1="152" y1="124" x2="218" y2="124" stroke="url(#rcp-arrow-wood)" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="156" y1="123.5" x2="216" y2="123.5" stroke="#fff9db" stroke-width="0.8" opacity="0.85"/>
+
+      <!-- Faceted Ruby Arrowhead -->
+      <path d="M218,124 L225,119 C229,116 234,120 232,124 C234,128 229,132 225,129 Z" fill="url(#rcp-ruby-arrow)"/>
+      <!-- Arrowhead Specular Glint -->
+      <circle cx="224" cy="121" r="1.2" fill="#ffffff"/>
+
+      <!-- Arrow Feather Fletching -->
+      <path d="M152,124 L142,118 L144,124 L142,130 Z" fill="#ff758f"/>
+      <path d="M148,124 L140,119 L142,124 L140,129 Z" fill="#ffffff" opacity="0.85"/>
+    </g>
+  </g>
+</svg>

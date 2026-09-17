@@ -183,7 +183,7 @@ function initApp() {
 
     // Listen for state changes
     appState.subscribe((newState, oldState, changedKeys) => {
-        if (changedKeys.some(k => ['occasion', 'recipient', 'customEvent', 'customTitle', 'language'].includes(k))) {
+        if (changedKeys.some(k => ['occasion', 'recipient', 'customEvent', 'customTitle', 'language', 'visualTheme', 'customVisualUrl'].includes(k))) {
             applyOccasionUI();
         }
     });

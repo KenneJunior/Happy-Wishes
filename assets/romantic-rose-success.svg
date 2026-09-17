@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Velvet Ruby Rose Full Bloom Celebration Illustration">
+  <defs>
+    <!-- Radiant Golden Morning Sunlight Aura -->
+    <radialGradient id="rrss-sun-aura" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#fff8eb" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#ffe4ec" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#ffd1dc" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Warm Dewdrop Halo -->
+    <radialGradient id="rrss-halo-glow" cx="50%" cy="40%" r="45%">
+      <stop offset="0%" stop-color="#fff9db" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#ffd166" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Golden Starlight Accent Gradient -->
+    <linearGradient id="rrss-gold-gleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#ffeaa7"/>
+      <stop offset="80%" stop-color="#f39c12"/>
+      <stop offset="100%" stop-color="#b76e00"/>
+    </linearGradient>
+
+    <!-- Deepest Carmine Velvet Underlayer -->
+    <linearGradient id="rrss-rose-dark" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#d90429"/>
+      <stop offset="40%" stop-color="#b00525"/>
+      <stop offset="75%" stop-color="#6e0216"/>
+      <stop offset="100%" stop-color="#360009"/>
+    </linearGradient>
+
+    <!-- Blooming Outer Petals -->
+    <linearGradient id="rrss-rose-bloom" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ff5c7e"/>
+      <stop offset="45%" stop-color="#e01a47"/>
+      <stop offset="80%" stop-color="#990b2b"/>
+      <stop offset="100%" stop-color="#540414"/>
+    </linearGradient>
+
+    <!-- Velvet Luminous Petal Sheen -->
+    <linearGradient id="rrss-petal-sheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffa3b5"/>
+      <stop offset="50%" stop-color="#ff5077"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+
+    <!-- Lush Botanical Rose Stem and Leaves -->
+    <linearGradient id="rrss-leaf-grad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#78b184"/>
+      <stop offset="45%" stop-color="#3d8b52"/>
+      <stop offset="85%" stop-color="#1b5a32"/>
+      <stop offset="100%" stop-color="#0e341c"/>
+    </linearGradient>
+
+    <!-- Ground Contact Shadow -->
+    <radialGradient id="rrss-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7a1e34" stop-opacity="0.2"/>
+      <stop offset="65%" stop-color="#7a1e34" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#7a1e34" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Finite Bloom Choreography -> Settles into Peaceful Resting Breathe */
+    @keyframes rrssBloomChoreography {
+      0% {
+        transform: scale(0.92) translateY(8px);
+        opacity: 0.85;
+      }
+      35% {
+        transform: scale(1.07) translateY(-8px);
+      }
+      65% {
+        transform: scale(0.985) translateY(-2px);
+      }
+      85% {
+        transform: scale(1.012) translateY(-4.5px);
+      }
+      100% {
+        transform: scale(1) translateY(-3.5px);
+      }
+    }
+
+    @keyframes rrssSettledBreathe {
+      0%, 100% {
+        transform: translateY(-3.5px) scale(1);
+      }
+      50% {
+        transform: translateY(-6px) scale(1.015);
+      }
+    }
+
+    @keyframes rrssHaloRadiance {
+      0% { transform: scale(0.7); opacity: 0; }
+      50% { transform: scale(1.18); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 0.6; }
+    }
+
+    @keyframes rrssStarSparkle {
+      0% { transform: scale(0); opacity: 0; }
+      45% { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.85; }
+    }
+
+    .rrss-rose-container {
+      animation: rrssBloomChoreography 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 rrssSettledBreathe 5.2s ease-in-out infinite 1.4s;
+      transform-origin: 140px 185px;
+    }
+
+    .rrss-halo {
+      animation: rrssHaloRadiance 1.6s ease-out forwards;
+      transform-origin: 140px 92px;
+    }
+
+    .rrss-star-1 {
+      animation: rrssStarSparkle 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
+      transform-origin: 72px 58px;
+    }
+    .rrss-star-2 {
+      animation: rrssStarSparkle 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+      transform-origin: 208px 52px;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rrss-rose-container,
+      .rrss-halo,
+      .rrss-star-1,
+      .rrss-star-2 {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+
+  <!-- Ambient Golden Dawn Backdrop -->
+  <circle cx="140" cy="114" r="102" fill="url(#rrss-sun-aura)"/>
+  <circle class="rrss-halo" cx="140" cy="92" r="76" fill="url(#rrss-halo-glow)"/>
+  <ellipse cx="140" cy="216" rx="44" ry="6.5" fill="url(#rrss-contact-shadow)"/>
+
+  <!-- Morning Starlight Shimmer Accents -->
+  <g class="rrss-star-1">
+    <path d="M72,50 Q72,58 64,58 Q72,58 72,66 Q72,58 80,58 Q72,58 72,50 Z" fill="url(#rrss-gold-gleam)"/>
+    <circle cx="72" cy="58" r="1.4" fill="#ffffff"/>
+  </g>
+  <g class="rrss-star-2">
+    <path d="M208,44 Q208,52 200,52 Q208,52 208,60 Q208,52 216,52 Q208,52 208,44 Z" fill="url(#rrss-gold-gleam)"/>
+    <circle cx="208" cy="52" r="1.4" fill="#ffffff"/>
+  </g>
+
+  <!-- Celebratory Full Bloom Rose Plant Group -->
+  <g class="rrss-rose-container">
+    <!-- Botanical Curved Stem with Golden Sap Accents -->
+    <path d="M140,140 Q135,178 144,212" fill="none" stroke="url(#rrss-leaf-grad)" stroke-width="7.5" stroke-linecap="round"/>
+    <path d="M138,142 Q133,178 142,210" fill="none" stroke="#a7e8bd" stroke-width="1.2" opacity="0.7" stroke-linecap="round"/>
+    
+    <!-- Rose Thorns -->
+    <path d="M137,158 Q130,156 131,161 Q136,161 138,160 Z" fill="#1b5a32"/>
+    <path d="M141,186 Q148,184 146,189 Q142,189 140,188 Z" fill="#1b5a32"/>
+
+    <!-- Flourishing Botanical Leaves Spread Wide in Celebration -->
+    <!-- Left Leaf -->
+    <g>
+      <path d="M138,165 C104,162 82,142 80,124 C104,118 132,138 138,165 Z" fill="url(#rrss-leaf-grad)"/>
+      <path d="M138,165 Q106,146 82,128" stroke="#a7e8bd" stroke-width="1.5" fill="none" opacity="0.9"/>
+      <path d="M120,154 Q110,148 104,152" stroke="#a7e8bd" stroke-width="1.2" fill="none" opacity="0.75"/>
+      <path d="M104,144 Q96,138 90,142" stroke="#a7e8bd" stroke-width="1.2" fill="none" opacity="0.75"/>
+    </g>
+
+    <!-- Right Leaf -->
+    <g>
+      <path d="M142,175 C176,172 198,152 200,134 C176,128 148,148 142,175 Z" fill="url(#rrss-leaf-grad)"/>
+      <path d="M142,175 Q174,156 198,138" stroke="#a7e8bd" stroke-width="1.5" fill="none" opacity="0.9"/>
+      <path d="M160,164 Q170,158 176,162" stroke="#a7e8bd" stroke-width="1.2" fill="none" opacity="0.75"/>
+      <path d="M176,154 Q184,148 190,152" stroke="#a7e8bd" stroke-width="1.2" fill="none" opacity="0.75"/>
+    </g>
+
+    <!-- Calyx Sepals (Cupping the Grand Blossom) -->
+    <path d="M124,138 C118,146 108,150 102,148 C110,142 120,136 124,138 Z" fill="#2d6a4f"/>
+    <path d="M156,138 C162,146 172,150 178,148 C170,142 160,136 156,138 Z" fill="#2d6a4f"/>
+    <path d="M140,144 C138,152 140,160 140,162 C142,160 142,152 140,144 Z" fill="#2d6a4f"/>
+
+    <!-- Grand Velvet Heritage Rose in Glorious Full Bloom -->
+    <g transform="translate(140, 92)">
+      <!-- Deep Velvet Outermost Unfurled Petals -->
+      <path d="M-42,-12 C-38,-48 38,-48 42,-12 C52,22 24,52 -2,52 C-28,52 -52,22 -42,-12 Z" fill="url(#rrss-rose-dark)"/>
+
+      <!-- Second Tier Broad Blooming Petals -->
+      <path d="M-36,-22 C-24,-44 24,-44 36,-22 C44,6 20,40 -2,40 C-24,40 -44,6 -36,-22 Z" fill="url(#rrss-rose-bloom)"/>
+      <path d="M-26,-28 C-14,-46 18,-42 28,-22 C34,4 16,32 -2,32 C-20,32 -32,4 -26,-28 Z" fill="url(#rrss-petal-sheen)"/>
+
+      <!-- Cupped Center Blooms Opening with Golden Radiance -->
+      <path d="M-28,4 C-18,28 18,28 28,4 C18,20 -18,20 -28,4 Z" fill="#ff5c7e"/>
+      <path d="M-20,-10 C-12,-26 16,-26 20,-8 C22,12 10,22 -2,22 C-14,22 -20,8 -20,-10 Z" fill="url(#rrss-rose-bloom)"/>
+
+      <!-- Rose Inner Spiral Petals -->
+      <path d="M-14,-6 C-10,-18 10,-18 14,-6 C16,8 5,16 -1,16 C-8,16 -15,8 -14,-6 Z" fill="#6e0216"/>
+      <path d="M-8,-3 C-5,-12 7,-12 9,-3 C10,5 4,10 -1,10 C-6,10 -9,5 -8,-3 Z" fill="#b00525"/>
+      
+      <!-- Core Spiral Bud -->
+      <path d="M-4,-1 C-2,-7 5,-7 6,-1 C7,4 2,6 -1,6 C-4,6 -5,3 -4,-1 Z" fill="#360009"/>
+      <circle cx="-0.5" cy="1.5" r="2.4" fill="#1a0004"/>
+
+      <!-- Delicate Velvet Rim Highlights catching Sunlight -->
+      <path d="M-34,-18 C-16,-40 20,-40 32,-16" stroke="#ffffff" stroke-width="1.6" fill="none" opacity="0.75" stroke-linecap="round"/>
+      <path d="M-22,8 C-10,26 12,26 22,8" stroke="#ffccd5" stroke-width="1.4" fill="none" opacity="0.8" stroke-linecap="round"/>
+
+      <!-- Crystal Dewdrop Glints on Petals -->
+      <circle cx="-24" cy="20" r="3" fill="#ffffff" opacity="0.95"/>
+      <circle cx="-23" cy="19" r="1.2" fill="#ffd166"/>
+      <circle cx="26" cy="14" r="2.4" fill="#ffffff" opacity="0.9"/>
+      <circle cx="10" cy="-18" r="1.8" fill="#ffffff" opacity="0.85"/>
+    </g>
+  </g>
+</svg>

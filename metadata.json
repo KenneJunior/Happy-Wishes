@@ -1,6 +1,6 @@
 {
-  "name": "Proposal/Celebrations",
-  "description": "Interactive celebration card with live countdown timer, 3D keepsake flip envelope, seasonal themes, multilingual translations, and personalized wishes.",
+  "name": "Proposal/Congratulations",
+  "description": "Imported from GitHub: KenneJunior/Happy-Wishes",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

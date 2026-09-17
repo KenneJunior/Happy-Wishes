@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Romantic Love Letter Illustration">
+  <defs>
+    <!-- Soft Warm Ambient Backdrop Glow -->
+    <radialGradient id="rlt-ambient-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff0f3" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#ffd5dc" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Cotton Rag Paper Parchment -->
+    <linearGradient id="rlt-parchment" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#fffbf7"/>
+      <stop offset="100%" stop-color="#f5ede2"/>
+    </linearGradient>
+
+    <!-- Envelope Body (Blush Cotton Paper) -->
+    <linearGradient id="rlt-envelope-base" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#fff5f6"/>
+      <stop offset="45%" stop-color="#fcd8e0"/>
+      <stop offset="100%" stop-color="#f7bcc8"/>
+    </linearGradient>
+
+    <!-- Envelope Flaps and Creases with Shadow -->
+    <linearGradient id="rlt-flap-side" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde5eb"/>
+      <stop offset="100%" stop-color="#f1abb9"/>
+    </linearGradient>
+    <linearGradient id="rlt-flap-bottom" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f7bcc8"/>
+      <stop offset="100%" stop-color="#ebb0bd"/>
+    </linearGradient>
+
+    <!-- Embossed Royal Wax Seal (Rich Crimson) -->
+    <linearGradient id="rlt-wax-seal" x1="20%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#e63956"/>
+      <stop offset="45%" stop-color="#b81434"/>
+      <stop offset="85%" stop-color="#7a0a1f"/>
+      <stop offset="100%" stop-color="#4a0410"/>
+    </linearGradient>
+
+    <!-- Ground Contact Shadow -->
+    <radialGradient id="rlt-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#803344" stop-opacity="0.16"/>
+      <stop offset="65%" stop-color="#803344" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#803344" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Physical, weightful floating with gentle inertia */
+    @keyframes rltFloatEnvelope {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-6.5px) rotate(-1.4deg);
+      }
+    }
+
+    @keyframes rltFlutterHeartL {
+      0% {
+        transform: translate(0, 0) scale(0.65) rotate(0deg);
+        opacity: 0;
+      }
+      30% {
+        opacity: 0.85;
+      }
+      80% {
+        opacity: 0.75;
+      }
+      100% {
+        transform: translate(-30px, -46px) scale(1.05) rotate(-22deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rltFlutterHeartR {
+      0% {
+        transform: translate(0, 0) scale(0.65) rotate(0deg);
+        opacity: 0;
+      }
+      30% {
+        opacity: 0.85;
+      }
+      80% {
+        opacity: 0.75;
+      }
+      100% {
+        transform: translate(28px, -48px) scale(1.05) rotate(24deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rltSealGleam {
+      0%, 100% { opacity: 0.3; transform: scale(0.85); }
+      50% { opacity: 0.95; transform: scale(1.15); }
+    }
+
+    .rlt-envelope-group {
+      animation: rltFloatEnvelope 4.6s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      transform-origin: 140px 145px;
+    }
+
+    .rlt-flutter-l {
+      animation: rltFlutterHeartL 4.4s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+      transform-origin: 120px 105px;
+    }
+
+    .rlt-flutter-r {
+      animation: rltFlutterHeartR 4.8s cubic-bezier(0.33, 1, 0.68, 1) infinite 1.2s;
+      transform-origin: 160px 100px;
+    }
+
+    .rlt-seal-sparkle {
+      animation: rltSealGleam 3.4s ease-in-out infinite;
+      transform-origin: 144px 150px;
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .rlt-envelope-group,
+      .rlt-flutter-l,
+      .rlt-flutter-r,
+      .rlt-seal-sparkle {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+  <!-- Ambient Glow Backdrop -->
+  <circle cx="140" cy="116" r="98" fill="url(#rlt-ambient-glow)"/>
+  <ellipse cx="140" cy="216" rx="56" ry="7" fill="url(#rlt-contact-shadow)"/>
+
+  <!-- Fluttering Floating Micro-Hearts from Envelope -->
+  <g class="rlt-flutter-l">
+    <path d="M120,105 C120,98 126,94 131,98 C136,102 136,108 127,116 L120,121 L113,116 C104,108 104,102 109,98 C114,94 120,98 120,105 Z" fill="#ff5c7e"/>
+  </g>
+  <g class="rlt-flutter-r">
+    <path d="M160,100 C160,93 166,89 171,93 C176,97 176,103 167,111 L160,116 L153,111 C144,103 144,97 149,93 C154,89 160,93 160,100 Z" fill="#e63956"/>
+  </g>
+
+  <!-- Main Tactile Love Letter and Envelope Group -->
+  <g class="rlt-envelope-group">
+    <!-- Back Interior Pocket of Envelope -->
+    <rect x="68" y="104" width="144" height="92" rx="10" fill="#f4b8c5"/>
+
+    <!-- Letter Parchment Peeking Out -->
+    <g transform="translate(80, 74)">
+      <!-- Cotton Paper Sheet with Deckled Edge Appearance -->
+      <rect x="0" y="0" width="120" height="82" rx="6" fill="url(#rlt-parchment)" stroke="#eddcd2" stroke-width="1.2"/>
+      
+      <!-- Calligraphic Handwritten Sentiments -->
+      <path d="M14,16 Q45,14 74,16" stroke="#b51739" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <path d="M14,28 Q60,26 92,28" stroke="#d63f60" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75"/>
+      <path d="M14,40 Q50,38 78,40" stroke="#d63f60" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75"/>
+      <path d="M14,52 Q40,50 62,52" stroke="#d63f60" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75"/>
+
+      <!-- Parchment Wax Stamp / Pressed Flower Heart Accent -->
+      <g transform="translate(98, 16)">
+        <path d="M0,0 C0,-4 5,-7 8,-4 C11,-1 11,3 6,7 L0,11 L-6,7 C-11,3 -11,-1 -8,-4 C-5,-7 0,-4 0,0 Z" fill="#ba1a38" opacity="0.9"/>
+      </g>
+    </g>
+
+    <!-- Side Folding Flaps of Envelope -->
+    <path d="M68,104 L140,154 L68,196 Z" fill="url(#rlt-flap-side)"/>
+    <path d="M212,104 L140,154 L212,196 Z" fill="url(#rlt-flap-side)"/>
+
+    <!-- Bottom Envelope Flap (Overlapping with Dimensional Crease) -->
+    <path d="M68,196 L140,146 L212,196 Z" fill="url(#rlt-envelope-base)" stroke="#f5b8c5" stroke-width="1"/>
+    <!-- Fold Shading Line -->
+    <path d="M68,196 L140,146 L212,196" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.6"/>
+
+    <!-- Embossed Royal Wax Seal (Centered at Envelope Junction) -->
+    <g transform="translate(140, 150)">
+      <!-- Wax Overflow Edge (Organic Droplet Spills) -->
+      <path d="M-17,-2 C-19,-12 0,-18 12,-14 C22,-10 20,4 16,14 C12,22 -2,22 -12,16 C-20,10 -15,4 -17,-2 Z" fill="url(#rlt-wax-seal)"/>
+      
+      <!-- Inner Circular Stamp Indentation -->
+      <circle cx="0" cy="1" r="12" fill="#800a20"/>
+      <circle cx="0" cy="1" r="11" fill="url(#rlt-wax-seal)"/>
+
+      <!-- Embossed Heart Emblem Inside Wax -->
+      <path d="M0,0 C0,-4 4,-6 7,-3 C10,0 10,4 5,8 L0,11 L-5,8 C-10,4 -10,0 -7,-3 C-4,-6 0,-4 0,0 Z" fill="#ffffff" opacity="0.92"/>
+
+      <!-- Glossy Wax Highlight Arc -->
+      <path d="M-10,-6 C-5,-14 6,-14 11,-7" stroke="#ffffff" stroke-width="1.8" fill="none" opacity="0.75" stroke-linecap="round"/>
+
+      <!-- Specular Shimmer -->
+      <g class="rlt-seal-sparkle">
+        <circle cx="5" cy="-2" r="1.4" fill="#ffffff"/>
+      </g>
+    </g>
+  </g>
+</svg>

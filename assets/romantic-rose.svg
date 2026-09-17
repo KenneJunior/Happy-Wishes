@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Velvet Ruby Rose Illustration">
+  <defs>
+    <!-- Ambient Rose Aura -->
+    <radialGradient id="rrs-ambient-glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ffebee" stop-opacity="0.75"/>
+      <stop offset="50%" stop-color="#ffd5dc" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Deep Velvet Rose Underlayer -->
+    <linearGradient id="rrs-rose-dark" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#c9184a"/>
+      <stop offset="40%" stop-color="#a01035"/>
+      <stop offset="80%" stop-color="#590d22"/>
+      <stop offset="100%" stop-color="#300310"/>
+    </linearGradient>
+
+    <!-- Mid Petals (Carmine Velvet) -->
+    <linearGradient id="rrs-rose-mid" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ff597b"/>
+      <stop offset="50%" stop-color="#d90429"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+
+    <!-- Highlighted Petal Folds -->
+    <linearGradient id="rrs-rose-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff8da1"/>
+      <stop offset="55%" stop-color="#ff477e"/>
+      <stop offset="100%" stop-color="#ba1a38"/>
+    </linearGradient>
+
+    <!-- Botanical Rose Stem and Leaves -->
+    <linearGradient id="rrs-leaf-grad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#70a97b"/>
+      <stop offset="45%" stop-color="#407952"/>
+      <stop offset="85%" stop-color="#214e34"/>
+      <stop offset="100%" stop-color="#133320"/>
+    </linearGradient>
+
+    <!-- Contact Ground Shadow -->
+    <radialGradient id="rrs-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#803344" stop-opacity="0.16"/>
+      <stop offset="65%" stop-color="#803344" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#803344" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Organic breathing and subtle stem inertia */
+    @keyframes rrsBreatheBlossom {
+      0%, 100% {
+        transform: rotate(-1.2deg) translateY(0px) scale(1);
+      }
+      50% {
+        transform: rotate(1.4deg) translateY(-3.5px) scale(1.02);
+      }
+    }
+
+    @keyframes rrsLeafSwayL {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-3deg); }
+    }
+
+    @keyframes rrsLeafSwayR {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(3.5deg); }
+    }
+
+    @keyframes rrsPetalDrift {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.85;
+      }
+      80% {
+        opacity: 0.8;
+      }
+      100% {
+        transform: translate(36px, 44px) rotate(42deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rrsDewGlint {
+      0%, 100% { opacity: 0.3; transform: scale(0.85); }
+      50% { opacity: 0.95; transform: scale(1.15); }
+    }
+
+    .rrs-blossom-group {
+      animation: rrsBreatheBlossom 4.8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+      transform-origin: 140px 190px;
+    }
+
+    .rrs-leaf-left {
+      animation: rrsLeafSwayL 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.2s;
+      transform-origin: 138px 165px;
+    }
+
+    .rrs-leaf-right {
+      animation: rrsLeafSwayR 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 0.35s;
+      transform-origin: 142px 175px;
+    }
+
+    .rrs-drifting-petal {
+      animation: rrsPetalDrift 5s cubic-bezier(0.33, 1, 0.68, 1) infinite;
+    }
+
+    .rrs-dew-spark {
+      animation: rrsDewGlint 3s ease-in-out infinite;
+      transform-origin: 122px 112px;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rrs-blossom-group,
+      .rrs-leaf-left,
+      .rrs-leaf-right,
+      .rrs-drifting-petal,
+      .rrs-dew-spark {
+        animation: none !important;
+        transform: none !important;
+      }
+    }
+  </style>
+
+  <!-- Ambient Backdrop Glow -->
+  <circle cx="140" cy="114" r="96" fill="url(#rrs-ambient-glow)"/>
+  <ellipse cx="140" cy="216" rx="38" ry="6" fill="url(#rrs-contact-shadow)"/>
+
+  <!-- Gently Drifting Soft Petal -->
+  <g class="rrs-drifting-petal" transform="translate(165, 78)">
+    <path d="M0,0 C6,-8 18,-5 17,7 C15,16 3,18 -2,10 C-4,4 -3,2 0,0 Z" fill="url(#rrs-rose-mid)" opacity="0.85"/>
+  </g>
+
+  <!-- Main Articulated Rose Plant Group -->
+  <g class="rrs-blossom-group">
+    <!-- Botanical Curved Stem with Thorn Accents -->
+    <path d="M140,140 Q136,178 144,212" fill="none" stroke="url(#rrs-leaf-grad)" stroke-width="7" stroke-linecap="round"/>
+    <!-- Stem Highlights -->
+    <path d="M138,142 Q134,178 142,210" fill="none" stroke="#95d5b2" stroke-width="1.2" opacity="0.65" stroke-linecap="round"/>
+    
+    <!-- Rose Thorns -->
+    <path d="M137,156 Q130,154 132,159 Q136,159 138,158 Z" fill="#214e34"/>
+    <path d="M141,186 Q148,184 146,189 Q142,189 140,188 Z" fill="#214e34"/>
+
+    <!-- Left Botanical Leaf with Delicate Veins -->
+    <g class="rrs-leaf-left">
+      <path d="M138,165 C108,162 90,144 88,128 C108,124 132,142 138,165 Z" fill="url(#rrs-leaf-grad)"/>
+      <path d="M138,165 Q110,148 90,132" stroke="#95d5b2" stroke-width="1.4" fill="none" opacity="0.85"/>
+      <path d="M124,155 Q115,150 110,154" stroke="#95d5b2" stroke-width="1" fill="none" opacity="0.7"/>
+      <path d="M110,146 Q102,140 98,144" stroke="#95d5b2" stroke-width="1" fill="none" opacity="0.7"/>
+    </g>
+
+    <!-- Right Botanical Leaf with Delicate Veins -->
+    <g class="rrs-leaf-right">
+      <path d="M142,175 C172,172 190,154 192,138 C172,134 148,152 142,175 Z" fill="url(#rrs-leaf-grad)"/>
+      <path d="M142,175 Q170,158 190,142" stroke="#95d5b2" stroke-width="1.4" fill="none" opacity="0.85"/>
+      <path d="M156,165 Q165,160 170,164" stroke="#95d5b2" stroke-width="1" fill="none" opacity="0.7"/>
+      <path d="M170,156 Q178,150 182,154" stroke="#95d5b2" stroke-width="1" fill="none" opacity="0.7"/>
+    </g>
+
+    <!-- Calyx (Green Sepals Cupping Rose Base) -->
+    <path d="M128,140 C124,146 116,150 110,148 C116,142 124,138 128,140 Z" fill="#2d6a4f"/>
+    <path d="M152,140 C156,146 164,150 170,148 C164,142 156,138 152,140 Z" fill="#2d6a4f"/>
+    <path d="M140,144 C138,152 140,158 140,160 C142,158 142,152 140,144 Z" fill="#2d6a4f"/>
+
+    <!-- Grand Velvet Heritage Rose Head -->
+    <g transform="translate(140, 95)">
+      <!-- Deep Underlayer Petals (Back Contour) -->
+      <path d="M-36,-10 C-32,-42 32,-42 36,-10 C44,18 20,44 -2,44 C-24,44 -44,18 -36,-10 Z" fill="url(#rrs-rose-dark)"/>
+
+      <!-- Second Tier Petals (Outer Curved Shells) -->
+      <path d="M-30,-18 C-20,-38 20,-38 30,-18 C38,4 18,34 -2,34 C-22,34 -36,4 -30,-18 Z" fill="url(#rrs-rose-mid)"/>
+      <path d="M-22,-24 C-12,-40 18,-36 24,-18 C28,2 14,26 -2,26 C-18,26 -28,4 -22,-24 Z" fill="url(#rrs-rose-light)"/>
+
+      <!-- Mid Petal Folds and Ruffles -->
+      <path d="M-24,2 C-16,24 16,24 24,2 C16,16 -16,16 -24,2 Z" fill="#ff477e"/>
+      <path d="M-18,-8 C-10,-22 14,-22 18,-6 C20,10 8,18 -2,18 C-12,18 -18,6 -18,-8 Z" fill="url(#rrs-rose-mid)"/>
+
+      <!-- Rose Inner Spiral Petals -->
+      <path d="M-12,-4 C-8,-16 8,-16 12,-4 C14,8 4,14 -1,14 C-7,14 -13,8 -12,-4 Z" fill="#7a081e"/>
+      <path d="M-6,-2 C-4,-10 6,-10 8,-2 C9,5 3,8 -1,8 C-5,8 -8,5 -6,-2 Z" fill="#ba1a38"/>
+      
+      <!-- Core Spiral Bud -->
+      <path d="M-3,-1 C-2,-6 4,-6 5,-1 C6,3 1,5 -1,5 C-3,5 -4,2 -3,-1 Z" fill="#40000a"/>
+      <circle cx="-0.5" cy="1" r="2.2" fill="#200005"/>
+
+      <!-- Petal Rim Gilded Shading / Specular Velvet Highlights -->
+      <path d="M-28,-14 C-14,-34 16,-34 26,-12" stroke="#ffffff" stroke-width="1.4" fill="none" opacity="0.6" stroke-linecap="round"/>
+      <path d="M-18,6 C-8,22 10,22 18,6" stroke="#ffb3c1" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round"/>
+
+      <!-- Crystal Dewdrops on Rose Petal -->
+      <g class="rrs-dew-spark">
+        <circle cx="-18" cy="17" r="2.6" fill="#ffffff" opacity="0.9"/>
+        <circle cx="-17" cy="16" r="1.1" fill="#ffe5ec"/>
+      </g>
+      <circle cx="22" cy="12" r="2" fill="#ffffff" opacity="0.85"/>
+    </g>
+  </g>
+</svg>

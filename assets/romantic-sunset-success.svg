@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Moonlit Swans Twilight Celebration Illustration">
+  <defs>
+    <!-- Radiant Golden Twilight Sky Gradient -->
+    <linearGradient id="rsns-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1f1033"/>
+      <stop offset="35%" stop-color="#4a1542"/>
+      <stop offset="65%" stop-color="#8c1f54"/>
+      <stop offset="85%" stop-color="#db3a63"/>
+      <stop offset="100%" stop-color="#fca07a"/>
+    </linearGradient>
+
+    <!-- Warm Golden Celestial Sun/Star Aura -->
+    <radialGradient id="rsns-victory-aura" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#fff9e6" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#ffd166" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#ff758c" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#1f1033" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Deep Lake Water with Golden Sunset Reflections -->
+    <linearGradient id="rsns-water" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#db3a63"/>
+      <stop offset="25%" stop-color="#701844"/>
+      <stop offset="60%" stop-color="#321038"/>
+      <stop offset="100%" stop-color="#14061e"/>
+    </linearGradient>
+
+    <!-- Luminous Golden Water Reflection Ripple -->
+    <linearGradient id="rsns-ripple-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffd166" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Celestial Radiant Heart -->
+    <linearGradient id="rsns-heart-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#ffeaa7"/>
+      <stop offset="75%" stop-color="#ff758f"/>
+      <stop offset="100%" stop-color="#d90429"/>
+    </linearGradient>
+
+    <!-- Swan Feather Shading (Luminous White and Soft Blush) -->
+    <linearGradient id="rsns-swan-body" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#fff5f8"/>
+      <stop offset="100%" stop-color="#fcd8e2"/>
+    </linearGradient>
+    <linearGradient id="rsns-swan-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="65%" stop-color="#fae4ec"/>
+      <stop offset="100%" stop-color="#e8bdcb"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* Finite Celestial Radiance Choreography -> Settles into Peaceful Water Rhythm */
+    @keyframes rsnsCelebrationEntrance {
+      0% {
+        transform: scale(0.92) translateY(6px);
+        opacity: 0.85;
+      }
+      35% {
+        transform: scale(1.05) translateY(-6px);
+      }
+      65% {
+        transform: scale(0.99) translateY(-1.5px);
+      }
+      85% {
+        transform: scale(1.01) translateY(-3px);
+      }
+      100% {
+        transform: scale(1) translateY(-2.5px);
+      }
+    }
+
+    @keyframes rsnsSettledBob {
+      0%, 100% {
+        transform: translateY(-2.5px) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-5px) rotate(0.6deg);
+      }
+    }
+
+    @keyframes rsnsHaloRadiance {
+      0% { transform: scale(0.7); opacity: 0; }
+      50% { transform: scale(1.18); opacity: 0.85; }
+      100% { transform: scale(1); opacity: 0.65; }
+    }
+
+    @keyframes rsnsCelestialHeartPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes rsnsStarSparkle {
+      0% { transform: scale(0); opacity: 0; }
+      45% { transform: scale(1.25); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.85; }
+    }
+
+    .rsns-swans-container {
+      animation: rsnsCelebrationEntrance 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 rsnsSettledBob 5s ease-in-out infinite 1.4s;
+      transform-origin: 140px 170px;
+    }
+
+    .rsns-halo {
+      animation: rsnsHaloRadiance 1.6s ease-out forwards;
+      transform-origin: 140px 95px;
+    }
+
+    .rsns-celestial-heart {
+      animation: rsnsCelestialHeartPulse 4.4s ease-in-out infinite 1.4s;
+      transform-origin: 140px 105px;
+    }
+
+    .rsns-star-1 {
+      animation: rsnsStarSparkle 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
+      transform-origin: 76px 52px;
+    }
+    .rsns-star-2 {
+      animation: rsnsStarSparkle 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+      transform-origin: 204px 46px;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rsns-swans-container,
+      .rsns-halo,
+      .rsns-celestial-heart,
+      .rsns-star-1,
+      .rsns-star-2 {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+
+  <!-- Twilight Backdrop Disc -->
+  <circle cx="140" cy="116" r="102" fill="url(#rsns-sky)"/>
+  <circle class="rsns-halo" cx="140" cy="95" r="76" fill="url(#rsns-victory-aura)"/>
+
+  <!-- Celestial Twilight Celebration Stars -->
+  <g class="rsns-star-1">
+    <path d="M76,46 Q76,52 70,52 Q76,52 76,58 Q76,52 82,52 Q76,52 76,46 Z" fill="#ffffff"/>
+    <circle cx="76" cy="52" r="1.4" fill="#ffd166"/>
+  </g>
+  <g class="rsns-star-2">
+    <path d="M204,40 Q204,46 198,46 Q204,46 204,52 Q204,46 210,46 Q204,46 204,40 Z" fill="#ffffff"/>
+    <circle cx="204" cy="46" r="1.4" fill="#ffd166"/>
+  </g>
+
+  <!-- Lake Water Surface with Golden Sunset Glow -->
+  <path d="M40,154 Q140,146 240,154 C235,195 205,218 140,222 C75,218 45,195 40,154 Z" fill="url(#rsns-water)"/>
+
+  <!-- Radiant Water Reflection Ripples -->
+  <line x1="65" y1="174" x2="215" y2="174" stroke="url(#rsns-ripple-gold)" stroke-width="2.6" stroke-linecap="round"/>
+  <line x1="88" y1="186" x2="192" y2="186" stroke="url(#rsns-ripple-gold)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="108" y1="198" x2="172" y2="198" stroke="#ffd166" stroke-width="1.4" opacity="0.6" stroke-linecap="round"/>
+
+  <!-- Main Swans and Radiant Celestial Heart Group -->
+  <g class="rsns-swans-container">
+    <!-- Radiant Golden Celestial Heart Rising Above Lake -->
+    <g class="rsns-celestial-heart" transform="translate(140, 106)">
+      <path d="M0,-12 C0,-24 16,-30 26,-18 C36,-6 36,10 14,26 L0,38 L-14,26 C-36,10 -36,-6 -26,-18 C-16,-30 0,-24 0,-12 Z" fill="url(#rsns-heart-gold)"/>
+      <!-- Inner Starlight Cross -->
+      <path d="M0,-8 L0,8 M-8,0 L8,0" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
+      <circle cx="0" cy="0" r="2.5" fill="#ffffff"/>
+      <circle cx="-12" cy="-14" r="1.6" fill="#ffffff"/>
+    </g>
+
+    <!-- Left Swan (Affectionate Nuzzle Pose) -->
+    <!-- Body and Feathers -->
+    <ellipse cx="110" cy="162" rx="24" ry="12" fill="url(#rsns-swan-body)"/>
+    <path d="M92,164 C96,152 112,150 128,155 C124,166 108,170 92,164 Z" fill="url(#rsns-swan-wing)"/>
+    <path d="M98,161 C106,154 118,156 124,160" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.85"/>
+    <path d="M86,163 C80,158 82,152 90,157 Z" fill="#ffffff"/>
+
+    <!-- Left Swan Curved Neck and Head (Leaning In to Nuzzle) -->
+    <path d="M106,164 C108,142 122,132 132,120 C138,112 141,106 138,98 C134,90 125,92 123,98 C121,104 115,120 110,136 C102,146 96,154 106,164 Z" 
+          fill="url(#rsns-swan-body)"/>
+    <circle cx="132" cy="98" r="4.8" fill="#ffffff"/>
+    <!-- Black Mask and Eye -->
+    <path d="M134,96 L138,98 L134,100 Z" fill="#1f1033"/>
+    <circle cx="132" cy="97" r="1" fill="#1f1033"/>
+    <!-- Beak -->
+    <path d="M137,97 L140.5,98.5 L137,100 Z" fill="#f77f00"/>
+
+    <!-- Right Swan (Mirroring and Affectionately Nuzzling) -->
+    <!-- Body and Feathers -->
+    <ellipse cx="170" cy="162" rx="24" ry="12" fill="url(#rsns-swan-body)"/>
+    <path d="M188,164 C184,152 168,150 152,155 C156,166 172,170 188,164 Z" fill="url(#rsns-swan-wing)"/>
+    <path d="M182,161 C174,154 162,156 156,160" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.85"/>
+    <path d="M194,163 C200,158 198,152 190,157 Z" fill="#ffffff"/>
+
+    <!-- Right Swan Curved Neck and Head -->
+    <path d="M174,164 C172,142 158,132 148,120 C142,112 139,106 142,98 C146,90 155,92 157,98 C159,104 165,120 170,136 C178,146 184,154 174,164 Z" 
+          fill="url(#rsns-swan-body)"/>
+    <circle cx="148" cy="98" r="4.8" fill="#ffffff"/>
+    <!-- Black Mask and Eye -->
+    <path d="M146,96 L142,98 L146,100 Z" fill="#1f1033"/>
+    <circle cx="148" cy="97" r="1" fill="#1f1033"/>
+    <!-- Beak -->
+    <path d="M143,97 L139.5,98.5 L143,100 Z" fill="#f77f00"/>
+  </g>
+</svg>

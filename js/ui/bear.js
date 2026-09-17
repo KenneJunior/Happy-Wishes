@@ -6,6 +6,7 @@
 
 import { BEAR_EMOTIONS, SUCCESS_EMOTION } from '../config/emotions.js';
 import { OCCASIONS, getBearAssetsForState } from '../config/occasions.js';
+import { resolveVisualAssetsForState } from '../config/visual-themes.js';
 import { appState } from '../core/state.js';
 
 let mainGif = null;
@@ -85,12 +86,76 @@ export function updateBearEmotion(dodgeNum) {
 export function updateBearAsset(isAccepted = false) {
     if (!mainGif) return;
     const state = appState.getState();
-    const assets = getBearAssetsForState(state);
+    const assets = resolveVisualAssetsForState(state, getBearAssetsForState);
 
     const targetSrc = isAccepted ? assets.success : assets.normal;
     if (targetSrc && mainGif.getAttribute('src') !== targetSrc) {
         mainGif.src = targetSrc;
     }
+    if (assets.theme && assets.theme.name) {
+        mainGif.alt = `${assets.theme.name} animation`;
+    }
+    mainGif.style.opacity = '1';
+}
+
+let previewSwapToken = 0;
+
+export function previewVisualAsset(themeId, customUrl = '', occasion = null) {
+    if (!mainGif) return;
+    const thisToken = ++previewSwapToken;
+    const state = appState.getState();
+    const tempState = {
+        ...state,
+        occasion: occasion || state.occasion,
+        visualTheme: themeId,
+        customVisualUrl: customUrl
+    };
+    const assets = resolveVisualAssetsForState(tempState, getBearAssetsForState);
+    const targetSrc = state.isAccepted ? assets.success : assets.normal;
+
+    if (!targetSrc) return;
+
+    if (mainGif.getAttribute('src') === targetSrc) {
+        mainGif.style.opacity = '1';
+        return;
+    }
+
+    // Gentle fade transition to prevent sudden flash
+    mainGif.style.transition = 'opacity 0.2s ease';
+    mainGif.style.opacity = '0.35';
+
+    const testImg = new Image();
+    testImg.onload = () => {
+        if (thisToken !== previewSwapToken || !mainGif) return;
+        mainGif.src = targetSrc;
+        mainGif.style.opacity = '1';
+        updateVisualAspectRatio();
+    };
+    testImg.onerror = () => {
+        if (thisToken !== previewSwapToken || !mainGif) return;
+        mainGif.style.opacity = '1';
+    };
+    testImg.src = targetSrc;
+
+    if (assets.theme && assets.theme.name) {
+        mainGif.alt = `${assets.theme.name} animation`;
+    }
+}
+
+export function restoreCommittedVisualAsset() {
+    if (!mainGif) return;
+    previewSwapToken++;
+    const state = appState.getState();
+    const assets = resolveVisualAssetsForState(state, getBearAssetsForState);
+    const targetSrc = state.isAccepted ? assets.success : assets.normal;
+    if (targetSrc) {
+        mainGif.src = targetSrc;
+    }
+    mainGif.style.opacity = '1';
+    if (assets.theme && assets.theme.name) {
+        mainGif.alt = `${assets.theme.name} animation`;
+    }
+    updateVisualAspectRatio();
 }
 
 export function initBear() {

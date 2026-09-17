@@ -9,6 +9,7 @@ import { launchCelebrationConfetti, triggerHeartExplosion, cancelHeartExplosion 
 import { spawnFloatingParticle } from './effects/particles.js';
 import { DeviceManager } from '../core/device.js';
 import { OCCASIONS, CELEBRATION_EVENT_TYPES, getBearAssetsForState } from '../config/occasions.js';
+import { resolveVisualAssetsForState } from '../config/visual-themes.js';
 import { getPersonalizedSuccessHeading } from '../core/occasion-service.js';
 import { appState } from '../core/state.js';
 import { applyTranslations } from '../i18n/index.js';
@@ -43,14 +44,24 @@ export function triggerAcceptSuccess() {
 
     sound.playCelebrationChime();
 
-    // 1. Hide question content-header and buttons
+    // 1. Hide question content-header and buttons with unified transition
     if (contentHeader) {
-        contentHeader.style.display = 'none';
-        contentHeader.setAttribute('hidden', 'true');
+        contentHeader.classList.add('is-hiding');
+        setTimeout(() => {
+            if (contentHeader) {
+                contentHeader.style.display = 'none';
+                contentHeader.setAttribute('hidden', 'true');
+            }
+        }, 180);
     }
     if (buttonGroup) {
-        buttonGroup.style.display = 'none';
-        buttonGroup.setAttribute('hidden', 'true');
+        buttonGroup.classList.add('is-hiding');
+        setTimeout(() => {
+            if (buttonGroup) {
+                buttonGroup.style.display = 'none';
+                buttonGroup.setAttribute('hidden', 'true');
+            }
+        }, 180);
     }
     if (occasionPillBtn) {
         occasionPillBtn.classList.add('d-none');
@@ -67,11 +78,11 @@ export function triggerAcceptSuccess() {
         denyBtn.style.display = 'none';
     }
 
-    // 2. Victory Bear
+    // 2. Victory Bear / Romantic Visual
     if (mainGif) {
-        const bearAssets = getBearAssetsForState(state);
-        mainGif.src = bearAssets.success || occ.bearSuccess;
-        mainGif.alt = `Celebratory ${occ.name} animation`;
+        const visualAssets = resolveVisualAssetsForState(state, getBearAssetsForState);
+        mainGif.src = visualAssets.success || occ.bearSuccess;
+        mainGif.alt = `Celebratory ${visualAssets.theme?.name || occ.name} animation`;
         mainGif.style.transform = 'scale(1.08)';
         if (mainGif.complete) {
             updateVisualAspectRatio();
@@ -179,10 +190,12 @@ export function resetSuccessState(onReplayOccasionApply) {
     resetDodge();
 
     if (contentHeader) {
+        contentHeader.classList.remove('is-hiding');
         contentHeader.style.display = '';
         contentHeader.removeAttribute('hidden');
     }
     if (buttonGroup) {
+        buttonGroup.classList.remove('is-hiding');
         buttonGroup.style.display = 'flex';
         buttonGroup.removeAttribute('hidden');
     }
@@ -204,10 +217,11 @@ export function resetSuccessState(onReplayOccasionApply) {
 
     const state = appState.getState();
     const occ = OCCASIONS[state.occasion] || OCCASIONS.christmas;
-    const bearAssets = getBearAssetsForState(state);
+    const visualAssets = resolveVisualAssetsForState(state, getBearAssetsForState);
 
     if (mainGif) {
-        mainGif.src = bearAssets.normal || occ.bearNormal;
+        mainGif.src = visualAssets.normal || occ.bearNormal;
+        mainGif.alt = `${visualAssets.theme?.name || occ.name} animation`;
         mainGif.style.transform = '';
     }
 

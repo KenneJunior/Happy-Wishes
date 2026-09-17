@@ -10,8 +10,10 @@ import { appState } from '../core/state.js';
 import { WISH_DATA } from '../config/wishes.js';
 import { CELEBRATION_EVENT_TYPES } from '../config/occasions.js';
 import { generateWishes } from '../services/wish-api.js';
+import { DeviceManager } from '../core/device.js';
 
 let wishJarModal = null;
+let isWishJarModalClosing = false;
 let wishJarTitle = null;
 let wishContentText = null;
 let wishCapsuleTag = null;
@@ -187,13 +189,18 @@ export async function fetchFreshWishes() {
 }
 
 export function openWishJarModal() {
-    if (!wishJarModal) return;
+    if (!wishJarModal || isWishJarModalClosing) return;
     initWishPool();
     updateWishJarUI();
 
     wishJarModal.hidden = false;
     wishJarModal.style.display = 'flex';
     wishJarModal.removeAttribute('aria-hidden');
+    wishJarModal.classList.remove('is-closing');
+
+    // Force reflow for clean entrance animation
+    void wishJarModal.offsetHeight;
+    wishJarModal.classList.add('is-open');
 
     if (nextWishBtn) {
         nextWishBtn.focus();
@@ -201,14 +208,32 @@ export function openWishJarModal() {
 }
 
 export function closeWishJarModal() {
-    if (!wishJarModal) return;
-    wishJarModal.hidden = true;
-    wishJarModal.style.display = 'none';
-    wishJarModal.setAttribute('aria-hidden', 'true');
+    if (!wishJarModal || wishJarModal.hidden || isWishJarModalClosing) return;
 
-    if (wishJarPillBtn) {
-        wishJarPillBtn.focus();
+    const isReduced = DeviceManager.prefersReducedMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    const finalizeClose = () => {
+        isWishJarModalClosing = false;
+        wishJarModal.hidden = true;
+        wishJarModal.style.display = 'none';
+        wishJarModal.setAttribute('aria-hidden', 'true');
+        wishJarModal.classList.remove('is-closing', 'is-open');
+
+        if (wishJarPillBtn) {
+            wishJarPillBtn.focus();
+        }
+    };
+
+    if (isReduced) {
+        finalizeClose();
+        return;
     }
+
+    isWishJarModalClosing = true;
+    wishJarModal.classList.remove('is-open');
+    wishJarModal.classList.add('is-closing');
+
+    setTimeout(finalizeClose, 210);
 }
 
 export function initWishJarModal() {

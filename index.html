@@ -161,16 +161,6 @@
 
                 <button 
                     type="button" 
-                    id="wish-jar-pill-btn" 
-                    class="glass-control-pill pill-sparkle" 
-                    aria-label="Open wishes and notes"
-                >
-                    <span class="pill-icon" aria-hidden="true">🎁</span>
-                    <span class="pill-label" id="wish-jar-pill-text">Holiday Wishes 🎁</span>
-                </button>
-
-                <button 
-                    type="button" 
                     id="theme-toggle-btn" 
                     class="glass-control-pill pill-theme-toggle" 
                     aria-label="Switch to dark mode for night-time viewing"
@@ -589,6 +579,190 @@
                         </div>
                     </div>
 
+                    <!-- Romantic Visual Theme & GIF Library -->
+                    <div class="form-group romantic-theme-group" id="romantic-theme-group">
+                        <div class="form-label-with-action">
+                            <label id="romantic-theme-title">
+                                <span class="label-icon">🎨</span> Romantic Theme Visual / GIF
+                            </label>
+                            <span class="theme-status-badge" id="romantic-theme-badge">Default Mascot 🐻</span>
+                        </div>
+                        <p class="form-field-hint" id="romantic-theme-desc-hint">Choose an animated illustration or GIF from our romantic library to display inside the card, or use the default occasion mascot.</p>
+
+                        <!-- Theme Category Filter Bar -->
+                        <div class="theme-category-filter-bar" id="theme-category-filter-bar" role="tablist" aria-label="Filter theme library by category">
+                            <button type="button" class="theme-category-btn active" id="theme-filter-all" data-category="all" role="tab" aria-selected="true">
+                                <span class="filter-icon" aria-hidden="true">✨</span> All <span class="filter-count" id="count-all">10</span>
+                            </button>
+                            <button type="button" class="theme-category-btn" id="theme-filter-romantic" data-category="romantic" role="tab" aria-selected="false">
+                                <span class="filter-icon" aria-hidden="true">💖</span> Romantic <span class="filter-count" id="count-romantic">8</span>
+                            </button>
+                            <button type="button" class="theme-category-btn" id="theme-filter-floral" data-category="floral" role="tab" aria-selected="false">
+                                <span class="filter-icon" aria-hidden="true">🌹</span> Floral <span class="filter-count" id="count-floral">2</span>
+                            </button>
+                            <button type="button" class="theme-category-btn" id="theme-filter-animated" data-category="animated" role="tab" aria-selected="false">
+                                <span class="filter-icon" aria-hidden="true">🎬</span> Animated <span class="filter-count" id="count-animated">10</span>
+                            </button>
+                        </div>
+
+                        <!-- Romantic Themes Grid -->
+                        <div class="romantic-themes-grid" id="romantic-themes-grid" role="radiogroup" aria-label="Select romantic theme visual or GIF">
+                            <div class="romantic-theme-card active" id="theme-card-default" data-theme="default" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="true">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-valentine.svg" alt="Default Mascot" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag">Default</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Occasion Mascot</span>
+                                    <span class="romantic-card-sub">Auto Holiday Bear</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-sweetheart-bear" data-theme="sweetheart-bear" data-categories="all,animated,romantic" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-valentine.svg" alt="Sweetheart Teddy" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-animated">Animated</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Sweetheart Teddy</span>
+                                    <span class="romantic-card-sub">Pulsing Ruby Heart</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-cupid-arrow" data-theme="cupid-arrow" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/romantic-cupid.svg" alt="Cupid's Golden Arrow" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-romantic">Romantic</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Cupid's Arrow</span>
+                                    <span class="romantic-card-sub">Love Messenger</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-blooming-rose" data-theme="blooming-rose" data-categories="all,floral,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/romantic-rose.svg" alt="Velvet Ruby Rose" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-floral">Floral</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Velvet Ruby Rose</span>
+                                    <span class="romantic-card-sub">Drifting Petals</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-romantic-bouquet" data-theme="romantic-bouquet" data-categories="all,floral,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/romantic-bouquet.svg" alt="Sweet Pastel Bouquet" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-floral">Floral</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Pastel Bouquet</span>
+                                    <span class="romantic-card-sub">Blushing Peonies</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-love-letter" data-theme="love-letter" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/romantic-letter.svg" alt="Fluttering Love Letter" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-keepsake">Keepsake</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Love Letter</span>
+                                    <span class="romantic-card-sub">Floating Hearts</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-twilight-sunset" data-theme="twilight-sunset" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/romantic-sunset.svg" alt="Moonlit Swans" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-twilight">Twilight</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Moonlit Swans</span>
+                                    <span class="romantic-card-sub">Serenade Lake</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-bouncing-hearts" data-theme="bouncing-hearts" data-categories="all,animated,romantic" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/img1.gif" alt="Bouncing Hearts GIF" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-gif">GIF</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Bouncing Hearts</span>
+                                    <span class="romantic-card-sub">Playful Romance</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-heart-hug" data-theme="heart-hug" data-categories="all,animated,romantic" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/img3.gif" alt="Loving Heart Hug GIF" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-gif">GIF</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Loving Heart Hug</span>
+                                    <span class="romantic-card-sub">Tender Embrace</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+
+                            <div class="romantic-theme-card" id="theme-card-golden-anniversary" data-theme="golden-anniversary" data-categories="all,romantic,animated" tabindex="0" role="radio" aria-checked="false">
+                                <div class="romantic-card-thumb-wrap">
+                                    <img src="./assets/bear-anniversary.svg" alt="Golden Milestone" class="romantic-card-thumb" loading="lazy">
+                                    <span class="romantic-theme-tag tag-milestone">Milestone</span>
+                                </div>
+                                <div class="romantic-card-info">
+                                    <span class="romantic-card-title">Golden Rings</span>
+                                    <span class="romantic-card-sub">Eternal Love</span>
+                                </div>
+                                <span class="theme-selected-check" aria-hidden="true">✓</span>
+                            </div>
+                            <!-- Graceful Empty Category Feedback State -->
+                            <div id="theme-empty-category-msg" class="theme-empty-category-msg" style="display: none;" role="status">
+                                <span class="empty-icon" aria-hidden="true">🎨</span>
+                                <span class="empty-text">No visuals found in this category.</span>
+                            </div>
+                        </div>
+
+                        <!-- Live Selected Theme Preview Strip -->
+                        <div class="theme-preview-strip" id="theme-preview-strip">
+                            <div class="theme-preview-thumb-wrap">
+                                <img id="theme-live-preview-img" src="./assets/bear-valentine.svg" alt="Selected Theme Preview" class="theme-live-preview-img" loading="lazy">
+                            </div>
+                            <div class="theme-preview-meta">
+                                <span class="theme-preview-name" id="theme-preview-name">Default Occasion Mascot</span>
+                                <span class="theme-preview-desc" id="theme-preview-desc">Dynamically matches the selected celebration mascot</span>
+                            </div>
+                        </div>
+
+                        <!-- Custom Image / GIF URL Input Row -->
+                        <div class="custom-visual-url-row" id="custom-visual-url-row">
+                            <div class="custom-visual-input-wrap">
+                                <span class="custom-visual-icon" aria-hidden="true">🌐</span>
+                                <input 
+                                    type="url" 
+                                    id="custom-visual-url-input" 
+                                    class="modal-input custom-visual-input" 
+                                    placeholder="Or paste any custom GIF / image URL (e.g. Giphy, Tenor, direct link)..."
+                                    autocomplete="off"
+                                >
+                                <button type="button" id="clear-custom-visual-btn" class="custom-visual-clear-btn" title="Clear custom image URL" hidden>✕</button>
+                            </div>
+                            <button type="button" id="reset-theme-visual-btn" class="btn-reset-visual" title="Reset to default occasion mascot">
+                                ↺ Default
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Celebration Song (Accept Button Song) Section -->
                     <div class="form-group celebration-song-group" id="celebration-song-group">
                         <div class="form-label-with-action">
@@ -674,6 +848,9 @@
                 <div class="modal-btn-row">
                     <button type="button" id="save-personalize-btn" class="btn-modal-primary" aria-label="Save and apply personalization">
                         <span id="save-personalize-text">Save & Apply 💖</span>
+                    </button>
+                    <button type="button" id="cancel-personalize-btn" class="btn-modal-secondary btn-modal-cancel" aria-label="Cancel and discard changes">
+                        <span id="cancel-personalize-text">Cancel</span>
                     </button>
                     <button type="button" id="copy-custom-link-btn" class="btn-modal-secondary" aria-label="Copy personalized shareable link">
                         <span id="copy-custom-link-text">Copy Link 🔗</span>

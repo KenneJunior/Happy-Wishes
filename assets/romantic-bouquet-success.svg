@@ -1,0 +1,320 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Romantic Flower Bouquet Success Celebration Illustration">
+  <defs>
+    <!-- Warm Golden Celebration Backdrop Glow -->
+    <radialGradient id="rbqs-sun-aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8e7" stop-opacity="0.9"/>
+      <stop offset="35%" stop-color="#ffe4ea" stop-opacity="0.6"/>
+      <stop offset="70%" stop-color="#ffd1dc" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Warm Golden Halo Radiance -->
+    <radialGradient id="rbqs-golden-halo" cx="50%" cy="45%" r="45%">
+      <stop offset="0%" stop-color="#fff9e6" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#ffd166" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Ground Contact Shadow -->
+    <radialGradient id="rbqs-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7a1e34" stop-opacity="0.22"/>
+      <stop offset="65%" stop-color="#7a1e34" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#7a1e34" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Silk Parchment Wrap (Warm Ivory with Gold Trim) -->
+    <linearGradient id="rbqs-wrap-silk" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#fff0f3"/>
+      <stop offset="85%" stop-color="#fbd6dd"/>
+      <stop offset="100%" stop-color="#f4b8c5"/>
+    </linearGradient>
+
+    <!-- Golden Starlight Gradient -->
+    <linearGradient id="rbqs-gold-star" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#ffeaa7"/>
+      <stop offset="100%" stop-color="#f39c12"/>
+    </linearGradient>
+
+    <!-- Radiant Velvet Crimson Rose -->
+    <linearGradient id="rbqs-rose-bloom" x1="20%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#ff4767"/>
+      <stop offset="40%" stop-color="#d91b41"/>
+      <stop offset="80%" stop-color="#990f2b"/>
+      <stop offset="100%" stop-color="#5e0517"/>
+    </linearGradient>
+
+    <!-- Rose Petal Sheen -->
+    <linearGradient id="rbqs-petal-sheen" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ff99ab"/>
+      <stop offset="50%" stop-color="#f73b5f"/>
+      <stop offset="100%" stop-color="#b81434"/>
+    </linearGradient>
+
+    <!-- Champagne Peach Blossoms -->
+    <linearGradient id="rbqs-peach-bloom" x1="15%" y1="10%" x2="85%" y2="95%">
+      <stop offset="0%" stop-color="#fff5eb"/>
+      <stop offset="45%" stop-color="#ffb8b4"/>
+      <stop offset="85%" stop-color="#f07180"/>
+      <stop offset="100%" stop-color="#bd2d43"/>
+    </linearGradient>
+
+    <!-- Satin Ribbon in Royal Crimson and Gold Edge -->
+    <linearGradient id="rbqs-ribbon" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#ff5274"/>
+      <stop offset="45%" stop-color="#cc183b"/>
+      <stop offset="85%" stop-color="#800b21"/>
+      <stop offset="100%" stop-color="#4a0412"/>
+    </linearGradient>
+
+    <!-- Botanical Emerald Foliage -->
+    <linearGradient id="rbqs-leaf-rich" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#a7e8bd"/>
+      <stop offset="45%" stop-color="#40916c"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+  </defs>
+
+  <style>
+    /* Finite Entrance Choreography -> Settled Blissful Idle */
+    @keyframes rbqsBloomChoreography {
+      0% {
+        transform: scale(0.92) translateY(8px);
+        opacity: 0.85;
+      }
+      35% {
+        transform: scale(1.06) translateY(-8px);
+      }
+      65% {
+        transform: scale(0.985) translateY(-2px);
+      }
+      85% {
+        transform: scale(1.01) translateY(-4px);
+      }
+      100% {
+        transform: scale(1) translateY(-3px);
+      }
+    }
+
+    @keyframes rbqsSettledBreathe {
+      0%, 100% {
+        transform: translateY(-3px) scale(1);
+      }
+      50% {
+        transform: translateY(-5px) scale(1.015);
+      }
+    }
+
+    @keyframes rbqsHaloRadiance {
+      0% {
+        transform: scale(0.7);
+        opacity: 0;
+      }
+      40% {
+        transform: scale(1.15);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.55;
+      }
+    }
+
+    @keyframes rbqsSparklePop {
+      0% {
+        transform: scale(0) rotate(-45deg);
+        opacity: 0;
+      }
+      45% {
+        transform: scale(1.25) rotate(15deg);
+        opacity: 1;
+      }
+      75% {
+        transform: scale(0.95) rotate(0deg);
+        opacity: 0.85;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.75;
+      }
+    }
+
+    @keyframes rbqsRibbonSwayL {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(3deg); }
+    }
+    @keyframes rbqsRibbonSwayR {
+      0%, 100% { transform: rotate(3deg); }
+      50% { transform: rotate(-3deg); }
+    }
+
+    /* Staged entrance container */
+    .rbqs-main-container {
+      animation: rbqsBloomChoreography 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                 rbqsSettledBreathe 5.6s ease-in-out infinite 1.4s;
+      transform-origin: 140px 180px;
+    }
+
+    .rbqs-halo {
+      animation: rbqsHaloRadiance 1.6s ease-out forwards;
+      transform-origin: 140px 110px;
+    }
+
+    .rbqs-spark-1 {
+      animation: rbqsSparklePop 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.3s;
+      transform-origin: 78px 68px;
+    }
+    .rbqs-spark-2 {
+      animation: rbqsSparklePop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.45s;
+      transform-origin: 204px 62px;
+    }
+    .rbqs-spark-3 {
+      animation: rbqsSparklePop 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.6s;
+      transform-origin: 140px 38px;
+    }
+
+    .rbqs-ribbon-tail-l {
+      animation: rbqsRibbonSwayL 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 1.4s;
+      transform-origin: 135px 172px;
+    }
+    .rbqs-ribbon-tail-r {
+      animation: rbqsRibbonSwayR 4.8s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 1.6s;
+      transform-origin: 145px 172px;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rbqs-main-container,
+      .rbqs-halo,
+      .rbqs-spark-1,
+      .rbqs-spark-2,
+      .rbqs-spark-3,
+      .rbqs-ribbon-tail-l,
+      .rbqs-ribbon-tail-r {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+
+  <!-- Ambient Backdrop -->
+  <circle cx="140" cy="116" r="102" fill="url(#rbqs-sun-aura)"/>
+  <circle class="rbqs-halo" cx="140" cy="105" r="76" fill="url(#rbqs-golden-halo)"/>
+  <ellipse cx="140" cy="216" rx="52" ry="7.5" fill="url(#rbqs-contact-shadow)"/>
+
+  <!-- Accompanying Golden Star Accents (Celebration Glimmers) -->
+  <g class="rbqs-spark-1">
+    <path d="M78,58 Q78,68 68,68 Q78,68 78,78 Q78,68 88,68 Q78,68 78,58 Z" fill="url(#rbqs-gold-star)"/>
+    <circle cx="78" cy="68" r="1.5" fill="#ffffff"/>
+  </g>
+  <g class="rbqs-spark-2">
+    <path d="M204,52 Q204,62 194,62 Q204,62 204,72 Q204,62 214,62 Q204,62 204,52 Z" fill="url(#rbqs-gold-star)"/>
+    <circle cx="204" cy="62" r="1.5" fill="#ffffff"/>
+  </g>
+  <g class="rbqs-spark-3">
+    <path d="M140,28 Q140,38 130,38 Q140,38 140,48 Q140,38 150,38 Q140,38 140,28 Z" fill="url(#rbqs-gold-star)"/>
+    <circle cx="140" cy="38" r="1.8" fill="#ffffff"/>
+  </g>
+
+  <!-- Bouquet Full Bloom Container -->
+  <g class="rbqs-main-container">
+    <!-- Bouquet Paper Cone Wrapper -->
+    <path d="M140,212 L98,126 C120,132 160,132 182,126 Z" fill="url(#rbqs-wrap-silk)" stroke="#f7cad0" stroke-width="1.4"/>
+    <!-- Folded Lapels with Gold Accent Line -->
+    <path d="M98,126 L140,212 L120,138 Z" fill="#ffe5ec" opacity="0.85"/>
+    <path d="M182,126 L140,212 L160,138 Z" fill="#fcd0d9" opacity="0.9"/>
+    <!-- Gold Trim Piping on Wrapper Edge -->
+    <path d="M98,126 Q140,135 182,126" stroke="#f6bd60" stroke-width="1.2" fill="none" opacity="0.85"/>
+
+    <!-- Lush Foliage: Spreading Celebration Leaves -->
+    <g>
+      <path d="M102,122 C78,104 80,78 98,88 C110,95 112,112 102,122 Z" fill="url(#rbqs-leaf-rich)"/>
+      <path d="M98,88 Q103,106 102,122" stroke="#1b4332" stroke-width="1.2" fill="none"/>
+      
+      <path d="M178,122 C202,104 200,78 182,88 C170,95 168,112 178,122 Z" fill="url(#rbqs-leaf-rich)"/>
+      <path d="M182,88 Q177,106 178,122" stroke="#1b4332" stroke-width="1.2" fill="none"/>
+
+      <!-- Delicate Golden Sprigs -->
+      <path d="M140,90 Q128,60 120,46" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <circle cx="120" cy="46" r="3.6" fill="#fff9db" stroke="#f6bd60" stroke-width="0.8"/>
+      <circle cx="127" cy="58" r="2.8" fill="#ffffff"/>
+
+      <path d="M140,90 Q152,60 160,46" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <circle cx="160" cy="46" r="3.6" fill="#fff9db" stroke="#f6bd60" stroke-width="0.8"/>
+      <circle cx="153" cy="58" r="2.8" fill="#ffffff"/>
+    </g>
+
+    <!-- Left Peony (Unfurled Blooming) -->
+    <g transform="translate(108, 102)">
+      <path d="M-22,-8 C-26,-24 4,-30 14,-18 C24,-6 20,16 4,20 C-12,24 -28,8 -22,-8 Z" fill="url(#rbqs-peach-bloom)"/>
+      <path d="M-15,-14 C-16,-24 4,-24 10,-14 C16,-4 12,14 -2,14 C-12,14 -18,0 -15,-14 Z" fill="#ffb4a2" opacity="0.9"/>
+      <path d="M-9,-6 C-7,-16 7,-16 9,-6 C11,4 3,9 -1,9 C-7,9 -11,4 -9,-6 Z" fill="#e05780"/>
+      <circle cx="-1" cy="1" r="3.2" fill="#990f2b"/>
+      <!-- Dewdrop highlight -->
+      <circle cx="7" cy="-14" r="1.8" fill="#ffffff" opacity="0.9"/>
+    </g>
+
+    <!-- Right Cream Blossom (Unfurled Blooming) -->
+    <g transform="translate(172, 102)">
+      <path d="M-14,-18 C-4,-30 26,-24 20,-8 C26,10 12,24 -4,20 C-20,16 -22,-6 -14,-18 Z" fill="#ffffff"/>
+      <path d="M-10,-14 C-2,-24 18,-18 16,-6 C20,8 8,16 -2,14 C-12,12 -16,0 -10,-14 Z" fill="#ffe5ec"/>
+      <path d="M-7,-4 C-2,-14 10,-12 8,-2 C10,6 2,11 -3,9 C-7,7 -9,2 -7,-4 Z" fill="#f4978e"/>
+      <circle cx="-1" cy="2" r="3" fill="#c9184a"/>
+      <!-- Silk edge highlight -->
+      <path d="M-10,-18 C2,-26 18,-20 18,-8" stroke="#f6bd60" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75"/>
+    </g>
+
+    <!-- Central Grand Rose (Glorious Centerpiece in Full Bloom) -->
+    <g transform="translate(140, 100)">
+      <!-- Deep Velvet Underlayer -->
+      <path d="M-32,-10 C-28,-36 28,-36 32,-10 C38,16 18,36 -2,36 C-22,36 -38,16 -32,-10 Z" fill="url(#rbqs-rose-bloom)"/>
+      
+      <!-- Outer Unfurled Petals -->
+      <path d="M-26,-16 C-16,-32 18,-32 26,-16 C32,2 16,26 -2,26 C-20,26 -30,2 -26,-16 Z" fill="url(#rbqs-petal-sheen)"/>
+      <path d="M-18,-20 C-10,-32 16,-28 20,-14 C24,2 12,20 -2,20 C-16,20 -22,4 -18,-20 Z" fill="#d91b41"/>
+      
+      <!-- Center Cupped Petals with Warm Radiance -->
+      <path d="M-20,2 C-14,20 14,20 20,2 C14,14 -14,14 -20,2 Z" fill="#ff4767"/>
+      <path d="M-15,-8 C-9,-18 13,-18 15,-6 C17,6 7,14 -2,14 C-11,14 -17,4 -15,-8 Z" fill="url(#rbqs-petal-sheen)"/>
+      
+      <!-- Rose Spiral Core -->
+      <path d="M-9,-4 C-7,-14 7,-14 9,-4 C10,4 4,10 -1,10 C-6,10 -10,4 -9,-4 Z" fill="#5e0517"/>
+      <path d="M-5,-2 C-3,-8 5,-8 6,-2 C7,3 2,6 -1,6 C-4,6 -6,3 -5,-2 Z" fill="#bf1335"/>
+      <circle cx="-0.5" cy="1" r="2.5" fill="#2b0008"/>
+
+      <!-- Golden Crown Stamen / Dewdrop Flare -->
+      <circle cx="10" cy="-12" r="2.4" fill="#ffffff"/>
+      <circle cx="10" cy="-12" r="1.2" fill="#ffd166"/>
+      <path d="M-12,-18 Q-2,-26 12,-18" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Silk Big Victory Bow (Flowing and Elegant) -->
+    <g transform="translate(140, 168)">
+      <!-- Left Bow Loop with Gold Piping -->
+      <path d="M0,-2 C-20,-20 -36,2 -10,7 C-2,8 0,0 0,-2 Z" fill="url(#rbqs-ribbon)"/>
+      <path d="M-2,-1 C-16,-15 -26,1 -10,5 Z" fill="#ff758f" opacity="0.8"/>
+      <path d="M0,-2 C-20,-20 -36,2 -10,7" stroke="#f6bd60" stroke-width="1" fill="none" opacity="0.75"/>
+
+      <!-- Right Bow Loop with Gold Piping -->
+      <path d="M0,-2 C20,-20 36,2 10,7 C2,8 0,0 0,-2 Z" fill="url(#rbqs-ribbon)"/>
+      <path d="M2,-1 C16,-15 26,1 10,5 Z" fill="#ff758f" opacity="0.8"/>
+      <path d="M0,-2 C20,-20 36,2 10,7" stroke="#f6bd60" stroke-width="1" fill="none" opacity="0.75"/>
+
+      <!-- Center Knot with Golden Ring -->
+      <ellipse cx="0" cy="2" rx="7" ry="6" fill="#800b21" stroke="#f6bd60" stroke-width="1.2"/>
+      <ellipse cx="-1.5" cy="0.5" rx="3.5" ry="2.2" fill="#ff99ab" opacity="0.65"/>
+
+      <!-- Flowing Silk Ribbon Tails -->
+      <g class="rbqs-ribbon-tail-l">
+        <path d="M-4,5 C-14,20 -20,32 -26,44 L-15,42 L-8,28 C-4,18 -2,10 -4,5 Z" fill="url(#rbqs-ribbon)"/>
+        <path d="M-5,7 C-12,20 -18,31 -22,41" stroke="#f6bd60" stroke-width="1" fill="none" opacity="0.8" stroke-linecap="round"/>
+      </g>
+      <g class="rbqs-ribbon-tail-r">
+        <path d="M4,5 C14,20 20,32 26,44 L15,42 L8,28 C4,18 2,10 4,5 Z" fill="url(#rbqs-ribbon)"/>
+        <path d="M5,7 C12,20 18,31 22,41" stroke="#f6bd60" stroke-width="1" fill="none" opacity="0.8" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+</svg>

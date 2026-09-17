@@ -1,0 +1,432 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Handcrafted Romantic Cupid Celebration Illustration">
+  <defs>
+    <!-- Radiant Golden and Rose Victory Aura -->
+    <radialGradient id="rcps-victory-aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff9ea" stop-opacity="0.95"/>
+      <stop offset="38%" stop-color="#ffe6ee" stop-opacity="0.6"/>
+      <stop offset="72%" stop-color="#ffd4e0" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Warm Golden Halo Glow -->
+    <radialGradient id="rcps-halo-glow" cx="50%" cy="40%" r="48%">
+      <stop offset="0%" stop-color="#fff9db" stop-opacity="0.92"/>
+      <stop offset="45%" stop-color="#ffd166" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Cherub Skin: Luminous Porcelain Peach -->
+    <linearGradient id="rcps-skin" x1="25%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#fffaf7"/>
+      <stop offset="35%" stop-color="#fde8de"/>
+      <stop offset="75%" stop-color="#f7c5b4"/>
+      <stop offset="100%" stop-color="#e29b87"/>
+    </linearGradient>
+    <linearGradient id="rcps-skin-shadow" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#f8cfc1"/>
+      <stop offset="60%" stop-color="#e99e8a"/>
+      <stop offset="100%" stop-color="#cb7a66"/>
+    </linearGradient>
+
+    <!-- Rosy Cheek and Knee Blush -->
+    <radialGradient id="rcps-blush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff6b8b" stop-opacity="0.62"/>
+      <stop offset="60%" stop-color="#ff8da1" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#ffb3c1" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Golden Ringlet Curls -->
+    <linearGradient id="rcps-hair-base" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#fff6c2"/>
+      <stop offset="35%" stop-color="#fec85a"/>
+      <stop offset="70%" stop-color="#d68429"/>
+      <stop offset="100%" stop-color="#934d0b"/>
+    </linearGradient>
+    <linearGradient id="rcps-hair-curl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffea9f"/>
+      <stop offset="50%" stop-color="#e89d30"/>
+      <stop offset="100%" stop-color="#a65814"/>
+    </linearGradient>
+
+    <!-- Broad Celebration Wings (Layered Feathers with Pearlescent Sheen) -->
+    <linearGradient id="rcps-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="42%" stop-color="#fff5f8"/>
+      <stop offset="80%" stop-color="#fcd0dc"/>
+      <stop offset="100%" stop-color="#e097a8"/>
+    </linearGradient>
+    <linearGradient id="rcps-wing-inner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#fef2f5"/>
+      <stop offset="100%" stop-color="#edd3da"/>
+    </linearGradient>
+
+    <!-- Sacred Golden Laurel and Halo -->
+    <linearGradient id="rcps-gold" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#ffecb3"/>
+      <stop offset="65%" stop-color="#f5a623"/>
+      <stop offset="100%" stop-color="#a86203"/>
+    </linearGradient>
+
+    <!-- Glorious Centerpiece Ruby Heart Jewel -->
+    <linearGradient id="rcps-ruby-heart" x1="20%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#ff6b8b"/>
+      <stop offset="32%" stop-color="#d90429"/>
+      <stop offset="72%" stop-color="#800216"/>
+      <stop offset="100%" stop-color="#3c0008"/>
+    </linearGradient>
+    <linearGradient id="rcps-heart-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#ff9eb5"/>
+      <stop offset="80%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+
+    <!-- Silk Chiffon Sash -->
+    <linearGradient id="rcps-sash" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fff0f4"/>
+      <stop offset="100%" stop-color="#f8c9d5"/>
+    </linearGradient>
+
+    <!-- Ground Contact Shadow with Physical Scaling -->
+    <radialGradient id="rcps-contact-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6e1f32" stop-opacity="0.22"/>
+      <stop offset="55%" stop-color="#6e1f32" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#6e1f32" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    /* Finite Celebration Sequence -> Smoothly Transitions into a Resting Hover Breath.
+       Does not continuously loop the high-intensity celebration entrance.
+    */
+    @keyframes rcpsVictoryEntrance {
+      0% {
+        transform: translateY(14px) scale(0.92);
+        opacity: 0.88;
+      }
+      30% {
+        transform: translateY(-9px) scale(1.06);
+      }
+      60% {
+        transform: translateY(-1.5px) scale(0.99);
+      }
+      80% {
+        transform: translateY(-4px) scale(1.01);
+      }
+      100% {
+        transform: translateY(-3.2px) scale(1);
+      }
+    }
+
+    @keyframes rcpsHoverBreathing {
+      0%, 100% {
+        transform: translateY(-3.2px) scale(1);
+      }
+      50% {
+        transform: translateY(-6.8px) scale(1.012);
+      }
+    }
+
+    @keyframes rcpsShadowEntrance {
+      0% {
+        transform: scale(0.92, 0.9);
+        opacity: 0.6;
+      }
+      30% {
+        transform: scale(0.84, 0.8);
+        opacity: 0.45;
+      }
+      60% {
+        transform: scale(1.02, 1.01);
+        opacity: 0.95;
+      }
+      100% {
+        transform: scale(1, 1);
+        opacity: 0.95;
+      }
+    }
+
+    @keyframes rcpsShadowHover {
+      0%, 100% {
+        transform: scale(1, 1);
+        opacity: 0.95;
+      }
+      50% {
+        transform: scale(0.86, 0.82);
+        opacity: 0.52;
+      }
+    }
+
+    @keyframes rcpsWingsSpreadElevate {
+      0% {
+        transform: scaleY(0.92) scaleX(0.96);
+      }
+      40% {
+        transform: scaleY(1.08) scaleX(1.02);
+      }
+      100% {
+        transform: scaleY(1) scaleX(1);
+      }
+    }
+
+    @keyframes rcpsHeartEntrancePulse {
+      0% {
+        transform: scale(0.84);
+      }
+      35% {
+        transform: scale(1.08);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes rcpsHeartRestingPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.025);
+      }
+    }
+
+    @keyframes rcpsHaloRadianceExpand {
+      0% {
+        transform: scale(0.65);
+        opacity: 0;
+      }
+      45% {
+        transform: scale(1.18);
+        opacity: 0.85;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.65;
+      }
+    }
+
+    @keyframes rcpsSparklePopIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      45% {
+        transform: scale(1.28);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.85;
+      }
+    }
+
+    .rcps-cherub-container {
+      animation: rcpsVictoryEntrance 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards,
+                 rcpsHoverBreathing 5.0s cubic-bezier(0.42, 0, 0.58, 1) infinite 1.4s;
+      transform-origin: 140px 140px;
+    }
+
+    .rcps-ground-shadow {
+      animation: rcpsShadowEntrance 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards,
+                 rcpsShadowHover 5.0s cubic-bezier(0.42, 0, 0.58, 1) infinite 1.4s;
+      transform-origin: 140px 218px;
+    }
+
+    .rcps-wings-container {
+      animation: rcpsWingsSpreadElevate 1.5s ease-out forwards;
+      transform-origin: 140px 116px;
+    }
+
+    .rcps-heart-jewel {
+      animation: rcpsHeartEntrancePulse 1.4s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards,
+                 rcpsHeartRestingPulse 4.4s ease-in-out infinite 1.4s;
+      transform-origin: 140px 146px;
+    }
+
+    .rcps-halo {
+      animation: rcpsHaloRadianceExpand 1.5s ease-out forwards;
+      transform-origin: 140px 52px;
+    }
+
+    .rcps-star-1 {
+      animation: rcpsSparklePopIn 1.1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.35s;
+      transform-origin: 74px 60px;
+    }
+    .rcps-star-2 {
+      animation: rcpsSparklePopIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.52s;
+      transform-origin: 206px 54px;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .rcps-cherub-container,
+      .rcps-ground-shadow,
+      .rcps-wings-container,
+      .rcps-heart-jewel,
+      .rcps-halo,
+      .rcps-star-1,
+      .rcps-star-2 {
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+    }
+  </style>
+
+  <!-- Radiant Backdrop Glow and Ground Shadow -->
+  <circle cx="140" cy="116" r="102" fill="url(#rcps-victory-aura)"/>
+  <circle class="rcps-halo" cx="140" cy="52" r="44" fill="url(#rcps-halo-glow)"/>
+  <ellipse class="rcps-ground-shadow" cx="140" cy="218" rx="48" ry="7.5" fill="url(#rcps-contact-shadow)"/>
+
+  <!-- Triumphant Golden Stars -->
+  <g class="rcps-star-1">
+    <path d="M74,52 Q74,60 66,60 Q74,60 74,68 Q74,60 82,60 Q74,60 74,52 Z" fill="url(#rcps-gold)"/>
+    <circle cx="74" cy="60" r="1.4" fill="#ffffff"/>
+  </g>
+  <g class="rcps-star-2">
+    <path d="M206,46 Q206,54 198,54 Q206,54 206,62 Q206,54 214,54 Q206,54 206,46 Z" fill="url(#rcps-gold)"/>
+    <circle cx="206" cy="54" r="1.4" fill="#ffffff"/>
+  </g>
+
+  <!-- Cupid Celebration Master Group -->
+  <g class="rcps-cherub-container">
+
+    <!-- Angel Wings Spread Wide and High -->
+    <g class="rcps-wings-container">
+      <!-- Left Wing Layered Feathers -->
+      <g>
+        <!-- Primary Outer Flight Feathers -->
+        <path d="M104,108 C64,66 36,74 32,102 C28,122 48,138 78,136 C92,135 100,122 104,108 Z" fill="url(#rcps-wing)"/>
+        <!-- Second Tier Feathers -->
+        <path d="M98,114 C68,88 46,96 42,114 C40,126 56,134 82,132 Z" fill="url(#rcps-wing-inner)"/>
+        <!-- Soft Covert Feathers -->
+        <path d="M96,118 C78,102 62,110 60,122 C62,130 76,132 90,128 Z" fill="#ffffff"/>
+        <!-- Feather Quill Rib Highlights -->
+        <path d="M94,114 C66,98 52,108 48,118" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round"/>
+        <path d="M96,122 C78,114 66,120 62,126" stroke="#fcd5de" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- Right Wing Layered Feathers -->
+      <g>
+        <!-- Primary Outer Flight Feathers -->
+        <path d="M176,108 C216,66 244,74 248,102 C252,122 232,138 202,136 C188,135 180,122 176,108 Z" fill="url(#rcps-wing)"/>
+        <!-- Second Tier Feathers -->
+        <path d="M182,114 C212,88 234,96 238,114 C240,126 224,134 198,132 Z" fill="url(#rcps-wing-inner)"/>
+        <!-- Soft Covert Feathers -->
+        <path d="M184,118 C202,102 218,110 220,122 C218,130 204,132 190,128 Z" fill="#ffffff"/>
+        <!-- Feather Quill Rib Highlights -->
+        <path d="M186,114 C214,98 228,108 232,118" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.9" stroke-linecap="round"/>
+        <path d="M184,122 C202,114 214,120 218,126" stroke="#fcd5de" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- Tucked Floating Cherub Legs (Connected at Pelvis) -->
+    <!-- Left Leg (Slightly Crossed Back) -->
+    <path d="M128,168 C120,172 116,182 122,190 C128,196 138,194 142,188 C144,182 140,174 134,170 Z" fill="url(#rcps-skin-shadow)"/>
+    <ellipse cx="126" cy="189" rx="6" ry="4.5" fill="url(#rcps-skin-shadow)" transform="rotate(-15 126 189)"/>
+
+    <!-- Right Leg (Foreground Tucked Leg) -->
+    <path d="M152,168 C160,172 164,182 158,190 C152,196 142,194 138,188 C136,182 140,174 146,170 Z" fill="url(#rcps-skin)"/>
+    <ellipse cx="154" cy="189" rx="6.2" ry="4.6" fill="url(#rcps-skin)" transform="rotate(15 154 189)"/>
+    <!-- Cute Baby Toes -->
+    <circle cx="159" cy="188" r="1.3" fill="#f8c3b2"/>
+    <circle cx="158" cy="190.5" r="1.1" fill="#f8c3b2"/>
+
+    <!-- Cherub Sculpted Torso -->
+    <path d="M124,124 C136,120 144,120 156,124 C166,134 166,150 158,168 C150,178 130,178 122,168 C114,150 114,134 124,124 Z" fill="url(#rcps-skin)"/>
+    <!-- Torso Highlight and Soft Blush -->
+    <ellipse cx="140" cy="138" rx="10" ry="7" fill="#ffffff" opacity="0.3"/>
+    <circle cx="140" cy="158" r="8" fill="url(#rcps-blush)" opacity="0.5"/>
+
+    <!-- Silken Chiffon Wrap with Golden Edging -->
+    <path d="M116,162 Q140,192 164,162 Q170,178 156,186 Q140,194 124,186 Q112,176 116,162 Z" fill="url(#rcps-sash)" stroke="#ffd1dc" stroke-width="0.9"/>
+    <path d="M120,165 Q140,188 160,165" stroke="#ffd166" stroke-width="1.1" fill="none" opacity="0.8"/>
+
+    <!-- The Great Faceted Ruby Love Heart (Centerpiece Jewel) -->
+    <g class="rcps-heart-jewel">
+      <!-- Heart Base Volume -->
+      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z" 
+            fill="url(#rcps-ruby-heart)"/>
+
+      <!-- Golden Filigree Rim Piping -->
+      <path d="M140,132 C140,110 168,96 186,114 C204,132 204,152 166,176 L140,194 L114,176 C76,152 76,132 94,114 C112,96 140,110 140,132 Z" 
+            stroke="url(#rcps-heart-rim)" stroke-width="1.8" fill="none" opacity="0.8"/>
+
+      <!-- Inner Glowing Core Facet -->
+      <path d="M140,140 C140,126 156,118 166,128 C176,138 176,150 152,162 L140,172 L128,162 C104,150 104,138 114,128 C124,118 140,126 140,140 Z" 
+            fill="#ff4d6d" opacity="0.48"/>
+
+      <!-- Specular Glass Highlight Glint -->
+      <path d="M116,122 C110,130 110,144 114,154" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" fill="none" opacity="0.85"/>
+      <circle cx="120" cy="118" r="2.2" fill="#ffffff"/>
+      <circle cx="114" cy="128" r="1.2" fill="#ffffff"/>
+    </g>
+
+    <!-- Sculpted Arms Hugging the Ruby Heart Lovingly -->
+    <!-- Left Arm and Hand: Wraps around left lobe to rest on jewel -->
+    <path d="M118,130 C104,134 98,146 106,156 C114,166 124,162 132,156" 
+          fill="none" stroke="url(#rcps-skin)" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="132" cy="156" rx="5" ry="4.2" fill="url(#rcps-skin)"/>
+    <!-- Delicately Sculpted Fingers on Heart -->
+    <path d="M130,154 C132,153 134,155 133,158 C132,160 130,160 129,159" fill="none" stroke="#e29b87" stroke-width="1.3" stroke-linecap="round"/>
+
+    <!-- Right Arm and Hand: Wraps around right lobe to rest on jewel -->
+    <path d="M162,130 C176,134 182,146 174,156 C166,166 156,162 148,156" 
+          fill="none" stroke="url(#rcps-skin)" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="148" cy="156" rx="5" ry="4.2" fill="url(#rcps-skin)"/>
+    <!-- Delicately Sculpted Fingers on Heart -->
+    <path d="M150,154 C148,153 146,155 147,158 C148,160 150,160 151,159" fill="none" stroke="#e29b87" stroke-width="1.3" stroke-linecap="round"/>
+
+    <!-- Cherub Head, Curls, and Blissful Smiling Face -->
+    <g transform="translate(140, 88)">
+      <!-- Head Contour -->
+      <path d="M-19,-4 C-21,12 -12,26 0,27 C12,26 21,12 19,-4 C19,-18 12,-26 0,-26 C-12,-26 -19,-18 -19,-4 Z" fill="url(#rcps-skin)"/>
+      <ellipse cx="0" cy="-10" rx="12" ry="7" fill="#ffffff" opacity="0.3"/>
+
+      <!-- Rosy Cheeks of Pure Bliss -->
+      <ellipse cx="-13" cy="7" rx="7.5" ry="4.4" fill="url(#rcps-blush)"/>
+      <ellipse cx="13" cy="7" rx="7.5" ry="4.4" fill="url(#rcps-blush)"/>
+
+      <!-- Blissful Closed Smiling Eyes (Curved in Joyful Ecstasy) -->
+      <path d="M-15,1 Q-10,-5 -5,1" fill="none" stroke="#4a1525" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M-16,3 Q-11,0 -7,4" fill="none" stroke="#4a1525" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+      <path d="M5,1 Q10,-5 15,1" fill="none" stroke="#4a1525" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M7,4 Q11,0 16,3" fill="none" stroke="#4a1525" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+
+      <!-- Soft Cherub Eyebrows -->
+      <path d="M-15,-6 Q-10,-9 -5,-6" fill="none" stroke="#c47829" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+      <path d="M5,-6 Q10,-9 15,-6" fill="none" stroke="#c47829" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+
+      <!-- Cute Button Nose -->
+      <path d="M-1,4 Q0,6 2,5" fill="none" stroke="#d98270" stroke-width="1.3" stroke-linecap="round"/>
+
+      <!-- Open Sweet Joyful Mouth -->
+      <path d="M-5,12 Q0,20 5,12 Z" fill="#b01332"/>
+      <path d="M-3,13 Q0,17 3,13 Z" fill="#ff758f"/>
+
+      <!-- Golden Ringlet Curls (Coherent Flowing Silhouette) -->
+      <circle cx="-16" cy="-18" r="9.5" fill="url(#rcps-hair-base)"/>
+      <circle cx="16" cy="-18" r="9.5" fill="url(#rcps-hair-base)"/>
+      <circle cx="0" cy="-24" r="11.5" fill="url(#rcps-hair-base)"/>
+      <circle cx="-19" cy="-8" r="7" fill="url(#rcps-hair-curl)"/>
+      <circle cx="19" cy="-8" r="7" fill="url(#rcps-hair-curl)"/>
+      <path d="M-13,-18 C-19,-6 -7,-5 -5,-14 Z" fill="url(#rcps-hair-curl)"/>
+      <path d="M5,-20 C-1,-8 13,-6 9,-15 Z" fill="url(#rcps-hair-curl)"/>
+      <circle cx="-7" cy="-19" r="8.5" fill="url(#rcps-hair-curl)"/>
+      <circle cx="7" cy="-19" r="8.5" fill="url(#rcps-hair-curl)"/>
+
+      <!-- Hair Highlight Strands -->
+      <path d="M-12,-24 Q-6,-28 0,-26 Q6,-28 12,-24" stroke="#fff3b0" stroke-width="1.4" fill="none" opacity="0.85" stroke-linecap="round"/>
+      <path d="M-4,-26 Q0,-29 4,-26" stroke="#ffffff" stroke-width="1.3" fill="none" opacity="0.8" stroke-linecap="round"/>
+
+      <!-- Golden Laurel Crown / Halo Hovering Serenely -->
+      <ellipse cx="0" cy="-35" rx="21" ry="6.5" fill="none" stroke="url(#rcps-gold)" stroke-width="2.8"/>
+      <!-- Halo Shimmer Point -->
+      <circle cx="15" cy="-34" r="1.8" fill="#ffffff"/>
+      <circle cx="-15" cy="-34" r="1.2" fill="#fff9db"/>
+    </g>
+  </g>
+</svg>
