@@ -157,7 +157,7 @@
     <!-- Botanical Curved Stem with Golden Sap Accents -->
     <path d="M140,140 Q135,178 144,212" fill="none" stroke="url(#rrss-leaf-grad)" stroke-width="7.5" stroke-linecap="round"/>
     <path d="M138,142 Q133,178 142,210" fill="none" stroke="#a7e8bd" stroke-width="1.2" opacity="0.7" stroke-linecap="round"/>
-    
+
     <!-- Rose Thorns -->
     <path d="M137,158 Q130,156 131,161 Q136,161 138,160 Z" fill="#1b5a32"/>
     <path d="M141,186 Q148,184 146,189 Q142,189 140,188 Z" fill="#1b5a32"/>
@@ -200,7 +200,7 @@
       <!-- Rose Inner Spiral Petals -->
       <path d="M-14,-6 C-10,-18 10,-18 14,-6 C16,8 5,16 -1,16 C-8,16 -15,8 -14,-6 Z" fill="#6e0216"/>
       <path d="M-8,-3 C-5,-12 7,-12 9,-3 C10,5 4,10 -1,10 C-6,10 -9,5 -8,-3 Z" fill="#b00525"/>
-      
+
       <!-- Core Spiral Bud -->
       <path d="M-4,-1 C-2,-7 5,-7 6,-1 C7,4 2,6 -1,6 C-4,6 -5,3 -4,-1 Z" fill="#360009"/>
       <circle cx="-0.5" cy="1.5" r="2.4" fill="#1a0004"/>

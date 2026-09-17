@@ -150,7 +150,7 @@
     <g transform="translate(80, 74)">
       <!-- Cotton Paper Sheet with Deckled Edge Appearance -->
       <rect x="0" y="0" width="120" height="82" rx="6" fill="url(#rlt-parchment)" stroke="#eddcd2" stroke-width="1.2"/>
-      
+
       <!-- Calligraphic Handwritten Sentiments -->
       <path d="M14,16 Q45,14 74,16" stroke="#b51739" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85"/>
       <path d="M14,28 Q60,26 92,28" stroke="#d63f60" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.75"/>
@@ -176,7 +176,7 @@
     <g transform="translate(140, 150)">
       <!-- Wax Overflow Edge (Organic Droplet Spills) -->
       <path d="M-17,-2 C-19,-12 0,-18 12,-14 C22,-10 20,4 16,14 C12,22 -2,22 -12,16 C-20,10 -15,4 -17,-2 Z" fill="url(#rlt-wax-seal)"/>
-      
+
       <!-- Inner Circular Stamp Indentation -->
       <circle cx="0" cy="1" r="12" fill="#800a20"/>
       <circle cx="0" cy="1" r="11" fill="url(#rlt-wax-seal)"/>
