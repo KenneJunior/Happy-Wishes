@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="roseRed1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="40%" stop-color="#c9184a"/>
+      <stop offset="100%" stop-color="#590d22"/>
+    </linearGradient>
+    <linearGradient id="roseRed2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758f"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+    <linearGradient id="roseLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#70e000"/>
+      <stop offset="45%" stop-color="#38b000"/>
+      <stop offset="100%" stop-color="#007200"/>
+    </linearGradient>
+    <linearGradient id="goldGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff9db"/>
+      <stop offset="50%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f48c06"/>
+    </linearGradient>
+    <radialGradient id="roseAmbient" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#ff758f" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="#ffb3c6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes bloomPulse {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.04) translateY(-4px); }
+    }
+    @keyframes driftPetal1 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      25% { opacity: 0.85; }
+      75% { opacity: 0.85; }
+      100% { transform: translate(-32px, 45px) rotate(-35deg); opacity: 0; }
+    }
+    @keyframes driftPetal2 {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      25% { opacity: 0.85; }
+      75% { opacity: 0.85; }
+      100% { transform: translate(35px, 50px) rotate(40deg); opacity: 0; }
+    }
+    @keyframes glowSpark {
+      0%, 100% { opacity: 0.2; transform: scale(0.6); }
+      50% { opacity: 1; transform: scale(1.25); }
+    }
+    .bloom-rose {
+      animation: bloomPulse 3.8s ease-in-out infinite;
+      transform-origin: 140px 110px;
+    }
+    .drifting-petal-l { animation: driftPetal1 4.2s ease-in-out infinite; transform-origin: 100px 90px; }
+    .drifting-petal-r { animation: driftPetal2 4.6s ease-in-out infinite 1.4s; transform-origin: 180px 95px; }
+    .sparkle-rose { animation: glowSpark 2.4s ease-in-out infinite; transform-origin: 140px 60px; }
+  </style>
+
+  <circle cx="140" cy="115" r="105" fill="url(#roseAmbient)" />
+
+  <!-- Drifting Petals -->
+  <g class="drifting-petal-l">
+    <path d="M100,90 Q85,100 90,112 Q102,118 108,106 Q112,94 100,90 Z" fill="url(#roseRed2)" opacity="0.85" filter="drop-shadow(0 2px 4px rgba(128,15,47,0.3))"/>
+  </g>
+  <g class="drifting-petal-r">
+    <path d="M180,95 Q195,105 190,118 Q178,124 172,112 Q168,100 180,95 Z" fill="url(#roseRed2)" opacity="0.85" filter="drop-shadow(0 2px 4px rgba(128,15,47,0.3))"/>
+  </g>
+
+  <!-- Blooming Velvet Rose Group -->
+  <g class="bloom-rose">
+    <!-- Stem & Leaves -->
+    <path d="M140,150 Q138,185 146,215" fill="none" stroke="url(#roseLeaf)" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Left Leaf -->
+    <path d="M138,175 Q105,170 95,152 Q115,148 138,168 Z" fill="url(#roseLeaf)" filter="drop-shadow(0 2px 3px rgba(0,114,0,0.25))"/>
+    <path d="M138,172 Q116,162 100,156" fill="none" stroke="#9ef01a" stroke-width="1.8" opacity="0.75"/>
+
+    <!-- Right Leaf -->
+    <path d="M142,185 Q175,180 185,162 Q165,158 142,178 Z" fill="url(#roseLeaf)" filter="drop-shadow(0 2px 3px rgba(0,114,0,0.25))"/>
+    <path d="M142,182 Q164,172 180,166" fill="none" stroke="#9ef01a" stroke-width="1.8" opacity="0.75"/>
+
+    <!-- Outer Rose Petals (Back layer) -->
+    <path d="M140,75 C95,65 75,115 105,150 C125,165 155,165 175,150 C205,115 185,65 140,75 Z" fill="url(#roseRed1)" filter="drop-shadow(0 6px 14px rgba(89,13,34,0.45))"/>
+
+    <!-- Mid Petals -->
+    <path d="M110,105 C98,125 115,145 138,148 C120,135 116,115 125,100 Z" fill="url(#roseRed2)"/>
+    <path d="M170,105 C182,125 165,145 142,148 C160,135 164,115 155,100 Z" fill="url(#roseRed2)"/>
+
+    <!-- Front Curved Petals -->
+    <path d="M118,118 Q140,154 162,118 Q140,136 118,118 Z" fill="#ff4d6d"/>
+    <path d="M125,102 C120,85 140,80 155,92 C165,102 152,122 140,125 C128,122 118,112 125,102 Z" fill="url(#roseRed1)"/>
+
+    <!-- Rose Center Spiral Bud -->
+    <path d="M135,94 C132,86 142,82 148,88 C153,94 148,102 142,104 C138,102 135,98 135,94 Z" fill="#590d22"/>
+    <path d="M138,91 Q143,87 146,92 Q143,96 140,94" fill="none" stroke="url(#goldGleam)" stroke-width="1.6" stroke-linecap="round"/>
+
+    <!-- Morning Dew Drops with Shimmer -->
+    <circle cx="120" cy="128" r="3.2" fill="#ffffff" opacity="0.85"/>
+    <circle cx="162" cy="122" r="2.6" fill="#ffffff" opacity="0.8"/>
+    <circle cx="132" cy="144" r="2.2" fill="#ffffff" opacity="0.75"/>
+  </g>
+
+  <!-- Golden Starlight Top Sparkle -->
+  <g class="sparkle-rose">
+    <path d="M140,50 Q140,60 130,60 Q140,60 140,70 Q140,60 150,60 Q140,60 140,50 Z" fill="url(#goldGleam)" filter="drop-shadow(0 0 6px #ffd166)"/>
+  </g>
+</svg>

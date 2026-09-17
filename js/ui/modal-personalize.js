@@ -9,10 +9,15 @@ import { showToast } from './toast.js';
 import { appState } from '../core/state.js';
 import { OCCASIONS } from '../config/occasions.js';
 import { OccasionManager, getPersonalizedHeading } from '../core/occasion-service.js';
+import { ROMANTIC_VISUAL_THEMES, ROMANTIC_VISUAL_MAP } from '../config/visual-themes.js';
+import { previewVisualAsset, updateBearAsset } from './bear.js';
 import { generateKeepsakeLetter } from '../services/letter-api.js';
 import { getLanguage, setLanguage, getLanguageName, t } from '../i18n/index.js';
+import { DeviceManager } from '../core/device.js';
 
 let personalizeModal = null;
+let isPersonalizeModalClosing = false;
+let isModalSaved = false;
 let closePersonalizeBtn = null;
 let savePersonalizeBtn = null;
 let copyCustomLinkBtn = null;
@@ -41,6 +46,21 @@ let isGeneratingLetter = false;
 let modalCurrentEventType = 'other';
 let modalCurrentEventTitle = '';
 let modalSelectedOccasion = 'christmas';
+
+// Romantic Theme & GIF Library Controls
+let romanticThemeBadge = null;
+let romanticThemeCards = [];
+let themeCategoryBtns = [];
+let activeThemeCategory = 'all';
+let themeLivePreviewImg = null;
+let themePreviewName = null;
+let themePreviewDesc = null;
+let customVisualUrlInput = null;
+let clearCustomVisualBtn = null;
+let resetThemeVisualBtn = null;
+
+let modalSelectedVisualTheme = 'default';
+let modalCustomVisualUrl = '';
 
 // Celebration Song Controls
 let customSongUrlInput = null;
@@ -95,6 +115,113 @@ function setPreviewPlayingState(isPlaying) {
     if (previewBtnText) previewBtnText.textContent = isPlaying ? 'Pause Test' : 'Test Song';
     if (previewSongBtn) previewSongBtn.classList.toggle('is-playing', isPlaying);
     if (songActiveIndicator) songActiveIndicator.classList.toggle('is-playing', isPlaying);
+}
+
+function updateVisualThemeDisplayUI(themeId, customUrl = '') {
+    const hasCustomUrl = !!(customUrl && customUrl.trim());
+
+    if (clearCustomVisualBtn) {
+        clearCustomVisualBtn.hidden = !hasCustomUrl;
+    }
+
+    // Immediately update the large preview image in 'visual-container' before saving
+    previewVisualAsset(hasCustomUrl ? 'custom-url' : themeId, customUrl);
+
+    if (hasCustomUrl) {
+        if (romanticThemeBadge) {
+            romanticThemeBadge.textContent = 'Custom Visual 🖼️';
+        }
+        if (themeLivePreviewImg) {
+            themeLivePreviewImg.src = customUrl.trim();
+        }
+        if (themePreviewName) {
+            themePreviewName.textContent = 'Custom Visual Image / GIF';
+        }
+        if (themePreviewDesc) {
+            themePreviewDesc.textContent = customUrl.trim();
+        }
+        romanticThemeCards.forEach(card => {
+            card.classList.remove('active');
+            card.setAttribute('aria-checked', 'false');
+        });
+        return;
+    }
+
+    const theme = ROMANTIC_VISUAL_MAP[themeId] || ROMANTIC_VISUAL_MAP.default;
+
+    if (romanticThemeBadge) {
+        romanticThemeBadge.textContent = `${theme.name} ${theme.icon || ''}`;
+    }
+
+    romanticThemeCards.forEach(card => {
+        const cardTheme = card.getAttribute('data-theme');
+        const isActive = cardTheme === themeId;
+        card.classList.toggle('active', isActive);
+        card.setAttribute('aria-checked', isActive ? 'true' : 'false');
+    });
+
+    if (themeLivePreviewImg) {
+        if (themeId === 'default') {
+            const currentOcc = OCCASIONS[modalSelectedOccasion] || OCCASIONS.valentine;
+            themeLivePreviewImg.src = currentOcc.bearNormal || './assets/bear-valentine.svg';
+        } else {
+            themeLivePreviewImg.src = theme.normal || theme.thumbnail;
+        }
+    }
+
+    if (themePreviewName) {
+        themePreviewName.textContent = themeId === 'default' 
+            ? 'Default Occasion Mascot'
+            : `${theme.name} (${theme.badge || 'Romantic'})`;
+    }
+
+    if (themePreviewDesc) {
+        themePreviewDesc.textContent = theme.description;
+    }
+}
+
+function filterThemeCards(category) {
+    activeThemeCategory = category;
+    themeCategoryBtns.forEach(btn => {
+        const isMatch = btn.getAttribute('data-category') === category;
+        btn.classList.toggle('active', isMatch);
+        btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+
+    romanticThemeCards.forEach(card => {
+        const cats = (card.getAttribute('data-categories') || 'all')
+            .split(',')
+            .map(s => s.trim().toLowerCase());
+        const matches = category === 'all' || cats.includes(category.toLowerCase());
+        card.classList.toggle('is-filtered-out', !matches);
+        card.setAttribute('aria-hidden', matches ? 'false' : 'true');
+    });
+}
+
+function updateCategoryCounts() {
+    let all = romanticThemeCards.length;
+    let romantic = 0;
+    let floral = 0;
+    let animated = 0;
+
+    romanticThemeCards.forEach(card => {
+        const cats = (card.getAttribute('data-categories') || 'all')
+            .split(',')
+            .map(s => s.trim().toLowerCase());
+        if (cats.includes('romantic')) romantic++;
+        if (cats.includes('floral')) floral++;
+        if (cats.includes('animated')) animated++;
+    });
+
+    const countAllEl = document.getElementById('count-all');
+    const countRomEl = document.getElementById('count-romantic');
+    const countFloEl = document.getElementById('count-floral');
+    const countAniEl = document.getElementById('count-animated');
+
+    if (countAllEl) countAllEl.textContent = all;
+    if (countRomEl) countRomEl.textContent = romantic;
+    if (countFloEl) countFloEl.textContent = floral;
+    if (countAniEl) countAniEl.textContent = animated;
 }
 
 function updateCustomCelebrationPreview() {
@@ -229,12 +356,30 @@ export function openPersonalizeModal(focusLanguage = false) {
     setPreviewPlayingState(false);
     updateSongDisplayUI();
 
+    // Populate Romantic Visual Theme fields
+    modalSelectedVisualTheme = state.visualTheme || 'default';
+    modalCustomVisualUrl = state.customVisualUrl || '';
+
+    if (customVisualUrlInput) {
+        customVisualUrlInput.value = modalCustomVisualUrl;
+    }
+    updateVisualThemeDisplayUI(modalSelectedVisualTheme, modalCustomVisualUrl);
+    filterThemeCards(activeThemeCategory || 'all');
+    updateCategoryCounts();
+
     updateModalOccasionUI(activeOccasionKey);
     updateCustomCelebrationPreview();
+
+    isModalSaved = false;
 
     personalizeModal.hidden = false;
     personalizeModal.style.display = 'flex';
     personalizeModal.removeAttribute('aria-hidden');
+    personalizeModal.classList.remove('is-closing');
+
+    // Trigger browser reflow so entrance animation plays smoothly
+    void personalizeModal.offsetHeight;
+    personalizeModal.classList.add('is-open');
 
     if (focusLanguage && languageSelect) {
         languageSelect.focus();
@@ -247,18 +392,39 @@ export function openPersonalizeModal(focusLanguage = false) {
 }
 
 export function closePersonalizeModal() {
-    if (!personalizeModal) return;
+    if (!personalizeModal || personalizeModal.hidden || isPersonalizeModalClosing) return;
     sound.stopPreview();
     setPreviewPlayingState(false);
 
-    personalizeModal.hidden = true;
-    personalizeModal.style.display = 'none';
-    personalizeModal.setAttribute('aria-hidden', 'true');
-
-    const triggerBtn = document.getElementById('personalize-pill-btn');
-    if (triggerBtn) {
-        triggerBtn.focus();
+    if (!isModalSaved) {
+        updateBearAsset(appState.getState().isAccepted);
     }
+
+    const isReduced = DeviceManager.prefersReducedMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+
+    const finalizeClose = () => {
+        isPersonalizeModalClosing = false;
+        personalizeModal.hidden = true;
+        personalizeModal.style.display = 'none';
+        personalizeModal.setAttribute('aria-hidden', 'true');
+        personalizeModal.classList.remove('is-closing', 'is-open');
+
+        const triggerBtn = document.getElementById('personalize-pill-btn');
+        if (triggerBtn) {
+            triggerBtn.focus();
+        }
+    };
+
+    if (isReduced) {
+        finalizeClose();
+        return;
+    }
+
+    isPersonalizeModalClosing = true;
+    personalizeModal.classList.remove('is-open');
+    personalizeModal.classList.add('is-closing');
+
+    setTimeout(finalizeClose, 210);
 }
 
 async function handleGenerateAiLetter() {
@@ -399,6 +565,84 @@ export function initPersonalizeModal() {
     songActiveIndicator = document.getElementById('song-active-indicator');
     songPresetChips = Array.from(document.querySelectorAll('.song-preset-chip'));
 
+    // Query Romantic Theme Controls
+    romanticThemeBadge = document.getElementById('romantic-theme-badge');
+    romanticThemeCards = Array.from(document.querySelectorAll('.romantic-theme-card'));
+    themeCategoryBtns = Array.from(document.querySelectorAll('.theme-category-btn'));
+    themeLivePreviewImg = document.getElementById('theme-live-preview-img');
+    themePreviewName = document.getElementById('theme-preview-name');
+    themePreviewDesc = document.getElementById('theme-preview-desc');
+    customVisualUrlInput = document.getElementById('custom-visual-url-input');
+    clearCustomVisualBtn = document.getElementById('clear-custom-visual-btn');
+    resetThemeVisualBtn = document.getElementById('reset-theme-visual-btn');
+
+    // Attach listeners to category filter buttons
+    if (themeCategoryBtns.length > 0) {
+        themeCategoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const cat = btn.getAttribute('data-category') || 'all';
+                filterThemeCards(cat);
+                sound.playDodgePop();
+            });
+        });
+    }
+
+    // Attach listeners to romantic theme cards
+    if (romanticThemeCards.length > 0) {
+        romanticThemeCards.forEach(card => {
+            const handleSelect = () => {
+                const themeId = card.getAttribute('data-theme') || 'default';
+                modalSelectedVisualTheme = themeId;
+                modalCustomVisualUrl = '';
+                if (customVisualUrlInput) customVisualUrlInput.value = '';
+                updateVisualThemeDisplayUI(themeId, '');
+                sound.playDodgePop();
+            };
+
+            card.addEventListener('click', handleSelect);
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleSelect();
+                }
+            });
+        });
+    }
+
+    if (customVisualUrlInput) {
+        customVisualUrlInput.addEventListener('input', () => {
+            const val = customVisualUrlInput.value.trim();
+            modalCustomVisualUrl = val;
+            if (val) {
+                modalSelectedVisualTheme = 'custom-url';
+            } else {
+                modalSelectedVisualTheme = 'default';
+            }
+            updateVisualThemeDisplayUI(modalSelectedVisualTheme, modalCustomVisualUrl);
+        });
+    }
+
+    if (clearCustomVisualBtn) {
+        clearCustomVisualBtn.addEventListener('click', () => {
+            modalCustomVisualUrl = '';
+            modalSelectedVisualTheme = 'default';
+            if (customVisualUrlInput) customVisualUrlInput.value = '';
+            updateVisualThemeDisplayUI('default', '');
+            sound.playDodgePop();
+        });
+    }
+
+    if (resetThemeVisualBtn) {
+        resetThemeVisualBtn.addEventListener('click', () => {
+            modalSelectedVisualTheme = 'default';
+            modalCustomVisualUrl = '';
+            if (customVisualUrlInput) customVisualUrlInput.value = '';
+            updateVisualThemeDisplayUI('default', '');
+            sound.playDodgePop();
+            showToast("Visual reset to default occasion mascot 🐻", "↺");
+        });
+    }
+
     if (customSongUrlInput) {
         customSongUrlInput.addEventListener('input', () => {
             const urlVal = customSongUrlInput.value.trim();
@@ -494,6 +738,9 @@ export function initPersonalizeModal() {
                 const occasionVal = card.getAttribute('data-occasion');
                 if (occasionVal && (OCCASIONS[occasionVal] || occasionVal === 'anniversary' || occasionVal === 'graduation')) {
                     updateModalOccasionUI(occasionVal);
+                    if (modalSelectedVisualTheme === 'default' && !modalCustomVisualUrl) {
+                        updateVisualThemeDisplayUI('default', '');
+                    }
                 }
             });
         });
@@ -577,7 +824,9 @@ export function initPersonalizeModal() {
                 language: chosenLang,
                 customMsg: newNote,
                 customSongUrl: modalCustomSongUrl || '',
-                customSongName: modalCustomSongName || ''
+                customSongName: modalCustomSongName || '',
+                visualTheme: modalSelectedVisualTheme || 'default',
+                customVisualUrl: modalCustomVisualUrl || ''
             };
 
             if (chosenOccasion === 'anniversary') {
@@ -607,6 +856,7 @@ export function initPersonalizeModal() {
             sound.setCelebrationSong(modalCustomSongUrl, modalCustomSongName);
             sound.stopPreview();
 
+            isModalSaved = true;
             appState.updateState(updatePayload);
             closePersonalizeModal();
             showToast(newName ? `Card personalized for ${newName}! 💖` : "Card personalized! 💖", "✨");

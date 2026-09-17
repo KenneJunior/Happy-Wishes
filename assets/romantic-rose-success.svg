@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="roseRed1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="40%" stop-color="#c9184a"/>
+      <stop offset="100%" stop-color="#590d22"/>
+    </linearGradient>
+    <linearGradient id="roseRed2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758f"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+    <linearGradient id="roseLeaf" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#70e000"/>
+      <stop offset="50%" stop-color="#38b000"/>
+      <stop offset="100%" stop-color="#007200"/>
+    </linearGradient>
+    <linearGradient id="goldGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff9db"/>
+      <stop offset="50%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#f48c06"/>
+    </linearGradient>
+    <linearGradient id="ribbonPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff9ebb"/>
+      <stop offset="50%" stop-color="#ff2e63"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+    <radialGradient id="bouquetAura" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#ff758f" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes swayBouquet {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1.5deg); }
+    }
+    @keyframes burstHearts {
+      0% { transform: scale(0.5) translateY(0); opacity: 0; }
+      50% { opacity: 1; transform: scale(1.1) translateY(-16px); }
+      100% { opacity: 0; transform: scale(0.8) translateY(-28px); }
+    }
+    .bouquet-group {
+      animation: swayBouquet 3.2s ease-in-out infinite;
+      transform-origin: 140px 180px;
+    }
+    .burst-heart-l { animation: burstHearts 2.4s ease-out infinite; transform-origin: 80px 60px; }
+    .burst-heart-r { animation: burstHearts 2.8s ease-out infinite 0.7s; transform-origin: 200px 65px; }
+    .burst-heart-c { animation: burstHearts 2.2s ease-out infinite 1.2s; transform-origin: 140px 35px; }
+  </style>
+
+  <circle cx="140" cy="115" r="110" fill="url(#bouquetAura)"/>
+
+  <!-- Sparkling Celebration Hearts -->
+  <g class="burst-heart-l">
+    <path d="M80,60 C80,52 87,48 93,53 C99,58 99,66 88,75 L80,81 L72,75 C61,66 61,58 67,53 C73,48 80,52 80,60 Z" fill="#ff2e63"/>
+  </g>
+  <g class="burst-heart-r">
+    <path d="M200,65 C200,57 207,53 213,58 C219,63 219,71 208,80 L200,86 L192,80 C181,71 181,63 187,58 C193,53 200,57 200,65 Z" fill="#ffd166"/>
+  </g>
+  <g class="burst-heart-c">
+    <path d="M140,35 C140,28 146,24 151,29 C156,34 156,41 146,49 L140,54 L134,49 C124,41 124,34 129,29 C134,24 140,28 140,35 Z" fill="#ff0a54"/>
+  </g>
+
+  <!-- Celebration Rose Bouquet -->
+  <g class="bouquet-group">
+    <!-- Bouquet Wrapping Paper / Base -->
+    <path d="M110,150 L140,225 L170,150 Z" fill="#fff0f5" stroke="#ffccd5" stroke-width="2" filter="drop-shadow(0 6px 12px rgba(201,24,74,0.25))"/>
+    
+    <!-- Satin Bow Ribbon -->
+    <path d="M140,165 C125,150 108,162 122,175 C132,185 140,175 140,170 C140,175 148,185 158,175 C172,162 155,150 140,165 Z" fill="url(#ribbonPink)"/>
+    <circle cx="140" cy="170" r="6" fill="#c9184a"/>
+    <path d="M136,174 Q125,200 120,212 M144,174 Q155,200 160,212" stroke="#ff2e63" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+
+    <!-- Leaves poking around -->
+    <path d="M85,120 Q70,95 90,85 Q105,100 85,120 Z" fill="url(#roseLeaf)"/>
+    <path d="M195,120 Q210,95 190,85 Q175,100 195,120 Z" fill="url(#roseLeaf)"/>
+    <path d="M140,80 Q140,55 152,65 Q145,80 140,80 Z" fill="url(#roseLeaf)"/>
+
+    <!-- Left Rose Blossom -->
+    <g transform="translate(-32, 10) scale(0.72) translate(60, 40)">
+      <circle cx="100" cy="90" r="30" fill="url(#roseRed1)"/>
+      <path d="M80,85 Q100,115 120,85 Q100,102 80,85 Z" fill="#ff758f"/>
+      <circle cx="100" cy="85" r="12" fill="#590d22"/>
+      <circle cx="100" cy="85" r="5" fill="#ff4d6d"/>
+    </g>
+
+    <!-- Right Rose Blossom -->
+    <g transform="translate(68, 10) scale(0.72) translate(-20, 40)">
+      <circle cx="100" cy="90" r="30" fill="url(#roseRed1)"/>
+      <path d="M80,85 Q100,115 120,85 Q100,102 80,85 Z" fill="#ff758f"/>
+      <circle cx="100" cy="85" r="12" fill="#590d22"/>
+      <circle cx="100" cy="85" r="5" fill="#ff4d6d"/>
+    </g>
+
+    <!-- Center Grand Rose Blossom -->
+    <circle cx="140" cy="110" r="36" fill="url(#roseRed1)" filter="drop-shadow(0 4px 10px rgba(89,13,34,0.4))"/>
+    <path d="M115,105 Q140,140 165,105 Q140,126 115,105 Z" fill="url(#roseRed2)"/>
+    <circle cx="140" cy="104" r="15" fill="#590d22"/>
+    <path d="M134,101 Q140,96 145,101 Q140,107 134,101 Z" fill="url(#goldGleam)"/>
+  </g>
+</svg>

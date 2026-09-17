@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="envelopeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5f5"/>
+      <stop offset="60%" stop-color="#fed7e2"/>
+      <stop offset="100%" stop-color="#fbb6ce"/>
+    </linearGradient>
+    <linearGradient id="rubyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#a4133c"/>
+    </linearGradient>
+    <radialGradient id="victoryLetterGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0.55"/>
+      <stop offset="50%" stop-color="#ff758f" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes joyfulPop {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.08) translateY(-8px); }
+    }
+    @keyframes heartShower1 {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      40% { opacity: 1; }
+      100% { transform: translateY(-38px) scale(1.1); opacity: 0; }
+    }
+    @keyframes heartShower2 {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      40% { opacity: 1; }
+      100% { transform: translateY(-44px) scale(1.2); opacity: 0; }
+    }
+    .celebration-envelope {
+      animation: joyfulPop 2.4s ease-in-out infinite;
+      transform-origin: 140px 140px;
+    }
+    .shower-1 { animation: heartShower1 2.2s ease-out infinite; transform-origin: 100px 70px; }
+    .shower-2 { animation: heartShower2 2.6s ease-out infinite 0.7s; transform-origin: 180px 65px; }
+    .shower-3 { animation: heartShower1 2.4s ease-out infinite 1.3s; transform-origin: 140px 45px; }
+  </style>
+
+  <circle cx="140" cy="120" r="105" fill="url(#victoryLetterGlow)"/>
+
+  <g class="shower-1">
+    <path d="M100,70 C100,62 108,58 114,63 C120,68 120,76 109,85 L100,91 L91,85 C80,76 80,68 86,63 C92,58 100,62 100,70 Z" fill="#ff0a54"/>
+  </g>
+  <g class="shower-2">
+    <path d="M180,65 C180,57 188,53 194,58 C200,63 200,71 189,80 L180,86 L171,80 C160,71 160,63 166,58 C172,53 180,57 180,65 Z" fill="#ffd166"/>
+  </g>
+  <g class="shower-3">
+    <path d="M140,45 C140,38 147,34 153,39 C159,44 159,51 148,59 L140,65 L132,59 C121,51 121,44 127,39 C133,34 140,38 140,45 Z" fill="#ff477e"/>
+  </g>
+
+  <!-- Envelope with Giant Beating Heart -->
+  <g class="celebration-envelope">
+    <rect x="70" y="115" width="140" height="85" rx="10" fill="#fbb6ce" filter="drop-shadow(0 8px 20px rgba(255,10,84,0.3))"/>
+    <path d="M70,115 L140,160 L70,200 Z" fill="#fed7e2"/>
+    <path d="M210,115 L140,160 L210,200 Z" fill="#fed7e2"/>
+    <path d="M70,200 L140,154 L210,200 Z" fill="url(#envelopeBg)"/>
+
+    <!-- Giant Glowing Ruby Heart Rising from Envelope -->
+    <path d="M140,110 C140,88 162,75 178,92 C194,108 194,130 162,154 L140,172 L118,154 C86,130 86,108 102,92 C118,75 140,88 140,110 Z" fill="url(#rubyGrad)" filter="drop-shadow(0 6px 14px rgba(255,10,84,0.45))"/>
+    
+    <!-- Heart Specular Highlight -->
+    <path d="M124,100 C120,105 120,116 122,122" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" fill="none" opacity="0.8"/>
+  </g>
+</svg>

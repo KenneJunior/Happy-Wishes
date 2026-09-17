@@ -11,6 +11,7 @@ import { OCCASIONS, CELEBRATION_EVENT_TYPES } from '../config/occasions.js';
 import { OccasionManager } from '../core/occasion-service.js';
 import { generateKeepsakeLetter } from '../services/letter-api.js';
 import { t } from '../i18n/index.js';
+import { DeviceManager } from '../core/device.js';
 
 let virtualCardWrapper = null;
 let virtualCardInner = null;
@@ -36,6 +37,232 @@ let isParchmentAiLoading = false;
 let isCardFlipped = false;
 let isScratchpadEditing = false;
 let hasSwipedDuringTouch = false;
+
+// Natural Keepsake Typing Engine State
+let currentNoteFullText = '';
+let isTypingActive = false;
+let typingTimeoutId = null;
+let hasTypedCurrentNote = false;
+let typingCursorEl = null;
+let typingSkipHintEl = null;
+
+function cancelTyping() {
+    if (typingTimeoutId) {
+        clearTimeout(typingTimeoutId);
+        typingTimeoutId = null;
+    }
+    isTypingActive = false;
+}
+
+export function skipTyping() {
+    if (!isTypingActive) return;
+    cancelTyping();
+
+    if (keepsakeBody) {
+        keepsakeBody.textContent = currentNoteFullText;
+    }
+    if (typingCursorEl && typingCursorEl.parentNode) {
+        typingCursorEl.remove();
+    }
+    if (typingSkipHintEl && typingSkipHintEl.parentNode) {
+        typingSkipHintEl.remove();
+    }
+    if (keepsakeSignature) {
+        keepsakeSignature.classList.remove('is-hidden');
+        keepsakeSignature.classList.add('is-revealed');
+    }
+    hasTypedCurrentNote = true;
+}
+
+export function startNaturalKeepsakeTyping(targetText, forceRestart = false) {
+    if (!keepsakeBody) return;
+    const textToType = (typeof targetText === 'string' && targetText.length > 0)
+        ? targetText
+        : (currentNoteFullText || keepsakeBody.textContent || '').trim();
+
+    if (!textToType) return;
+    currentNoteFullText = textToType;
+
+    const isReduced = DeviceManager.prefersReducedMotion || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (isReduced) {
+        cancelTyping();
+        keepsakeBody.textContent = textToType;
+        if (typingCursorEl && typingCursorEl.parentNode) typingCursorEl.remove();
+        if (typingSkipHintEl && typingSkipHintEl.parentNode) typingSkipHintEl.remove();
+        if (keepsakeSignature) {
+            keepsakeSignature.classList.remove('is-hidden');
+            keepsakeSignature.classList.add('is-revealed');
+        }
+        hasTypedCurrentNote = true;
+        return;
+    }
+
+    if (!forceRestart && hasTypedCurrentNote && keepsakeBody.textContent.trim() === textToType.trim()) {
+        if (keepsakeSignature) {
+            keepsakeSignature.classList.remove('is-hidden');
+            keepsakeSignature.classList.add('is-revealed');
+        }
+        return;
+    }
+
+    cancelTyping();
+    isTypingActive = true;
+    hasTypedCurrentNote = false;
+
+    // Reset body content and insert cursor
+    keepsakeBody.textContent = '';
+    if (!typingCursorEl) {
+        typingCursorEl = document.createElement('span');
+        typingCursorEl.className = 'keepsake-typing-cursor';
+        typingCursorEl.setAttribute('aria-hidden', 'true');
+    }
+    keepsakeBody.appendChild(typingCursorEl);
+
+    // Conceal signature during active typing
+    if (keepsakeSignature) {
+        keepsakeSignature.classList.remove('is-revealed');
+        keepsakeSignature.classList.add('is-hidden');
+    }
+
+    // Attach skip hint indicator promptly
+    if (!typingSkipHintEl) {
+        typingSkipHintEl = document.createElement('span');
+        typingSkipHintEl.className = 'typing-skip-hint';
+        typingSkipHintEl.setAttribute('role', 'button');
+        typingSkipHintEl.setAttribute('tabindex', '0');
+        typingSkipHintEl.setAttribute('title', 'Click or tap anywhere on note to reveal full message');
+        typingSkipHintEl.innerHTML = '<span aria-hidden="true">⚡</span> Skip typing';
+        typingSkipHintEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            skipTyping();
+        });
+        typingSkipHintEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                skipTyping();
+            }
+        });
+    }
+
+    if (parchmentContentView) {
+        if (typingSkipHintEl.parentNode) {
+            typingSkipHintEl.remove();
+        }
+        typingSkipHintEl.classList.remove('is-visible');
+        parchmentContentView.appendChild(typingSkipHintEl);
+
+        setTimeout(() => {
+            if (isTypingActive && typingSkipHintEl) {
+                typingSkipHintEl.classList.add('is-visible');
+            }
+        }, 600);
+    }
+
+    let charIndex = 0;
+    let burstRemaining = 4 + Math.floor(Math.random() * 4); // cluster of 4-7 characters for human rhythm
+
+    function typeNextChar() {
+        if (!isTypingActive) return;
+
+        if (charIndex < textToType.length) {
+            const char = textToType[charIndex];
+            const textNode = document.createTextNode(char);
+            keepsakeBody.insertBefore(textNode, typingCursorEl);
+            charIndex++;
+
+            // 1. Natural Base Cadence with Organic Human Micro-Fluctuation
+            let delay = 24 + Math.floor(Math.random() * 12); // 24ms - 36ms base speed
+
+            // 2. Character & Letter Rhythm (Capitals, Symbols, Digraphs)
+            const isCapital = /[A-Z]/.test(char);
+            const isSymbol = /[0-9@#$%&*]/.test(char);
+            if (isCapital) {
+                delay += 24 + Math.floor(Math.random() * 16); // Capital letter coordination
+            } else if (isSymbol) {
+                delay += 30 + Math.floor(Math.random() * 20); // Symbol micro-pause
+            }
+
+            // 3. Human Typing Rhythm Clusters (Micro-bursts followed by subtle breath pauses)
+            burstRemaining--;
+            if (burstRemaining <= 0) {
+                delay += 22 + Math.floor(Math.random() * 26);
+                burstRemaining = 4 + Math.floor(Math.random() * 4);
+            }
+
+            // 4. Structural Delays & Punctuation
+            const nextChar = textToType[charIndex];
+            const prevChar = charIndex >= 2 ? textToType[charIndex - 2] : '';
+
+            if (char === '\n') {
+                // Paragraph break vs single line break
+                if (nextChar === '\n' || prevChar === '\n') {
+                    delay = 450 + Math.floor(Math.random() * 80); // Paragraph transition breath
+                } else {
+                    delay = 280 + Math.floor(Math.random() * 60); // Line break pause
+                }
+            } else if (char === '.' || char === '!' || char === '?' || char === '…') {
+                // Thoughtful sentence pause when closing a statement
+                if (!nextChar || nextChar === ' ' || nextChar === '\n' || nextChar === '"' || nextChar === "'") {
+                    delay = 380 + Math.floor(Math.random() * 100);
+                } else {
+                    delay = 180 + Math.floor(Math.random() * 40);
+                }
+            } else if (char === ',' || char === ';' || char === ':' || char === '—' || char === '-') {
+                // Natural clause breathing pause
+                delay = 180 + Math.floor(Math.random() * 40);
+            } else if (char === '"' || char === "'" || char === '(' || char === ')') {
+                // Micro-hesitation around quotes/parentheses
+                delay = 90 + Math.floor(Math.random() * 30);
+            } else if (char === ' ') {
+                // Natural inter-word spacing breath
+                delay = 48 + Math.floor(Math.random() * 18);
+            }
+
+            typingTimeoutId = setTimeout(typeNextChar, delay);
+        } else {
+            finishTyping();
+        }
+    }
+
+    function finishTyping() {
+        isTypingActive = false;
+        hasTypedCurrentNote = true;
+        typingTimeoutId = null;
+
+        if (typingSkipHintEl && typingSkipHintEl.parentNode) {
+            typingSkipHintEl.classList.remove('is-visible');
+            setTimeout(() => {
+                if (typingSkipHintEl && typingSkipHintEl.parentNode) {
+                    typingSkipHintEl.remove();
+                }
+            }, 200);
+        }
+
+        // Allow cursor to linger and blink gently with a soft fade before clean removal
+        if (typingCursorEl) {
+            typingCursorEl.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => {
+                if (typingCursorEl) {
+                    typingCursorEl.style.opacity = '0';
+                    setTimeout(() => {
+                        if (typingCursorEl && typingCursorEl.parentNode) {
+                            typingCursorEl.remove();
+                        }
+                    }, 400);
+                }
+            }, 450);
+        }
+
+        // Smoothly reveal signature with physics curve
+        if (keepsakeSignature) {
+            keepsakeSignature.classList.remove('is-hidden');
+            keepsakeSignature.classList.add('is-revealed');
+        }
+    }
+
+    // Brief settling pause after card flip completes before typing begins
+    typingTimeoutId = setTimeout(typeNextChar, 260);
+}
 
 export function updateEditNoteVisibility() {
     const state = appState.getState();
@@ -94,20 +321,38 @@ export function updateKeepsakeContent() {
         }
     }
 
-    if (keepsakeBody) {
-        if (customText) {
-            // User-authored note or AI-generated letter: PRESERVE EXACTLY AS ENTERED!
-            keepsakeBody.textContent = customText;
-        } else if (state.occasion === 'custom') {
-            const eventCfg = CELEBRATION_EVENT_TYPES[state.customEvent] || CELEBRATION_EVENT_TYPES.other;
-            keepsakeBody.textContent = eventCfg.successSubtext || occ.successSubtext;
-        } else {
-            keepsakeBody.textContent = occ.successSubtext || occ.defaultMessage || "Wishing you infinite joy!";
+    let noteText = '';
+    if (customText) {
+        // User-authored note or AI-generated letter: PRESERVE EXACTLY AS ENTERED!
+        noteText = customText;
+    } else if (state.occasion === 'custom') {
+        const eventCfg = CELEBRATION_EVENT_TYPES[state.customEvent] || CELEBRATION_EVENT_TYPES.other;
+        noteText = eventCfg.successSubtext || occ.successSubtext;
+    } else {
+        noteText = occ.successSubtext || occ.defaultMessage || "Wishing you infinite joy!";
+    }
+
+    const textChanged = (currentNoteFullText !== noteText);
+    currentNoteFullText = noteText;
+
+    if (textChanged) {
+        hasTypedCurrentNote = false;
+    }
+
+    if (scratchpadTextarea) {
+        scratchpadTextarea.value = noteText.trim();
+    }
+
+    if (isCardFlipped && !isScratchpadEditing && textChanged) {
+        startNaturalKeepsakeTyping(noteText, true);
+    } else if (!isTypingActive && keepsakeBody) {
+        keepsakeBody.textContent = noteText;
+        if (keepsakeSignature) {
+            keepsakeSignature.classList.remove('is-hidden');
+            keepsakeSignature.classList.add('is-revealed');
         }
     }
-    if (scratchpadTextarea && keepsakeBody) {
-        scratchpadTextarea.value = keepsakeBody.textContent.trim();
-    }
+
     updateEditNoteVisibility();
 }
 
@@ -117,6 +362,10 @@ export function flipCardToBack() {
     isCardFlipped = true;
     appState.updateState({ cardFlipped: true }, false);
     sound.playDodgePop();
+
+    if (!isScratchpadEditing && !hasTypedCurrentNote) {
+        startNaturalKeepsakeTyping(currentNoteFullText);
+    }
 }
 
 export function flipCardToFront() {
@@ -125,9 +374,14 @@ export function flipCardToFront() {
     isCardFlipped = false;
     appState.updateState({ cardFlipped: false }, false);
     sound.playDodgePop();
+
+    // Skip active typing so text is instantly complete if flipped back later
+    skipTyping();
 }
 
 export function resetCardFlip() {
+    cancelTyping();
+    hasTypedCurrentNote = false;
     if (virtualCardInner) {
         virtualCardInner.classList.remove('is-flipped');
         isCardFlipped = false;
@@ -330,10 +584,11 @@ export function initKeepsake() {
     if (editScratchpadBtn) {
         editScratchpadBtn.addEventListener('click', () => {
             if (!isScratchpadEditing) {
+                skipTyping();
                 if (parchmentContentView) parchmentContentView.hidden = true;
                 if (parchmentScratchpadEditor) parchmentScratchpadEditor.hidden = false;
                 if (scratchpadTextarea && keepsakeBody) {
-                    scratchpadTextarea.value = keepsakeBody.textContent.trim();
+                    scratchpadTextarea.value = (currentNoteFullText || keepsakeBody.textContent).trim();
                     scratchpadTextarea.focus();
                 }
                 if (scratchpadBtnIcon) scratchpadBtnIcon.textContent = '💾';
@@ -342,6 +597,8 @@ export function initKeepsake() {
             } else {
                 const newText = scratchpadTextarea ? scratchpadTextarea.value.trim() : '';
                 if (newText) {
+                    currentNoteFullText = newText;
+                    hasTypedCurrentNote = true;
                     if (keepsakeBody) keepsakeBody.textContent = newText;
                     appState.updateState({ customMsg: newText });
                 }
@@ -405,10 +662,15 @@ export function initKeepsake() {
             });
 
             if (result && result.letter) {
+                currentNoteFullText = result.letter;
+                hasTypedCurrentNote = false;
                 appState.updateState({ customMsg: result.letter });
                 if (scratchpadTextarea) scratchpadTextarea.value = result.letter;
                 sound.playCelebrationChime();
                 showToast("Gemini AI crafted a heartfelt keepsake letter! 💌✨", "✨");
+                if (isCardFlipped && !isScratchpadEditing) {
+                    startNaturalKeepsakeTyping(result.letter, true);
+                }
             }
         } catch (err) {
             console.error('Error generating keepsake parchment letter:', err);
@@ -427,6 +689,24 @@ export function initKeepsake() {
     if (aiParchmentBtn) {
         aiParchmentBtn.addEventListener('click', handleGenerateParchmentAiLetter);
     }
+
+    // Tap/click on parchment view or press Space/Enter/Escape to skip typing
+    if (parchmentContentView) {
+        parchmentContentView.addEventListener('click', (e) => {
+            if (e.target.closest('button, .parchment-tool-btn, .scratchpad-tool-btn')) return;
+            if (isTypingActive) {
+                skipTyping();
+            }
+        });
+    }
+
+    window.addEventListener('keydown', (e) => {
+        if (isTypingActive && isCardFlipped && !isScratchpadEditing) {
+            if (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape') {
+                skipTyping();
+            }
+        }
+    });
 
     // Copy Scratchpad Note to Clipboard
     if (copyScratchpadBtn) {

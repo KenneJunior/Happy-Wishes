@@ -6,6 +6,7 @@
 
 import { BEAR_EMOTIONS, SUCCESS_EMOTION } from '../config/emotions.js';
 import { OCCASIONS, getBearAssetsForState } from '../config/occasions.js';
+import { resolveVisualAssetsForState } from '../config/visual-themes.js';
 import { appState } from '../core/state.js';
 
 let mainGif = null;
@@ -85,11 +86,32 @@ export function updateBearEmotion(dodgeNum) {
 export function updateBearAsset(isAccepted = false) {
     if (!mainGif) return;
     const state = appState.getState();
-    const assets = getBearAssetsForState(state);
+    const assets = resolveVisualAssetsForState(state, getBearAssetsForState);
 
     const targetSrc = isAccepted ? assets.success : assets.normal;
     if (targetSrc && mainGif.getAttribute('src') !== targetSrc) {
         mainGif.src = targetSrc;
+    }
+    if (assets.theme && assets.theme.name) {
+        mainGif.alt = `${assets.theme.name} animation`;
+    }
+}
+
+export function previewVisualAsset(themeId, customUrl = '') {
+    if (!mainGif) return;
+    const state = appState.getState();
+    const tempState = {
+        ...state,
+        visualTheme: themeId,
+        customVisualUrl: customUrl
+    };
+    const assets = resolveVisualAssetsForState(tempState, getBearAssetsForState);
+    const targetSrc = state.isAccepted ? assets.success : assets.normal;
+    if (targetSrc && mainGif.getAttribute('src') !== targetSrc) {
+        mainGif.src = targetSrc;
+    }
+    if (assets.theme && assets.theme.name) {
+        mainGif.alt = `${assets.theme.name} animation`;
     }
 }
 

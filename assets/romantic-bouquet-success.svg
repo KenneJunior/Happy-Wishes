@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="blossomSkySuccess" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff5f7"/>
+      <stop offset="50%" stop-color="#ffccd5"/>
+      <stop offset="100%" stop-color="#ff758f"/>
+    </linearGradient>
+    <linearGradient id="roseGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="50%" stop-color="#c9184a"/>
+      <stop offset="100%" stop-color="#590d22"/>
+    </linearGradient>
+    <radialGradient id="gloryAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#ff758f" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes heartBurstCeil {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.1) translateY(-6px); }
+    }
+    @keyframes floatSparkle {
+      0% { transform: translateY(0) scale(0.6); opacity: 0; }
+      50% { opacity: 1; transform: translateY(-16px) scale(1.2); }
+      100% { transform: translateY(-32px) scale(0.4); opacity: 0; }
+    }
+    .celebrate-bouquet {
+      animation: heartBurstCeil 2.4s ease-in-out infinite;
+      transform-origin: 140px 140px;
+    }
+    .sp-1 { animation: floatSparkle 2.2s ease-out infinite; transform-origin: 85px 80px; }
+    .sp-2 { animation: floatSparkle 2.6s ease-out infinite 0.7s; transform-origin: 195px 75px; }
+    .sp-3 { animation: floatSparkle 2s ease-out infinite 1.2s; transform-origin: 140px 45px; }
+  </style>
+
+  <circle cx="140" cy="120" r="95" fill="url(#blossomSkySuccess)"/>
+  <circle cx="140" cy="110" r="75" fill="url(#gloryAura)"/>
+
+  <!-- Sparkles -->
+  <g class="sp-1"><circle cx="85" cy="80" r="4" fill="#ffd166" filter="drop-shadow(0 0 5px #ffd166)"/></g>
+  <g class="sp-2"><circle cx="195" cy="75" r="4" fill="#ffd166" filter="drop-shadow(0 0 5px #ffd166)"/></g>
+  <g class="sp-3"><circle cx="140" cy="45" r="5" fill="#ffffff" filter="drop-shadow(0 0 6px #ff4d6d)"/></g>
+
+  <!-- Big Celebratory Bouquet -->
+  <g class="celebrate-bouquet">
+    <!-- Outer Glow Hearts -->
+    <path d="M140,55 C140,42 152,35 162,45 C172,55 172,67 154,82 L140,94 L126,82 C108,67 108,55 118,45 C128,35 140,42 140,55 Z" fill="#ff4d6d" opacity="0.45" filter="drop-shadow(0 0 8px #ff4d6d)"/>
+
+    <!-- Cone Wrapper -->
+    <path d="M140,200 L102,120 C120,126 160,126 178,120 Z" fill="#ffffff" stroke="#ff4d6d" stroke-width="2"/>
+    <path d="M140,200 L115,122 C130,127 150,127 165,122 Z" fill="#ffd1dc"/>
+
+    <!-- Leaves -->
+    <path d="M105,120 C82,100 88,75 106,88 C116,96 116,112 105,120 Z" fill="#52b788"/>
+    <path d="M175,120 C198,100 192,75 174,88 C164,96 164,112 175,120 Z" fill="#52b788"/>
+
+    <!-- Central Majestic Rose -->
+    <g transform="translate(140, 105)">
+      <circle cx="0" cy="0" r="28" fill="url(#roseGleam)" filter="drop-shadow(0 3px 8px rgba(89,13,34,0.4))"/>
+      <path d="M-20,-10 C-14,-26 14,-26 20,-10 C24,5 12,22 -2,22 C-16,22 -24,5 -20,-10 Z" fill="#ff4d6d"/>
+      <path d="M-13,-6 C-9,-18 9,-18 13,-6 C17,4 7,15 -2,15 C-11,15 -17,4 -13,-6 Z" fill="#ff758f"/>
+      <circle cx="0" cy="0" r="4.5" fill="#ffffff"/>
+    </g>
+
+    <!-- Side Blooming Roses -->
+    <g transform="translate(108, 100)">
+      <circle cx="0" cy="0" r="20" fill="#ff4d6d"/>
+      <circle cx="0" cy="0" r="14" fill="#ff758f"/>
+      <circle cx="0" cy="0" r="4" fill="#ffffff"/>
+    </g>
+    <g transform="translate(172, 100)">
+      <circle cx="0" cy="0" r="20" fill="#ff4d6d"/>
+      <circle cx="0" cy="0" r="14" fill="#ff758f"/>
+      <circle cx="0" cy="0" r="4" fill="#ffffff"/>
+    </g>
+
+    <!-- Silk Big Red Victory Bow -->
+    <g transform="translate(140, 168)">
+      <path d="M0,0 C-22,-18 -30,10 -3,5 Z" fill="#c9184a"/>
+      <path d="M0,0 C22,-18 30,10 3,5 Z" fill="#c9184a"/>
+      <circle cx="0" cy="1" r="6" fill="#590d22"/>
+      <path d="M-3,4 C-10,16 -15,26 -18,32 L-10,30 L-6,22 C-4,16 -2,7 -3,4 Z" fill="#800f2f"/>
+      <path d="M3,4 C10,16 15,26 18,32 L10,30 L6,22 C4,16 2,7 3,4 Z" fill="#800f2f"/>
+    </g>
+  </g>
+</svg>

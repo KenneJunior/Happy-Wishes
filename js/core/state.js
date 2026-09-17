@@ -18,7 +18,9 @@ const STORAGE_KEYS = {
     THEME_MODE: 'valentine_theme_mode',
     CUSTOM_SONG_URL: 'celebration_custom_song_url',
     CUSTOM_SONG_NAME: 'celebration_custom_song_name',
-    LANGUAGE: 'celebration_language'
+    LANGUAGE: 'celebration_language',
+    VISUAL_THEME: 'celebration_visual_theme',
+    CUSTOM_VISUAL_URL: 'celebration_custom_visual_url'
 };
 
 const DEFAULT_STATE = {
@@ -31,6 +33,8 @@ const DEFAULT_STATE = {
     customFrom: '',
     customSongUrl: '',
     customSongName: '',
+    visualTheme: 'default',
+    customVisualUrl: '',
     denyCount: 0,
     acceptScale: 1.0,
     cardFlipped: false,
@@ -167,6 +171,12 @@ class StateStore {
                 if (storedLang && ['en', 'fr', 'es', 'pt', 'de'].includes(storedLang.toLowerCase())) {
                     loaded.language = storedLang.toLowerCase();
                 }
+
+                const storedVisualTheme = localStorage.getItem(STORAGE_KEYS.VISUAL_THEME);
+                if (storedVisualTheme) loaded.visualTheme = storedVisualTheme;
+
+                const storedVisualUrl = localStorage.getItem(STORAGE_KEYS.CUSTOM_VISUAL_URL);
+                if (storedVisualUrl) loaded.customVisualUrl = storedVisualUrl;
             }
         } catch (e) {
             console.warn('LocalStorage unavailable or restricted:', e);
@@ -180,6 +190,12 @@ class StateStore {
             if (urlLang && ['en', 'fr', 'es', 'pt', 'de'].includes(urlLang.toLowerCase())) {
                 loaded.language = urlLang.toLowerCase();
             }
+
+            const urlVisual = params.get('visual') || params.get('theme_visual') || params.get('gif');
+            if (urlVisual && urlVisual.trim()) loaded.visualTheme = urlVisual.trim();
+
+            const urlVisualUrl = params.get('visual_url') || params.get('custom_gif');
+            if (urlVisualUrl && urlVisualUrl.trim()) loaded.customVisualUrl = urlVisualUrl.trim();
 
             const urlTo = params.get('to') || params.get('name') || params.get('recipient');
             if (urlTo && urlTo.trim()) loaded.recipient = urlTo.trim().slice(0, 36);
@@ -310,6 +326,18 @@ class StateStore {
             if (this._state.language) {
                 localStorage.setItem(STORAGE_KEYS.LANGUAGE, this._state.language);
             }
+
+            if (this._state.visualTheme && this._state.visualTheme !== 'default') {
+                localStorage.setItem(STORAGE_KEYS.VISUAL_THEME, this._state.visualTheme);
+            } else {
+                localStorage.removeItem(STORAGE_KEYS.VISUAL_THEME);
+            }
+
+            if (this._state.customVisualUrl && !this._state.customVisualUrl.startsWith('blob:')) {
+                localStorage.setItem(STORAGE_KEYS.CUSTOM_VISUAL_URL, this._state.customVisualUrl);
+            } else {
+                localStorage.removeItem(STORAGE_KEYS.CUSTOM_VISUAL_URL);
+            }
         } catch (e) {
             console.warn('Failed to persist state to localStorage:', e);
         }
@@ -324,6 +352,12 @@ class StateStore {
         if (this._state.recipient) url.searchParams.set('to', this._state.recipient);
         if (this._state.occasion) url.searchParams.set('occasion', this._state.occasion);
         if (this._state.language && this._state.language !== 'en') url.searchParams.set('lang', this._state.language);
+        if (this._state.visualTheme && this._state.visualTheme !== 'default') {
+            url.searchParams.set('visual', this._state.visualTheme);
+        }
+        if (this._state.customVisualUrl && !this._state.customVisualUrl.startsWith('blob:')) {
+            url.searchParams.set('visual_url', this._state.customVisualUrl);
+        }
         if (this._state.customDate) url.searchParams.set('date', this._state.customDate);
         if (this._state.customEvent) url.searchParams.set('event', this._state.customEvent);
         if (this._state.customTitle) url.searchParams.set('title', this._state.customTitle);

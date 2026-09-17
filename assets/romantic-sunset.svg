@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="twilightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2b0938"/>
+      <stop offset="50%" stop-color="#6a0572"/>
+      <stop offset="80%" stop-color="#ab2567"/>
+      <stop offset="100%" stop-color="#ff758c"/>
+    </linearGradient>
+    <linearGradient id="moonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#fff3b0"/>
+      <stop offset="100%" stop-color="#ffd166"/>
+    </linearGradient>
+    <linearGradient id="waterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff758c"/>
+      <stop offset="40%" stop-color="#7209b7"/>
+      <stop offset="100%" stop-color="#3a0ca3"/>
+    </linearGradient>
+    <radialGradient id="twilightAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff758c" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#6a0572" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes gentleBob {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes twinkleStar {
+      0%, 100% { opacity: 0.3; transform: scale(0.7); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .swans-group {
+      animation: gentleBob 3.5s ease-in-out infinite;
+      transform-origin: 140px 160px;
+    }
+    .star-1 { animation: twinkleStar 2.6s ease-in-out infinite; transform-origin: 80px 50px; }
+    .star-2 { animation: twinkleStar 3.1s ease-in-out infinite 0.9s; transform-origin: 210px 65px; }
+    .star-3 { animation: twinkleStar 2.4s ease-in-out infinite 1.4s; transform-origin: 190px 40px; }
+  </style>
+
+  <!-- Twilight Backdrop Disc -->
+  <circle cx="140" cy="120" r="105" fill="url(#twilightSky)" filter="drop-shadow(0 8px 24px rgba(43,9,56,0.35))"/>
+
+  <!-- Crescent Heart Moon -->
+  <g transform="translate(140, 68)">
+    <circle cx="0" cy="0" r="28" fill="url(#moonGlow)" filter="drop-shadow(0 0 10px rgba(255,243,176,0.8))"/>
+    <circle cx="10" cy="-6" r="24" fill="#2b0938"/>
+  </g>
+
+  <!-- Twinkling Twilight Stars -->
+  <g class="star-1">
+    <circle cx="80" cy="50" r="2" fill="#ffffff"/>
+  </g>
+  <g class="star-2">
+    <circle cx="210" cy="65" r="2.2" fill="#ffd166"/>
+  </g>
+  <g class="star-3">
+    <circle cx="190" cy="40" r="1.8" fill="#ffffff"/>
+  </g>
+
+  <!-- Water Surface -->
+  <path d="M45,160 Q140,150 235,160 C230,195 205,220 140,225 C75,220 50,195 45,160 Z" fill="url(#waterGrad)"/>
+  <line x1="80" y1="168" x2="200" y2="168" stroke="#ffffff" stroke-width="1.2" opacity="0.4" stroke-dasharray="8 6"/>
+  <line x1="95" y1="178" x2="185" y2="178" stroke="#ffd166" stroke-width="1.2" opacity="0.3" stroke-dasharray="6 8"/>
+
+  <!-- Graceful Loving Swans Forming a Heart Shape -->
+  <g class="swans-group">
+    <!-- Left Swan -->
+    <path d="M98,168 C100,145 116,130 128,118 C135,110 140,105 137,98 C134,92 126,92 124,98 C122,104 116,120 110,135 C100,145 92,154 98,168 Z" fill="#ffffff" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.2))"/>
+    <ellipse cx="112" cy="160" rx="18" ry="9" fill="#ffffff"/>
+    <!-- Left Swan Beak -->
+    <path d="M136,98 L140,100 L136,102 Z" fill="#ff758c"/>
+
+    <!-- Right Swan -->
+    <path d="M182,168 C180,145 164,130 152,118 C145,110 140,105 143,98 C146,92 154,92 156,98 C158,104 164,120 170,135 C180,145 188,154 182,168 Z" fill="#ffffff" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.2))"/>
+    <ellipse cx="168" cy="160" rx="18" ry="9" fill="#ffffff"/>
+    <!-- Right Swan Beak -->
+    <path d="M144,98 L140,100 L144,102 Z" fill="#ff758c"/>
+
+    <!-- Glowing Heart Formed by the Necks -->
+    <path d="M140,112 C140,106 144,102 147,105 C150,108 150,113 144,118 L140,122 L136,118 C130,113 130,108 133,105 C136,102 140,106 140,112 Z" fill="#ff477e" filter="drop-shadow(0 0 6px rgba(255,71,126,0.7))"/>
+  </g>
+</svg>

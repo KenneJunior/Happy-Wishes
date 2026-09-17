@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="cupidSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff0ea"/>
+      <stop offset="100%" stop-color="#fed5c8"/>
+    </linearGradient>
+    <linearGradient id="cupidHair" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe899"/>
+      <stop offset="60%" stop-color="#f8b84e"/>
+      <stop offset="100%" stop-color="#e08d23"/>
+    </linearGradient>
+    <linearGradient id="cupidWing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="60%" stop-color="#ffe5ed"/>
+      <stop offset="100%" stop-color="#ffb3c6"/>
+    </linearGradient>
+    <linearGradient id="goldBow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3b0"/>
+      <stop offset="50%" stop-color="#ffd166"/>
+      <stop offset="100%" stop-color="#e69c24"/>
+    </linearGradient>
+    <linearGradient id="rubyArrow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+    <radialGradient id="cupidGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff758f" stop-opacity="0.55"/>
+      <stop offset="60%" stop-color="#ffb3c6" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <style>
+    @keyframes floatWingL {
+      0%, 100% { transform: rotate(-5deg); }
+      50% { transform: rotate(12deg); }
+    }
+    @keyframes floatWingR {
+      0%, 100% { transform: rotate(5deg); }
+      50% { transform: rotate(-12deg); }
+    }
+    @keyframes floatCupid {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(1.2deg); }
+    }
+    @keyframes pulseHeart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.14); }
+    }
+    @keyframes sparkleTwinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.7); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+    .cupid-body-group {
+      animation: floatCupid 3.6s ease-in-out infinite;
+      transform-origin: 140px 130px;
+    }
+    .wing-l {
+      animation: floatWingL 1.8s ease-in-out infinite;
+      transform-origin: 105px 115px;
+    }
+    .wing-r {
+      animation: floatWingR 1.8s ease-in-out infinite;
+      transform-origin: 175px 115px;
+    }
+    .arrow-heart {
+      animation: pulseHeart 1.4s ease-in-out infinite;
+      transform-origin: 198px 86px;
+    }
+    .sparkle-1 { animation: sparkleTwinkle 2.4s ease-in-out infinite; transform-origin: 65px 60px; }
+    .sparkle-2 { animation: sparkleTwinkle 2.9s ease-in-out infinite 0.7s; transform-origin: 220px 50px; }
+    .sparkle-3 { animation: sparkleTwinkle 2.2s ease-in-out infinite 1.3s; transform-origin: 235px 170px; }
+  </style>
+
+  <!-- Ambient Glow -->
+  <circle cx="140" cy="120" r="100" fill="url(#cupidGlow)" />
+
+  <!-- Floating Sparkles -->
+  <g class="sparkle-1">
+    <path d="M65,52 Q65,60 57,60 Q65,60 65,68 Q65,60 73,60 Q65,60 65,52 Z" fill="#ffd166" />
+  </g>
+  <g class="sparkle-2">
+    <path d="M220,42 Q220,50 212,50 Q220,50 220,58 Q220,50 228,50 Q220,50 220,42 Z" fill="#ff477e" />
+  </g>
+  <g class="sparkle-3">
+    <path d="M235,162 Q235,170 227,170 Q235,170 235,178 Q235,170 243,170 Q235,170 235,162 Z" fill="#ffd166" />
+  </g>
+
+  <!-- Cupid Main Floating Group -->
+  <g class="cupid-body-group">
+    <!-- Left Wing -->
+    <g class="wing-l">
+      <path d="M105,115 C80,90 60,95 55,115 C52,128 65,140 85,142 C98,143 105,130 105,115 Z" fill="url(#cupidWing)" opacity="0.95" filter="url(#softGlow)"/>
+      <path d="M100,118 C85,102 72,106 68,118 C66,126 75,134 90,135 Z" fill="#ffffff" opacity="0.7"/>
+    </g>
+
+    <!-- Right Wing -->
+    <g class="wing-r">
+      <path d="M175,115 C200,90 220,95 225,115 C228,128 215,140 195,142 C182,143 175,130 175,115 Z" fill="url(#cupidWing)" opacity="0.95" filter="url(#softGlow)"/>
+      <path d="M180,118 C195,102 208,106 212,118 C214,126 205,134 190,135 Z" fill="#ffffff" opacity="0.7"/>
+    </g>
+
+    <!-- Chubby Cupid Body -->
+    <ellipse cx="140" cy="148" rx="34" ry="40" fill="url(#cupidSkin)"/>
+    <!-- Diaper / Cloud wrap -->
+    <path d="M115,160 Q140,192 165,160 Q172,176 158,186 Q140,194 122,186 Q108,176 115,160 Z" fill="#ffffff" filter="drop-shadow(0 2px 4px rgba(255,117,140,0.25))"/>
+
+    <!-- Left Arm & Bow -->
+    <path d="M118,135 Q102,125 106,108 Q110,95 125,105" fill="none" stroke="url(#cupidSkin)" stroke-width="12" stroke-linecap="round"/>
+    
+    <!-- Golden Bow -->
+    <path d="M102,80 Q88,110 102,140" fill="none" stroke="url(#goldBow)" stroke-width="5" stroke-linecap="round"/>
+    <line x1="102" y1="80" x2="102" y2="140" stroke="#ffffff" stroke-width="1.8" opacity="0.85"/>
+
+    <!-- Head -->
+    <circle cx="140" cy="98" r="32" fill="url(#cupidSkin)"/>
+
+    <!-- Rosy Blushing Cheeks -->
+    <ellipse cx="122" cy="107" rx="8" ry="4.5" fill="#ff477e" opacity="0.38"/>
+    <ellipse cx="158" cy="107" rx="8" ry="4.5" fill="#ff477e" opacity="0.38"/>
+
+    <!-- Happy Eyes & Smile -->
+    <path d="M125,97 Q130,92 135,97" fill="none" stroke="#6b2d5c" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M145,97 Q150,92 155,97" fill="none" stroke="#6b2d5c" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M136,108 Q140,114 144,108" fill="none" stroke="#e0407b" stroke-width="2.4" stroke-linecap="round"/>
+
+    <!-- Curly Golden Hair -->
+    <circle cx="126" cy="74" r="12" fill="url(#cupidHair)"/>
+    <circle cx="140" cy="70" r="14" fill="url(#cupidHair)"/>
+    <circle cx="154" cy="74" r="12" fill="url(#cupidHair)"/>
+    <circle cx="118" cy="85" r="9" fill="url(#cupidHair)"/>
+    <circle cx="162" cy="85" r="9" fill="url(#cupidHair)"/>
+
+    <!-- Little Golden Halo -->
+    <ellipse cx="140" cy="62" rx="22" ry="7" fill="none" stroke="url(#goldBow)" stroke-width="3.5" opacity="0.9"/>
+
+    <!-- Right Arm holding Heart Arrow -->
+    <path d="M156,138 Q175,125 182,102" fill="none" stroke="url(#cupidSkin)" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- Golden Arrow Shaft -->
+    <line x1="95" y1="110" x2="192" y2="90" stroke="url(#goldBow)" stroke-width="3" stroke-linecap="round"/>
+    <!-- Arrow Feathers -->
+    <path d="M94,110 L84,104 M94,110 L84,116 M98,109 L88,103 M98,109 L88,115" stroke="#ff758f" stroke-width="2.4" stroke-linecap="round"/>
+
+    <!-- Arrow Ruby Heart Head -->
+    <g class="arrow-heart">
+      <path d="M198,86 C198,80 205,76 210,81 C215,86 215,92 205,100 L198,106 L191,100 C181,92 181,86 186,81 C191,76 198,80 198,86 Z" fill="url(#rubyArrow)" filter="drop-shadow(0 2px 6px rgba(255,10,84,0.5))"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="twilightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2b0938"/>
+      <stop offset="40%" stop-color="#7209b7"/>
+      <stop offset="75%" stop-color="#f72585"/>
+      <stop offset="100%" stop-color="#ff758c"/>
+    </linearGradient>
+    <linearGradient id="rubyGleam" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#ff0a54"/>
+      <stop offset="100%" stop-color="#a4133c"/>
+    </linearGradient>
+    <radialGradient id="twilightVictory" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd166" stop-opacity="0.65"/>
+      <stop offset="60%" stop-color="#ff0a54" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes heartBurstCeil {
+      0%, 100% { transform: scale(1) translateY(0); }
+      50% { transform: scale(1.12) translateY(-6px); }
+    }
+    @keyframes fireflySparkle {
+      0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+      50% { opacity: 1; transform: translate(15px, -20px) scale(1.2); }
+      100% { opacity: 0; transform: translate(30px, -40px) scale(0.6); }
+    }
+    .constellation-heart {
+      animation: heartBurstCeil 2.6s ease-in-out infinite;
+      transform-origin: 140px 95px;
+    }
+    .fly-1 { animation: fireflySparkle 2.8s ease-out infinite; transform-origin: 90px 140px; }
+    .fly-2 { animation: fireflySparkle 3.2s ease-out infinite 0.9s; transform-origin: 170px 130px; }
+  </style>
+
+  <circle cx="140" cy="120" r="105" fill="url(#twilightSky)"/>
+  <circle cx="140" cy="100" r="80" fill="url(#twilightVictory)"/>
+
+  <!-- Firefly Sparks -->
+  <g class="fly-1">
+    <circle cx="90" cy="140" r="3" fill="#ffd166" filter="drop-shadow(0 0 6px #ffd166)"/>
+  </g>
+  <g class="fly-2">
+    <circle cx="170" cy="130" r="3" fill="#ffd166" filter="drop-shadow(0 0 6px #ffd166)"/>
+  </g>
+
+  <!-- Big Glowing Starlit Celestial Heart -->
+  <g class="constellation-heart">
+    <path d="M140,80 C140,55 165,42 184,60 C202,78 202,102 166,130 L140,150 L114,130 C78,102 78,78 96,60 C115,42 140,55 140,80 Z" fill="url(#rubyGleam)" filter="drop-shadow(0 0 20px rgba(255,10,84,0.75))"/>
+    
+    <!-- Inner Radiant Sparkle -->
+    <path d="M140,70 Q140,80 130,80 Q140,80 140,90 Q140,80 150,80 Q140,80 140,70 Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Water Surface & Swans Celebrating -->
+  <path d="M45,170 Q140,162 235,170 C230,198 205,220 140,225 C75,220 50,198 45,170 Z" fill="#2b0938"/>
+  <path d="M110,178 C115,165 125,160 135,165 L138,172 L115,182 Z" fill="#ffffff"/>
+  <path d="M170,178 C165,165 155,160 145,165 L142,172 L165,182 Z" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="envelopeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff5f5"/>
+      <stop offset="60%" stop-color="#fed7e2"/>
+      <stop offset="100%" stop-color="#fbb6ce"/>
+    </linearGradient>
+    <linearGradient id="paperGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fff0f5"/>
+    </linearGradient>
+    <linearGradient id="waxSeal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff477e"/>
+      <stop offset="50%" stop-color="#c9184a"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+    <radialGradient id="letterAura" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#ff758f" stop-opacity="0.4"/>
+      <stop offset="60%" stop-color="#ffd166" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes floatLetter {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-7px) rotate(-1.5deg); }
+    }
+    @keyframes flutterHeart1 {
+      0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+      30% { opacity: 0.9; }
+      80% { opacity: 0.8; }
+      100% { transform: translate(-30px, -45px) scale(1.1); opacity: 0; }
+    }
+    @keyframes flutterHeart2 {
+      0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+      30% { opacity: 0.9; }
+      80% { opacity: 0.8; }
+      100% { transform: translate(28px, -48px) scale(1.1); opacity: 0; }
+    }
+    @keyframes flutterHeart3 {
+      0% { transform: translate(0, 0) scale(0.7); opacity: 0; }
+      40% { opacity: 1; }
+      90% { opacity: 0.8; }
+      100% { transform: translate(0px, -55px) scale(1.2); opacity: 0; }
+    }
+    .letter-group {
+      animation: floatLetter 3.4s ease-in-out infinite;
+      transform-origin: 140px 140px;
+    }
+    .fly-heart-l { animation: flutterHeart1 3.6s ease-out infinite; transform-origin: 120px 100px; }
+    .fly-heart-r { animation: flutterHeart2 3.9s ease-out infinite 0.8s; transform-origin: 160px 100px; }
+    .fly-heart-c { animation: flutterHeart3 3.4s ease-out infinite 1.4s; transform-origin: 140px 90px; }
+  </style>
+
+  <circle cx="140" cy="120" r="105" fill="url(#letterAura)"/>
+
+  <!-- Fluttering Floating Hearts from Envelope -->
+  <g class="fly-heart-l">
+    <path d="M120,100 C120,92 127,88 133,93 C139,98 139,106 128,115 L120,121 L112,115 C101,106 101,98 107,93 C113,88 120,92 120,100 Z" fill="#ff477e"/>
+  </g>
+  <g class="fly-heart-r">
+    <path d="M160,100 C160,92 167,88 173,93 C179,98 179,106 168,115 L160,121 L152,115 C141,106 141,98 147,93 C153,88 160,92 160,100 Z" fill="#ff0a54"/>
+  </g>
+  <g class="fly-heart-c">
+    <path d="M140,90 C140,82 147,78 153,83 C159,88 159,96 148,105 L140,111 L132,105 C121,96 121,88 127,83 C133,78 140,82 140,90 Z" fill="#ffd166"/>
+  </g>
+
+  <!-- Love Letter Envelope Group -->
+  <g class="letter-group">
+    <!-- Back of Envelope -->
+    <rect x="70" y="100" width="140" height="90" rx="10" fill="#fbb6ce" filter="drop-shadow(0 8px 18px rgba(201,24,74,0.22))"/>
+
+    <!-- Letter Paper peaking out -->
+    <rect x="80" y="75" width="120" height="75" rx="6" fill="url(#paperGrad)" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.08))"/>
+    <!-- Handwriting text lines on letter -->
+    <line x1="92" y1="88" x2="168" y2="88" stroke="#ff758f" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="92" y1="98" x2="188" y2="98" stroke="#ffb3c6" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="92" y1="108" x2="155" y2="108" stroke="#ffb3c6" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- Little heart seal on parchment -->
+    <path d="M178,88 C178,84 182,81 185,84 C188,87 188,91 182,96 L178,99 L174,96 C168,91 168,87 171,84 C174,81 178,84 178,88 Z" fill="#ff0a54"/>
+
+    <!-- Left & Right Fold Flaps -->
+    <path d="M70,100 L140,148 L70,190 Z" fill="#fed7e2"/>
+    <path d="M210,100 L140,148 L210,190 Z" fill="#fed7e2"/>
+
+    <!-- Bottom Envelope Flap -->
+    <path d="M70,190 L140,142 L210,190 Z" fill="url(#envelopeBg)"/>
+
+    <!-- Wax Seal Heart -->
+    <circle cx="140" cy="144" r="14" fill="url(#waxSeal)" filter="drop-shadow(0 3px 6px rgba(128,15,47,0.4))"/>
+    <path d="M140,140 C140,136 144,133 147,136 C150,139 150,143 144,147 L140,151 L136,147 C130,143 130,139 133,136 C136,133 140,136 140,140 Z" fill="#ffffff" opacity="0.9"/>
+  </g>
+</svg>

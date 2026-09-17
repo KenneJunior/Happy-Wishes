@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240">
+  <defs>
+    <linearGradient id="blossomSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff0f5"/>
+      <stop offset="60%" stop-color="#ffd1dc"/>
+      <stop offset="100%" stop-color="#ffb3c6"/>
+    </linearGradient>
+    <linearGradient id="petalPink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758f"/>
+      <stop offset="60%" stop-color="#ff4d6d"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+    <linearGradient id="petalPeach" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffccd5"/>
+      <stop offset="100%" stop-color="#ff758f"/>
+    </linearGradient>
+    <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#80ed99"/>
+      <stop offset="100%" stop-color="#38b000"/>
+    </linearGradient>
+    <linearGradient id="ribbonSilk" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="100%" stop-color="#800f2f"/>
+    </linearGradient>
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#ffccd5" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <style>
+    @keyframes swayBouquet {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2.5deg); }
+    }
+    @keyframes floatPetal {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      30% { opacity: 0.9; }
+      80% { opacity: 0.7; }
+      100% { transform: translate(-30px, 35px) rotate(80deg); opacity: 0; }
+    }
+    @keyframes shimmerPollen {
+      0%, 100% { transform: scale(0.8); opacity: 0.4; }
+      50% { transform: scale(1.2); opacity: 1; }
+    }
+    .bouquet-group {
+      animation: swayBouquet 4s ease-in-out infinite;
+      transform-origin: 140px 190px;
+    }
+    .floating-p1 { animation: floatPetal 3.8s ease-in-out infinite; transform-origin: 100px 70px; }
+    .floating-p2 { animation: floatPetal 4.2s ease-in-out infinite 1.6s; transform-origin: 175px 85px; }
+    .pollen-dot { animation: shimmerPollen 2.5s ease-in-out infinite; }
+  </style>
+
+  <!-- Background Aura -->
+  <circle cx="140" cy="120" r="95" fill="url(#blossomSky)" filter="drop-shadow(0 6px 20px rgba(255, 77, 109, 0.2))"/>
+  <circle cx="140" cy="115" r="70" fill="url(#sunGlow)"/>
+
+  <!-- Drifting Flower Petals -->
+  <g class="floating-p1">
+    <path d="M100,70 C95,60 108,55 112,65 C115,75 105,80 100,70 Z" fill="#ff758f" opacity="0.85"/>
+  </g>
+  <g class="floating-p2">
+    <path d="M175,85 C170,75 185,72 188,82 C190,92 180,95 175,85 Z" fill="#ff4d6d" opacity="0.85"/>
+  </g>
+
+  <!-- Bouquet Container with Animation -->
+  <g class="bouquet-group">
+    <!-- Bouquet Wrapper Paper Cone -->
+    <path d="M140,195 L108,125 C122,128 158,128 172,125 Z" fill="#fdf0ed" stroke="#f2b5c0" stroke-width="1.5" filter="drop-shadow(0 4px 6px rgba(0,0,0,0.08))"/>
+    <path d="M140,195 L118,126 C132,130 148,130 162,126 Z" fill="#fae1dd"/>
+
+    <!-- Lush Foliage & Leaves -->
+    <!-- Left Leaf -->
+    <path d="M112,125 C92,108 95,85 110,95 C120,102 122,118 112,125 Z" fill="url(#leafGreen)"/>
+    <path d="M110,95 Q115,110 114,124" stroke="#2d6a4f" stroke-width="1" fill="none"/>
+
+    <!-- Right Leaf -->
+    <path d="M168,125 C188,108 185,85 170,95 C160,102 158,118 168,125 Z" fill="url(#leafGreen)"/>
+    <path d="M170,95 Q165,110 166,124" stroke="#2d6a4f" stroke-width="1" fill="none"/>
+
+    <!-- Top Sprouting Sprigs -->
+    <path d="M140,95 C135,70 140,55 140,55 C140,55 145,70 140,95 Z" fill="#52b788"/>
+    <circle cx="140" cy="53" r="3" fill="#ffccd5"/>
+
+    <!-- Central Garden Rose (Center Blossom) -->
+    <g transform="translate(140, 110)">
+      <circle cx="0" cy="0" r="26" fill="url(#petalPink)" filter="drop-shadow(0 2px 5px rgba(128,15,47,0.3))"/>
+      <!-- Outer Petal layers -->
+      <path d="M-18,-10 C-12,-24 12,-24 18,-10 C22,4 10,20 -2,20 C-14,20 -22,4 -18,-10 Z" fill="#ff4d6d"/>
+      <path d="M-12,-6 C-8,-16 8,-16 12,-6 C16,4 6,14 -2,14 C-10,14 -16,4 -12,-6 Z" fill="#ff758f"/>
+      <!-- Rose Spiral Core -->
+      <path d="M-6,-2 C-3,-8 5,-8 6,-2 C7,4 2,8 -1,8 C-4,8 -7,4 -6,-2 Z" fill="#c9184a"/>
+      <circle cx="0" cy="0" r="3.5" fill="#590d22"/>
+    </g>
+
+    <!-- Left Peony Blossom -->
+    <g transform="translate(112, 105)">
+      <circle cx="0" cy="0" r="19" fill="url(#petalPeach)" filter="drop-shadow(0 2px 4px rgba(201,24,74,0.25))"/>
+      <path d="M-12,-6 C-8,-14 8,-14 12,-6 C15,2 6,10 0,10 C-6,10 -15,2 -12,-6 Z" fill="#ff758f"/>
+      <circle cx="0" cy="0" r="4" fill="#ff4d6d"/>
+    </g>
+
+    <!-- Right Peony Blossom -->
+    <g transform="translate(168, 105)">
+      <circle cx="0" cy="0" r="19" fill="url(#petalPeach)" filter="drop-shadow(0 2px 4px rgba(201,24,74,0.25))"/>
+      <path d="M-12,-6 C-8,-14 8,-14 12,-6 C15,2 6,10 0,10 C-6,10 -15,2 -12,-6 Z" fill="#ff758f"/>
+      <circle cx="0" cy="0" r="4" fill="#ff4d6d"/>
+    </g>
+
+    <!-- Small White Jasmine Filler Stars -->
+    <g transform="translate(126, 80)">
+      <circle cx="0" cy="0" r="5" fill="#ffffff"/>
+      <circle cx="0" cy="0" r="2" fill="#ffd166" class="pollen-dot"/>
+    </g>
+    <g transform="translate(154, 80)">
+      <circle cx="0" cy="0" r="5" fill="#ffffff"/>
+      <circle cx="0" cy="0" r="2" fill="#ffd166" class="pollen-dot"/>
+    </g>
+
+    <!-- Silk Bow & Ribbons -->
+    <g transform="translate(140, 168)">
+      <!-- Left Bow Loop -->
+      <path d="M0,0 C-18,-15 -25,8 -2,4 Z" fill="url(#ribbonSilk)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.2))"/>
+      <!-- Right Bow Loop -->
+      <path d="M0,0 C18,-15 25,8 2,4 Z" fill="url(#ribbonSilk)" filter="drop-shadow(0 2px 3px rgba(0,0,0,0.2))"/>
+      <!-- Bow Knot -->
+      <circle cx="0" cy="1" r="5" fill="#590d22"/>
+      <!-- Hanging Ribbon Tails -->
+      <path d="M-2,3 C-8,14 -12,22 -14,28 L-8,26 L-5,20 C-3,14 -1,6 -2,3 Z" fill="#800f2f"/>
+      <path d="M2,3 C8,14 12,22 14,28 L8,26 L5,20 C3,14 1,6 2,3 Z" fill="#800f2f"/>
+    </g>
+  </g>
+</svg>
