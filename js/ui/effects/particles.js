@@ -431,17 +431,17 @@ export function spawnFloatingParticle(options = {}) {
     particleEl.setAttribute('data-material', material);
 
     // Visible, atmospheric dimensions based on tier, definition scale, and device profile
-    // Far tier: 1.15rem - 1.55rem (~18px - 25px) - subtle atmospheric depth
-    // Mid tier: 1.65rem - 2.25rem (~26px - 36px) - prominent crisp celebration motifs
-    // Near tier: 2.35rem - 3.25rem (~38px - 52px) - hero celebration accents
-    const baseRem = tier === 'far' ? 1.25 : (tier === 'mid' ? 1.75 : 2.5);
-    const tierMultiplier = deviceConfig.isMobile ? 0.85 : 1.0;
+    // Far tier: 1.35rem - 1.85rem (~22px - 30px) - clearly visible background celebratory motifs
+    // Mid tier: 2.30rem - 3.40rem (~37px - 55px) - prominent crisp celebration motifs
+    // Near tier: 3.60rem - 5.40rem (~58px - 86px) - hero celebration accents
+    const baseRem = tier === 'far' ? 1.35 : (tier === 'mid' ? 1.85 : 2.5);
+    const tierMultiplier = deviceConfig.isMobile ? 0.9 : 1.0;
     const randScale = (Math.random() * (definition.maxScale - definition.minScale) + definition.minScale);
-    const finalDimensionRem = (Math.max(0.85, baseRem * randScale * tierMultiplier)).toFixed(2);
+    const finalDimensionRem = (Math.max(1.1, baseRem * randScale * tierMultiplier)).toFixed(2);
 
     // Opacity based on tier & definition, calibrated to guarantee visibility against ambient background
-    const minOp = Math.max(0.48, definition.minOpacity);
-    const maxOp = Math.max(minOp + 0.15, definition.maxOpacity);
+    const minOp = Math.max(0.55, definition.minOpacity);
+    const maxOp = Math.max(minOp + 0.15, Math.min(1.0, definition.maxOpacity * 1.1));
     const randOpacity = (Math.random() * (maxOp - minOp) + minOp).toFixed(2);
 
     // Physical motion parameters calibrated to material and device tier

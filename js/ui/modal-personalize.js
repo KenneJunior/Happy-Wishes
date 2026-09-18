@@ -760,9 +760,71 @@ async function handleGenerateAiLetter() {
 }
 
 /**
- * Commits the current draft configuration atomically to state, storage, and audio.
+ * Robust clipboard copy with automatic multi-strategy fallback.
+ * Works across modern browsers, iframes, mobile devices, and restricted contexts.
+ * @param {string} text - Text to copy
+ * @returns {Promise<boolean>} True if copied successfully
  */
-function commitDraftChanges() {
+export async function copyTextToClipboard(text) {
+    if (!text) return false;
+
+    // Strategy 1: Modern asynchronous Clipboard API
+    if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (err) {
+            console.warn('[Clipboard] navigator.clipboard.writeText failed, trying execCommand fallback:', err);
+        }
+    }
+
+    // Strategy 2: Synchronous execCommand fallback using a temporary hidden textarea
+    if (typeof document !== 'undefined') {
+        try {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'fixed';
+            textarea.style.top = '0';
+            textarea.style.left = '0';
+            textarea.style.width = '2em';
+            textarea.style.height = '2em';
+            textarea.style.padding = '0';
+            textarea.style.border = 'none';
+            textarea.style.outline = 'none';
+            textarea.style.boxShadow = 'none';
+            textarea.style.background = 'transparent';
+            textarea.style.opacity = '0';
+            textarea.style.pointerEvents = 'none';
+            textarea.style.zIndex = '-9999';
+
+            document.body.appendChild(textarea);
+            textarea.focus({ preventScroll: true });
+            textarea.select();
+            textarea.setSelectionRange(0, textarea.value.length);
+
+            const successful = document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            if (successful) {
+                return true;
+            }
+        } catch (execErr) {
+            console.warn('[Clipboard] execCommand fallback failed:', execErr);
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Commits the current draft configuration atomically to state, storage, and audio.
+ * @param {Object} [options]
+ * @param {boolean} [options.closeModal=true]
+ * @param {boolean} [options.showToastNotice=true]
+ */
+export function commitDraftChanges(options = {}) {
+    const { closeModal = true, showToastNotice = true } = (typeof options === 'object' && options !== null) ? options : {};
     if (isSaving || !draftState) return;
     isSaving = true;
 
@@ -832,8 +894,16 @@ function commitDraftChanges() {
         // Atomically commit into central application state
         appState.updateState(updatePayload);
 
-        closePersonalizeModal();
-        showToast(newName ? `Card personalized for ${newName}! 💖` : "Card personalized! 💖", "✨");
+        // Keep local committedState snapshot synchronized
+        committedState = { ...appState.getState() };
+
+        if (closeModal) {
+            closePersonalizeModal();
+        }
+
+        if (showToastNotice) {
+            showToast(newName ? `Card personalized for ${newName}! 💖` : "Card personalized! 💖", "✨");
+        }
     } finally {
         isSaving = false;
         if (savePersonalizeBtn) {
@@ -1247,18 +1317,61 @@ export function initPersonalizeModal() {
 
     // Copy Link Button (Commits current draft and copies shareable URL)
     if (copyCustomLinkBtn) {
-        copyCustomLinkBtn.addEventListener('click', () => {
-            commitDraftChanges();
+        copyCustomLinkBtn.addEventListener('click', async () => {
+            // Commit all current form inputs atomically into appState without prematurely closing modal
+            commitDraftChanges({ closeModal: false, showToastNotice: false });
             const shareUrl = appState.getShareUrl();
 
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(shareUrl).then(() => {
-                    showToast("Personalized link copied! Ready to share 🔗✨", "📋");
-                }).catch(() => {
-                    showToast("Link created! Ready to share", "🔗");
-                });
+            // Populate fallback link container if present
+            const shareInput = document.getElementById('personalize-share-link-input');
+            const shareContainer = document.getElementById('personalize-share-link-container');
+            if (shareInput) {
+                shareInput.value = shareUrl;
+            }
+
+            const copyBtnText = document.getElementById('copy-custom-link-text');
+            const originalText = copyBtnText ? copyBtnText.textContent : 'Copy Link 🔗';
+
+            // Multi-strategy clipboard copy
+            const copySuccess = await copyTextToClipboard(shareUrl);
+
+            if (copySuccess) {
+                if (copyBtnText) copyBtnText.textContent = 'Copied! 📋✨';
+                copyCustomLinkBtn.classList.add('is-copied');
+                showToast("Personalized link copied! Ready to share 🔗✨", "📋");
             } else {
-                showToast("Link created! Ready to share", "🔗");
+                if (copyBtnText) copyBtnText.textContent = 'Link Ready! 🔗';
+                if (shareContainer) {
+                    shareContainer.hidden = false;
+                    shareContainer.classList.add('is-active');
+                    if (shareInput) {
+                        shareInput.focus();
+                        shareInput.select();
+                    }
+                }
+                showToast("Personalized link generated! Ready to share 🔗", "✨");
+            }
+
+            setTimeout(() => {
+                if (copyBtnText) copyBtnText.textContent = originalText;
+                copyCustomLinkBtn.classList.remove('is-copied');
+            }, 2500);
+        });
+    }
+
+    // Inline fallback share link "Copy" button listener
+    const inlineShareCopyBtn = document.getElementById('personalize-share-link-copy-btn');
+    if (inlineShareCopyBtn) {
+        inlineShareCopyBtn.addEventListener('click', async () => {
+            const shareInput = document.getElementById('personalize-share-link-input');
+            const textToCopy = shareInput ? shareInput.value : appState.getShareUrl();
+            const copied = await copyTextToClipboard(textToCopy);
+            if (copied) {
+                inlineShareCopyBtn.textContent = 'Copied! ✨';
+                showToast("Link copied to clipboard! 📋✨", "📋");
+                setTimeout(() => {
+                    inlineShareCopyBtn.textContent = 'Copy';
+                }, 2000);
             }
         });
     }

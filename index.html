@@ -943,6 +943,19 @@
                         <span id="copy-custom-link-text">Copy Link 🔗</span>
                     </button>
                 </div>
+
+                <!-- Fallback & Direct Link Display Container -->
+                <div id="personalize-share-link-container" class="personalize-share-link-container" hidden>
+                    <label for="personalize-share-link-input" class="personalize-share-link-label">
+                        <span>Personalized Share Link:</span>
+                    </label>
+                    <div class="personalize-share-link-row">
+                        <input type="text" id="personalize-share-link-input" class="personalize-share-link-input" readonly aria-label="Personalized share link">
+                        <button type="button" id="personalize-share-link-copy-btn" class="btn-share-link-copy" aria-label="Copy link to clipboard">
+                            Copy
+                        </button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
