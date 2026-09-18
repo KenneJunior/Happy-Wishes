@@ -21,6 +21,7 @@ import { previewVisualAsset, updateBearAsset, restoreCommittedVisualAsset } from
 import { generateKeepsakeLetter } from '../services/letter-api.js';
 import { getLanguage, setLanguage, getLanguageName, t, applyTranslations } from '../i18n/index.js';
 import { DeviceManager } from '../core/device.js';
+import { updateParticlePerformance } from './effects/particles.js';
 
 // DOM Element References
 let personalizeModal = null;
@@ -85,6 +86,14 @@ let songTitleDisplay = null;
 let songActiveIndicator = null;
 let songPresetChips = [];
 
+// Particle Performance Controls
+let particlePerfRadios = [];
+let particlePerfLight = null;
+let particlePerfHeavy = null;
+let particlePerfBadge = null;
+let particlePerfCardLight = null;
+let particlePerfCardHeavy = null;
+
 // State Management: Committed vs Draft
 let committedState = null;
 let draftState = null;
@@ -93,6 +102,21 @@ let draftState = null;
 let visualLoadToken = 0;
 let customUrlDebounceTimer = null;
 const sessionObjectUrls = new Set();
+
+/**
+ * Updates the Particle Performance UI options and status badge.
+ * @param {string} mode 'light' | 'heavy'
+ */
+function updateParticlePerfUI(mode = 'heavy') {
+    const isLight = mode === 'light';
+    if (particlePerfLight) particlePerfLight.checked = isLight;
+    if (particlePerfHeavy) particlePerfHeavy.checked = !isLight;
+    if (particlePerfCardLight) particlePerfCardLight.classList.toggle('is-active', isLight);
+    if (particlePerfCardHeavy) particlePerfCardHeavy.classList.toggle('is-active', !isLight);
+    if (particlePerfBadge) {
+        particlePerfBadge.textContent = isLight ? 'Gentle Atmosphere' : 'Rich Atmosphere';
+    }
+}
 
 /**
  * Calculates and updates the category count pills dynamically from ROMANTIC_VISUAL_THEMES.
@@ -509,6 +533,13 @@ export function openPersonalizeModal(focusLanguage = false) {
     updateModalOccasionUI(activeOccasionKey);
     updateCustomCelebrationPreview();
 
+    // Populate Particle Performance Controls
+    const currentPerf = (draftState && draftState.particlePerformance) || (appState.getState && appState.getState().particlePerformance) || 'heavy';
+    if (draftState) {
+        draftState.particlePerformance = currentPerf;
+    }
+    updateParticlePerfUI(currentPerf);
+
     isModalSaved = false;
     isPersonalizeModalOpen = true;
 
@@ -566,6 +597,11 @@ export function cancelPersonalizeModal() {
 
     // Restore committed visual mascot on main card
     restoreCommittedVisualAsset();
+
+    // Revert particle performance if previewed
+    if (committedState && committedState.particlePerformance) {
+        updateParticlePerformance(committedState.particlePerformance);
+    }
 
     // Discard draft
     draftState = null;
@@ -841,6 +877,10 @@ export function commitDraftChanges(options = {}) {
         const chosenLang = languageSelect ? languageSelect.value : (draftState.language || getLanguage());
 
         const chosenVisual = draftState.visualTheme || resolveOccasionDefaultVisual(chosenOccasion, draftState.customEvent);
+        const chosenPerf = (draftState && (draftState.particlePerformance === 'light' || draftState.particlePerformance === 'heavy'))
+            ? draftState.particlePerformance
+            : 'heavy';
+
         const updatePayload = {
             recipient: newName,
             occasion: chosenOccasion,
@@ -850,7 +890,8 @@ export function commitDraftChanges(options = {}) {
             customSongName: draftState.customSongName || '',
             visualTheme: chosenVisual,
             visualSelectionMode: draftState.visualSelectionMode || 'occasion-default',
-            customVisualUrl: draftState.customVisualUrl || ''
+            customVisualUrl: draftState.customVisualUrl || '',
+            particlePerformance: chosenPerf
         };
 
         if (chosenOccasion === 'anniversary') {
@@ -893,6 +934,9 @@ export function commitDraftChanges(options = {}) {
 
         // Atomically commit into central application state
         appState.updateState(updatePayload);
+
+        // Instantly synchronize the particle engine with the new performance mode
+        updateParticlePerformance(chosenPerf);
 
         // Keep local committedState snapshot synchronized
         committedState = { ...appState.getState() };
@@ -1285,6 +1329,29 @@ export function initPersonalizeModal() {
             if (draftState) {
                 draftState.customMsg = customNoteInput.value;
             }
+        });
+    }
+
+    // Particle Performance Mode Controls
+    particlePerfLight = document.getElementById('particle-perf-light');
+    particlePerfHeavy = document.getElementById('particle-perf-heavy');
+    particlePerfBadge = document.getElementById('particle-perf-badge');
+    particlePerfCardLight = document.getElementById('particle-perf-card-light');
+    particlePerfCardHeavy = document.getElementById('particle-perf-card-heavy');
+    particlePerfRadios = [particlePerfLight, particlePerfHeavy].filter(Boolean);
+
+    if (particlePerfRadios.length > 0) {
+        particlePerfRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (!radio.checked) return;
+                const chosenPerf = radio.value;
+                if (draftState) {
+                    draftState.particlePerformance = chosenPerf;
+                }
+                updateParticlePerfUI(chosenPerf);
+                updateParticlePerformance(chosenPerf);
+                sound.playDodgePop();
+            });
         });
     }
 

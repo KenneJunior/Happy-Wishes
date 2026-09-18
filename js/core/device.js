@@ -25,6 +25,7 @@ export const DeviceManager = {
 
         const lowCpu = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
         const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
+        const isConstrained = Boolean(lowCpu || lowMemory);
 
         // Explicit OS Reduced Motion check
         if (window.matchMedia) {
@@ -52,9 +53,10 @@ export const DeviceManager = {
             }
         }
 
-        this.isMobile = isMobileUA || isSmallScreen || (hasTouch && isCoarse);
-        this.isCoarsePointer = isCoarse || !canHover;
-        this.isLowPower = this.isMobile || lowCpu || lowMemory;
+        this.isMobile = Boolean(isMobileUA || isSmallScreen || (hasTouch && isCoarse));
+        this.isCoarsePointer = Boolean(isCoarse || !canHover);
+        this.isConstrained = isConstrained;
+        this.isLowPower = isConstrained;
         this.canTilt = !this.isMobile && canHover && !hasTouch;
 
         if (document.body) {
@@ -62,15 +64,27 @@ export const DeviceManager = {
                 document.body.classList.add('reduced-motion-mode');
             }
             if (this.isMobile) {
-                document.body.classList.add('is-mobile', 'mobile-throttled');
-                this.maxParticles = 2; // Strict mobile throttle: max 2 active floating particles
-                this.spawnIntervalMs = 3200; // Low-frequency spawn to preserve mobile battery
+                document.body.classList.add('is-mobile');
+                this.maxParticles = this.isConstrained ? 18 : 38;
+                this.spawnIntervalMs = this.isConstrained ? 1200 : 450;
             } else {
                 document.body.classList.add('is-desktop');
-                this.maxParticles = 8;
-                this.spawnIntervalMs = 850;
+                this.maxParticles = this.isConstrained ? 28 : 55;
+                this.spawnIntervalMs = this.isConstrained ? 800 : 300;
             }
         }
+    },
+
+    /**
+     * Resolves intelligent default performance mode:
+     * - Mobile: light if low-power / constrained, heavy if capable
+     * - Desktop: heavy unless constrained resources
+     */
+    getDefaultParticlePerformanceMode() {
+        if (this.isMobile) {
+            return this.isConstrained || this.isLowPower ? 'light' : 'heavy';
+        }
+        return this.isConstrained || this.isLowPower ? 'light' : 'heavy';
     },
 
     /**

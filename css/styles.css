@@ -5848,5 +5848,144 @@ body.dark-mode .pill-settings:hover {
     transform: translateY(-1px);
 }
 
+/* --------------------------------------------------------------------------
+   Personalize Modal: Particle Performance Mode Controls
+   -------------------------------------------------------------------------- */
+.particle-performance-group {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .particle-performance-group {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.particle-perf-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 46, 99, 0.12);
+    color: var(--color-primary);
+    border: 1px solid rgba(255, 46, 99, 0.25);
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.18rem 0.6rem;
+    letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .particle-perf-badge {
+    background: rgba(255, 78, 121, 0.22);
+    border-color: rgba(255, 78, 121, 0.4);
+    color: #ff99b6;
+}
+
+.particle-perf-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+}
+
+@media (max-width: 480px) {
+    .particle-perf-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.particle-perf-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem 0.85rem;
+    border-radius: 12px;
+    background: var(--modal-input-bg, #ffffff);
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+[data-theme="dark"] .particle-perf-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.particle-perf-card:hover {
+    border-color: rgba(255, 46, 99, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 46, 99, 0.08);
+}
+
+.particle-perf-card.is-active,
+.particle-perf-card:has(.particle-perf-radio:checked) {
+    border-color: var(--color-primary, #ff2e63);
+    background: rgba(255, 46, 99, 0.06);
+    box-shadow: 0 4px 14px rgba(255, 46, 99, 0.15);
+}
+
+[data-theme="dark"] .particle-perf-card.is-active,
+[data-theme="dark"] .particle-perf-card:has(.particle-perf-radio:checked) {
+    background: rgba(255, 46, 99, 0.16);
+    border-color: #ff4d79;
+}
+
+.particle-perf-radio {
+    margin-top: 0.2rem;
+    margin-right: 0.6rem;
+    accent-color: var(--color-primary, #ff2e63);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.particle-perf-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.particle-perf-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.particle-perf-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.particle-perf-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--modal-text, #1e1b2e);
+    letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .particle-perf-title {
+    color: #f1f5f9;
+}
+
+.particle-perf-desc {
+    font-size: 0.74rem;
+    color: var(--modal-text-muted, #64748b);
+    line-height: 1.35;
+    margin: 0;
+}
+
+[data-theme="dark"] .particle-perf-desc {
+    color: #94a3b8;
+}
+
+.particle-motion-hint {
+    margin-top: 0.45rem;
+    font-size: 0.72rem;
+    color: var(--modal-text-muted, #64748b);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
 
 

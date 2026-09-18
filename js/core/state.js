@@ -6,8 +6,9 @@
 
 import { getDefaultOccasionKey } from './occasion-service.js';
 import { OCCASIONS, resolveOccasionDefaultVisual, isOccasionDefaultVisual } from '../config/occasions.js';
+import { DeviceManager } from './device.js';
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
     RECIPIENT: 'celebration_recipient',
     OCCASION: 'celebration_occasion',
     CUSTOM_DATE: 'celebration_custom_date',
@@ -21,8 +22,23 @@ const STORAGE_KEYS = {
     LANGUAGE: 'celebration_language',
     VISUAL_THEME: 'celebration_visual_theme',
     VISUAL_SELECTION_MODE: 'celebration_visual_selection_mode',
-    CUSTOM_VISUAL_URL: 'celebration_custom_visual_url'
+    CUSTOM_VISUAL_URL: 'celebration_custom_visual_url',
+    PARTICLE_PERFORMANCE: 'celebration_particle_performance'
 };
+
+/**
+ * Resolves intelligent default particle performance mode:
+ * Mobile: Light if low-power/constrained, Heavy if modern/capable
+ * Desktop: Heavy unless constrained resources
+ */
+export function resolveDefaultParticlePerformance() {
+    try {
+        if (typeof DeviceManager !== 'undefined' && typeof DeviceManager.getDefaultParticlePerformanceMode === 'function') {
+            return DeviceManager.getDefaultParticlePerformanceMode();
+        }
+    } catch (_) {}
+    return 'heavy';
+}
 
 const initialDefaultOccasion = getDefaultOccasionKey();
 
@@ -39,6 +55,7 @@ export const DEFAULT_STATE = {
     visualTheme: resolveOccasionDefaultVisual(initialDefaultOccasion),
     visualSelectionMode: 'occasion-default',
     customVisualUrl: '',
+    particlePerformance: 'heavy',
     denyCount: 0,
     acceptScale: 1.0,
     cardFlipped: false,
@@ -188,6 +205,13 @@ class StateStore {
 
                 const storedVisualUrl = localStorage.getItem(STORAGE_KEYS.CUSTOM_VISUAL_URL);
                 if (storedVisualUrl) loaded.customVisualUrl = storedVisualUrl;
+
+                const storedPerf = localStorage.getItem(STORAGE_KEYS.PARTICLE_PERFORMANCE);
+                if (storedPerf && (storedPerf === 'light' || storedPerf === 'heavy')) {
+                    loaded.particlePerformance = storedPerf;
+                } else {
+                    loaded.particlePerformance = resolveDefaultParticlePerformance();
+                }
             }
         } catch (e) {
             console.warn('LocalStorage unavailable or restricted:', e);
@@ -196,6 +220,11 @@ class StateStore {
         // 2. URL Parameters (Explicitly override saved state)
         if (typeof window !== 'undefined' && window.location) {
             const params = new URLSearchParams(window.location.search);
+
+            const urlPerf = params.get('perf') || params.get('particles') || params.get('particle_perf');
+            if (urlPerf && (urlPerf.toLowerCase() === 'light' || urlPerf.toLowerCase() === 'heavy')) {
+                loaded.particlePerformance = urlPerf.toLowerCase();
+            }
 
             const urlLang = params.get('lang') || params.get('language');
             if (urlLang && ['en', 'fr', 'es', 'pt', 'de'].includes(urlLang.toLowerCase())) {
@@ -377,6 +406,10 @@ class StateStore {
             } else {
                 localStorage.removeItem(STORAGE_KEYS.CUSTOM_VISUAL_URL);
             }
+
+            if (this._state.particlePerformance) {
+                localStorage.setItem(STORAGE_KEYS.PARTICLE_PERFORMANCE, this._state.particlePerformance);
+            }
         } catch (e) {
             console.warn('Failed to persist state to localStorage:', e);
         }
@@ -391,6 +424,7 @@ class StateStore {
         if (this._state.recipient) url.searchParams.set('to', this._state.recipient);
         if (this._state.occasion) url.searchParams.set('occasion', this._state.occasion);
         if (this._state.language && this._state.language !== 'en') url.searchParams.set('lang', this._state.language);
+        if (this._state.particlePerformance) url.searchParams.set('perf', this._state.particlePerformance);
         if (this._state.visualTheme && this._state.visualTheme !== 'default') {
             if (this._state.visualSelectionMode === 'explicit' && !isOccasionDefaultVisual(this._state.visualTheme, this._state.occasion, this._state.customEvent)) {
                 url.searchParams.set('visual', this._state.visualTheme);
@@ -415,4 +449,3 @@ class StateStore {
 }
 
 export const appState = new StateStore();
-export { STORAGE_KEYS };

@@ -6,6 +6,9 @@ import {
     stopEmojiSpawner, 
     initParticles, 
     clearFloatingParticles,
+    updateParticlePerformance,
+    PARTICLE_PERFORMANCE_MODES,
+    SPAWN_JITTER_RATIO,
     OCCASION_SVG_COLLECTIONS,
     THEME_SVG_COLLECTIONS,
     resolveActiveOccasion,
@@ -128,10 +131,11 @@ const secondEl = container.children[1];
 assert(secondEl.classList.contains('particle-christmas'), "Switching occasion immediately spawns occasion-specific particle");
 
 // 7. Test Device Performance Budget Cap
-for (let i = 0; i < 15; i++) {
+const activeMax = getDeviceParticleConfig().maxActiveParticles;
+for (let i = 0; i < activeMax + 10; i++) {
     spawnFloatingParticle();
 }
-assert(container.childElementCount <= DeviceManager.maxParticles, `Container respects DeviceManager.maxParticles throttle limit (${container.childElementCount} <= ${DeviceManager.maxParticles})`);
+assert(container.childElementCount <= activeMax, `Container respects active particle throttle limit (${container.childElementCount} <= ${activeMax})`);
 
 // 8. Test Reduced Motion Mode
 container.innerHTML = '';
@@ -234,45 +238,77 @@ assert(resolveActiveOccasion({ activeOccasion: 'bday' }) === 'birthday', "resolv
 assert(resolveActiveOccasion({ occasion: 'wedding' }) === 'anniversary', "resolveActiveOccasion normalizes alias 'wedding' -> 'anniversary'");
 assert(resolveActiveOccasion({ occasion: 'diploma' }) === 'graduation', "resolveActiveOccasion normalizes alias 'diploma' -> 'graduation'");
 
-// Test Device Capability Config - Desktop profile
+// Test Device Capability Config - Desktop profile (Heavy & Light)
 DeviceManager.isMobile = false;
 DeviceManager.isLowPower = false;
 DeviceManager.prefersReducedMotion = false;
-DeviceManager.maxParticles = 8;
-DeviceManager.spawnIntervalMs = 850;
 
-let config = getDeviceParticleConfig();
-assert(!config.isMobile && !config.isLowPower && !config.prefersReducedMotion, "Desktop profile detected accurately");
-assert(config.maxActiveParticles === 8, "Desktop particle capacity is 8");
-assert(config.spawnIntervalMs === 850, "Desktop spawn interval is 850ms");
-assert(config.allowNearTier === true, "Desktop allows near-tier hero particles");
-assert(config.enable3DTransforms === true, "Desktop enables 3D transforms");
-assert(config.initialFieldCount === 6, "Desktop initial field count is 6");
+// Desktop Heavy
+let configHeavy = getDeviceParticleConfig('heavy');
+assert(!configHeavy.isMobile && !configHeavy.prefersReducedMotion, "Desktop heavy profile detected accurately");
+assert(configHeavy.maxActiveParticles === 55, "Desktop heavy particle capacity is 55");
+assert(configHeavy.spawnIntervalMs === 300, "Desktop heavy spawn interval is 300ms");
+assert(configHeavy.initialFieldCount === 14, "Desktop heavy initial field count is 14");
+assert(configHeavy.burstCount === 14, "Desktop heavy burst count is 14");
+assert(configHeavy.allowNearTier === true, "Desktop heavy allows near-tier particles");
+assert(configHeavy.enable3DTransforms === true, "Desktop heavy enables 3D transforms");
+assert(configHeavy.spawnJitterRatio === 0.20, "Desktop heavy has 20% timing jitter");
 
-// Test Device Capability Config - Mobile profile
+// Desktop Light
+let configLight = getDeviceParticleConfig('light');
+assert(configLight.maxActiveParticles === 28, "Desktop light particle capacity is 28");
+assert(configLight.spawnIntervalMs === 800, "Desktop light spawn interval is 800ms");
+assert(configLight.initialFieldCount === 8, "Desktop light initial field count is 8");
+assert(configLight.burstCount === 8, "Desktop light burst count is 8");
+assert(configLight.burstCooldownMs === 1400, "Desktop light burst cooldown is 1400ms");
+
+// Test Device Capability Config - Mobile profile (Heavy & Light)
 DeviceManager.isMobile = true;
-DeviceManager.isLowPower = true;
-DeviceManager.maxParticles = 2;
-DeviceManager.spawnIntervalMs = 3200;
+DeviceManager.isLowPower = false;
 
-config = getDeviceParticleConfig();
-assert(config.isMobile && config.isLowPower, "Mobile + low-power profile detected accurately");
-assert(config.maxActiveParticles === 2, "Mobile max active particles is clamped to 2");
-assert(config.spawnIntervalMs >= 3200, "Mobile spawn interval is >= 3200ms");
-assert(config.allowNearTier === false, "Low-power mobile suppresses heavy near-tier particles");
-assert(config.enable3DTransforms === false, "Mobile disables heavy 3D matrix transforms");
-assert(config.initialFieldCount === 2, "Mobile seeds lighter initial field of 2 particles");
+// Mobile Heavy (Active, responsive, alive on mobile)
+let mobHeavy = getDeviceParticleConfig('heavy');
+assert(mobHeavy.isMobile === true, "Mobile heavy profile detected accurately");
+assert(mobHeavy.maxActiveParticles === 38, "Mobile heavy max active particles is 38");
+assert(mobHeavy.spawnIntervalMs === 450, "Mobile heavy spawn interval is 450ms");
+assert(mobHeavy.initialFieldCount === 10, "Mobile heavy initial field count is 10");
+assert(mobHeavy.burstCount === 10, "Mobile heavy burst count is 10");
+assert(mobHeavy.burstCooldownMs === 900, "Mobile heavy burst cooldown is 900ms");
+assert(mobHeavy.allowNearTier === true, "Mobile heavy allows near tier");
+assert(mobHeavy.enable3DTransforms === false, "Mobile disables heavy 3D matrix transforms");
+assert(mobHeavy.spawnJitterRatio === 0.20, "Mobile heavy has 20% timing jitter");
 
-// Test tier filtering via getOccasionParticleCollection on low-power
-const filteredBdayCollection = getOccasionParticleCollection('birthday', config);
-assert(filteredBdayCollection.every(p => p.tier !== 'near'), "Low-power config filters out 'near' tier variants from collection");
+// Mobile Light (Battery-saver / constrained mode)
+let mobLight = getDeviceParticleConfig('light');
+assert(mobLight.maxActiveParticles === 18, "Mobile light max active particles is 18");
+assert(mobLight.spawnIntervalMs === 1200, "Mobile light spawn interval is 1200ms");
+assert(mobLight.initialFieldCount === 5, "Mobile light initial field count is 5");
+assert(mobLight.burstCount === 5, "Mobile light burst count is 5");
+assert(mobLight.burstCooldownMs === 1800, "Mobile light burst cooldown is 1800ms");
+assert(mobLight.tierDistribution.near === 0.10, "Mobile light restricts near-tier particles to 10%");
 
-// Test Device Capability Config - Reduced Motion
+// Test live performance switching and pruning
+container.innerHTML = '';
+// Populate container with 25 particles
+for (let i = 0; i < 25; i++) {
+    const el = document.createElement('div');
+    el.className = 'floating-particle particle-valentine';
+    container.appendChild(el);
+}
+assert(container.childElementCount === 25, "Container seeded with 25 particles");
+// Switch to mobile light mode (capacity: 18)
+updateParticlePerformance('light', { immediate: true });
+assert(container.childElementCount <= 18, `updateParticlePerformance('light') pruned excess particles to capacity (${container.childElementCount} <= 18)`);
+
+// Test Device Capability Config - Reduced Motion Override
 DeviceManager.prefersReducedMotion = true;
-config = getDeviceParticleConfig();
-assert(config.prefersReducedMotion === true, "Reduced motion preference detected");
-assert(config.maxActiveParticles === 2, "Reduced motion strictly limits to 2 stationary particles");
-assert(config.enable3DTransforms === false, "Reduced motion disables 3D transforms");
+// Even if 'heavy' mode is requested, reduced motion strictly takes highest priority
+let configRM = getDeviceParticleConfig('heavy');
+assert(configRM.prefersReducedMotion === true, "Reduced motion preference detected");
+assert(configRM.maxActiveParticles === 2, "Reduced motion strictly overrides heavy mode and limits to 2 stationary particles");
+assert(configRM.spawnIntervalMs >= 4000, "Reduced motion enforces slow spawn interval >= 4000ms");
+assert(configRM.burstCount === 0, "Reduced motion disables bursts completely");
+assert(configRM.enable3DTransforms === false, "Reduced motion disables 3D transforms");
 
 // Spawning with reduced motion
 container.innerHTML = '';
@@ -293,8 +329,7 @@ assert(container.childElementCount === 0, "spawnOccasionParticleBurst safely sup
 DeviceManager.isMobile = false;
 DeviceManager.isLowPower = false;
 DeviceManager.prefersReducedMotion = false;
-DeviceManager.maxParticles = 8;
-DeviceManager.spawnIntervalMs = 850;
+updateParticlePerformance('heavy');
 
 clearFloatingParticles();
 

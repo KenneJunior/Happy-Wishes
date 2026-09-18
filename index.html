@@ -911,6 +911,42 @@
                         </div>
                     </div>
 
+                    <!-- Particle Performance Mode Selection -->
+                    <div class="form-group particle-performance-group" id="particle-performance-group">
+                        <div class="form-label-with-action">
+                            <label for="particle-perf-radios">
+                                <span class="label-icon">✨</span> Background Particles
+                            </label>
+                            <span class="particle-perf-badge" id="particle-perf-badge">Rich Atmosphere</span>
+                        </div>
+                        <p class="form-field-hint">Choose your preferred background atmosphere density and animation frequency.</p>
+                        <div class="particle-perf-options" id="particle-perf-radios" role="radiogroup" aria-label="Particle Performance Mode">
+                            <label class="particle-perf-card" id="particle-perf-card-light">
+                                <input type="radio" name="particle-performance-mode" value="light" id="particle-perf-light" class="particle-perf-radio">
+                                <div class="particle-perf-content">
+                                    <div class="particle-perf-header">
+                                        <span class="particle-perf-icon" aria-hidden="true">🍃</span>
+                                        <span class="particle-perf-title" id="particle-perf-light-title">Light Mode</span>
+                                    </div>
+                                    <p class="particle-perf-desc" id="particle-perf-light-desc">Gentle & battery-conscious. Subtle particle budget with smooth floating.</p>
+                                </div>
+                            </label>
+                            <label class="particle-perf-card" id="particle-perf-card-heavy">
+                                <input type="radio" name="particle-performance-mode" value="heavy" id="particle-perf-heavy" class="particle-perf-radio" checked>
+                                <div class="particle-perf-content">
+                                    <div class="particle-perf-header">
+                                        <span class="particle-perf-icon" aria-hidden="true">🌟</span>
+                                        <span class="particle-perf-title" id="particle-perf-heavy-title">Heavy Mode</span>
+                                    </div>
+                                    <p class="particle-perf-desc" id="particle-perf-heavy-desc">Vibrant & alive. Higher frequency, rich tiers, and festive bursts.</p>
+                                </div>
+                            </label>
+                        </div>
+                        <p class="particle-motion-hint" id="particle-motion-hint">
+                            <span class="hint-icon" aria-hidden="true">♿</span> System reduced-motion preferences always take highest priority.
+                        </p>
+                    </div>
+
                     <div class="form-group">
                         <div class="form-label-with-action">
                             <label for="custom-note-input">Personal Sweet Note / Keepsake Letter (Optional)</label>
