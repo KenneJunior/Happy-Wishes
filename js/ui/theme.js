@@ -67,6 +67,16 @@ export function applyOccasionTheme(occasionKey) {
     if (occ.themeClass) {
         document.body.classList.add(occ.themeClass);
     }
+
+    if (typeof document !== 'undefined') {
+        if (document.body) {
+            document.body.setAttribute('theme', occasionKey);
+        }
+        const container = document.getElementById('floating-hearts-container');
+        if (container) {
+            container.setAttribute('theme', occasionKey);
+        }
+    }
 }
 
 export function initTheme() {

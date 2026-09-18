@@ -424,199 +424,353 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. Floating Particles & Seasonal Background Spawner Layer (GPU-Thrust)
+   Temporary Diagnostic CSS: Force Visibility & Isolate Inheritance Regression
    -------------------------------------------------------------------------- */
+#floating-hearts-container,
 .floating-hearts-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 2;
-    contain: strict;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 15 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
     transform: translate3d(0, 0, 0);
 }
 
-/* Base floating particle with GPU 3D positioning */
+#floating-hearts-container * {
+    visibility: visible !important;
+    pointer-events: none !important;
+}
+
+#floating-hearts-container .floating-particle,
 .floating-particle {
-    position: absolute;
+    position: absolute !important;
     user-select: none;
-    pointer-events: none;
+    pointer-events: none !important;
     will-change: transform, opacity;
     line-height: 1;
+    display: inline-flex !important;
+    visibility: visible !important;
+    min-width: 14px;
+    min-height: 14px;
     transform: translate3d(0, 0, 0);
 }
 
-/* Dynamic SVG Icon Particles (Graduation Cap, Anniversary Ring) */
+#floating-hearts-container .floating-particle svg,
+.floating-particle.particle-svg-icon svg {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    pointer-events: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Floating Particles & Seasonal Background Spawner Layer (GPU-Thrust)
+   -------------------------------------------------------------------------- */
+
+/* Dynamic SVG Icon Particles with Refined Ambient Shadows */
 .floating-particle.particle-svg-icon {
-    display: inline-flex;
+    display: inline-flex !important;
     align-items: center;
     justify-content: center;
     line-height: 0;
     pointer-events: none;
     will-change: transform, opacity;
+    visibility: visible !important;
+    top: -40px;
 }
 
 .floating-particle.particle-svg-icon svg {
-    display: block;
+    display: block !important;
     width: 100%;
     height: 100%;
+    flex-shrink: 0;
     overflow: visible;
-    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.22));
+    pointer-events: none;
+    visibility: visible !important;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.16));
 }
 
+/* Subtle Occasion Ambient Glow Accents */
 .floating-particle.particle-svg-icon.particle-valentine svg {
-    filter: drop-shadow(0 4px 10px rgba(255, 46, 99, 0.4)) drop-shadow(0 0 8px rgba(255, 117, 140, 0.5));
+    filter: drop-shadow(0 2px 8px rgba(225, 29, 72, 0.28));
 }
 
 .floating-particle.particle-svg-icon.particle-birthday svg {
-    filter: drop-shadow(0 4px 10px rgba(236, 72, 153, 0.35)) drop-shadow(0 0 8px rgba(253, 224, 71, 0.45));
+    filter: drop-shadow(0 2px 8px rgba(236, 72, 153, 0.26));
 }
 
 .floating-particle.particle-svg-icon.particle-christmas svg {
-    filter: drop-shadow(0 4px 10px rgba(16, 185, 129, 0.35)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.65));
+    filter: drop-shadow(0 2px 8px rgba(186, 230, 253, 0.38));
 }
 
 .floating-particle.particle-svg-icon.particle-newyear svg {
-    filter: drop-shadow(0 4px 12px rgba(217, 119, 6, 0.45)) drop-shadow(0 0 10px rgba(254, 240, 138, 0.6));
+    filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.32));
 }
 
 .floating-particle.particle-svg-icon.particle-easter svg {
-    filter: drop-shadow(0 4px 10px rgba(192, 132, 252, 0.35)) drop-shadow(0 0 8px rgba(244, 114, 182, 0.45));
+    filter: drop-shadow(0 2px 8px rgba(168, 85, 247, 0.26));
 }
 
 .floating-particle.particle-svg-icon.particle-graduation svg {
-    filter: drop-shadow(0 4px 12px rgba(29, 53, 87, 0.45)) drop-shadow(0 0 8px rgba(255, 209, 102, 0.45));
+    filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.28));
 }
 
 .floating-particle.particle-svg-icon.particle-anniversary svg {
-    filter: drop-shadow(0 4px 12px rgba(255, 78, 121, 0.45)) drop-shadow(0 0 10px rgba(255, 209, 102, 0.55));
+    filter: drop-shadow(0 2px 8px rgba(244, 63, 94, 0.28));
 }
 
 .floating-particle.particle-svg-icon.particle-custom svg {
-    filter: drop-shadow(0 4px 12px rgba(139, 92, 246, 0.4)) drop-shadow(0 0 10px rgba(253, 224, 71, 0.5));
+    filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.28));
 }
 
-/* 1. Upward Floating with Dynamic Horizontal Oscillation (Valentine & Birthday) */
-.floating-particle.particle-up,
-.floating-heart,
-.floating-hearts-container .floating-particle.particle-up,
-.floating-hearts-container .floating-heart {
-    position: absolute;
-    bottom: -60px;
-    user-select: none;
-    pointer-events: none;
-    animation: floatOscillate linear forwards;
-    will-change: transform, opacity;
+/* Visual Depth Tiers — Supporting both modern tier classes and semantic aliases */
+.floating-particle.particle-tier-far,
+.floating-particle.particle-far {
+    opacity: var(--target-opacity, 0.55);
+    filter: blur(0.35px);
+    z-index: 1;
 }
 
-@keyframes floatOscillate {
-    0% {
-        transform: translate3d(0, 0, 0) scale(0.6) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.85;
-    }
-    25% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.35 + 24px), -28vh, 0) scale(0.82) rotate(calc(var(--spin, 25deg) * -0.5));
-    }
-    50% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.65 - 26px), -58vh, 0) scale(0.96) rotate(calc(var(--spin, 25deg) * 0.6));
-    }
-    75% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.85 + 20px), -86vh, 0) scale(1.06) rotate(calc(var(--spin, 25deg) * -0.3));
-        opacity: 0.8;
-    }
-    100% {
-        transform: translate3d(var(--drift, 40px), -118vh, 0) scale(1.15) rotate(var(--spin, 25deg));
-        opacity: 0;
-    }
+.floating-particle.particle-tier-mid,
+.floating-particle.particle-mid {
+    opacity: var(--target-opacity, 0.75);
+    filter: none;
+    z-index: 2;
 }
 
-@keyframes floatUpward {
-    0% {
-        transform: translate3d(0, 0, 0) scale(0.6) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.85;
-    }
-    25% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.35 + 24px), -28vh, 0) scale(0.82) rotate(calc(var(--spin, 25deg) * -0.5));
-    }
-    50% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.65 - 26px), -58vh, 0) scale(0.96) rotate(calc(var(--spin, 25deg) * 0.6));
-    }
-    75% {
-        transform: translate3d(calc(var(--drift, 40px) * 0.85 + 20px), -86vh, 0) scale(1.06) rotate(calc(var(--spin, 25deg) * -0.3));
-        opacity: 0.8;
-    }
-    100% {
-        transform: translate3d(var(--drift, 40px), -118vh, 0) scale(1.15) rotate(var(--spin, 25deg));
-        opacity: 0;
-    }
+.floating-particle.particle-tier-near,
+.floating-particle.particle-near {
+    opacity: var(--target-opacity, 0.92);
+    filter: none;
+    z-index: 3;
 }
 
-/* 2. Christmas Snowflakes Falling Downward */
+/* Physical Material Motion Types — Supporting both material-* and legacy particle-* selectors */
+.floating-particle.material-petal,
+.floating-particle.particle-petal {
+    animation: particlePetalDrift var(--duration, 8.5s) cubic-bezier(0.37, 0, 0.63, 1) forwards;
+}
+
+.floating-particle.material-confetti,
+.floating-particle.particle-confetti {
+    animation: particleConfettiTumble var(--duration, 5.2s) ease-in-out forwards;
+}
+
+.floating-particle.material-snow,
 .floating-particle.particle-snow {
-    top: -50px;
-    color: #ffffff;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.85), 0 0 16px rgba(180, 230, 255, 0.6);
-    animation: snowFall linear forwards;
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.7));
+    animation: particleSnowFloat var(--duration, 9.0s) linear forwards;
 }
 
-@keyframes snowFall {
+.floating-particle.material-sparkle,
+.floating-particle.material-spark,
+.floating-particle.particle-sparkle,
+.floating-particle.particle-spark,
+.floating-particle.material-star,
+.floating-particle.particle-star {
+    animation: particleSparkleFloat var(--duration, 7.2s) ease-in-out forwards;
+}
+
+.floating-particle.material-heart,
+.floating-particle.particle-heart {
+    animation: particleHeartFloat var(--duration, 7.5s) ease-in-out forwards;
+}
+
+.floating-particle.material-bubble,
+.floating-particle.particle-bubble,
+.floating-particle.particle-up {
+    animation: particleBubbleRise var(--duration, 6.5s) ease-in-out forwards;
+}
+
+.floating-particle:not([class*="material-"]):not([class*="particle-petal"]):not([class*="particle-confetti"]):not([class*="particle-snow"]):not([class*="particle-spark"]):not([class*="particle-heart"]):not([class*="particle-bubble"]):not([class*="particle-up"]) {
+    animation: particleDriftFall var(--duration, 7.0s) cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* 1. Natural Drift Falling */
+@keyframes particleDriftFall {
     0% {
-        transform: translate3d(0, 0, 0) rotate(0deg);
+        transform: translate3d(0, -15px, 0) rotate(0deg);
         opacity: 0;
     }
-    10% {
-        opacity: 0.95;
+    5% {
+        opacity: var(--target-opacity, 0.75);
     }
     50% {
-        transform: translate3d(var(--drift, 30px), 55vh, 0) rotate(var(--spin, 120deg));
+        transform: translate3d(var(--sway-x, 25px), 55vh, 0) rotate(calc(var(--spin, 40deg) * 0.5));
     }
-    90% {
-        opacity: 0.85;
+    94% {
+        opacity: var(--target-opacity, 0.75);
     }
     100% {
-        transform: translate3d(calc(var(--drift, 30px) * -0.5), 115vh, 0) rotate(calc(var(--spin, 120deg) * 2));
+        transform: translate3d(calc(var(--sway-x, 25px) * -0.4), calc(100vh + 50px), 0) rotate(var(--spin, 40deg));
         opacity: 0;
     }
 }
 
-/* 3. New Year Golden Sparks & Twinkles Rising */
-.floating-particle.particle-spark {
-    bottom: -50px;
-    color: #ffd166;
-    text-shadow: 0 0 10px #ffd166, 0 0 20px #ffb703, 0 0 30px rgba(255, 209, 102, 0.8);
-    animation: sparkRise linear forwards;
-}
-
-@keyframes sparkRise {
+/* 2. Swaying Petal Flutter */
+@keyframes particlePetalDrift {
     0% {
-        transform: translate3d(0, 0, 0) scale(0.4) rotate(0deg);
+        transform: translate3d(0, -20px, 0) scale(0.88) rotate(0deg);
         opacity: 0;
     }
-    15% {
-        opacity: 1;
-        transform: translate3d(calc(var(--drift, 25px) * 0.3), -18vh, 0) scale(1.2) rotate(45deg);
+    5% {
+        opacity: var(--target-opacity, 0.8);
+    }
+    30% {
+        transform: translate3d(calc(var(--sway-x, 45px) * 0.85), 28vh, 0) scale(0.96) rotate(calc(var(--spin, 45deg) * 0.4));
+    }
+    60% {
+        transform: translate3d(calc(var(--sway-x, 45px) * -0.65), 62vh, 0) scale(1) rotate(calc(var(--spin, 45deg) * -0.6));
+    }
+    94% {
+        opacity: var(--target-opacity, 0.8);
+    }
+    100% {
+        transform: translate3d(calc(var(--sway-x, 45px) * 0.35), calc(100vh + 50px), 0) scale(0.92) rotate(var(--spin, 45deg));
+        opacity: 0;
+    }
+}
+
+/* 3. 3D Tumbling Confetti */
+@keyframes particleConfettiTumble {
+    0% {
+        transform: translate3d(0, -15px, 0) rotate3d(1, 0.8, 0.3, 0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: var(--target-opacity, 0.85);
     }
     50% {
-        opacity: 0.85;
-        transform: translate3d(calc(var(--drift, 25px) * 0.7), -55vh, 0) scale(0.85) rotate(90deg);
+        transform: translate3d(var(--sway-x, 25px), 52vh, 0) rotate3d(1, 0.8, 0.3, 360deg);
     }
-    75% {
-        opacity: 1;
-        transform: translate3d(var(--drift, 25px), -85vh, 0) scale(1.15) rotate(140deg);
+    94% {
+        opacity: var(--target-opacity, 0.85);
     }
     100% {
-        transform: translate3d(calc(var(--drift, 25px) * 1.3), -115vh, 0) scale(0.5) rotate(180deg);
+        transform: translate3d(calc(var(--sway-x, 25px) * -0.5), calc(100vh + 45px), 0) rotate3d(1, 0.8, 0.3, 720deg);
         opacity: 0;
+    }
+}
+
+/* 4. Serene Drifting Snow */
+@keyframes particleSnowFloat {
+    0% {
+        transform: translate3d(0, -15px, 0) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    50% {
+        transform: translate3d(var(--sway-x, 18px), 54vh, 0) rotate(calc(var(--spin, 20deg) * 0.5));
+    }
+    94% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    100% {
+        transform: translate3d(calc(var(--sway-x, 18px) * -0.35), calc(100vh + 45px), 0) rotate(var(--spin, 20deg));
+        opacity: 0;
+    }
+}
+
+/* 5. Twinkling Floating Sparkle */
+@keyframes particleSparkleFloat {
+    0% {
+        transform: translate3d(0, -10px, 0) scale(0.75);
+        opacity: 0;
+    }
+    5% {
+        transform: translate3d(calc(var(--sway-x, 15px) * 0.2), 6vh, 0) scale(0.9);
+        opacity: var(--target-opacity, 0.85);
+    }
+    50% {
+        transform: translate3d(calc(var(--sway-x, 15px) * 0.7), 50vh, 0) scale(0.95);
+        opacity: calc(var(--target-opacity, 0.85) * 0.9);
+    }
+    85% {
+        transform: translate3d(var(--sway-x, 15px), 78vh, 0) scale(1.05);
+        opacity: var(--target-opacity, 0.85);
+    }
+    94% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    100% {
+        transform: translate3d(calc(var(--sway-x, 15px) * 1.2), calc(100vh + 40px), 0) scale(0.7);
+        opacity: 0;
+    }
+}
+
+/* 6. Buoyant Heart Float */
+@keyframes particleHeartFloat {
+    0% {
+        transform: translate3d(0, -15px, 0) scale(0.75) rotate(0deg);
+        opacity: 0;
+    }
+    5% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    45% {
+        transform: translate3d(var(--sway-x, 30px), 48vh, 0) scale(1) rotate(calc(var(--spin, 20deg) * 0.7));
+    }
+    94% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    100% {
+        transform: translate3d(calc(var(--sway-x, 30px) * -0.3), calc(100vh + 45px), 0) scale(0.85) rotate(calc(var(--spin, 20deg) * -0.5));
+        opacity: 0;
+    }
+}
+
+/* 7. Effervescent Bubble Rise */
+@keyframes particleBubbleRise {
+    0% {
+        transform: translate3d(0, 102vh, 0) scale(0.65);
+        opacity: 0;
+    }
+    6% {
+        transform: translate3d(calc(var(--sway-x, 20px) * 0.2), 92vh, 0) scale(0.9);
+        opacity: var(--target-opacity, 0.85);
+    }
+    50% {
+        transform: translate3d(calc(var(--sway-x, 20px) * -0.4), 48vh, 0) scale(0.95);
+    }
+    92% {
+        opacity: var(--target-opacity, 0.85);
+    }
+    100% {
+        transform: translate3d(var(--sway-x, 20px), -10vh, 0) scale(1.1);
+        opacity: 0;
+    }
+}
+
+/* Reduced Motion Mode Accessible Atmosphere */
+@media (prefers-reduced-motion: reduce) {
+    .floating-particle {
+        top: var(--reduced-top, 30vh) !important;
+        animation: particleAtmosphericBreathe 4s ease-in-out infinite !important;
+        transform: none !important;
+    }
+}
+
+body.reduced-motion-mode .floating-particle,
+.reduced-motion-particle {
+    top: var(--reduced-top, 30vh) !important;
+    animation: particleAtmosphericBreathe 4s ease-in-out infinite !important;
+    transform: none !important;
+}
+
+@keyframes particleAtmosphericBreathe {
+    0%, 100% {
+        opacity: 0.35;
+    }
+    50% {
+        opacity: 0.75;
     }
 }
 
