@@ -386,30 +386,30 @@ body {
 }
 
 .orb-1 {
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(circle, rgba(255, 46, 99, 0.45) 0%, rgba(255, 117, 140, 0) 70%);
+    width: 480px;
+    height: 480px;
+    background: radial-gradient(circle, rgba(255, 46, 99, 1) 100%, rgba(255, 117, 140, 1) 87%);
     top: 5%;
     left: 10%;
     animation-duration: 16s;
 }
 
 .orb-2 {
-    width: 440px;
-    height: 440px;
-    background: radial-gradient(circle, rgba(132, 94, 194, 0.4) 0%, rgba(251, 194, 235, 0) 70%);
+    width: 540px;
+    height: 540px;
+    background: radial-gradient(circle, rgba(132, 94, 194, 1) 100%, rgba(251, 194, 235, 1) 90%);
     bottom: 5%;
-    right: 10%;
+    right: 2%;
     animation-duration: 20s;
     animation-delay: -4s;
 }
 
 .orb-3 {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 209, 102, 0.35) 0%, rgba(255, 78, 121, 0) 70%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 209, 102, 1) 100%, rgba(255, 78, 121, 1) 90%);
     top: 40%;
-    right: 25%;
+    left: 5%;
     animation-duration: 18s;
     animation-delay: -8s;
 }
@@ -821,7 +821,7 @@ body.reduced-motion-mode .floating-particle [class*="tassel"],
 /* Mobile Performance & Thermal Protection (Eliminates heating & freezes) */
 body.is-mobile .ambient-glow,
 body.mobile-throttled .ambient-glow {
-    display: none !important;
+    /* display: none !important; */
 }
 
 body.is-mobile .glass-card::before,
@@ -848,7 +848,7 @@ body.mobile-throttled #valentine-card {
 
 @media (max-width: 768px), (pointer: coarse) {
     .ambient-glow {
-        display: none !important;
+        /* display: none !important; */
     }
     .glass-card::before,
     #valentine-card::before {

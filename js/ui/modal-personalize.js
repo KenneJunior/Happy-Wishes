@@ -124,8 +124,8 @@ function updateReducedMotionButtonUI() {
     if (toggleReducedMotionBtn) {
         toggleReducedMotionBtn.setAttribute('aria-pressed', isReduced ? 'true' : 'false');
         toggleReducedMotionBtn.classList.toggle('is-active', isReduced);
-        toggleReducedMotionBtn.title = isReduced 
-            ? 'Reduced Motion is ON (gentle stationary particles). Click to turn OFF.' 
+        toggleReducedMotionBtn.title = isReduced
+            ? 'Reduced Motion is ON (gentle stationary particles). Click to turn OFF.'
             : 'Reduced Motion is OFF. Click to turn ON.';
     }
 
