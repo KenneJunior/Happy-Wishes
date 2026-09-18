@@ -21,6 +21,7 @@ import { previewVisualAsset, updateBearAsset, restoreCommittedVisualAsset } from
 import { generateKeepsakeLetter } from '../services/letter-api.js';
 import { getLanguage, setLanguage, getLanguageName, t, applyTranslations } from '../i18n/index.js';
 import { DeviceManager } from '../core/device.js';
+import { updateParticlePerformance, handleReducedMotionToggle } from './effects/particles.js';
 
 // DOM Element References
 let personalizeModal = null;
@@ -85,6 +86,16 @@ let songTitleDisplay = null;
 let songActiveIndicator = null;
 let songPresetChips = [];
 
+// Particle Performance Controls
+let particlePerfRadios = [];
+let particlePerfLight = null;
+let particlePerfHeavy = null;
+let particlePerfBadge = null;
+let particlePerfCardLight = null;
+let particlePerfCardHeavy = null;
+let toggleReducedMotionBtn = null;
+let reducedMotionBtnText = null;
+
 // State Management: Committed vs Draft
 let committedState = null;
 let draftState = null;
@@ -93,6 +104,74 @@ let draftState = null;
 let visualLoadToken = 0;
 let customUrlDebounceTimer = null;
 const sessionObjectUrls = new Set();
+
+/**
+ * Updates the small toggle button state and text for reduced motion.
+ */
+function updateReducedMotionButtonUI() {
+    const isReduced = Boolean(
+        DeviceManager.prefersReducedMotion ||
+        (typeof document !== 'undefined' && document.body && document.body.classList.contains('reduced-motion-mode'))
+    );
+
+    if (!toggleReducedMotionBtn) {
+        toggleReducedMotionBtn = document.getElementById('toggle-reduced-motion-btn');
+    }
+    if (!reducedMotionBtnText) {
+        reducedMotionBtnText = document.getElementById('reduced-motion-btn-text');
+    }
+
+    if (toggleReducedMotionBtn) {
+        toggleReducedMotionBtn.setAttribute('aria-pressed', isReduced ? 'true' : 'false');
+        toggleReducedMotionBtn.classList.toggle('is-active', isReduced);
+        toggleReducedMotionBtn.title = isReduced 
+            ? 'Reduced Motion is ON (gentle stationary particles). Click to turn OFF.' 
+            : 'Reduced Motion is OFF. Click to turn ON.';
+    }
+
+    if (reducedMotionBtnText) {
+        reducedMotionBtnText.textContent = isReduced ? 'Reduce Motion: On' : 'Reduce Motion: Off';
+    }
+}
+
+/**
+ * Updates the Particle Performance UI options and status badge.
+ * Respects user selection for saving, while providing clear helper context when Reduced Motion is active.
+ * @param {string} mode 'light' | 'heavy'
+ */
+function updateParticlePerfUI(mode = 'heavy') {
+    const isLight = mode === 'light';
+    if (particlePerfLight) particlePerfLight.checked = isLight;
+    if (particlePerfHeavy) particlePerfHeavy.checked = !isLight;
+    if (particlePerfCardLight) particlePerfCardLight.classList.toggle('is-active', isLight);
+    if (particlePerfCardHeavy) particlePerfCardHeavy.classList.toggle('is-active', !isLight);
+
+    const isReduced = Boolean(
+        DeviceManager.prefersReducedMotion ||
+        (typeof document !== 'undefined' && document.body && document.body.classList.contains('reduced-motion-mode'))
+    );
+
+    updateReducedMotionButtonUI();
+
+    if (particlePerfBadge) {
+        if (isReduced) {
+            particlePerfBadge.textContent = 'Reduced Motion Active';
+        } else {
+            particlePerfBadge.textContent = isLight ? 'Gentle Atmosphere' : 'Rich Atmosphere';
+        }
+    }
+
+    const motionHint = document.getElementById('particle-motion-hint');
+    if (motionHint) {
+        if (isReduced) {
+            motionHint.innerHTML = '<span class="hint-icon" aria-hidden="true">♿</span> <strong>Reduced Motion is enabled</strong>, so particle movement is limited. Your Light/Heavy preference is saved and will apply whenever motion is re-enabled.';
+            motionHint.classList.add('is-reduced-active');
+        } else {
+            motionHint.innerHTML = '<span class="hint-icon" aria-hidden="true">♿</span> System reduced-motion preferences always take highest priority.';
+            motionHint.classList.remove('is-reduced-active');
+        }
+    }
+}
 
 /**
  * Calculates and updates the category count pills dynamically from ROMANTIC_VISUAL_THEMES.
@@ -509,6 +588,13 @@ export function openPersonalizeModal(focusLanguage = false) {
     updateModalOccasionUI(activeOccasionKey);
     updateCustomCelebrationPreview();
 
+    // Populate Particle Performance Controls
+    const currentPerf = (draftState && draftState.particlePerformance) || (appState.getState && appState.getState().particlePerformance) || 'heavy';
+    if (draftState) {
+        draftState.particlePerformance = currentPerf;
+    }
+    updateParticlePerfUI(currentPerf);
+
     isModalSaved = false;
     isPersonalizeModalOpen = true;
 
@@ -566,6 +652,11 @@ export function cancelPersonalizeModal() {
 
     // Restore committed visual mascot on main card
     restoreCommittedVisualAsset();
+
+    // Revert particle performance if previewed
+    if (committedState && committedState.particlePerformance) {
+        updateParticlePerformance(committedState.particlePerformance);
+    }
 
     // Discard draft
     draftState = null;
@@ -841,6 +932,10 @@ export function commitDraftChanges(options = {}) {
         const chosenLang = languageSelect ? languageSelect.value : (draftState.language || getLanguage());
 
         const chosenVisual = draftState.visualTheme || resolveOccasionDefaultVisual(chosenOccasion, draftState.customEvent);
+        const chosenPerf = (draftState && (draftState.particlePerformance === 'light' || draftState.particlePerformance === 'heavy'))
+            ? draftState.particlePerformance
+            : 'heavy';
+
         const updatePayload = {
             recipient: newName,
             occasion: chosenOccasion,
@@ -850,7 +945,8 @@ export function commitDraftChanges(options = {}) {
             customSongName: draftState.customSongName || '',
             visualTheme: chosenVisual,
             visualSelectionMode: draftState.visualSelectionMode || 'occasion-default',
-            customVisualUrl: draftState.customVisualUrl || ''
+            customVisualUrl: draftState.customVisualUrl || '',
+            particlePerformance: chosenPerf
         };
 
         if (chosenOccasion === 'anniversary') {
@@ -893,6 +989,9 @@ export function commitDraftChanges(options = {}) {
 
         // Atomically commit into central application state
         appState.updateState(updatePayload);
+
+        // Instantly synchronize the particle engine with the new performance mode
+        updateParticlePerformance(chosenPerf);
 
         // Keep local committedState snapshot synchronized
         committedState = { ...appState.getState() };
@@ -1287,6 +1386,84 @@ export function initPersonalizeModal() {
             }
         });
     }
+
+    // Particle Performance Mode Controls
+    particlePerfLight = document.getElementById('particle-perf-light');
+    particlePerfHeavy = document.getElementById('particle-perf-heavy');
+    particlePerfBadge = document.getElementById('particle-perf-badge');
+    particlePerfCardLight = document.getElementById('particle-perf-card-light');
+    particlePerfCardHeavy = document.getElementById('particle-perf-card-heavy');
+    particlePerfRadios = [particlePerfLight, particlePerfHeavy].filter(Boolean);
+
+    if (particlePerfRadios.length > 0) {
+        particlePerfRadios.forEach(radio => {
+            radio.addEventListener('change', () => {
+                if (!radio.checked) return;
+                const chosenPerf = radio.value;
+                if (draftState) {
+                    draftState.particlePerformance = chosenPerf;
+                }
+                updateParticlePerfUI(chosenPerf);
+                updateParticlePerformance(chosenPerf);
+                sound.playDodgePop();
+            });
+        });
+    }
+
+    // Toggle Reduced Motion on/off button
+    toggleReducedMotionBtn = document.getElementById('toggle-reduced-motion-btn');
+    reducedMotionBtnText = document.getElementById('reduced-motion-btn-text');
+    if (toggleReducedMotionBtn) {
+        toggleReducedMotionBtn.addEventListener('click', () => {
+            const isCurrentlyReduced = Boolean(
+                DeviceManager.prefersReducedMotion ||
+                (typeof document !== 'undefined' && document.body && document.body.classList.contains('reduced-motion-mode'))
+            );
+            const nextReduced = !isCurrentlyReduced;
+            if (typeof DeviceManager.setReducedMotion === 'function') {
+                DeviceManager.setReducedMotion(nextReduced);
+            } else {
+                DeviceManager.prefersReducedMotion = nextReduced;
+                if (document.body) {
+                    document.body.classList.toggle('reduced-motion-mode', nextReduced);
+                }
+            }
+            handleReducedMotionToggle(nextReduced);
+            const currentPerf = (draftState && draftState.particlePerformance) || (appState.getState && appState.getState().particlePerformance) || 'heavy';
+            updateParticlePerfUI(currentPerf);
+            sound.playDodgePop();
+            showToast(nextReduced ? 'Reduced motion enabled' : 'Reduced motion disabled', '♿');
+        });
+    }
+
+    // Dynamically react if the user updates system settings while the modal is open or app is running
+    if (typeof window !== 'undefined' && window.matchMedia) {
+        try {
+            const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+            const handleSystemMotionUpdate = (e) => {
+                const matches = Boolean(e && e.matches);
+                DeviceManager.prefersReducedMotion = matches;
+                if (typeof document !== 'undefined' && document.body) {
+                    document.body.classList.toggle('reduced-motion-mode', matches);
+                }
+                handleReducedMotionToggle(matches);
+                updateReducedMotionButtonUI();
+                const activePerf = (draftState && draftState.particlePerformance) || (appState.getState && appState.getState().particlePerformance) || 'heavy';
+                updateParticlePerfUI(activePerf);
+            };
+
+            if (typeof motionQuery.addEventListener === 'function') {
+                motionQuery.addEventListener('change', handleSystemMotionUpdate);
+            } else if (typeof motionQuery.addListener === 'function') {
+                motionQuery.addListener(handleSystemMotionUpdate);
+            }
+        } catch (_) {}
+    }
+
+    // Reflect current state of window.matchMedia('(prefers-reduced-motion: reduce)') on load immediately
+    updateReducedMotionButtonUI();
+    const initialPerf = (appState.getState && appState.getState().particlePerformance) || 'heavy';
+    updateParticlePerfUI(initialPerf);
 
     // Modal Close Controls
     if (closePersonalizeBtn) {

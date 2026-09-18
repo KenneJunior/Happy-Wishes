@@ -20,11 +20,20 @@ import {
     SVG_REGISTRY,
     resolveOccasionKey,
     OCCASION_PARTICLES,
-    getNextSvgId
+    getNextSvgId,
+    PARTICLE_PERFORMANCE_MODES,
+    REDUCED_MOTION_CONFIG
 } from './svg-particles.js';
 
-// Re-export registry methods and collections for external extensibility
-export {registerParticleSvg, SVG_REGISTRY, resolveOccasionKey, OCCASION_PARTICLES};
+// Re-export registry methods, collections, and performance configuration for external extensibility
+export {
+    registerParticleSvg,
+    SVG_REGISTRY,
+    resolveOccasionKey,
+    OCCASION_PARTICLES,
+    PARTICLE_PERFORMANCE_MODES,
+    REDUCED_MOTION_CONFIG
+};
 
 /**
  * Curated mapping of active occasion identifiers to their dedicated SVG asset collections.
@@ -81,23 +90,40 @@ export function normalizeOccasionKey(raw) {
 // Alias for theme-based consumers
 export const normalizeThemeName = normalizeOccasionKey;
 
+/** Timing jitter ratio around the configured interval (±20%) */
+export const SPAWN_JITTER_RATIO = 0.20;
+
 /**
- * Retrieves the device capability profile from DeviceManager to configure
- * adaptive particle capacity, tier complexity, physical materials, and animation physics.
+ * Retrieves the active particle configuration based on device capabilities,
+ * user-selected performance mode, and accessibility overrides.
  *
+ * Priority order:
+ * 1. Accessibility: prefers-reduced-motion STRICTLY limits capacity & disables motion
+ * 2. User selection: Light vs Heavy mode from appState or explicit override
+ * 3. Hardware defaults: Intelligent defaults from DeviceManager
+ *
+ * @param {string} [performanceModeOverride] Optional explicit 'light' or 'heavy'
  * @returns {{
+ *   mode: string,
  *   prefersReducedMotion: boolean,
  *   isLowPower: boolean,
  *   isMobile: boolean,
  *   isCoarse: boolean,
  *   maxActiveParticles: number,
  *   spawnIntervalMs: number,
+ *   initialFieldCount: number,
+ *   burstCount: number,
+ *   burstCooldownMs: number,
+ *   rareParticleChance: number,
+ *   uncommonParticleChance: number,
+ *   tierDistribution: { far: number, mid: number, near: number },
  *   allowNearTier: boolean,
  *   enable3DTransforms: boolean,
- *   initialFieldCount: number
+ *   timing: { fadeInMs: number, visibleDurationMs: number, fadeOutMs: number, totalDurationMs: number },
+ *   spawnJitterRatio: number
  * }}
  */
-export function getDeviceParticleConfig() {
+export function getDeviceParticleConfig(performanceModeOverride = null) {
     const prefersReducedMotion = Boolean(
         DeviceManager.prefersReducedMotion ||
         (typeof document !== 'undefined' && document.body && document.body.classList.contains('reduced-motion-mode'))
@@ -106,51 +132,79 @@ export function getDeviceParticleConfig() {
     const isMobile = Boolean(DeviceManager.isMobile);
     const isCoarse = Boolean(DeviceManager.isCoarsePointer);
 
-    // Dynamic particle budget calibrated to hardware capability:
-    // - Reduced Motion: strictly minimal 2 stationary particles to eliminate visual stimulation
-    // - Low Power Mode: capped at max 3 to prevent thermal throttling or battery drain
-    // - Mobile devices: capped at DeviceManager.maxParticles (default 2)
-    // - Desktop / Flagship: full capability (DeviceManager.maxParticles, default 8)
-    let maxActiveParticles;
+    // 1. Resolve user performance mode selection: override -> appState -> hardware default
+    let mode = 'heavy';
+    if (performanceModeOverride && (performanceModeOverride === 'light' || performanceModeOverride === 'heavy')) {
+        mode = performanceModeOverride;
+    } else {
+        try {
+            if (typeof appState !== 'undefined' && appState.getState) {
+                const st = appState.getState();
+                if (st && (st.particlePerformance === 'light' || st.particlePerformance === 'heavy')) {
+                    mode = st.particlePerformance;
+                } else if (isMobile) {
+                    mode = isLowPower ? 'light' : 'heavy';
+                } else {
+                    mode = isLowPower ? 'light' : 'heavy';
+                }
+            } else if (isMobile) {
+                mode = isLowPower ? 'light' : 'heavy';
+            }
+        } catch (_) {
+            mode = isMobile && isLowPower ? 'light' : 'heavy';
+        }
+    }
+
+    const modeConfig = PARTICLE_PERFORMANCE_MODES[mode] || PARTICLE_PERFORMANCE_MODES.heavy;
+    const deviceMode = isMobile ? modeConfig.mobile : modeConfig.desktop;
+
+    let maxActiveParticles = deviceMode.maxActiveParticles;
+    let spawnIntervalMs = deviceMode.spawnIntervalMs;
+    let initialFieldCount = deviceMode.initialParticleCount;
+    let burstCount = deviceMode.burstCount;
+    let burstCooldownMs = deviceMode.burstCooldownMs;
+    let rareParticleChance = deviceMode.rareParticleChance;
+    let uncommonParticleChance = deviceMode.uncommonParticleChance;
+    let tierDistribution = { ...deviceMode.tierDistribution };
+
+    // 2. Strict Accessibility Priority: prefers-reduced-motion
+    // When enabled, acts as a high-priority constraint overriding Light/Heavy selection
     if (prefersReducedMotion) {
-        maxActiveParticles = 2;
-    } else if (isLowPower) {
-        maxActiveParticles = Math.min(DeviceManager.maxParticles || 2, 3);
-    } else if (isMobile) {
-        maxActiveParticles = DeviceManager.maxParticles || 2;
-    } else {
-        maxActiveParticles = DeviceManager.maxParticles || 8;
+        const rm = isMobile ? REDUCED_MOTION_CONFIG.mobile : REDUCED_MOTION_CONFIG.desktop;
+        maxActiveParticles = rm.maxActiveParticles;
+        spawnIntervalMs = rm.spawnIntervalMs;
+        initialFieldCount = rm.initialParticleCount;
+        burstCount = rm.burstCount;
+        burstCooldownMs = rm.burstCooldownMs;
+        rareParticleChance = rm.rareParticleChance;
+        uncommonParticleChance = rm.uncommonParticleChance;
+        tierDistribution = { ...rm.tierDistribution };
     }
 
-    // Adaptive spawn interval: longer on low power / battery saving mode
-    let spawnIntervalMs;
-    if (isLowPower) {
-        spawnIntervalMs = Math.max(DeviceManager.spawnIntervalMs || 3200, 3500);
-    } else if (isMobile) {
-        spawnIntervalMs = DeviceManager.spawnIntervalMs || 3200;
-    } else {
-        spawnIntervalMs = DeviceManager.spawnIntervalMs || 850;
-    }
+    // Near tier availability (available in light/heavy, and conservative in reduced motion)
+    const allowNearTier = (tierDistribution.near > 0);
 
-    // Tier filtering: on low-power devices, reserve complex multi-layered 'near' particles
-    const allowNearTier = !isLowPower && !prefersReducedMotion;
-
-    // 3D transforms: disable continuous 3D rotation matrix calculations on mobile or low power
+    // 3D transforms: disabled on mobile or low power or reduced motion
     const enable3DTransforms = !isMobile && !isLowPower && !prefersReducedMotion;
 
-    // Initial background seed field density
-    const initialFieldCount = prefersReducedMotion ? 2 : (isLowPower ? 2 : (isMobile ? 3 : 6));
-
     return {
+        mode,
         prefersReducedMotion,
         isLowPower,
         isMobile,
         isCoarse,
         maxActiveParticles,
         spawnIntervalMs,
+        initialFieldCount,
+        burstCount,
+        burstCooldownMs,
+        rareParticleChance,
+        uncommonParticleChance,
+        tierDistribution,
         allowNearTier,
         enable3DTransforms,
-        initialFieldCount
+        timing: REDUCED_MOTION_CONFIG.timing,
+        spawnJitterRatio: SPAWN_JITTER_RATIO
     };
 }
 
@@ -332,20 +386,44 @@ export function getOccasionParticleSvg(occasionOrState, forcedVariantIndex, devi
     if (typeof forcedVariantIndex === 'number' && forcedVariantIndex >= 0 && forcedVariantIndex < count) {
         variantIndex = forcedVariantIndex;
     } else {
-        // Controlled Rarity distribution tuned with device performance:
-        // Flagship/Desktop: ~65% common, ~25% uncommon, ~10% rare hero
-        // Low Power: ~80% common, ~20% uncommon (avoids heavy complex rare paths)
-        const roll = Math.random();
+        // 1. Target Tier selection based on calibrated tier distribution:
+        const tDist = effectiveDeviceConfig.tierDistribution || { far: 0.40, mid: 0.42, near: 0.18 };
+        const tierRoll = Math.random();
+        let targetTier = 'mid';
+        if (tierRoll < tDist.far) {
+            targetTier = 'far';
+        } else if (tierRoll < tDist.far + tDist.mid) {
+            targetTier = 'mid';
+        } else {
+            targetTier = effectiveDeviceConfig.allowNearTier ? 'near' : 'mid';
+        }
+
+        // 2. Controlled Rarity distribution tuned with exact performance targets:
+        const rareChance = typeof effectiveDeviceConfig.rareParticleChance === 'number'
+            ? effectiveDeviceConfig.rareParticleChance
+            : 0.10;
+        const uncommonChance = typeof effectiveDeviceConfig.uncommonParticleChance === 'number'
+            ? effectiveDeviceConfig.uncommonParticleChance
+            : 0.30;
+        const rarityRoll = Math.random();
         let targetRarity = 'common';
-        if (!effectiveDeviceConfig.isLowPower && roll > 0.90) {
+        if (rarityRoll < rareChance) {
             targetRarity = 'rare';
-        } else if (roll > (effectiveDeviceConfig.isLowPower ? 0.80 : 0.65)) {
+        } else if (rarityRoll < (rareChance + uncommonChance)) {
             targetRarity = 'uncommon';
         }
 
-        const filtered = collection.map((p, idx) => ({p, idx})).filter(item => item.p.rarity === targetRarity);
-        if (filtered.length > 0) {
-            const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+        // Match both tier and rarity if available, then tier alone, then rarity alone
+        let candidates = collection.map((p, idx) => ({p, idx})).filter(item => item.p.tier === targetTier && item.p.rarity === targetRarity);
+        if (candidates.length === 0) {
+            candidates = collection.map((p, idx) => ({p, idx})).filter(item => item.p.tier === targetTier);
+        }
+        if (candidates.length === 0) {
+            candidates = collection.map((p, idx) => ({p, idx})).filter(item => item.p.rarity === targetRarity);
+        }
+
+        if (candidates.length > 0) {
+            const chosen = candidates[Math.floor(Math.random() * candidates.length)];
             variantIndex = chosen.idx;
         } else {
             variantIndex = Math.floor(Math.random() * count);
@@ -369,7 +447,9 @@ export function getOccasionParticleSvg(occasionOrState, forcedVariantIndex, devi
 export const getThemeParticleSvg = getOccasionParticleSvg;
 
 let floatingContainer = null;
-let floatingInterval = null;
+let spawnerTimeoutId = null;
+let isSpawningActive = false;
+let lastBurstTimestamp = 0;
 let visibilityListenerBound = false;
 
 /**
@@ -392,23 +472,102 @@ function getDistributedSpawnX() {
 }
 
 /**
+ * Calculates a stationary placement coordinate for reduced-motion particles,
+ * avoiding the central card, applying flank-bias, respecting depth tiers,
+ * and maintaining spacing to prevent overlapping or clustering.
+ *
+ * @param {string} [tier='mid'] 'far' | 'mid' | 'near'
+ * @returns {{ x: number, y: number }} Viewport percentages
+ */
+export function getReducedMotionPlacement(tier = 'mid') {
+    let existing = [];
+    if (floatingContainer) {
+        existing = Array.from(floatingContainer.children).map(c => ({
+            x: parseFloat(c.style.left) || 50,
+            y: parseFloat(c.style.top || c.style.getPropertyValue('--reduced-top')) || 50
+        }));
+    }
+
+    let bestX = 15;
+    let bestY = 30;
+    let maxDist = -1;
+
+    for (let attempt = 0; attempt < 8; attempt++) {
+        let candX = 15;
+        let candY = 30;
+        const flankRoll = Math.random();
+
+        if (tier === 'near') {
+            // Near tier strictly placed in outer flanks to avoid text or primary interactive controls
+            if (flankRoll < 0.5) {
+                candX = parseFloat((Math.random() * 18 + 4).toFixed(1)); // 4 - 22vw
+            } else {
+                candX = parseFloat((Math.random() * 18 + 78).toFixed(1)); // 78 - 96vw
+            }
+            candY = parseFloat((Math.random() * 65 + 15).toFixed(1)); // 15 - 80vh
+        } else if (flankRoll < 0.45) {
+            // Left flank
+            candX = parseFloat((Math.random() * 22 + 4).toFixed(1)); // 4 - 26vw
+            candY = parseFloat((Math.random() * 75 + 10).toFixed(1)); // 10 - 85vh
+        } else if (flankRoll < 0.90) {
+            // Right flank
+            candX = parseFloat((Math.random() * 22 + 74).toFixed(1)); // 74 - 96vw
+            candY = parseFloat((Math.random() * 75 + 10).toFixed(1)); // 10 - 85vh
+        } else {
+            // Top or bottom edge framing
+            candX = parseFloat((Math.random() * 44 + 28).toFixed(1)); // 28 - 72vw
+            candY = Math.random() < 0.5
+                ? parseFloat((Math.random() * 12 + 6).toFixed(1)) // 6 - 18vh
+                : parseFloat((Math.random() * 12 + 82).toFixed(1)); // 82 - 94vh
+        }
+
+        if (existing.length === 0) {
+            return { x: candX, y: candY };
+        }
+
+        let minDist = Infinity;
+        for (const ep of existing) {
+            const d = Math.hypot(candX - ep.x, candY - ep.y);
+            if (d < minDist) minDist = d;
+        }
+
+        if (minDist > maxDist) {
+            maxDist = minDist;
+            bestX = candX;
+            bestY = candY;
+        }
+
+        if (minDist > 18) {
+            break;
+        }
+    }
+
+    return { x: bestX, y: bestY };
+}
+
+/**
  * Spawns a single floating particle using rich, scalable SVG vector artwork mapped
  * specifically to the active occasion (Birthday, Anniversary, Graduation, etc.)
- * while strictly respecting the device capability system.
+ * while strictly respecting the device capability system and performance modes.
  *
  * @param {object} [options]
  * @param {string} [options.occasion] Optional explicit occasion override
  * @param {string} [options.theme] Optional explicit theme override
  * @param {number} [options.initialYPercent] Optional initial vertical percentage (for field seeding)
+ * @param {number} [options.maxAllowedParticles] Optional dynamic cap override (e.g. for burst overshoots)
  */
 export function spawnFloatingParticle(options = {}) {
     if (typeof document === 'undefined' || document.hidden || !floatingContainer) return;
 
-    // Leverage Device Capability Engine
+    // Leverage Device Capability Engine & Performance Mode
     const deviceConfig = getDeviceParticleConfig();
 
     // Respect device performance budget and max concurrent particle cap
-    if (floatingContainer.childElementCount >= deviceConfig.maxActiveParticles) return;
+    const maxCap = typeof options.maxAllowedParticles === 'number'
+        ? options.maxAllowedParticles
+        : deviceConfig.maxActiveParticles;
+
+    if (floatingContainer.childElementCount >= maxCap) return;
 
     // Dynamically resolve active occasion and map to curated SVG asset collection
     const activeOccasion = resolveActiveOccasion(options);
@@ -431,9 +590,6 @@ export function spawnFloatingParticle(options = {}) {
     particleEl.setAttribute('data-material', material);
 
     // Visible, atmospheric dimensions based on tier, definition scale, and device profile
-    // Far tier: 1.35rem - 1.85rem (~22px - 30px) - clearly visible background celebratory motifs
-    // Mid tier: 2.30rem - 3.40rem (~37px - 55px) - prominent crisp celebration motifs
-    // Near tier: 3.60rem - 5.40rem (~58px - 86px) - hero celebration accents
     const baseRem = tier === 'far' ? 1.35 : (tier === 'mid' ? 1.85 : 2.5);
     const tierMultiplier = deviceConfig.isMobile ? 0.9 : 1.0;
     const randScale = (Math.random() * (definition.maxScale - definition.minScale) + definition.minScale);
@@ -467,42 +623,45 @@ export function spawnFloatingParticle(options = {}) {
 
     const duration = (Math.random() * 2.0 + baseDuration).toFixed(2);
 
-    // Calculate sway and spin according to device 3D transform capability
-    let swayX = '0px';
-    let spin = '0deg';
-    if (!deviceConfig.prefersReducedMotion) {
-        if (deviceConfig.isLowPower || deviceConfig.isMobile) {
-            // Clamped 2D transforms for battery saving
-            swayX = (Math.random() * 36 - 18).toFixed(0) + 'px';
-            spin = (Math.random() * 50 - 25).toFixed(0) + 'deg';
-        } else {
-            // Full desktop physical dynamics
-            swayX = (Math.random() * 60 - 30).toFixed(0) + 'px';
-            spin = (Math.random() * 80 - 40).toFixed(0) + 'deg';
-        }
-    }
-
-    const startX = getDistributedSpawnX();
-
-    particleEl.style.left = `${startX}vw`;
     particleEl.style.width = `${finalDimensionRem}rem`;
     particleEl.style.height = `${finalDimensionRem}rem`;
     particleEl.style.setProperty('--target-opacity', randOpacity);
-    particleEl.style.setProperty('--sway-x', swayX);
-    particleEl.style.setProperty('--spin', spin);
-    particleEl.style.setProperty('--duration', `${duration}s`);
-    particleEl.style.animationDuration = `${duration}s`;
 
     if (deviceConfig.prefersReducedMotion) {
+        // Reduced Motion: stationary positioning, zero sway/spin/drift, gentle fade lifecycle
         particleEl.classList.add('reduced-motion-particle');
-        const stationaryY = (Math.random() * 65 + 15).toFixed(1);
-        particleEl.style.top = `${stationaryY}vh`;
-        particleEl.style.setProperty('--reduced-top', `${stationaryY}vh`);
-    } else if (typeof options.initialYPercent === 'number') {
-        // Initial field seeding: start midway with negative animation delay calibrated to initial position
-        const progress = Math.min(Math.max(options.initialYPercent / 100, 0.05), 0.85);
-        const elapsed = (progress * parseFloat(duration)).toFixed(2);
-        particleEl.style.animationDelay = `-${elapsed}s`;
+        const pos = getReducedMotionPlacement(tier);
+        particleEl.style.left = `${pos.x}vw`;
+        particleEl.style.top = `${pos.y}vh`;
+        particleEl.style.setProperty('--reduced-top', `${pos.y}vh`);
+        particleEl.style.setProperty('--sway-x', '0px');
+        particleEl.style.setProperty('--spin', '0deg');
+        particleEl.style.transform = 'none';
+        particleEl.style.animation = 'particleReducedMotionLifecycle 2.9s ease-in-out forwards';
+    } else {
+        // Full kinetic dynamics
+        let swayX = '0px';
+        let spin = '0deg';
+        if (deviceConfig.isLowPower || deviceConfig.isMobile) {
+            swayX = (Math.random() * 36 - 18).toFixed(0) + 'px';
+            spin = (Math.random() * 50 - 25).toFixed(0) + 'deg';
+        } else {
+            swayX = (Math.random() * 60 - 30).toFixed(0) + 'px';
+            spin = (Math.random() * 80 - 40).toFixed(0) + 'deg';
+        }
+
+        const startX = getDistributedSpawnX();
+        particleEl.style.left = `${startX}vw`;
+        particleEl.style.setProperty('--sway-x', swayX);
+        particleEl.style.setProperty('--spin', spin);
+        particleEl.style.setProperty('--duration', `${duration}s`);
+        particleEl.style.animationDuration = `${duration}s`;
+
+        if (typeof options.initialYPercent === 'number') {
+            const progress = Math.min(Math.max(options.initialYPercent / 100, 0.05), 0.85);
+            const elapsed = (progress * parseFloat(duration)).toFixed(2);
+            particleEl.style.animationDelay = `-${elapsed}s`;
+        }
     }
 
     particleEl.innerHTML = svg;
@@ -526,10 +685,11 @@ export function spawnFloatingParticle(options = {}) {
         cleanup();
     }, {once: true});
 
-    // In reduced-motion mode, particles breathe in place infinitely and are not removed by timer
-    if (!deviceConfig.prefersReducedMotion) {
+    if (deviceConfig.prefersReducedMotion) {
+        // Lifecycle: fadeIn 250ms + visible 2200ms + fadeOut 450ms = 2900ms
+        setTimeout(cleanup, 2900 + 350);
+    } else {
         const safeDuration = parseFloat(duration) || 8.0;
-        // Generous buffer (+3500ms) guarantees the particle completely finishes animation and moves off-screen
         setTimeout(cleanup, safeDuration * 1000 + 3500);
     }
 }
@@ -593,7 +753,8 @@ function logParticleDiagnostics(container, sampleParticle = null) {
 
 /**
  * Spawns a coordinated burst of celebratory occasion particles (e.g., on card acceptance or dodge),
- * leveraging DeviceManager.getExplodeBudget() directly for device-tailored counts.
+ * respecting burst counts, burst cooldowns, and a strict +20% overshoot limit.
+ * Under reduced motion, triggers a controlled, static, gentle burst without explosive velocity.
  *
  * @param {number} [originXPercent=50]
  * @param {number} [originYPercent=50]
@@ -602,24 +763,59 @@ function logParticleDiagnostics(container, sampleParticle = null) {
 export function spawnOccasionParticleBurst(originXPercent = 50, originYPercent = 50, occasionKey = null) {
     if (typeof document === 'undefined' || !floatingContainer) return;
 
-    const budget = DeviceManager.getExplodeBudget ? DeviceManager.getExplodeBudget() : {
-        isReducedMotion: DeviceManager.prefersReducedMotion,
-        total: DeviceManager.isMobile ? 3 : 8,
-        animDuration: 1200
-    };
+    const deviceConfig = getDeviceParticleConfig();
 
-    if (budget.isReducedMotion || budget.total <= 0) return;
+    // 1. Check reduced motion celebration:
+    // When reduced motion is active, do not remove the celebration effect entirely.
+    // Instead of explosive movement, use a controlled number of stationary particles
+    // with short opacity fade-in, gentle fade-out (max 5 on mobile, 8 on desktop).
+    if (deviceConfig.prefersReducedMotion) {
+        const reducedBurstCount = deviceConfig.isMobile ? 5 : 8;
+        const now = Date.now();
+        if (now - lastBurstTimestamp < 1500) {
+            return;
+        }
+        lastBurstTimestamp = now;
+
+        const occ = occasionKey || resolveActiveOccasion();
+        for (let i = 0; i < reducedBurstCount; i++) {
+            setTimeout(() => {
+                if (floatingContainer && floatingContainer.childElementCount < 16) {
+                    spawnFloatingParticle({
+                        occasion: occ,
+                        isBurstParticle: true
+                    });
+                }
+            }, i * 70);
+        }
+        return;
+    }
+
+    if (deviceConfig.burstCount <= 0) return;
+
+    // 2. Cooldown check to prevent rapid spamming from mechanical pulses
+    const now = Date.now();
+    if (now - lastBurstTimestamp < deviceConfig.burstCooldownMs) {
+        return;
+    }
+    lastBurstTimestamp = now;
+
+    // 3. Max allowable particles during burst (maximum ~20% above maxActiveParticles)
+    const maxBurstCapacity = Math.round(deviceConfig.maxActiveParticles * 1.20);
+    const availableSlots = Math.max(0, maxBurstCapacity - floatingContainer.childElementCount);
+    if (availableSlots <= 0) return;
 
     const occ = occasionKey || resolveActiveOccasion();
-    const burstCount = Math.min(budget.total, 8);
+    const burstCount = Math.min(deviceConfig.burstCount, availableSlots);
 
     for (let i = 0; i < burstCount; i++) {
         setTimeout(() => {
             spawnFloatingParticle({
                 occasion: occ,
-                initialYPercent: originYPercent + (Math.random() * 10 - 5)
+                initialYPercent: originYPercent + (Math.random() * 10 - 5),
+                maxAllowedParticles: maxBurstCapacity
             });
-        }, i * 120);
+        }, i * 90);
     }
 }
 
@@ -633,37 +829,63 @@ export function clearFloatingParticles() {
 }
 
 /**
- * Starts the particle spawner, seeding an initial field of staggered particles
- * based on the active device capability profile.
+ * Single scheduler tick with ±20% jitter.
+ * Guarantees exactly ONE active scheduler loop at all times.
+ */
+function scheduleNextTick() {
+    if (!isSpawningActive) return;
+    if (spawnerTimeoutId) {
+        clearTimeout(spawnerTimeoutId);
+        spawnerTimeoutId = null;
+    }
+
+    const config = getDeviceParticleConfig();
+    const baseInterval = config.spawnIntervalMs;
+    const jitterRatio = config.spawnJitterRatio || SPAWN_JITTER_RATIO;
+    const jitter = (Math.random() * 2 - 1) * jitterRatio * baseInterval;
+    const delay = Math.max(80, Math.round(baseInterval + jitter));
+
+    spawnerTimeoutId = setTimeout(() => {
+        spawnerTimeoutId = null;
+        if (isSpawningActive && typeof document !== 'undefined' && !document.hidden) {
+            spawnFloatingParticle();
+        }
+        scheduleNextTick();
+    }, delay);
+}
+
+/**
+ * Starts the single particle spawner, seeding an initial field of staggered particles
+ * based on the active performance profile.
  */
 export function startEmojiSpawner() {
-    if (!floatingInterval) {
-        const deviceConfig = getDeviceParticleConfig();
+    if (isSpawningActive) return; // Single spawner guarantee!
+    isSpawningActive = true;
 
-        // Seed initial field so screen is immediately atmospheric
-        const initialCount = deviceConfig.initialFieldCount;
-        for (let i = 0; i < initialCount; i++) {
-            const initialY = 15 + i * (65 / initialCount);
-            spawnFloatingParticle({initialYPercent: initialY});
-        }
+    const deviceConfig = getDeviceParticleConfig();
 
-        floatingInterval = setInterval(spawnFloatingParticle, deviceConfig.spawnIntervalMs);
+    // Seed initial field so screen is immediately atmospheric
+    const initialCount = deviceConfig.initialFieldCount;
+    for (let i = 0; i < initialCount; i++) {
+        const initialY = 15 + i * (65 / Math.max(1, initialCount));
+        spawnFloatingParticle({ initialYPercent: initialY });
+    }
 
-        // Bind visibility listener once to conserve battery when tab is hidden
-        if (typeof document !== 'undefined' && !visibilityListenerBound) {
-            visibilityListenerBound = true;
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    if (floatingInterval) {
-                        clearInterval(floatingInterval);
-                        floatingInterval = null;
-                    }
-                } else if (!floatingInterval) {
-                    const currentConfig = getDeviceParticleConfig();
-                    floatingInterval = setInterval(spawnFloatingParticle, currentConfig.spawnIntervalMs);
+    scheduleNextTick();
+
+    // Bind visibility listener once to conserve battery when tab is hidden
+    if (typeof document !== 'undefined' && !visibilityListenerBound) {
+        visibilityListenerBound = true;
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (spawnerTimeoutId) {
+                    clearTimeout(spawnerTimeoutId);
+                    spawnerTimeoutId = null;
                 }
-            });
-        }
+            } else if (isSpawningActive && !spawnerTimeoutId) {
+                scheduleNextTick();
+            }
+        });
     }
 }
 
@@ -671,20 +893,148 @@ export function startEmojiSpawner() {
  * Stops the floating particle spawner.
  */
 export function stopEmojiSpawner() {
-    if (floatingInterval) {
-        clearInterval(floatingInterval);
-        floatingInterval = null;
+    isSpawningActive = false;
+    if (spawnerTimeoutId) {
+        clearTimeout(spawnerTimeoutId);
+        spawnerTimeoutId = null;
     }
 }
 
 /**
- * Initializes the particle system and binds to the container element.
+ * Dynamically updates particle performance mode without requiring page reload.
+ * Adjusts spawner cadence, tier distribution, and smoothly prunes excess particles.
+ *
+ * @param {string} [newMode] 'light' | 'heavy'
+ * @param {object} [options]
+ * @param {boolean} [options.immediate=false]
+ */
+export function updateParticlePerformance(newMode = null, options = {}) {
+    const config = getDeviceParticleConfig(newMode);
+
+    if (!floatingContainer && typeof document !== 'undefined') {
+        floatingContainer = document.getElementById('floating-hearts-container');
+    }
+
+    // If changing from Heavy to Light and active count exceeds limit, smoothly prune excess particles
+    if (floatingContainer && floatingContainer.childElementCount > config.maxActiveParticles) {
+        const excess = floatingContainer.childElementCount - config.maxActiveParticles;
+        const children = Array.from(floatingContainer.children);
+        // Prune far tier or oldest particles first for visual grace
+        const farTier = children.filter(c => c.getAttribute('data-tier') === 'far');
+        const others = children.filter(c => c.getAttribute('data-tier') !== 'far');
+        const toPrune = [...farTier, ...others].slice(0, excess);
+        toPrune.forEach(el => {
+            el.classList.add('particle-pruning');
+            if (options && options.immediate) {
+                if (el.parentNode) el.parentNode.removeChild(el);
+            } else {
+                el.style.transition = 'opacity 0.35s ease-out';
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    if (el.parentNode) el.parentNode.removeChild(el);
+                }, 350);
+            }
+        });
+    }
+
+    // Immediately reschedule next tick with the new cadence and budget
+    if (isSpawningActive) {
+        if (spawnerTimeoutId) {
+            clearTimeout(spawnerTimeoutId);
+            spawnerTimeoutId = null;
+        }
+        scheduleNextTick();
+    }
+}
+
+let mediaQueryListenerBound = false;
+
+/**
+ * Dynamically handles runtime changes to prefers-reduced-motion without requiring page reload.
+ * When enabled, immediately stops active movement, switches active particles to stationary lifecycle,
+ * prunes excess particles down to the reduced-motion budget, and reschedules the spawner.
+ * When disabled, seamlessly restores the user's selected Light/Heavy profile.
+ *
+ * @param {boolean} isReduced
+ */
+export function handleReducedMotionToggle(isReduced) {
+    if (typeof document !== 'undefined' && document.body) {
+        document.body.classList.toggle('reduced-motion-mode', isReduced);
+    }
+
+    if (!floatingContainer && typeof document !== 'undefined') {
+        floatingContainer = document.getElementById('floating-hearts-container');
+    }
+
+    if (floatingContainer) {
+        const particles = Array.from(floatingContainer.children);
+        if (isReduced) {
+            particles.forEach(p => {
+                p.classList.add('reduced-motion-particle');
+                p.style.setProperty('--sway-x', '0px');
+                p.style.setProperty('--spin', '0deg');
+                p.style.transform = 'none';
+                p.style.animation = 'particleReducedMotionLifecycle 2.9s ease-in-out forwards';
+            });
+        } else {
+            particles.forEach(p => {
+                p.classList.remove('reduced-motion-particle');
+            });
+        }
+    }
+
+    updateParticlePerformance(null, { immediate: isReduced });
+}
+
+/**
+ * Sets up a dynamic media query listener for `(prefers-reduced-motion: reduce)`.
+ * Ensures operating-system and browser accessibility preference changes react instantly.
+ */
+export function setupReducedMotionListener() {
+    if (typeof window === 'undefined' || !window.matchMedia || mediaQueryListenerBound) return;
+    mediaQueryListenerBound = true;
+
+    try {
+        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const handleChange = (e) => {
+            const matches = Boolean(e && e.matches);
+            DeviceManager.prefersReducedMotion = matches;
+            handleReducedMotionToggle(matches);
+        };
+
+        if (typeof mediaQuery.addEventListener === 'function') {
+            mediaQuery.addEventListener('change', handleChange);
+        } else if (typeof mediaQuery.addListener === 'function') {
+            mediaQuery.addListener(handleChange);
+        }
+    } catch (_) {}
+}
+
+// Auto-initialize listener if running in browser
+if (typeof window !== 'undefined' && window.matchMedia) {
+    setupReducedMotionListener();
+}
+
+/**
+ * Initializes the particle system, binds to the container element,
+ * and sets up reactive state synchronization.
  * @param {object} [options]
  */
 export function initParticles(options = {}) {
     floatingContainer = document.getElementById('floating-hearts-container');
+    setupReducedMotionListener();
+
     if (options.autoStart !== false) {
         startEmojiSpawner();
+    }
+
+    // Reactively adjust particle performance when appState changes
+    if (typeof appState !== 'undefined' && appState.subscribe) {
+        appState.subscribe((newState, oldState, changedKeys) => {
+            if (changedKeys && changedKeys.includes('particlePerformance')) {
+                updateParticlePerformance(newState.particlePerformance);
+            }
+        });
     }
 }
 

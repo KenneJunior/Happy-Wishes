@@ -1,6 +1,6 @@
 {
-  "name": "Proposal/Congratulations",
-  "description": "Imported from GitHub: KenneJunior/Happy-Wishes",
+  "name": "Remix be-my-Valentine",
+  "description": "Progressive Web App celebration keepsake with offline support, iPhone splash screens and icons, personalized interactive cards, and music.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

@@ -753,7 +753,22 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .floating-particle {
         top: var(--reduced-top, 30vh) !important;
-        animation: particleAtmosphericBreathe 4s ease-in-out infinite !important;
+        animation: particleReducedMotionLifecycle 2.9s ease-in-out forwards !important;
+        transform: none !important;
+    }
+
+    /* Disable internal SVG animations, keyframes, transitions, and motion classes on all children */
+    .floating-particle *,
+    .floating-particle svg *,
+    .floating-particle [class*="motion"],
+    .floating-particle [class*="anim"],
+    .floating-particle [class*="sparkle"],
+    .floating-particle [class*="twinkle"],
+    .floating-particle [class*="pulse"],
+    .floating-particle [class*="wave"],
+    .floating-particle [class*="tassel"] {
+        animation: none !important;
+        transition: none !important;
         transform: none !important;
     }
 }
@@ -761,16 +776,45 @@ body {
 body.reduced-motion-mode .floating-particle,
 .reduced-motion-particle {
     top: var(--reduced-top, 30vh) !important;
-    animation: particleAtmosphericBreathe 4s ease-in-out infinite !important;
+    animation: particleReducedMotionLifecycle 2.9s ease-in-out forwards !important;
     transform: none !important;
 }
 
-@keyframes particleAtmosphericBreathe {
-    0%, 100% {
-        opacity: 0.35;
+body.reduced-motion-mode .floating-particle *,
+body.reduced-motion-mode .floating-particle svg *,
+body.reduced-motion-mode .floating-particle [class*="motion"],
+body.reduced-motion-mode .floating-particle [class*="anim"],
+body.reduced-motion-mode .floating-particle [class*="sparkle"],
+body.reduced-motion-mode .floating-particle [class*="twinkle"],
+body.reduced-motion-mode .floating-particle [class*="pulse"],
+body.reduced-motion-mode .floating-particle [class*="wave"],
+body.reduced-motion-mode .floating-particle [class*="tassel"],
+.reduced-motion-particle *,
+.reduced-motion-particle svg *,
+.reduced-motion-particle [class*="motion"],
+.reduced-motion-particle [class*="anim"],
+.reduced-motion-particle [class*="sparkle"],
+.reduced-motion-particle [class*="twinkle"],
+.reduced-motion-particle [class*="pulse"],
+.reduced-motion-particle [class*="wave"],
+.reduced-motion-particle [class*="tassel"] {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+}
+
+@keyframes particleReducedMotionLifecycle {
+    0% {
+        opacity: 0;
     }
-    50% {
-        opacity: 0.75;
+    8.6% {
+        opacity: var(--target-opacity, 0.75);
+    }
+    84.5% {
+        opacity: var(--target-opacity, 0.75);
+    }
+    100% {
+        opacity: 0;
     }
 }
 
@@ -5847,6 +5891,496 @@ body.dark-mode .pill-settings:hover {
     background: #be123c;
     transform: translateY(-1px);
 }
+
+/* --------------------------------------------------------------------------
+   Personalize Modal: Particle Performance Mode Controls
+   -------------------------------------------------------------------------- */
+.particle-performance-group {
+    margin-top: 1rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .particle-performance-group {
+    border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+.particle-perf-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 46, 99, 0.12);
+    color: var(--color-primary);
+    border: 1px solid rgba(255, 46, 99, 0.25);
+    border-radius: 9999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.18rem 0.6rem;
+    letter-spacing: 0.02em;
+}
+
+[data-theme="dark"] .particle-perf-badge {
+    background: rgba(255, 78, 121, 0.22);
+    border-color: rgba(255, 78, 121, 0.4);
+    color: #ff99b6;
+}
+
+.particle-perf-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-top: 0.6rem;
+}
+
+@media (max-width: 480px) {
+    .particle-perf-options {
+        grid-template-columns: 1fr;
+    }
+}
+
+.particle-perf-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem 0.85rem;
+    border-radius: 12px;
+    background: var(--modal-input-bg, #ffffff);
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+}
+
+[data-theme="dark"] .particle-perf-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.particle-perf-card:hover {
+    border-color: rgba(255, 46, 99, 0.4);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 46, 99, 0.08);
+}
+
+.particle-perf-card.is-active,
+.particle-perf-card:has(.particle-perf-radio:checked) {
+    border-color: var(--color-primary, #ff2e63);
+    background: rgba(255, 46, 99, 0.06);
+    box-shadow: 0 4px 14px rgba(255, 46, 99, 0.15);
+}
+
+[data-theme="dark"] .particle-perf-card.is-active,
+[data-theme="dark"] .particle-perf-card:has(.particle-perf-radio:checked) {
+    background: rgba(255, 46, 99, 0.16);
+    border-color: #ff4d79;
+}
+
+.particle-perf-radio {
+    margin-top: 0.2rem;
+    margin-right: 0.6rem;
+    accent-color: var(--color-primary, #ff2e63);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.particle-perf-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.particle-perf-header {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.particle-perf-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.particle-perf-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--modal-text, #1e1b2e);
+    letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .particle-perf-title {
+    color: #f1f5f9;
+}
+
+.particle-perf-desc {
+    font-size: 0.74rem;
+    color: var(--modal-text-muted, #64748b);
+    line-height: 1.35;
+    margin: 0;
+}
+
+[data-theme="dark"] .particle-perf-desc {
+    color: #94a3b8;
+}
+
+.particle-motion-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.particle-motion-hint {
+    margin: 0;
+    font-size: 0.73rem;
+    color: var(--modal-text-muted, #64748b);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    line-height: 1.35;
+    flex: 1;
+    min-width: 180px;
+}
+
+.particle-motion-hint.is-reduced-active {
+    color: var(--color-primary, #ff2e63);
+}
+
+[data-theme="dark"] .particle-motion-hint.is-reduced-active {
+    color: #ff85a3;
+}
+
+.btn-toggle-reduced-motion {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    min-height: 34px;
+    border-radius: 9999px;
+    background: var(--modal-input-bg, #ffffff);
+    border: 1.5px solid rgba(0, 0, 0, 0.12);
+    color: var(--modal-text, #1e1b2e);
+    font-family: inherit;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .btn-toggle-reduced-motion {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #f1f5f9;
+}
+
+.btn-toggle-reduced-motion:hover {
+    border-color: var(--color-primary, #ff2e63);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-toggle-reduced-motion:active {
+    transform: scale(0.96) translateY(1px);
+}
+
+.btn-toggle-reduced-motion:focus-visible {
+    outline: 2px solid var(--color-primary, #ff2e63);
+    outline-offset: 2px;
+}
+
+.btn-toggle-reduced-motion.is-active {
+    background: rgba(255, 46, 99, 0.12);
+    border-color: var(--color-primary, #ff2e63);
+    color: var(--color-primary, #ff2e63);
+    box-shadow: 0 2px 10px rgba(255, 46, 99, 0.16);
+}
+
+[data-theme="dark"] .btn-toggle-reduced-motion.is-active {
+    background: rgba(255, 46, 99, 0.22);
+    border-color: #ff4d79;
+    color: #ff85a3;
+}
+
+.reduced-motion-btn-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+.reduced-motion-switch-pill {
+    position: relative;
+    width: 22px;
+    height: 12px;
+    border-radius: 9999px;
+    background: rgba(0, 0, 0, 0.18);
+    transition: background-color 0.2s ease;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .reduced-motion-switch-pill {
+    background: rgba(255, 255, 255, 0.24);
+}
+
+.reduced-motion-switch-pill::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffffff;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.btn-toggle-reduced-motion.is-active .reduced-motion-switch-pill {
+    background: var(--color-primary, #ff2e63);
+}
+
+.btn-toggle-reduced-motion.is-active .reduced-motion-switch-pill::after {
+    transform: translateX(10px);
+}
+
+@media (max-width: 480px) {
+    .particle-motion-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-toggle-reduced-motion {
+        justify-content: center;
+        width: 100%;
+        min-height: 40px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   PWA UI Components (Install Pill, iOS Guide Modal, and Offline Status)
+   -------------------------------------------------------------------------- */
+
+.pill-pwa-install {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--pill-bg, rgba(255, 255, 255, 0.85));
+    border: 1px solid var(--pill-border, rgba(255, 182, 193, 0.4));
+    color: var(--pill-text, #4a1525);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill-pwa-install:hover {
+    background: var(--color-primary, #ff2e63);
+    color: #ffffff;
+    border-color: var(--color-primary, #ff2e63);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 46, 99, 0.3);
+}
+
+/* iOS Safari Installation Guide Modal */
+.ios-install-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(15, 6, 12, 0.65);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out;
+}
+
+.ios-install-modal.active,
+.ios-install-modal:not([hidden]) {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.ios-install-card {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+    background: var(--modal-bg, rgba(255, 255, 255, 0.96));
+    color: var(--modal-text, #2d0c18);
+    border: 1px solid var(--modal-border, rgba(255, 182, 193, 0.5));
+    border-radius: 20px;
+    padding: 24px 22px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+    animation: iosModalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] .ios-install-card {
+    background: rgba(26, 13, 24, 0.96);
+    color: #fdf0f5;
+    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+}
+
+@keyframes iosModalPop {
+    from {
+        transform: scale(0.92) translateY(12px);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.ios-install-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.ios-install-icon {
+    font-size: 1.5rem;
+}
+
+.ios-modal-title {
+    font-family: var(--font-display, 'Outfit', sans-serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.ios-install-intro {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--text-muted, #733c52);
+    margin-bottom: 16px;
+}
+
+[data-theme="dark"] .ios-install-intro {
+    color: #c7a3bc;
+}
+
+.ios-install-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ios-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.95rem;
+    line-height: 1.45;
+}
+
+.step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-primary, #ff2e63);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.ios-share-badge,
+.ios-add-badge {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    vertical-align: middle;
+}
+
+[data-theme="dark"] .ios-share-badge,
+[data-theme="dark"] .ios-add-badge {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.ios-install-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ios-confirm-btn {
+    padding: 10px 24px;
+    border-radius: 9999px;
+    background: var(--color-primary, #ff2e63);
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ios-confirm-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 46, 99, 0.35);
+}
+
+/* PWA Offline Status Toast Banner */
+.pwa-offline-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    z-index: 9998;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 9999px;
+    background: rgba(30, 15, 25, 0.92);
+    color: #ffffff;
+    font-size: 0.88rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+.pwa-offline-banner.visible {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.offline-pulse-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #ffb703;
+    box-shadow: 0 0 8px #ffb703;
+    animation: pulseOffline 1.8s infinite;
+}
+
+@keyframes pulseOffline {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.25); opacity: 0.6; }
+}
+
 
 
 

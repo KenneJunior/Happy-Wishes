@@ -6,7 +6,7 @@
 
 import { sound } from '../core/sound.js';
 import { launchCelebrationConfetti, triggerHeartExplosion, cancelHeartExplosion } from './effects/index.js';
-import { spawnFloatingParticle } from './effects/particles.js';
+import { spawnFloatingParticle, spawnOccasionParticleBurst } from './effects/particles.js';
 import { DeviceManager } from '../core/device.js';
 import { OCCASIONS, CELEBRATION_EVENT_TYPES, getBearAssetsForState } from '../config/occasions.js';
 import { resolveVisualAssetsForState } from '../config/visual-themes.js';
@@ -151,8 +151,11 @@ export function triggerAcceptSuccess() {
     // 8. Launch Confetti (automatically respects reduced motion)
     launchCelebrationConfetti();
 
-    // 9. Extra particle burst (bypassed on reduced motion)
-    if (!DeviceManager.prefersReducedMotion) {
+    // 9. Adaptive celebratory particle burst
+    if (DeviceManager.prefersReducedMotion) {
+        // Controlled reduced-motion celebration: static positions, gentle fade (max 5 mobile, 8 desktop)
+        spawnOccasionParticleBurst(50, 50, state.occasion);
+    } else {
         const burstCount = DeviceManager.isMobile ? 2 : 10;
         for (let i = 0; i < burstCount; i++) {
             setTimeout(spawnFloatingParticle, i * 140);

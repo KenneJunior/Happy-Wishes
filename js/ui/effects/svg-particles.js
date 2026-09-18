@@ -5028,6 +5028,114 @@ export const OCCASION_PARTICLES = {
  }
 
 /* ==========================================================================
+   CENTRAL PARTICLE PERFORMANCE MODES & REDUCED MOTION CONFIGURATION
+   ========================================================================== */
+
+export const PARTICLE_PERFORMANCE_MODES = {
+    light: {
+        name: 'Light',
+        mobile: {
+            spawnIntervalMs: 1200,
+            maxActiveParticles: 18,
+            initialParticleCount: 5,
+            rareParticleChance: 0.04,
+            uncommonParticleChance: 0.18,
+            burstCount: 5,
+            burstCooldownMs: 1800,
+            tierDistribution: {
+                far: 0.55,
+                mid: 0.35,
+                near: 0.10
+            }
+        },
+        desktop: {
+            spawnIntervalMs: 800,
+            maxActiveParticles: 28,
+            initialParticleCount: 8,
+            rareParticleChance: 0.07,
+            uncommonParticleChance: 0.24,
+            burstCount: 8,
+            burstCooldownMs: 1400,
+            tierDistribution: {
+                far: 0.45,
+                mid: 0.40,
+                near: 0.15
+            }
+        }
+    },
+    heavy: {
+        name: 'Heavy',
+        mobile: {
+            spawnIntervalMs: 450,
+            maxActiveParticles: 38,
+            initialParticleCount: 10,
+            rareParticleChance: 0.10,
+            uncommonParticleChance: 0.30,
+            burstCount: 10,
+            burstCooldownMs: 900,
+            tierDistribution: {
+                far: 0.40,
+                mid: 0.42,
+                near: 0.18
+            }
+        },
+        desktop: {
+            spawnIntervalMs: 300,
+            maxActiveParticles: 55,
+            initialParticleCount: 14,
+            rareParticleChance: 0.14,
+            uncommonParticleChance: 0.34,
+            burstCount: 14,
+            burstCooldownMs: 700,
+            tierDistribution: {
+                far: 0.35,
+                mid: 0.45,
+                near: 0.20
+            }
+        }
+    }
+};
+
+export const REDUCED_MOTION_CONFIG = {
+    mobile: {
+        spawnIntervalMs: 2500, // 2200 - 3000ms range
+        maxActiveParticles: 8, // 4 - 8 range
+        initialParticleCount: 3,
+        rareParticleChance: 0.03,
+        uncommonParticleChance: 0.12,
+        burstCount: 5,
+        reducedMotionBurstCount: 5,
+        burstCooldownMs: 2500,
+        tierDistribution: {
+            far: 0.70,
+            mid: 0.30,
+            near: 0.00
+        }
+    },
+    desktop: {
+        spawnIntervalMs: 1800, // 1600 - 2200ms range
+        maxActiveParticles: 12, // 8 - 12 range
+        initialParticleCount: 4,
+        rareParticleChance: 0.05,
+        uncommonParticleChance: 0.16,
+        burstCount: 8,
+        reducedMotionBurstCount: 8,
+        burstCooldownMs: 2000,
+        tierDistribution: {
+            far: 0.68,
+            mid: 0.32,
+            near: 0.00
+        }
+    },
+    timing: {
+        fadeInMs: 250,
+        visibleDurationMs: 2200,
+        fadeOutMs: 450,
+        totalDurationMs: 2900
+    }
+};
+
+/* ==========================================================================
    BACKWARD-COMPATIBLE REGISTRY & RESOLUTION
    ========================================================================== */
 
@@ -5092,7 +5200,7 @@ export function registerParticleSvg(occasion, generatorOrDef) {
     }
 }
 
-export function getOccasionParticleSvg(stateOrOccasion, forcedVariantIndex) {
+export function getOccasionParticleSvg(stateOrOccasion, forcedVariantIndex, configOrOptions = null) {
     const occasionKey = resolveOccasionKey(stateOrOccasion);
     const particleList = OCCASION_PARTICLES[occasionKey] || OCCASION_PARTICLES.valentine;
     const count = particleList.length;
@@ -5101,20 +5209,65 @@ export function getOccasionParticleSvg(stateOrOccasion, forcedVariantIndex) {
     if (typeof forcedVariantIndex === 'number' && forcedVariantIndex >= 0 && forcedVariantIndex < count) {
         variantIndex = forcedVariantIndex;
     } else {
+        // Resolve configuration options
+        let cfg = null;
+        if (typeof configOrOptions === 'string') {
+            const mode = configOrOptions.toLowerCase();
+            if (mode === 'reduced-motion' || mode === 'reducedmotion') {
+                cfg = REDUCED_MOTION_CONFIG.desktop;
+            } else if (PARTICLE_PERFORMANCE_MODES[mode]) {
+                cfg = PARTICLE_PERFORMANCE_MODES[mode].desktop;
+            }
+        } else if (configOrOptions && typeof configOrOptions === 'object') {
+            cfg = configOrOptions;
+        }
+
+        const rareChance = (cfg && typeof cfg.rareParticleChance === 'number')
+            ? cfg.rareParticleChance
+            : 0.10;
+        const uncommonChance = (cfg && typeof cfg.uncommonParticleChance === 'number')
+            ? cfg.uncommonParticleChance
+            : 0.25;
+
         const roll = Math.random();
         let targetRarity = 'common';
-        if (roll > 0.90) {
+        if (roll < rareChance) {
             targetRarity = 'rare';
-        } else if (roll > 0.65) {
+        } else if (roll < (rareChance + uncommonChance)) {
             targetRarity = 'uncommon';
         }
 
-        const filtered = particleList
-            .map((p, idx) => ({ p, idx }))
-            .filter(item => item.p.rarity === targetRarity);
+        let targetTier = null;
+        if (cfg && cfg.tierDistribution) {
+            const tDist = cfg.tierDistribution;
+            const tFar = typeof tDist.far === 'number' ? tDist.far : 0.45;
+            const tMid = typeof tDist.mid === 'number' ? tDist.mid : 0.40;
+            const tierRoll = Math.random();
+            if (tierRoll < tFar) {
+                targetTier = 'far';
+            } else if (tierRoll < tFar + tMid) {
+                targetTier = 'mid';
+            } else {
+                targetTier = (cfg.allowNearTier === false) ? 'mid' : 'near';
+            }
+        }
 
-        if (filtered.length > 0) {
-            const chosen = filtered[Math.floor(Math.random() * filtered.length)];
+        let candidates = particleList.map((p, idx) => ({ p, idx }));
+        if (targetTier) {
+            const tierMatches = candidates.filter(item => item.p.tier === targetTier && item.p.rarity === targetRarity);
+            if (tierMatches.length > 0) {
+                candidates = tierMatches;
+            } else {
+                const tierOnly = candidates.filter(item => item.p.tier === targetTier);
+                if (tierOnly.length > 0) candidates = tierOnly;
+            }
+        } else {
+            const rarityMatches = candidates.filter(item => item.p.rarity === targetRarity);
+            if (rarityMatches.length > 0) candidates = rarityMatches;
+        }
+
+        if (candidates.length > 0) {
+            const chosen = candidates[Math.floor(Math.random() * candidates.length)];
             variantIndex = chosen.idx;
         } else {
             variantIndex = Math.floor(Math.random() * count);

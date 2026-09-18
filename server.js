@@ -474,6 +474,19 @@ app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/js', express.static(path.join(__dirname, 'js')));
 app.use('/pages', express.static(path.join(__dirname, 'pages')));
 
+// PWA explicit routes
+app.get('/sw.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.join(__dirname, 'sw.js'));
+});
+
+app.get('/manifest.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/manifest+json; charset=UTF-8');
+  res.sendFile(path.join(__dirname, 'manifest.json'));
+});
+
 // Direct static mounts for seamless fallback resolution
 app.use(express.static(path.join(__dirname, 'pages'), { extensions: ['html'] }));
 app.use(express.static(__dirname, { extensions: ['html'] }));
