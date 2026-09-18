@@ -1,322 +1,348 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Romantic Flower Bouquet Illustration">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" role="img" aria-label="Romantic flower bouquet illustration">
   <defs>
-    <!-- Soft Background Ambient Glow -->
-    <radialGradient id="rbq-ambient-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#ffe4ea" stop-opacity="0.6"/>
-      <stop offset="55%" stop-color="#ffd1dc" stop-opacity="0.25"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    <!-- Ambient glow -->
+    <radialGradient id="rbq-glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFE8EC" stop-opacity="0.55"/>
+      <stop offset="0.55" stop-color="#FFD1DC" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Ground Contact Shadow -->
-    <radialGradient id="rbq-contact-shadow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#803344" stop-opacity="0.18"/>
-      <stop offset="60%" stop-color="#803344" stop-opacity="0.06"/>
-      <stop offset="100%" stop-color="#803344" stop-opacity="0"/>
+    <radialGradient id="rbq-shadow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#5A1A28" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#5A1A28" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#5A1A28" stop-opacity="0"/>
     </radialGradient>
 
-    <!-- Bouquet Paper Wrap Gradient -->
-    <linearGradient id="rbq-wrap-main" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#fff8f6"/>
-      <stop offset="45%" stop-color="#f7e5e1"/>
-      <stop offset="100%" stop-color="#eed1cb"/>
-    </linearGradient>
-    <linearGradient id="rbq-wrap-fold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fdf2ef"/>
-      <stop offset="100%" stop-color="#e3c2bc"/>
+    <!-- Wrap paper -->
+    <linearGradient id="rbq-wrap" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFF9F5"/>
+      <stop offset="0.5" stop-color="#F8E6DF"/>
+      <stop offset="1" stop-color="#E3C6BC"/>
     </linearGradient>
 
-    <!-- Satin Velvet Ribbon -->
-    <linearGradient id="rbq-ribbon-velvet" x1="15%" y1="0%" x2="85%" y2="100%">
-      <stop offset="0%" stop-color="#e63956"/>
-      <stop offset="40%" stop-color="#ba1a38"/>
-      <stop offset="85%" stop-color="#800f26"/>
-      <stop offset="100%" stop-color="#540817"/>
-    </linearGradient>
-    <linearGradient id="rbq-ribbon-highlight" x1="0%" y1="30%" x2="100%" y2="70%">
-      <stop offset="0%" stop-color="#ff758f"/>
-      <stop offset="50%" stop-color="#e63956"/>
-      <stop offset="100%" stop-color="#99132e"/>
+    <linearGradient id="rbq-wrap-fold" x1="0" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#F2D8CF"/>
+      <stop offset="1" stop-color="#D2A99C"/>
     </linearGradient>
 
-    <!-- Central Grand Rose Shading -->
-    <linearGradient id="rbq-rose-deep" x1="20%" y1="10%" x2="80%" y2="90%">
-      <stop offset="0%" stop-color="#e83652"/>
-      <stop offset="45%" stop-color="#bf1335"/>
-      <stop offset="85%" stop-color="#7a0a1f"/>
-      <stop offset="100%" stop-color="#4a0411"/>
-    </linearGradient>
-    <linearGradient id="rbq-rose-petal-light" x1="10%" y1="0%" x2="90%" y2="100%">
-      <stop offset="0%" stop-color="#ff7b93"/>
-      <stop offset="60%" stop-color="#e02b48"/>
-      <stop offset="100%" stop-color="#a30f28"/>
+    <linearGradient id="rbq-wrap-hi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
     </linearGradient>
 
-    <!-- Pastel Peach Peony -->
-    <linearGradient id="rbq-peony-peach" x1="15%" y1="10%" x2="85%" y2="95%">
-      <stop offset="0%" stop-color="#ffecd6"/>
-      <stop offset="45%" stop-color="#fca8a4"/>
-      <stop offset="85%" stop-color="#e3636f"/>
-      <stop offset="100%" stop-color="#aa2840"/>
+    <!-- Velvet ribbon -->
+    <linearGradient id="rbq-velvet" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#E0425C"/>
+      <stop offset="0.35" stop-color="#B81834"/>
+      <stop offset="0.75" stop-color="#7E0E24"/>
+      <stop offset="1" stop-color="#4E0512"/>
     </linearGradient>
 
-    <!-- Cream Tea Rose -->
-    <linearGradient id="rbq-tea-rose" x1="20%" y1="10%" x2="80%" y2="90%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="40%" stop-color="#fff0f3"/>
-      <stop offset="80%" stop-color="#fec5bb"/>
-      <stop offset="100%" stop-color="#e28c9b"/>
+    <linearGradient id="rbq-velvet-hi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF8A9E"/>
+      <stop offset="0.5" stop-color="#E0425C" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#7E0E24" stop-opacity="0"/>
     </linearGradient>
 
-    <!-- Botanical Foliage (Eucalyptus and Rose Leaf) -->
-    <linearGradient id="rbq-leaf-eucalyptus" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#84a98c"/>
-      <stop offset="55%" stop-color="#52796f"/>
-      <stop offset="100%" stop-color="#2f3e46"/>
+    <!-- Central heritage rose -->
+    <radialGradient id="rbq-rose-base" cx="0.42" cy="0.34" r="0.72">
+      <stop offset="0" stop-color="#C41838"/>
+      <stop offset="0.55" stop-color="#8C0F26"/>
+      <stop offset="1" stop-color="#47040F"/>
+    </radialGradient>
+
+    <radialGradient id="rbq-rose-mid" cx="0.42" cy="0.32" r="0.7">
+      <stop offset="0" stop-color="#FF5A76"/>
+      <stop offset="0.55" stop-color="#C81C3E"/>
+      <stop offset="1" stop-color="#8C0F26"/>
+    </radialGradient>
+
+    <!-- Peony -->
+    <radialGradient id="rbq-peony" cx="0.42" cy="0.34" r="0.72">
+      <stop offset="0" stop-color="#FFE1D4"/>
+      <stop offset="0.4" stop-color="#FBA9A8"/>
+      <stop offset="0.8" stop-color="#E06A78"/>
+      <stop offset="1" stop-color="#9E2440"/>
+    </radialGradient>
+
+    <!-- Tea rose -->
+    <radialGradient id="rbq-tea" cx="0.42" cy="0.3" r="0.75">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.45" stop-color="#FDEBEF"/>
+      <stop offset="0.8" stop-color="#F8C2C0"/>
+      <stop offset="1" stop-color="#D88998"/>
+    </radialGradient>
+
+    <!-- Foliage -->
+    <linearGradient id="rbq-eucalyptus" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#A6C1AE"/>
+      <stop offset="0.5" stop-color="#6B8E7B"/>
+      <stop offset="1" stop-color="#3A5650"/>
     </linearGradient>
-    <linearGradient id="rbq-leaf-fresh" x1="10%" y1="0%" x2="90%" y2="100%">
-      <stop offset="0%" stop-color="#95d5b2"/>
-      <stop offset="50%" stop-color="#52b788"/>
-      <stop offset="100%" stop-color="#2d6a4f"/>
+
+    <linearGradient id="rbq-leaf" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#7BB894"/>
+      <stop offset="0.5" stop-color="#3E8B66"/>
+      <stop offset="1" stop-color="#1B4533"/>
     </linearGradient>
+
+    <filter id="rbq-lift" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#5A1A28" flood-opacity="0.14"/>
+    </filter>
+
+    <style>
+      @keyframes rbq-sway {
+      0%, 100% { transform: rotate(-1.2deg) translateY(0); }
+      50%      { transform: rotate(1.4deg) translateY(-2.5px); }
+      }
+      @keyframes rbq-tail-l {
+      0%, 100% { transform: rotate(-2.5deg); }
+      50%      { transform: rotate(4.5deg); }
+      }
+      @keyframes rbq-tail-r {
+      0%, 100% { transform: rotate(2.5deg); }
+      50%      { transform: rotate(-4deg); }
+      }
+      @keyframes rbq-bloom {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.022); }
+      }
+      @keyframes rbq-drift {
+      0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+      20%  { opacity: 0.85; }
+      80%  { opacity: 0.7; }
+      100% { transform: translate(-44px, 48px) rotate(54deg); opacity: 0; }
+      }
+      @keyframes rbq-twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.9); }
+      50%      { opacity: 0.95; transform: scale(1.18); }
+      }
+
+      .rbq-sway    { animation: rbq-sway 5.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; transform-origin: 140px 200px; }
+      .rbq-tail-l  { animation: rbq-tail-l 5.4s cubic-bezier(0.45, 0, 0.55, 1) infinite 0.24s; transform-origin: 134px 172px; }
+      .rbq-tail-r  { animation: rbq-tail-r 5.4s cubic-bezier(0.45, 0, 0.55, 1) infinite 0.36s; transform-origin: 146px 172px; }
+      .rbq-bloom   { animation: rbq-bloom 4.8s ease-in-out infinite; transform-origin: 140px 100px; }
+      .rbq-drift   { animation: rbq-drift 5.2s cubic-bezier(0.33, 1, 0.68, 1) infinite; }
+      .rbq-twinkle { animation: rbq-twinkle 3.4s ease-in-out infinite; transform-origin: 152px 90px; }
+
+      @media (prefers-reduced-motion: reduce) {
+      .rbq-sway, .rbq-tail-l, .rbq-tail-r, .rbq-bloom, .rbq-drift, .rbq-twinkle {
+      animation: none !important;
+      transform: none !important;
+      }
+      }
+    </style>
   </defs>
 
-  <style>
-    /* Organic, physically grounded idle motion */
-    @keyframes rbqSwayBody {
-      0%, 100% {
-        transform: rotate(-1.5deg) translateY(0px);
-      }
-      50% {
-        transform: rotate(1.8deg) translateY(-3px);
-      }
-    }
+  <!-- Ambient backdrop -->
+  <circle cx="140" cy="112" r="102" fill="url(#rbq-glow)"/>
 
-    @keyframes rbqRibbonLagL {
-      0%, 100% {
-        transform: rotate(-2deg);
-      }
-      50% {
-        transform: rotate(4deg);
-      }
-    }
+  <!-- Ground contact shadow -->
+  <ellipse cx="140" cy="214" rx="48" ry="7" fill="url(#rbq-shadow)"/>
 
-    @keyframes rbqRibbonLagR {
-      0%, 100% {
-        transform: rotate(3deg);
-      }
-      50% {
-        transform: rotate(-3.5deg);
-      }
-    }
-
-    @keyframes rbqPetalBreathe {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.028);
-      }
-    }
-
-    @keyframes rbqDriftingPetal {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 0;
-      }
-      20% {
-        opacity: 0.85;
-      }
-      80% {
-        opacity: 0.8;
-      }
-      100% {
-        transform: translate(-38px, 42px) rotate(48deg);
-        opacity: 0;
-      }
-    }
-
-    @keyframes rbqGlint {
-      0%, 100% {
-        opacity: 0.25;
-        transform: scale(0.85);
-      }
-      50% {
-        opacity: 0.9;
-        transform: scale(1.15);
-      }
-    }
-
-    .rbq-stem-bouquet {
-      animation: rbqSwayBody 5.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
-      transform-origin: 140px 200px;
-    }
-
-    .rbq-ribbon-left {
-      animation: rbqRibbonLagL 5.2s cubic-bezier(0.45, 0, 0.55, 1) infinite 0.22s;
-      transform-origin: 135px 172px;
-    }
-
-    .rbq-ribbon-right {
-      animation: rbqRibbonLagR 5.2s cubic-bezier(0.45, 0, 0.55, 1) infinite 0.35s;
-      transform-origin: 145px 172px;
-    }
-
-    .rbq-petal-pulse {
-      animation: rbqPetalBreathe 4.6s ease-in-out infinite;
-      transform-origin: 140px 105px;
-    }
-
-    .rbq-petal-drift {
-      animation: rbqDriftingPetal 4.8s cubic-bezier(0.33, 1, 0.68, 1) infinite;
-    }
-
-    .rbq-glint-spark {
-      animation: rbqGlint 3.2s ease-in-out infinite;
-      transform-origin: 148px 94px;
-    }
-
-    /* Accessibility: Respect Reduced Motion */
-    @media (prefers-reduced-motion: reduce) {
-      .rbq-stem-bouquet,
-      .rbq-ribbon-left,
-      .rbq-ribbon-right,
-      .rbq-petal-pulse,
-      .rbq-petal-drift,
-      .rbq-glint-spark {
-        animation: none !important;
-        transform: none !important;
-      }
-    }
-  </style>
-
-  <!-- Ambient Backdrop -->
-  <circle cx="140" cy="116" r="94" fill="url(#rbq-ambient-glow)"/>
-  <ellipse cx="140" cy="216" rx="46" ry="7" fill="url(#rbq-contact-shadow)"/>
-
-  <!-- Subtle Drifting Petal with air drag -->
-  <g class="rbq-petal-drift" transform="translate(176, 76)">
-    <path d="M0,0 C6,-8 18,-4 16,8 C14,16 2,18 -2,10 C-4,4 -3,2 0,0 Z" fill="url(#rbq-rose-petal-light)" opacity="0.85"/>
+  <!-- Drifting petal -->
+  <g class="rbq-drift" transform="translate(178, 70)">
+    <path d="M 0 0 C 6 -7 16 -4 15 6 C 14 14 4 17 -2 10 C -5 6 -3 2 0 0 Z"
+          fill="#F8C2C0" opacity="0.92"/>
+    <path d="M 0 0 C 6 -7 16 -4 15 6 C 14 14 4 17 -2 10"
+          fill="none" stroke="#D88998" stroke-width="0.5" opacity="0.6"/>
+    <path d="M 1 -1 C 5 -4 10 -2 10 3" fill="none" stroke="#FFFFFF" stroke-width="0.7" opacity="0.7"/>
   </g>
 
-  <!-- Main Articulated Bouquet Group -->
-  <g class="rbq-stem-bouquet">
-    <!-- Bouquet Wrapping Paper (Folded Textured Cornucopia) -->
-    <!-- Base Kraft Cone -->
-    <path d="M140,210 L102,130 C122,134 158,134 178,130 Z" fill="url(#rbq-wrap-main)" stroke="#e4bfb7" stroke-width="1.2"/>
-    <!-- Fold Lapels with Dimensional Shadow -->
-    <path d="M102,130 L140,210 L122,142 Z" fill="url(#rbq-wrap-fold)" opacity="0.85"/>
-    <path d="M178,130 L140,210 L158,142 Z" fill="#edd6d1" opacity="0.9"/>
-    <!-- Paper Crease Highlights -->
-    <path d="M140,210 L139,150" stroke="#ffffff" stroke-width="1.4" opacity="0.6" stroke-linecap="round"/>
+  <!-- Main bouquet -->
+  <g class="rbq-sway" filter="url(#rbq-lift)">
 
-    <!-- Foliage / Botanical Greenery (Background Layer) -->
-    <!-- Eucalyptus Round Leaves (Left) -->
-    <g transform="translate(98, 120) rotate(-24)">
-      <path d="M0,15 C-12,5 -14,-15 -2,-20 C10,-24 18,-8 12,8 Z" fill="url(#rbq-leaf-eucalyptus)"/>
-      <path d="M0,15 Q3,-5 0,-18" stroke="#415a77" stroke-width="1" fill="none" opacity="0.6"/>
-      <ellipse cx="-1" cy="-6" rx="9" ry="12" fill="#a4c3b2" opacity="0.35"/>
-    </g>
-    <!-- Eucalyptus Round Leaves (Right) -->
-    <g transform="translate(182, 120) rotate(24)">
-      <path d="M0,15 C12,5 14,-15 2,-20 C-10,-24 -18,-8 -12,8 Z" fill="url(#rbq-leaf-eucalyptus)"/>
-      <path d="M0,15 Q-3,-5 0,-18" stroke="#415a77" stroke-width="1" fill="none" opacity="0.6"/>
-      <ellipse cx="1" cy="-6" rx="9" ry="12" fill="#a4c3b2" opacity="0.35"/>
-    </g>
+    <!-- Wrapping paper cone -->
+    <path d="M 140 210 L 95 128 C 115 121 165 121 185 128 Z" fill="url(#rbq-wrap)"/>
 
-    <!-- Deep Green Rose Leaves -->
-    <path d="M110,126 C90,110 88,88 104,96 C115,102 118,118 110,126 Z" fill="url(#rbq-leaf-fresh)"/>
-    <path d="M104,96 Q108,112 110,126" stroke="#1b4332" stroke-width="1.2" fill="none"/>
-    
-    <path d="M170,126 C190,110 192,88 176,96 C165,102 162,118 170,126 Z" fill="url(#rbq-leaf-fresh)"/>
-    <path d="M176,96 Q172,112 170,126" stroke="#1b4332" stroke-width="1.2" fill="none"/>
+    <!-- Left lapel fold -->
+    <path d="M 95 128 L 140 210 L 118 146 C 108 140 100 134 95 128 Z" fill="url(#rbq-wrap-fold)" opacity="0.85"/>
 
-    <!-- Baby's Breath and Delicate Sprigs (Top Accent) -->
-    <g opacity="0.95">
-      <path d="M140,94 Q132,68 126,56" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <circle cx="126" cy="56" r="3.2" fill="#ffffff" stroke="#ffccd5" stroke-width="0.8"/>
-      <circle cx="132" cy="66" r="2.6" fill="#fff0f3"/>
-      
-      <path d="M140,94 Q148,68 154,56" stroke="#52796f" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <circle cx="154" cy="56" r="3.2" fill="#ffffff" stroke="#ffccd5" stroke-width="0.8"/>
-      <circle cx="148" cy="66" r="2.6" fill="#fff0f3"/>
+    <!-- Right lapel fold -->
+    <path d="M 185 128 L 140 210 L 162 146 C 172 140 180 134 185 128 Z" fill="#DDB6A8" opacity="0.9"/>
 
-      <path d="M140,92 L140,50" stroke="#52796f" stroke-width="1.4" stroke-linecap="round"/>
-      <circle cx="140" cy="49" r="3.5" fill="#ffffff" stroke="#ffccd5" stroke-width="0.8"/>
+    <!-- Top edge highlight -->
+    <path d="M 95 128 C 115 121 165 121 185 128" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.55"/>
+
+    <!-- Center soft crease -->
+    <path d="M 140 210 C 138 186 138 162 141 142" stroke="#FFFFFF" stroke-width="1.2" fill="none" opacity="0.35" stroke-linecap="round"/>
+
+    <!-- ── Foliage (background) ──────────────────────── -->
+
+    <!-- Left eucalyptus sprig -->
+    <g>
+      <path d="M 110 148 C 96 132 86 114 80 96" stroke="#5A7A6C" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="82" cy="108" rx="4.5" ry="8" fill="url(#rbq-eucalyptus)" transform="rotate(-32 82 108)"/>
+      <ellipse cx="76" cy="96" rx="4.2" ry="7.5" fill="url(#rbq-eucalyptus)" transform="rotate(-46 76 96)"/>
+      <ellipse cx="92" cy="118" rx="4.5" ry="7" fill="url(#rbq-eucalyptus)" transform="rotate(-20 92 118)"/>
+      <ellipse cx="94" cy="130" rx="4" ry="6.5" fill="url(#rbq-eucalyptus)" transform="rotate(-10 94 130)"/>
     </g>
 
-    <!-- Left Flower: Pastel Peach Peony -->
-    <g transform="translate(112, 108)">
-      <!-- Outer Peony Petals -->
-      <path d="M-18,-8 C-22,-22 4,-26 12,-16 C20,-6 18,14 4,18 C-10,22 -24,8 -18,-8 Z" fill="url(#rbq-peony-peach)"/>
-      <path d="M-12,-12 C-14,-22 2,-20 8,-12 C14,-4 10,12 -2,12 C-10,12 -16,0 -12,-12 Z" fill="#ffa69e" opacity="0.85"/>
-      <!-- Soft Peony Inner Ruffles -->
-      <path d="M-8,-4 C-6,-14 6,-14 8,-4 C10,4 2,8 -2,8 C-6,8 -10,4 -8,-4 Z" fill="#ff758f"/>
-      <path d="M-4,-2 C-3,-8 4,-8 5,-2 C6,3 1,5 -1,5 C-3,5 -5,3 -4,-2 Z" fill="#c9184a"/>
-      <!-- Top Rim Highlight -->
-      <path d="M-14,-14 C-6,-22 6,-20 12,-10" stroke="#fff1e6" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.75"/>
+    <!-- Right eucalyptus sprig -->
+    <g>
+      <path d="M 170 148 C 184 132 194 114 200 96" stroke="#5A7A6C" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <ellipse cx="198" cy="108" rx="4.5" ry="8" fill="url(#rbq-eucalyptus)" transform="rotate(32 198 108)"/>
+      <ellipse cx="204" cy="96" rx="4.2" ry="7.5" fill="url(#rbq-eucalyptus)" transform="rotate(46 204 96)"/>
+      <ellipse cx="188" cy="118" rx="4.5" ry="7" fill="url(#rbq-eucalyptus)" transform="rotate(20 188 118)"/>
+      <ellipse cx="186" cy="130" rx="4" ry="6.5" fill="url(#rbq-eucalyptus)" transform="rotate(10 186 130)"/>
     </g>
 
-    <!-- Right Flower: Elegant Cream Tea Rose -->
-    <g transform="translate(168, 108)">
-      <!-- Outer Cream Petals -->
-      <path d="M-12,-16 C-4,-26 22,-22 18,-8 C24,8 10,22 -4,18 C-18,14 -20,-6 -12,-16 Z" fill="url(#rbq-tea-rose)"/>
-      <path d="M-8,-12 C-2,-20 16,-16 14,-6 C18,6 6,14 -4,12 C-12,10 -14,0 -8,-12 Z" fill="#fff5f5"/>
-      <!-- Warm Blush Center -->
-      <path d="M-6,-4 C-2,-12 10,-10 8,-2 C10,6 2,10 -3,8 C-7,6 -8,2 -6,-4 Z" fill="#f4978e"/>
-      <path d="M-3,-1 C-1,-6 6,-5 5,-1 C6,3 1,5 -2,4 C-4,3 -4,1 -3,-1 Z" fill="#d90429"/>
-      <!-- Silk Petal Edge Highlight -->
-      <path d="M-8,-16 C2,-24 16,-18 16,-8" stroke="#ffffff" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+    <!-- Deep green rose leaves -->
+    <g>
+      <path d="M 116 132 C 96 122 88 104 100 96 C 112 90 122 106 118 126 Z" fill="url(#rbq-leaf)"/>
+      <path d="M 116 132 C 110 118 104 104 100 96" stroke="#0F3123" stroke-width="0.9" fill="none" opacity="0.7"/>
+      <path d="M 104 108 C 108 106 112 108 114 112" stroke="#8DD0A6" stroke-width="0.7" fill="none" opacity="0.6"/>
+    </g>
+    <g>
+      <path d="M 164 132 C 184 122 192 104 180 96 C 168 90 158 106 162 126 Z" fill="url(#rbq-leaf)"/>
+      <path d="M 164 132 C 170 118 176 104 180 96" stroke="#0F3123" stroke-width="0.9" fill="none" opacity="0.7"/>
+      <path d="M 176 108 C 172 106 168 108 166 112" stroke="#8DD0A6" stroke-width="0.7" fill="none" opacity="0.6"/>
     </g>
 
-    <!-- Center Blossom: Grand Velvet Heritage Rose (Focal Point) -->
-    <g class="rbq-petal-pulse" transform="translate(140, 105)">
-      <!-- Deep Petal Shadow Silhouette -->
-      <path d="M-28,-8 C-24,-30 24,-30 28,-8 C34,14 16,32 -2,32 C-20,32 -34,14 -28,-8 Z" fill="url(#rbq-rose-deep)"/>
-      
-      <!-- Layered Petal Shells -->
-      <path d="M-22,-14 C-14,-28 16,-28 22,-14 C28,2 14,24 -2,24 C-18,24 -26,2 -22,-14 Z" fill="url(#rbq-rose-petal-light)"/>
-      <path d="M-16,-18 C-8,-28 14,-24 18,-12 C22,2 10,18 -2,18 C-14,18 -20,4 -16,-18 Z" fill="#c9184a"/>
-      
-      <!-- Cupped Front Petal Folds -->
-      <path d="M-18,2 C-14,18 14,18 18,2 C12,12 -12,12 -18,2 Z" fill="#ff4d6d"/>
-      <path d="M-14,-6 C-8,-16 12,-16 14,-4 C16,8 6,14 -2,14 C-10,14 -16,4 -14,-6 Z" fill="url(#rbq-rose-petal-light)"/>
-      
-      <!-- Velvet Rose Spiral Core -->
-      <path d="M-8,-4 C-6,-12 6,-12 8,-4 C9,4 3,9 -1,9 C-5,9 -9,4 -8,-4 Z" fill="#540817"/>
-      <path d="M-4,-2 C-3,-7 4,-7 5,-2 C6,3 1,5 -1,5 C-3,5 -5,2 -4,-2 Z" fill="#ba1a38"/>
-      <circle cx="-0.5" cy="0.5" r="2.2" fill="#2b0008"/>
+    <!-- Baby's breath -->
+    <g>
+      <path d="M 138 130 C 132 108 126 92 122 78" stroke="#5A7A6C" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <circle cx="122" cy="78" r="2.8" fill="#FFFFFF" stroke="#F2B8C6" stroke-width="0.5"/>
+      <circle cx="128" cy="92" r="2.4" fill="#FFFBFC"/>
+      <circle cx="134" cy="106" r="2.2" fill="#FFFFFF"/>
+      <circle cx="118" cy="84" r="1.6" fill="#FFFBFC" opacity="0.9"/>
+      <circle cx="130" cy="86" r="1.4" fill="#FFFFFF" opacity="0.85"/>
 
-      <!-- Dewdrop Glint -->
-      <g class="rbq-glint-spark">
-        <circle cx="8" cy="-11" r="2" fill="#ffffff" opacity="0.95"/>
-        <circle cx="9" cy="-10.5" r="0.8" fill="#ffd166"/>
+      <path d="M 142 130 C 148 108 154 92 158 78" stroke="#5A7A6C" stroke-width="1.1" fill="none" stroke-linecap="round"/>
+      <circle cx="158" cy="78" r="2.8" fill="#FFFFFF" stroke="#F2B8C6" stroke-width="0.5"/>
+      <circle cx="152" cy="92" r="2.4" fill="#FFFBFC"/>
+      <circle cx="146" cy="106" r="2.2" fill="#FFFFFF"/>
+      <circle cx="162" cy="84" r="1.6" fill="#FFFBFC" opacity="0.9"/>
+      <circle cx="150" cy="86" r="1.4" fill="#FFFFFF" opacity="0.85"/>
+
+      <path d="M 140 128 L 140 74" stroke="#5A7A6C" stroke-width="1.1" stroke-linecap="round"/>
+      <circle cx="140" cy="72" r="3" fill="#FFFFFF" stroke="#F2B8C6" stroke-width="0.6"/>
+      <circle cx="136" cy="78" r="1.6" fill="#FFFBFC"/>
+      <circle cx="144" cy="80" r="1.5" fill="#FFFFFF"/>
+    </g>
+
+    <!-- ── Peony (left) ─────────────────────────────── -->
+    <g transform="translate(106, 112)">
+      <circle r="25" fill="#9E2440"/>
+      <g fill="#E06A78">
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z"/>
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z" transform="rotate(60)"/>
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z" transform="rotate(120)"/>
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z" transform="rotate(180)"/>
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z" transform="rotate(240)"/>
+        <path d="M 0 -5 C -8 -5 -14 -10 -14 -17 C -14 -24 -7 -27 0 -27 C 7 -27 14 -24 14 -17 C 14 -10 8 -5 0 -5 Z" transform="rotate(300)"/>
+      </g>
+      <circle r="17" fill="#FBA9A8"/>
+      <g fill="#FFC9BE">
+        <path d="M 0 -3 C -6 -3 -10 -8 -10 -13 C -10 -18 -5 -20 0 -20 C 5 -20 10 -18 10 -13 C 10 -8 6 -3 0 -3 Z"/>
+        <path d="M 0 -3 C -6 -3 -10 -8 -10 -13 C -10 -18 -5 -20 0 -20 C 5 -20 10 -18 10 -13 C 10 -8 6 -3 0 -3 Z" transform="rotate(72)"/>
+        <path d="M 0 -3 C -6 -3 -10 -8 -10 -13 C -10 -18 -5 -20 0 -20 C 5 -20 10 -18 10 -13 C 10 -8 6 -3 0 -3 Z" transform="rotate(144)"/>
+        <path d="M 0 -3 C -6 -3 -10 -8 -10 -13 C -10 -18 -5 -20 0 -20 C 5 -20 10 -18 10 -13 C 10 -8 6 -3 0 -3 Z" transform="rotate(216)"/>
+        <path d="M 0 -3 C -6 -3 -10 -8 -10 -13 C -10 -18 -5 -20 0 -20 C 5 -20 10 -18 10 -13 C 10 -8 6 -3 0 -3 Z" transform="rotate(288)"/>
+      </g>
+      <circle r="7" fill="#FFE1D4"/>
+      <circle r="3" fill="#F8B0B0"/>
+      <ellipse cx="-8" cy="-10" rx="4.5" ry="1.8" fill="#FFFFFF" opacity="0.5" transform="rotate(-40 -8 -10)"/>
+    </g>
+
+    <!-- ── Tea rose (right) ─────────────────────────── -->
+    <g transform="translate(174, 112)">
+      <circle r="22" fill="#D88998"/>
+      <g fill="#F8C2C0">
+        <path d="M 0 -5 C -7 -5 -13 -10 -13 -16 C -13 -22 -6 -25 0 -25 C 6 -25 13 -22 13 -16 C 13 -10 7 -5 0 -5 Z"/>
+        <path d="M 0 -5 C -7 -5 -13 -10 -13 -16 C -13 -22 -6 -25 0 -25 C 6 -25 13 -22 13 -16 C 13 -10 7 -5 0 -5 Z" transform="rotate(72)"/>
+        <path d="M 0 -5 C -7 -5 -13 -10 -13 -16 C -13 -22 -6 -25 0 -25 C 6 -25 13 -22 13 -16 C 13 -10 7 -5 0 -5 Z" transform="rotate(144)"/>
+        <path d="M 0 -5 C -7 -5 -13 -10 -13 -16 C -13 -22 -6 -25 0 -25 C 6 -25 13 -22 13 -16 C 13 -10 7 -5 0 -5 Z" transform="rotate(216)"/>
+        <path d="M 0 -5 C -7 -5 -13 -10 -13 -16 C -13 -22 -6 -25 0 -25 C 6 -25 13 -22 13 -16 C 13 -10 7 -5 0 -5 Z" transform="rotate(288)"/>
+      </g>
+      <circle r="13" fill="#FDEBEF"/>
+      <g fill="#F9D2D4">
+        <path d="M 0 -3 C -5 -3 -8 -7 -8 -11 C -8 -15 -4 -17 0 -17 C 4 -17 8 -15 8 -11 C 8 -7 5 -3 0 -3 Z"/>
+        <path d="M 0 -3 C -5 -3 -8 -7 -8 -11 C -8 -15 -4 -17 0 -17 C 4 -17 8 -15 8 -11 C 8 -7 5 -3 0 -3 Z" transform="rotate(120)"/>
+        <path d="M 0 -3 C -5 -3 -8 -7 -8 -11 C -8 -15 -4 -17 0 -17 C 4 -17 8 -15 8 -11 C 8 -7 5 -3 0 -3 Z" transform="rotate(240)"/>
+      </g>
+      <circle r="5.5" fill="#F0AFB4"/>
+      <circle r="2.2" fill="#DC8C94"/>
+      <ellipse cx="-6" cy="-8" rx="3.5" ry="1.5" fill="#FFFFFF" opacity="0.65" transform="rotate(-40 -6 -8)"/>
+    </g>
+
+    <!-- ── Central heritage rose (focal) ────────────── -->
+    <g class="rbq-bloom" transform="translate(140, 100)">
+      <!-- Base silhouette -->
+      <circle r="32" fill="url(#rbq-rose-base)"/>
+
+      <!-- Outer petal lobes (5 around) -->
+      <g fill="#A10E2A">
+        <path d="M 0 -8 C -10 -8 -17 -14 -16 -22 C -15 -30 -6 -33 0 -32 C 6 -33 15 -30 16 -22 C 17 -14 10 -8 0 -8 Z"/>
+        <path d="M 0 -8 C -10 -8 -17 -14 -16 -22 C -15 -30 -6 -33 0 -32 C 6 -33 15 -30 16 -22 C 17 -14 10 -8 0 -8 Z" transform="rotate(72)"/>
+        <path d="M 0 -8 C -10 -8 -17 -14 -16 -22 C -15 -30 -6 -33 0 -32 C 6 -33 15 -30 16 -22 C 17 -14 10 -8 0 -8 Z" transform="rotate(144)"/>
+        <path d="M 0 -8 C -10 -8 -17 -14 -16 -22 C -15 -30 -6 -33 0 -32 C 6 -33 15 -30 16 -22 C 17 -14 10 -8 0 -8 Z" transform="rotate(216)"/>
+        <path d="M 0 -8 C -10 -8 -17 -14 -16 -22 C -15 -30 -6 -33 0 -32 C 6 -33 15 -30 16 -22 C 17 -14 10 -8 0 -8 Z" transform="rotate(288)"/>
+      </g>
+
+      <!-- Mid ring -->
+      <circle r="21" fill="url(#rbq-rose-mid)"/>
+      <g fill="#C81C3E">
+        <path d="M 0 -4 C -7 -4 -12 -9 -12 -15 C -12 -21 -6 -23 0 -23 C 6 -23 12 -21 12 -15 C 12 -9 7 -4 0 -4 Z"/>
+        <path d="M 0 -4 C -7 -4 -12 -9 -12 -15 C -12 -21 -6 -23 0 -23 C 6 -23 12 -21 12 -15 C 12 -9 7 -4 0 -4 Z" transform="rotate(120)"/>
+        <path d="M 0 -4 C -7 -4 -12 -9 -12 -15 C -12 -21 -6 -23 0 -23 C 6 -23 12 -21 12 -15 C 12 -9 7 -4 0 -4 Z" transform="rotate(240)"/>
+      </g>
+
+      <!-- Inner cupped petal -->
+      <circle r="12" fill="#D4183F"/>
+      <path d="M -8 2 C -8 -4 -4 -8 2 -8 C 8 -8 12 -4 12 2 C 12 7 8 11 2 11 C -3 11 -7 8 -8 2 Z" fill="#E83652"/>
+
+      <!-- Spiral core -->
+      <path d="M -5 1 C -5 -3 -2 -6 2 -6 C 6 -6 8 -2 6 2 C 4 6 0 6 -2 4 C -4 2 -3 -1 -1 -2"
+            fill="none" stroke="#7A0A1F" stroke-width="1.6" stroke-linecap="round"/>
+      <circle r="2.2" fill="#4A0411"/>
+
+      <!-- Seam lines -->
+      <path d="M 0 -32 C -1 -24 -1 -16 -2 -8" stroke="#5A0413" stroke-width="0.7" fill="none" opacity="0.55"/>
+      <path d="M 28 -14 C 20 -10 12 -8 4 -8" stroke="#5A0413" stroke-width="0.7" fill="none" opacity="0.45"/>
+      <path d="M -28 -14 C -20 -10 -12 -8 -4 -8" stroke="#5A0413" stroke-width="0.7" fill="none" opacity="0.45"/>
+
+      <!-- Specular highlight -->
+      <ellipse cx="-11" cy="-14" rx="7" ry="2.8" fill="#FFFFFF" opacity="0.28" transform="rotate(-40 -11 -14)"/>
+      <circle cx="8" cy="-12" r="1.6" fill="#FFFFFF" opacity="0.85"/>
+
+      <!-- Dewdrop glint -->
+      <g class="rbq-twinkle">
+        <circle cx="10" cy="-13" r="1.8" fill="#FFFFFF" opacity="0.9"/>
+        <circle cx="10.4" cy="-12.6" r="0.7" fill="#FFE9A8"/>
       </g>
     </g>
 
-    <!-- Satin Velvet Ribbon Bow Tie (Tied at Bouquet Neck) -->
-    <!-- Center Knot -->
+    <!-- ── Velvet ribbon bow ────────────────────────── -->
     <g transform="translate(140, 168)">
-      <!-- Left Bow Loop -->
-      <path d="M0,-2 C-18,-18 -32,2 -8,6 C-2,7 0,0 0,-2 Z" fill="url(#rbq-ribbon-velvet)"/>
-      <path d="M-2,-1 C-14,-13 -24,1 -8,4 Z" fill="url(#rbq-ribbon-highlight)" opacity="0.75"/>
+      <!-- Left bow loop -->
+      <path d="M 0 -3 C -17 -15 -32 1 -9 6 C -3 7 0 0 0 -3 Z" fill="url(#rbq-velvet)"/>
+      <path d="M -2 -1 C -13 -11 -24 2 -9 5 Z" fill="url(#rbq-velvet-hi)" opacity="0.55"/>
+      <path d="M -2 -1 C -13 -11 -24 2 -9 5" fill="none" stroke="#FF8A9E" stroke-width="0.5" opacity="0.5"/>
 
-      <!-- Right Bow Loop -->
-      <path d="M0,-2 C18,-18 32,2 8,6 C2,7 0,0 0,-2 Z" fill="url(#rbq-ribbon-velvet)"/>
-      <path d="M2,-1 C14,-13 24,1 8,4 Z" fill="url(#rbq-ribbon-highlight)" opacity="0.75"/>
+      <!-- Right bow loop -->
+      <path d="M 0 -3 C 17 -15 32 1 9 6 C 3 7 0 0 0 -3 Z" fill="url(#rbq-velvet)"/>
+      <path d="M 2 -1 C 13 -11 24 2 9 5 Z" fill="url(#rbq-velvet-hi)" opacity="0.55"/>
+      <path d="M 2 -1 C 13 -11 24 2 9 5" fill="none" stroke="#FF8A9E" stroke-width="0.5" opacity="0.5"/>
 
-      <!-- Velvet Knot Core with Dimension -->
-      <ellipse cx="0" cy="2" rx="6.5" ry="5.5" fill="#7a081e" stroke="#e63956" stroke-width="0.8"/>
-      <ellipse cx="-1.5" cy="0.5" rx="3.5" ry="2.2" fill="#ff758f" opacity="0.6"/>
+      <!-- Knot -->
+      <ellipse cx="0" cy="2" rx="6.2" ry="5" fill="#7E0E24"/>
+      <ellipse cx="-1.4" cy="0.6" rx="3" ry="1.9" fill="#E0425C" opacity="0.7"/>
 
-      <!-- Graceful Flowing Tails with Believable Inertia -->
-      <g class="rbq-ribbon-left">
-        <path d="M-4,5 C-12,18 -18,28 -22,40 L-13,38 L-7,26 C-4,18 -2,9 -4,5 Z" fill="url(#rbq-ribbon-velvet)"/>
-        <path d="M-5,7 C-10,18 -15,28 -18,37" stroke="#ff758f" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round"/>
+      <!-- Left hanging tail -->
+      <g class="rbq-tail-l">
+        <path d="M -4 5 C -12 18 -18 32 -22 44 L -14 42 C -10 34 -6 24 -3 14 C -2 9 -2 6 -4 5 Z" fill="url(#rbq-velvet)"/>
+        <path d="M -6 8 C -11 20 -16 32 -19 41" stroke="#FF8A9E" stroke-width="0.9" fill="none" opacity="0.55" stroke-linecap="round"/>
+        <path d="M -14 42 L -22 44 L -19 41 Z" fill="#4E0512" opacity="0.5"/>
       </g>
-      <g class="rbq-ribbon-right">
-        <path d="M4,5 C12,18 18,28 22,40 L13,38 L7,26 C4,18 2,9 4,5 Z" fill="url(#rbq-ribbon-velvet)"/>
-        <path d="M5,7 C10,18 15,28 18,37" stroke="#ff758f" stroke-width="1.2" fill="none" opacity="0.7" stroke-linecap="round"/>
+
+      <!-- Right hanging tail -->
+      <g class="rbq-tail-r">
+        <path d="M 4 5 C 12 18 18 32 22 44 L 14 42 C 10 34 6 24 3 14 C 2 9 2 6 4 5 Z" fill="url(#rbq-velvet)"/>
+        <path d="M 6 8 C 11 20 16 32 19 41" stroke="#FF8A9E" stroke-width="0.9" fill="none" opacity="0.55" stroke-linecap="round"/>
+        <path d="M 14 42 L 22 44 L 19 41 Z" fill="#4E0512" opacity="0.5"/>
       </g>
     </g>
+
   </g>
 </svg>

@@ -1,201 +1,281 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 240" width="280" height="240" aria-label="Moonlit Swans Twilight Sunset Illustration">
+<!-- assets/romantic-sunset.svg -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
   <defs>
-    <!-- Deep Cinematic Twilight Sky Gradient -->
-    <linearGradient id="rsn-sky" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#190e2b"/>
-      <stop offset="35%" stop-color="#3d143c"/>
-      <stop offset="65%" stop-color="#7a1c49"/>
-      <stop offset="85%" stop-color="#c43358"/>
-      <stop offset="100%" stop-color="#f88365"/>
+    <!-- Background Sky Gradient -->
+    <linearGradient id="rsn-sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0c0714" />
+      <stop offset="35%" stop-color="#1b0f2a" />
+      <stop offset="65%" stop-color="#4a1532" />
+      <stop offset="85%" stop-color="#8c2b4d" />
+      <stop offset="100%" stop-color="#d96b52" />
     </linearGradient>
 
-    <!-- Golden Horizon Sun/Moon Glow -->
-    <radialGradient id="rsn-celestial-glow" cx="50%" cy="45%" r="50%">
-      <stop offset="0%" stop-color="#fff8db" stop-opacity="0.9"/>
-      <stop offset="40%" stop-color="#ffd166" stop-opacity="0.45"/>
-      <stop offset="80%" stop-color="#ff758c" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#190e2b" stop-opacity="0"/>
+    <!-- Celestial Moon Glow -->
+    <radialGradient id="rsn-moon-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff8eb" stop-opacity="0.95" />
+      <stop offset="25%" stop-color="#fde3c2" stop-opacity="0.6" />
+      <stop offset="55%" stop-color="#e08272" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#4a1532" stop-opacity="0" />
     </radialGradient>
 
-    <!-- Deep Lake Water with Sunset Reflection -->
-    <linearGradient id="rsn-water" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#c43358"/>
-      <stop offset="25%" stop-color="#641640"/>
-      <stop offset="60%" stop-color="#2d1033"/>
-      <stop offset="100%" stop-color="#14071f"/>
+    <!-- Water Surface Gradient -->
+    <linearGradient id="rsn-water-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#361026" />
+      <stop offset="20%" stop-color="#210a1b" />
+      <stop offset="60%" stop-color="#130612" />
+      <stop offset="100%" stop-color="#090209" />
     </linearGradient>
 
-    <!-- Golden Crescent Moon -->
-    <linearGradient id="rsn-moon" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="50%" stop-color="#fff3b0"/>
-      <stop offset="100%" stop-color="#ffd166"/>
+    <!-- Water Center Light Path -->
+    <radialGradient id="rsn-water-reflection" cx="50%" cy="0%" r="75%">
+      <stop offset="0%" stop-color="#f8a27d" stop-opacity="0.45" />
+      <stop offset="40%" stop-color="#a43354" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#130612" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Swan Body Base Gradient (Left Swan - Light Source Right) -->
+    <linearGradient id="rsn-swan-left-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#fff0f3" />
+      <stop offset="75%" stop-color="#ea9fb3" />
+      <stop offset="100%" stop-color="#914b62" />
     </linearGradient>
 
-    <!-- Swan Feather Shading -->
-    <linearGradient id="rsn-swan-body" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="60%" stop-color="#fff2f6"/>
-      <stop offset="100%" stop-color="#fcd3dc"/>
-    </linearGradient>
-    <linearGradient id="rsn-swan-wing" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="70%" stop-color="#f5e1e8"/>
-      <stop offset="100%" stop-color="#e3b6c3"/>
+    <!-- Swan Body Base Gradient (Right Swan - Light Source Left) -->
+    <linearGradient id="rsn-swan-right-grad" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="40%" stop-color="#fff0f3" />
+      <stop offset="75%" stop-color="#ea9fb3" />
+      <stop offset="100%" stop-color="#914b62" />
     </linearGradient>
 
-    <!-- Swan Water Reflection Ripple -->
-    <linearGradient id="rsn-ripple" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffd166" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#ffd166" stop-opacity="0.6"/>
-      <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+    <!-- Wing Layer Highlight -->
+    <linearGradient id="rsn-wing-highlight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#f7cad5" stop-opacity="0.2" />
+    </linearGradient>
+
+    <!-- Beak Gradient -->
+    <linearGradient id="rsn-beak-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
     </linearGradient>
   </defs>
 
   <style>
-    /* Calming atmospheric water bobbing and soft star twinkling */
-    @keyframes rsnSwansBob {
-      0%, 100% {
-        transform: translateY(0px) rotate(0deg);
-      }
-      50% {
-        transform: translateY(-4px) rotate(0.6deg);
-      }
+    /* Continuous Ambient Floating Animations */
+    .rsn-ambient-water {
+    animation: rsnRipple 8s ease-in-out infinite alternate;
+    }
+    .rsn-swan-left-group {
+    animation: rsnFloatLeft 6s ease-in-out infinite alternate;
+    transform-origin: 320px 320px;
+    }
+    .rsn-swan-right-group {
+    animation: rsnFloatRight 6.8s ease-in-out infinite alternate;
+    transform-origin: 480px 320px;
+    }
+    .rsn-neck-left {
+    animation: rsnNeckSwayLeft 7.5s ease-in-out infinite alternate;
+    transform-origin: 330px 290px;
+    }
+    .rsn-neck-right {
+    animation: rsnNeckSwayRight 8.1s ease-in-out infinite alternate;
+    transform-origin: 470px 290px;
+    }
+    .rsn-reflection {
+    animation: rsnReflectionPulse 6.4s ease-in-out infinite alternate;
+    transform-origin: 400px 360px;
     }
 
-    @keyframes rsnWaterShimmer {
-      0%, 100% {
-        opacity: 0.35;
-        transform: scaleX(0.96);
-      }
-      50% {
-        opacity: 0.75;
-        transform: scaleX(1.04);
-      }
+    @keyframes rsnFloatLeft {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-3px) rotate(-0.5deg); }
+    100% { transform: translateY(1.5px) rotate(0.3deg); }
+    }
+    @keyframes rsnFloatRight {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-3.5px) rotate(0.5deg); }
+    100% { transform: translateY(1px) rotate(-0.3deg); }
+    }
+    @keyframes rsnNeckSwayLeft {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(1.2deg); }
+    }
+    @keyframes rsnNeckSwayRight {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-1.2deg); }
+    }
+    @keyframes rsnRipple {
+    0% { opacity: 0.3; transform: scaleY(1); }
+    100% { opacity: 0.6; transform: scaleY(1.15); }
+    }
+    @keyframes rsnReflectionPulse {
+    0% { opacity: 0.5; transform: scaleX(1); }
+    100% { opacity: 0.75; transform: scaleX(1.04); }
     }
 
-    @keyframes rsnStarTwinkle {
-      0%, 100% {
-        opacity: 0.25;
-        transform: scale(0.8);
-      }
-      50% {
-        opacity: 0.95;
-        transform: scale(1.15);
-      }
-    }
-
-    .rsn-swans-group {
-      animation: rsnSwansBob 4.8s cubic-bezier(0.42, 0, 0.58, 1) infinite;
-      transform-origin: 140px 170px;
-    }
-
-    .rsn-water-ripple-1 {
-      animation: rsnWaterShimmer 4s ease-in-out infinite;
-      transform-origin: 140px 176px;
-    }
-    .rsn-water-ripple-2 {
-      animation: rsnWaterShimmer 4.6s ease-in-out infinite 1.2s;
-      transform-origin: 140px 188px;
-    }
-
-    .rsn-star-1 {
-      animation: rsnStarTwinkle 3.4s ease-in-out infinite;
-      transform-origin: 82px 50px;
-    }
-    .rsn-star-2 {
-      animation: rsnStarTwinkle 3.8s ease-in-out infinite 1s;
-      transform-origin: 206px 42px;
-    }
-
-    /* Accessibility */
+    /* Accessibility / Reduced Motion */
     @media (prefers-reduced-motion: reduce) {
-      .rsn-swans-group,
-      .rsn-water-ripple-1,
-      .rsn-water-ripple-2,
-      .rsn-star-1,
-      .rsn-star-2 {
-        animation: none !important;
-        transform: none !important;
-      }
+    .rsn-ambient-water,
+    .rsn-swan-left-group,
+    .rsn-swan-right-group,
+    .rsn-neck-left,
+    .rsn-neck-right,
+    .rsn-reflection {
+    animation: none !important;
+    transform: none !important;
+    }
     }
   </style>
 
-  <!-- Twilight Backdrop Disc -->
-  <circle cx="140" cy="116" r="102" fill="url(#rsn-sky)"/>
-  <circle cx="140" cy="98" r="72" fill="url(#rsn-celestial-glow)"/>
+  <!-- 1. Background Sky -->
+  <rect width="800" height="300" fill="url(#rsn-sky-grad)" />
 
-  <!-- Golden Crescent Moon and Evening Star -->
-  <g transform="translate(140, 58)">
-    <!-- Crescent Moon Silhouette -->
-    <path d="M-6,-22 C8,-22 18,-12 18,2 C18,16 8,26 -6,26 C4,22 10,12 10,2 C10,-8 4,-18 -6,-22 Z" fill="url(#rsn-moon)"/>
-    <!-- Moon Inner Glow -->
-    <circle cx="6" cy="2" r="1.5" fill="#ffffff"/>
+  <!-- 2. Distant Horizon Mountain Silhouettes -->
+  <path d="M 0 300 L 0 285 Q 120 270 250 280 T 520 275 Q 680 265 800 280 L 800 300 Z" fill="#2d0b21" opacity="0.7" />
+  <path d="M 0 300 L 0 290 Q 180 280 380 288 T 710 282 L 800 290 L 800 300 Z" fill="#1b0515" />
+
+  <!-- 3. Celestial Moon / Horizon Glow -->
+  <circle cx="400" cy="220" r="160" fill="url(#rsn-moon-glow)" />
+  <circle cx="400" cy="210" r="28" fill="#fffdfa" />
+  <circle cx="400" cy="210" r="36" fill="#fff5e6" opacity="0.4" />
+
+  <!-- 4. Water Base -->
+  <rect x="0" y="295" width="800" height="205" fill="url(#rsn-water-grad)" />
+
+  <!-- 5. Water Reflections & Light Path -->
+  <ellipse cx="400" cy="380" rx="260" ry="85" fill="url(#rsn-water-reflection)" />
+
+  <!-- Ambient Water Ripple Lines -->
+  <g stroke="#f3a683" stroke-opacity="0.25" stroke-linecap="round" class="rsn-ambient-water">
+    <line x1="280" y1="305" x2="520" y2="305" stroke-width="1.5" />
+    <line x1="220" y1="318" x2="580" y2="318" stroke-width="2" />
+    <line x1="160" y1="335" x2="640" y2="335" stroke-width="1.8" />
+    <line x1="240" y1="355" x2="560" y2="355" stroke-width="1.2" />
+    <line x1="310" y1="380" x2="490" y2="380" stroke-width="1" />
   </g>
 
-  <!-- Evening Twilight Stars -->
-  <g class="rsn-star-1">
-    <circle cx="82" cy="50" r="1.6" fill="#ffffff"/>
-    <path d="M82,46 L82,54 M78,50 L86,50" stroke="#fff9db" stroke-width="0.8" opacity="0.75"/>
-  </g>
-  <g class="rsn-star-2">
-    <circle cx="206" cy="42" r="1.8" fill="#ffd166"/>
-    <path d="M206,38 L206,46 M202,42 L210,42" stroke="#fff9db" stroke-width="0.8" opacity="0.75"/>
+  <!-- 6. Water Surface Reflections of Swans -->
+  <g class="rsn-reflection" opacity="0.5">
+    <!-- Left Swan Reflection -->
+    <path d="M 230 330 C 260 360 330 360 360 340 C 350 375 280 380 230 345 Z" fill="#601833" filter="blur(2px)" />
+    <!-- Right Swan Reflection -->
+    <path d="M 570 330 C 540 360 470 360 440 340 C 450 375 520 380 570 345 Z" fill="#601833" filter="blur(2px)" />
   </g>
 
-  <!-- Calming Lake Water Surface with Curved Horizon -->
-  <path d="M40,154 Q140,146 240,154 C235,195 205,218 140,222 C75,218 45,195 40,154 Z" fill="url(#rsn-water)"/>
+  <!-- ==================== 7. LEFT SWAN ==================== -->
+  <g class="rsn-swan-left-group">
+    <!-- Body & Tail -->
+    <path d="M 210 305
+             C 190 295 180 280 175 265
+             C 188 275 205 288 225 292
+             C 200 280 195 260 195 250
+             C 212 265 230 280 250 285
+             C 270 250 330 255 355 285
+             C 370 305 365 328 335 332
+             C 285 338 235 325 210 305 Z"
+          fill="url(#rsn-swan-left-grad)" />
 
-  <!-- Luminous Lake Surface Ripples -->
-  <line class="rsn-water-ripple-1" x1="75" y1="176" x2="205" y2="176" stroke="url(#rsn-ripple)" stroke-width="2.2" stroke-linecap="round"/>
-  <line class="rsn-water-ripple-2" x1="95" y1="188" x2="185" y2="188" stroke="url(#rsn-ripple)" stroke-width="1.8" stroke-linecap="round"/>
-  <line x1="110" y1="198" x2="170" y2="198" stroke="#ff758c" stroke-width="1.2" opacity="0.3" stroke-linecap="round"/>
+    <!-- Layered Wing (Primary & Secondary Feathers) -->
+    <path d="M 220 285
+             C 240 260 285 252 325 270
+             C 345 280 350 298 330 310
+             C 290 318 245 308 220 285 Z"
+          fill="url(#rsn-wing-highlight)" />
+    <path d="M 240 282
+             C 260 265 295 260 325 278
+             C 310 298 275 302 240 282 Z"
+          fill="#ffffff" opacity="0.6" />
 
-  <!-- Graceful Swans Forming a Heart Neck Shape -->
-  <g class="rsn-swans-group">
-    <!-- Center Sunset Radiance in the Heart Gap -->
-    <path d="M140,118 C140,110 146,104 150,108 C154,112 154,118 146,124 L140,130 L134,124 C126,118 126,112 130,108 C134,104 140,110 140,118 Z" 
-          fill="#ff5c7e" opacity="0.85"/>
-    <circle cx="140" cy="118" r="3" fill="#ffffff" opacity="0.9"/>
+    <!-- Chest Cushion Ripple -->
+    <path d="M 335 328 C 350 330 365 325 375 322" stroke="#fbcfe8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8" />
 
-    <!-- Left Swan (Graceful Plumage and Slender Curved Neck) -->
-    <!-- Body and Feathered Wing -->
-    <ellipse cx="108" cy="162" rx="24" ry="12" fill="url(#rsn-swan-body)"/>
-    <!-- Folded Wing Layer with Feather Slits -->
-    <path d="M90,164 C94,152 110,150 126,155 C122,166 106,170 90,164 Z" fill="url(#rsn-swan-wing)"/>
-    <path d="M96,161 C104,154 116,156 122,160" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.8"/>
-    <!-- Tail Feathers -->
-    <path d="M84,163 C78,158 80,152 88,157 Z" fill="#ffffff"/>
+    <!-- Neck & Head Assembly (Animated Neck Sway) -->
+    <g class="rsn-neck-left">
+      <!-- Natural Graceful S-Curve Neck -->
+      <path d="M 338 298
+               C 365 285 372 235 352 195
+               C 342 175 352 155 368 152
+               C 382 150 388 165 378 185
+               C 362 218 388 275 348 315 Z"
+            fill="url(#rsn-swan-left-grad)" />
 
-    <!-- Left Swan S-Curved Neck and Head -->
-    <path d="M104,164 C106,142 120,132 130,120 C136,112 140,106 137,98 C133,90 124,92 122,98 C120,104 114,120 108,136 C100,146 94,154 104,164 Z" 
-          fill="url(#rsn-swan-body)"/>
-    <!-- Left Swan Head Highlight -->
-    <circle cx="131" cy="98" r="4.8" fill="#ffffff"/>
-    <!-- Black Facial Mask and Eye -->
-    <path d="M133,96 L137,98 L133,100 Z" fill="#190e2b"/>
-    <circle cx="131" cy="97" r="1" fill="#190e2b"/>
-    <!-- Orange Beak -->
-    <path d="M136,97 L140,98.5 L136,100 Z" fill="#f77f00"/>
+      <!-- Head Structure -->
+      <path d="M 362 154
+               C 360 144 372 138 384 145
+               C 392 150 395 160 386 166
+               C 376 170 365 165 362 154 Z"
+            fill="#ffffff" />
 
-    <!-- Right Swan (Mirroring to Form the Heart Symmetry) -->
-    <!-- Body and Feathered Wing -->
-    <ellipse cx="172" cy="162" rx="24" ry="12" fill="url(#rsn-swan-body)"/>
-    <!-- Folded Wing Layer -->
-    <path d="M190,164 C186,152 170,150 154,155 C158,166 174,170 190,164 Z" fill="url(#rsn-swan-wing)"/>
-    <path d="M184,161 C176,154 164,156 158,160" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.8"/>
-    <!-- Tail Feathers -->
-    <path d="M196,163 C202,158 200,152 192,157 Z" fill="#ffffff"/>
+      <!-- Basal Knob & Facial Mask -->
+      <path d="M 382 148 C 386 146 389 149 388 153 C 385 156 381 155 380 151 Z" fill="#180e15" />
 
-    <!-- Right Swan S-Curved Neck and Head -->
-    <path d="M176,164 C174,142 160,132 150,120 C144,112 140,106 143,98 C147,90 156,92 158,98 C160,104 166,120 172,136 C180,146 186,154 176,164 Z" 
-          fill="url(#rsn-swan-body)"/>
-    <!-- Right Swan Head Highlight -->
-    <circle cx="149" cy="98" r="4.8" fill="#ffffff"/>
-    <!-- Black Facial Mask and Eye -->
-    <path d="M147,96 L143,98 L147,100 Z" fill="#190e2b"/>
-    <circle cx="149" cy="97" r="1" fill="#190e2b"/>
-    <!-- Orange Beak -->
-    <path d="M144,97 L140,98.5 L144,100 Z" fill="#f77f00"/>
+      <!-- Beak (Gently angled down, NOT touching right beak) -->
+      <path d="M 387 153 L 406 161 C 401 166 394 167 386 162 Z" fill="url(#rsn-beak-grad)" />
+
+      <!-- Subtle Eye -->
+      <circle cx="378" cy="151" r="1.8" fill="#180e15" />
+      <circle cx="377.6" cy="150.4" r="0.6" fill="#ffffff" />
+    </g>
   </g>
+
+  <!-- ==================== 8. RIGHT SWAN ==================== -->
+  <g class="rsn-swan-right-group">
+    <!-- Body & Tail -->
+    <path d="M 590 305
+             C 610 295 620 280 625 265
+             C 612 275 595 288 575 292
+             C 600 280 605 260 605 250
+             C 588 265 570 280 550 285
+             C 530 250 470 255 445 285
+             C 430 305 435 328 465 332
+             C 515 338 565 325 590 305 Z"
+          fill="url(#rsn-swan-right-grad)" />
+
+    <!-- Layered Wing -->
+    <path d="M 580 285
+             C 560 260 515 252 475 270
+             C 455 280 450 298 470 310
+             C 510 318 555 308 580 285 Z"
+          fill="url(#rsn-wing-highlight)" />
+    <path d="M 560 282
+             C 540 265 505 260 475 278
+             C 490 298 525 302 560 282 Z"
+          fill="#ffffff" opacity="0.6" />
+
+    <!-- Chest Cushion Ripple -->
+    <path d="M 465 328 C 450 330 435 325 425 322" stroke="#fbcfe8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.8" />
+
+    <!-- Neck & Head Assembly (Animated Neck Sway) -->
+    <g class="rsn-neck-right">
+      <!-- Natural Graceful S-Curve Neck -->
+      <path d="M 462 298
+               C 435 285 428 235 448 195
+               C 458 175 448 155 432 152
+               C 418 150 412 165 422 185
+               C 438 218 412 275 452 315 Z"
+            fill="url(#rsn-swan-right-grad)" />
+
+      <!-- Head Structure -->
+      <path d="M 438 154
+               C 440 144 428 138 416 145
+               C 408 150 405 160 414 166
+               C 424 170 435 165 438 154 Z"
+            fill="#ffffff" />
+
+      <!-- Basal Knob & Facial Mask -->
+      <path d="M 418 148 C 414 146 411 149 412 153 C 415 156 419 155 420 151 Z" fill="#180e15" />
+
+      <!-- Beak (Gently angled down, NOT touching left beak. Clear separation) -->
+      <path d="M 413 153 L 394 161 C 399 166 406 167 414 162 Z" fill="url(#rsn-beak-grad)" />
+
+      <!-- Subtle Eye -->
+      <circle cx="422" cy="151" r="1.8" fill="#180e15" />
+      <circle cx="422.4" cy="150.4" r="0.6" fill="#ffffff" />
+    </g>
+  </g>
+
+  <!-- 9. Foreground Soft Water Edges -->
+  <rect x="0" y="480" width="800" height="20" fill="#040105" opacity="0.8" />
 </svg>
